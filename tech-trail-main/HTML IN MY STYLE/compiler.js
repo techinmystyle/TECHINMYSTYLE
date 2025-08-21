@@ -174,3 +174,14 @@ document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable 
     // Disable Ctrl+Shift+K (Firefox)
     if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
   };
+
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7G01YFBCVB');
+</script>
