@@ -6,125 +6,351 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     *, *::before, *::after { box-sizing: border-box; }
+    
     body {
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      background: linear-gradient(135deg, #38ef7d, #11998e);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #333;
+      overflow: hidden;
     }
+    
+    /* Animated background particles */
+    .bg-particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+      50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
+    }
+    
     .login-container {
-      background: #fff;
-      padding: 40px 36px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-      width: 360px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      padding: 50px 40px;
+      border-radius: 24px;
+      box-shadow: 
+        0 20px 60px rgba(0,0,0,0.15),
+        0 0 0 1px rgba(255,255,255,0.2);
+      width: 420px;
       max-width: 90vw;
       text-align: center;
+      position: relative;
+      z-index: 1;
+      transform: translateY(0);
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
     h2 {
-      color: #11998e;
-      margin-bottom: 24px;
-      font-weight: 700;
-      font-size: 2rem;
-      letter-spacing: 1px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 32px;
+      font-weight: 800;
+      font-size: 2.4rem;
+      letter-spacing: -0.5px;
       user-select: none;
+      position: relative;
     }
+    
+    h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 2px;
+    }
+    
     form {
       display: flex;
       flex-direction: column;
-      gap: 18px;
+      gap: 24px;
+      margin-top: 40px;
     }
+    
     label {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       text-align: left;
       user-select: none;
-      color: #347a5d;
+      color: #4a5568;
       display: block;
+      transition: color 0.3s ease;
     }
+    
     .field-wrapper {
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 4px;
+      position: relative;
     }
+    
     input[type="text"], input[type="password"] {
-      padding: 12px 14px;
+      padding: 16px 18px;
       font-size: 1rem;
-      border: 2px solid #adebad;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-      outline-offset: 2px;
-    }
-    input[type="text"]:focus, input[type="password"]:focus {
-      border-color: #28a745;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       outline: none;
-      box-shadow: 0 0 5px #28a745aa;
+      background: rgba(255, 255, 255, 0.8);
+      position: relative;
     }
+    
+    input[type="text"]:focus, input[type="password"]:focus {
+      border-color: #667eea;
+      box-shadow: 
+        0 0 0 3px rgba(102, 126, 234, 0.1),
+        0 4px 12px rgba(102, 126, 234, 0.15);
+      background: rgba(255, 255, 255, 1);
+      transform: translateY(-1px);
+    }
+    
+    input[type="text"]:focus + .field-focus,
+    input[type="password"]:focus + .field-focus {
+      opacity: 1;
+      transform: scale(1);
+    }
+    
     .error-msg {
-      color: #e63946;
-      font-size: 0.92rem;
-      min-height: 16px;
+      color: #e53e3e;
+      font-size: 0.9rem;
+      min-height: 18px;
       text-align: left;
+      font-weight: 500;
+      margin-top: 4px;
     }
+    
     button {
-      padding: 14px;
+      padding: 18px 24px;
       font-size: 1.1rem;
       font-weight: 700;
       color: white;
-      background: linear-gradient(135deg, #28a745, #19692c);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       border: none;
       border-radius: 12px;
       cursor: pointer;
       user-select: none;
-      transition: background-color 0.3s ease;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
     }
+    
+    button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    
+    button:hover::before {
+      left: 100%;
+    }
+    
     button:disabled {
-      background: #95d195;
-      cursor: default;
+      background: #a0aec0;
+      cursor: not-allowed;
+      transform: none;
     }
+    
     button:hover:not(:disabled) {
-      background: linear-gradient(135deg, #19692c, #28a745);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
     }
+    
+    button:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    /* Loading spinner */
+    .spinner {
+      display: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    button.loading .spinner {
+      display: inline-block;
+    }
+    
+    button.loading .btn-text {
+      opacity: 0.8;
+    }
+    
     #status {
-      margin-top: 14px;
-      min-height: 20px;
+      margin-top: 20px;
+      min-height: 24px;
       font-weight: 600;
       font-size: 0.95rem;
       user-select: none;
       text-align: center;
+      transition: all 0.3s ease;
     }
+    
+    .status-success {
+      color: #38a169 !important;
+      animation: fadeInUp 0.5s ease;
+    }
+    
+    .status-error {
+      color: #e53e3e !important;
+      animation: shake 0.5s ease;
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+    
     a {
-      margin-top: 22px;
+      margin-top: 28px;
       display: inline-block;
-      font-size: 0.9rem;
-      color: #11998e;
+      font-size: 0.95rem;
+      color: #667eea;
       text-decoration: none;
       user-select: none;
-      transition: color 0.3s ease;
+      transition: all 0.3s ease;
+      font-weight: 500;
+      position: relative;
     }
+    
+    a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      transition: width 0.3s ease;
+    }
+    
     a:hover {
-      color: #0d6b44;
-      text-decoration: underline;
+      color: #764ba2;
+      transform: translateY(-1px);
     }
-    @media (max-width: 400px) {
+    
+    a:hover::after {
+      width: 100%;
+    }
+    
+    /* Success checkmark animation */
+    .checkmark {
+      display: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #38a169;
+      position: relative;
+      margin-right: 8px;
+    }
+    
+    .checkmark::after {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 4px;
+      width: 6px;
+      height: 12px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+    
+    .checkmark.show {
+      display: inline-block;
+      animation: checkmarkPop 0.5s ease;
+    }
+    
+    @keyframes checkmarkPop {
+      0% { transform: scale(0); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+    
+    @media (max-width: 480px) {
       .login-container {
-        padding: 30px 24px;
+        padding: 40px 28px;
+        width: 95vw;
       }
       button {
         font-size: 1rem;
+        padding: 16px 20px;
       }
       h2 {
-        font-size: 1.6rem;
+        font-size: 2rem;
       }
     }
+    
+    /* Generate particles with random positions */
   </style>
 </head>
 <body>
+  <!-- Animated background particles -->
+  <div class="bg-particles" id="particles"></div>
+  
   <div class="login-container" role="main" aria-label="Login Form">
     <h2>Sign In</h2>
     <form id="loginForm" onsubmit="event.preventDefault(); login();">
@@ -138,23 +364,50 @@
         <input type="password" id="password" autocomplete="current-password" required aria-required="true" aria-describedby="password-error" />
         <div class="error-msg" id="password-error"></div>
       </div>
-      <button type="submit" id="loginBtn">Sign In</button>
+      <button type="submit" id="loginBtn">
+        <span class="spinner"></span>
+        <span class="checkmark"></span>
+        <span class="btn-text">Sign In</span>
+      </button>
     </form>
     <p id="status" role="alert" aria-live="polite"></p>
     <a href="register.html">Don't have an account? Sign Up</a>
   </div>
 
   <script>
+    // Create animated particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 50;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.top = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 6 + 's';
+        particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+        particlesContainer.appendChild(particle);
+      }
+    }
+    
+    // Initialize particles
+    createParticles();
+
     const loginBtn = document.getElementById('loginBtn');
     const status = document.getElementById('status');
+    const spinner = document.querySelector('.spinner');
+    const checkmark = document.querySelector('.checkmark');
+    const btnText = document.querySelector('.btn-text');
 
     function validateUsername(username) {
       if (!username) return "Username is required.";
-      if (!/^[a-zA-Z0-9]{3,}$/.test(username)) {
+      if (!/^[a-zA-Z0-9]{3,}\$/.test(username)) {
         return "Username must be at least 3 characters (letters/numbers).";
       }
       return "";
     }
+    
     function validatePassword(password) {
       if (!password) return "Password is required.";
       if (password.length < 8) {
@@ -162,19 +415,23 @@
       }
       return "";
     }
+    
     function showError(inputId, message) {
       document.getElementById(inputId + "-error").textContent = message;
     }
+    
     function clearErrors() {
       showError("username", "");
       showError("password", "");
       status.textContent = "";
+      status.className = "";
     }
 
-    // Real-time validation
+    // Real-time validation with enhanced UX
     document.getElementById("username").addEventListener("input", function() {
       showError("username", validateUsername(this.value.trim()));
     });
+    
     document.getElementById("password").addEventListener("input", function() {
       showError("password", validatePassword(this.value));
     });
@@ -196,13 +453,15 @@
       if (passErr) { showError("password", passErr); isValid = false; }
 
       if (!isValid) {
-        status.style.color = '#e63946';
+        status.className = "status-error";
         status.textContent = "Please fix the errors above.";
         return;
       }
 
+      // Start loading state
       loginBtn.disabled = true;
-      status.style.color = '#333';
+      loginBtn.classList.add('loading');
+      status.className = "";
       status.textContent = 'Signing in...';
 
       try {
@@ -217,14 +476,21 @@
           localStorage.setItem('username', data.username);
           localStorage.setItem('isLoggedIn', 'true');
 
-          status.style.color = '#28a745';
+          // Success animation
+          loginBtn.classList.remove('loading');
+          checkmark.classList.add('show');
+          btnText.textContent = 'Success!';
+          status.className = "status-success";
           status.textContent = 'Login successful! Redirecting...';
 
           setTimeout(() => {
             window.location.href = '../index.html';
           }, 1200);
         } else {
-          status.style.color = '#e63946';
+          // Error state
+          loginBtn.classList.remove('loading');
+          status.className = "status-error";
+          
           // Show per-field error if possible
           if (data.message && data.message.toLowerCase().includes("username")) {
             showError("username", data.message);
@@ -236,21 +502,66 @@
         }
       } catch (error) {
         console.error('Login request failed:', error);
-        status.style.color = '#e63946';
+        loginBtn.classList.remove('loading');
+        status.className = "status-error";
         status.textContent = 'Server error, please try again later.';
         loginBtn.disabled = false;
       }
     }
+
+    // Add input focus effects
+    const inputs = document.querySelectorAll('input[type="text"], input[type="password"]');
+    inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+        this.parentElement.querySelector('label').style.color = '#667eea';
+      });
+      
+      input.addEventListener('blur', function() {
+        this.parentElement.querySelector('label').style.color = '#4a5568';
+      });
+    });
+
+    // Add keyboard navigation enhancement
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' && !loginBtn.disabled) {
+        login();
+      }
+    });
+
+    // Add subtle hover effects to container
+    const container = document.querySelector('.login-container');
+    container.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-2px)';
+      this.style.boxShadow = '0 25px 70px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.3)';
+    });
+    
+    container.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0)';
+      this.style.boxShadow = '0 20px 60px rgba(0,0,0,0.15), 0 0 0 1px rgba(255,255,255,0.2)';
+    });
+
+    // Add dynamic particle movement on mouse move
+    document.addEventListener('mousemove', function(e) {
+      const particles = document.querySelectorAll('.particle');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+      
+      particles.forEach((particle, index) => {
+        const speed = (index % 3 + 1) * 0.5;
+        const x = (mouseX - 0.5) * speed;
+        const y = (mouseY - 0.5) * speed;
+        particle.style.transform = `translate(${x}px, ${y}px)`;
+      });
+    });
   </script>
 
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-7G01YFBCVB');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-7G01YFBCVB');
+  </script>
 </body>
 </html>
