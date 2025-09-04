@@ -55,6 +55,14 @@
             transition: width 0.4s ease-in-out;
         }
 
+        .task-section-title {
+            margin-top: 25px;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #222;
+        }
+
         .task-card {
             display: flex;
             justify-content: space-between;
@@ -147,7 +155,7 @@
 <p class="footer">© 2025 Tech In My Style. All Rights Reserved.</p>
 
 <script>
-    const API_BASE = "https://tech-trail-w2ap.onrender.com"; // ✅ Updated to correct API
+    const API_BASE = "https://tech-trail-w2ap.onrender.com"; // ✅ Correct API
     const USERNAME = localStorage.getItem("username");
     const COURSE = "html";
 
@@ -161,16 +169,12 @@
     const progressTextEl = document.getElementById("progress-text");
     const loadingEl = document.getElementById("loading");
 
-    // List of HTML tasks
-    const htmlTasks = [
-        { id: "task1", title: "Introduction to HTML" },
-        { id: "task2", title: "Basic HTML Tags" },
-        { id: "task3", title: "HTML Forms & Inputs" },
-        { id: "task4", title: "HTML Tables & Lists" },
-        { id: "task5", title: "HTML Media & Embedding" },
-        { id: "task6", title: "HTML5 Semantic Elements" },
-        { id: "task7", title: "HTML Project: Personal Portfolio" }
-    ];
+    // Grouped HTML tasks
+    const htmlTasks = {
+        beginner: Array.from({ length: 10 }, (_, i) => ({ id: `beginner-${i+1}`, title: `Beginner Task ${i+1}` })),
+        intermediate: Array.from({ length: 10 }, (_, i) => ({ id: `intermediate-${i+1}`, title: `Intermediate Task ${i+1}` })),
+        advanced: Array.from({ length: 10 }, (_, i) => ({ id: `advanced-${i+1}`, title: `Advanced Task ${i+1}` }))
+    };
 
     let completedTasks = [];
 
@@ -192,30 +196,37 @@
         }
     }
 
-    // Render tasks
+    // Render tasks grouped by level
     function renderTasks() {
         loadingEl.style.display = "none";
         tasksListEl.innerHTML = "";
 
-        htmlTasks.forEach(task => {
-            const isCompleted = completedTasks.includes(task.id);
+        Object.keys(htmlTasks).forEach(level => {
+            const sectionTitle = document.createElement("h3");
+            sectionTitle.className = "task-section-title";
+            sectionTitle.textContent = `${level.charAt(0).toUpperCase() + level.slice(1)} Level`;
+            tasksListEl.appendChild(sectionTitle);
 
-            const taskCard = document.createElement("div");
-            taskCard.className = "task-card";
+            htmlTasks[level].forEach(task => {
+                const isCompleted = completedTasks.includes(task.id);
 
-            const taskName = document.createElement("span");
-            taskName.className = "task-name";
-            taskName.textContent = task.title;
+                const taskCard = document.createElement("div");
+                taskCard.className = "task-card";
 
-            const statusBtn = document.createElement("button");
-            statusBtn.className = `task-status ${isCompleted ? "completed" : "pending"}`;
-            statusBtn.textContent = isCompleted ? "Completed" : "Mark Complete";
+                const taskName = document.createElement("span");
+                taskName.className = "task-name";
+                taskName.textContent = task.title;
 
-            statusBtn.addEventListener("click", () => toggleTask(task.id, isCompleted));
+                const statusBtn = document.createElement("button");
+                statusBtn.className = `task-status ${isCompleted ? "completed" : "pending"}`;
+                statusBtn.textContent = isCompleted ? "Completed" : "Mark Complete";
 
-            taskCard.appendChild(taskName);
-            taskCard.appendChild(statusBtn);
-            tasksListEl.appendChild(taskCard);
+                statusBtn.addEventListener("click", () => toggleTask(task.id, isCompleted));
+
+                taskCard.appendChild(taskName);
+                taskCard.appendChild(statusBtn);
+                tasksListEl.appendChild(taskCard);
+            });
         });
 
         updateProgress();
@@ -247,7 +258,8 @@
 
     // Update progress bar
     function updateProgress() {
-        const percent = Math.round((completedTasks.length / htmlTasks.length) * 100);
+        const totalTasks = Object.values(htmlTasks).flat().length;
+        const percent = Math.round((completedTasks.length / totalTasks) * 100);
         progressFillEl.style.width = `${percent}%`;
         progressFillEl.textContent = `${percent}%`;
         progressTextEl.textContent = `${percent}%`;
