@@ -1548,3 +1548,31 @@ class HTMLLearningGame {
 document.addEventListener('DOMContentLoaded', () => {
   new HTMLLearningGame();
 });
+
+
+async saveGameState() {
+  try {
+    const stateToSave = {
+      username: this.username, // must be set after login
+      course: "html", // or dynamic based on your current course
+      completedTasks: Array.from(this.gameState.completedTasks),
+      unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
+      failedAttempts: this.gameState.failedAttempts,
+      editorContent: this.gameState.editorContent
+    };
+
+    // Save locally (optional backup)
+    localStorage.setItem('htmlLearningGame', JSON.stringify(stateToSave));
+
+    // Send progress to backend
+    await fetch(http://127.0.0.1:8000/task/save-progress, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(stateToSave)
+    });
+  } catch (error) {
+    console.error("Error saving game state:", error);
+  }
+}
