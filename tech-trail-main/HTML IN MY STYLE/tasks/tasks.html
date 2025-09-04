@@ -97,6 +97,13 @@
             color: white;
         }
 
+        .loading {
+            text-align: center;
+            color: #555;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
         .footer {
             text-align: center;
             margin-top: 25px;
@@ -130,6 +137,9 @@
         </div>
     </div>
 
+    <!-- Loading message -->
+    <div id="loading" class="loading">⏳ Loading tasks...</div>
+
     <!-- Tasks Section -->
     <div id="tasks-list"></div>
 </div>
@@ -137,7 +147,7 @@
 <p class="footer">© 2025 Tech In My Style. All Rights Reserved.</p>
 
 <script>
-    const API_BASE = "https://techinmystyle.com";  // Change if different in production
+    const API_BASE = "https://tech-trail-w2ap.onrender.com"; // ✅ Updated to correct API
     const USERNAME = localStorage.getItem("username");
     const COURSE = "html";
 
@@ -149,8 +159,9 @@
     const tasksListEl = document.getElementById("tasks-list");
     const progressFillEl = document.getElementById("progress-fill");
     const progressTextEl = document.getElementById("progress-text");
+    const loadingEl = document.getElementById("loading");
 
-    // List of HTML tasks (You can add more later)
+    // List of HTML tasks
     const htmlTasks = [
         { id: "task1", title: "Introduction to HTML" },
         { id: "task2", title: "Basic HTML Tags" },
@@ -167,17 +178,25 @@
     async function fetchProgress() {
         try {
             const response = await fetch(`${API_BASE}/progress/${USERNAME}`);
+
+            if (!response.ok) {
+                throw new Error(`Server returned ${response.status}`);
+            }
+
             const data = await response.json();
             completedTasks = data[COURSE] || [];
             renderTasks();
         } catch (err) {
             console.error("Error fetching progress:", err);
+            loadingEl.textContent = "⚠️ Unable to load progress. Please try again later.";
         }
     }
 
     // Render tasks
     function renderTasks() {
+        loadingEl.style.display = "none";
         tasksListEl.innerHTML = "";
+
         htmlTasks.forEach(task => {
             const isCompleted = completedTasks.includes(task.id);
 
@@ -222,6 +241,7 @@
             renderTasks();
         } catch (err) {
             console.error("Error marking task complete:", err);
+            alert("Failed to update task status. Try again later.");
         }
     }
 
