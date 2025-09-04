@@ -1,272 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HTML Course Tasks | Tech In My Style</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            margin: 0;
-            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-        }
-
-        header {
-            background-color: #00bfa6;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 22px;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            width: 95%;
-            max-width: 900px;
-            margin: 20px auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .progress-container {
-            margin-bottom: 20px;
-        }
-
-        .progress-bar {
-            height: 20px;
-            width: 100%;
-            background-color: #e9ecef;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            width: 0%;
-            background-color: #00bfa6;
-            text-align: center;
-            line-height: 20px;
-            color: white;
-            font-weight: bold;
-            transition: width 0.4s ease-in-out;
-        }
-
-        .task-section-title {
-            margin-top: 25px;
-            margin-bottom: 10px;
-            font-weight: bold;
-            font-size: 18px;
-            color: #222;
-        }
-
-        .task-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 18px;
-            margin: 12px 0;
-            background-color: #f1f3f4;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .task-card:hover {
-            background-color: #e6f7f4;
-            transform: scale(1.02);
-        }
-
-        .task-name {
-            font-size: 17px;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .task-status {
-            font-size: 14px;
-            font-weight: bold;
-            padding: 6px 14px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .completed {
-            background-color: #00bfa6;
-            color: white;
-        }
-
-        .pending {
-            background-color: #ff4d4d;
-            color: white;
-        }
-
-        .loading {
-            text-align: center;
-            color: #555;
-            margin-top: 20px;
-            font-size: 16px;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 25px;
-            color: #555;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .task-card {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
-            }
-
-            .task-status {
-                align-self: flex-end;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Tasks - Tech in My Style</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f7fa;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #0078d7;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .container {
+      max-width: 800px;
+      margin: 20px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+    }
+    h2 {
+      color: #0078d7;
+      border-bottom: 2px solid #0078d7;
+      padding-bottom: 5px;
+    }
+    .task-list {
+      list-style: none;
+      padding: 0;
+    }
+    .task-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f0f4ff;
+      padding: 12px;
+      margin-bottom: 8px;
+      border-radius: 6px;
+      transition: 0.3s ease;
+    }
+    .task-item.completed {
+      background: #c7f9cc;
+      text-decoration: line-through;
+    }
+    .progress-container {
+      margin: 20px 0;
+      background: #e1e8ed;
+      border-radius: 10px;
+      height: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background-color: #0078d7;
+      transition: width 0.4s ease-in-out;
+    }
+    .progress-text {
+      margin-top: 5px;
+      font-size: 14px;
+      text-align: center;
+      font-weight: bold;
+    }
+    button {
+      background-color: #0078d7;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    button:disabled {
+      background-color: #999;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
+  <header>HTML Tasks Progress</header>
 
-<header>🚀 HTML Course – Tasks</header>
-
-<div class="container">
-    <!-- Progress Section -->
+  <div class="container">
+    <!-- Progress Bar -->
     <div class="progress-container">
-        <p><b>Progress:</b> <span id="progress-text">0%</span></p>
-        <div class="progress-bar">
-            <div class="progress-fill" id="progress-fill">0%</div>
-        </div>
+      <div id="progressBar" class="progress-bar"></div>
     </div>
+    <div id="progressText" class="progress-text">0% Completed</div>
 
-    <!-- Loading message -->
-    <div id="loading" class="loading">⏳ Loading tasks...</div>
+    <!-- Beginner Tasks -->
+    <h2>Beginner (1-10)</h2>
+    <ul class="task-list" id="beginnerTasks"></ul>
 
-    <!-- Tasks Section -->
-    <div id="tasks-list"></div>
-</div>
+    <!-- Intermediate Tasks -->
+    <h2>Intermediate (11-20)</h2>
+    <ul class="task-list" id="intermediateTasks"></ul>
 
-<p class="footer">© 2025 Tech In My Style. All Rights Reserved.</p>
+    <!-- Advanced Tasks -->
+    <h2>Advanced (21-30)</h2>
+    <ul class="task-list" id="advancedTasks"></ul>
+  </div>
 
-<script>
-    const API_BASE = "https://tech-trail-w2ap.onrender.com"; // ✅ Correct API
-    const USERNAME = localStorage.getItem("username");
+  <script>
+    const API_BASE = "https://tech-trail-w2ap.onrender.com";
+    const USERNAME = "jagapathiadaka"; // ✅ Change this dynamically if needed
     const COURSE = "html";
-
-    if (!USERNAME) {
-        alert("You must be logged in to view tasks.");
-        window.location.href = "/login.html";
-    }
-
-    const tasksListEl = document.getElementById("tasks-list");
-    const progressFillEl = document.getElementById("progress-fill");
-    const progressTextEl = document.getElementById("progress-text");
-    const loadingEl = document.getElementById("loading");
-
-    // Grouped HTML tasks
-    const htmlTasks = {
-        beginner: Array.from({ length: 10 }, (_, i) => ({ id: `beginner-${i+1}`, title: `Beginner Task ${i+1}` })),
-        intermediate: Array.from({ length: 10 }, (_, i) => ({ id: `intermediate-${i+1}`, title: `Intermediate Task ${i+1}` })),
-        advanced: Array.from({ length: 10 }, (_, i) => ({ id: `advanced-${i+1}`, title: `Advanced Task ${i+1}` }))
-    };
 
     let completedTasks = [];
 
-    // Fetch progress from backend
+    // Generate all 30 tasks dynamically
+    const tasks = {
+      beginner: Array.from({ length: 10 }, (_, i) => ({
+        id: `beginner-${i + 1}`,
+        title: `Beginner Task ${i + 1}`
+      })),
+      intermediate: Array.from({ length: 10 }, (_, i) => ({
+        id: `intermediate-${i + 1}`,
+        title: `Intermediate Task ${i + 1}`
+      })),
+      advanced: Array.from({ length: 10 }, (_, i) => ({
+        id: `advanced-${i + 1}`,
+        title: `Advanced Task ${i + 1}`
+      }))
+    };
+
     async function fetchProgress() {
-        try {
-            const response = await fetch(`${API_BASE}/progress/${USERNAME}`);
-
-            if (!response.ok) {
-                throw new Error(`Server returned ${response.status}`);
-            }
-
-            const data = await response.json();
-            completedTasks = data[COURSE] || [];
-            renderTasks();
-        } catch (err) {
-            console.error("Error fetching progress:", err);
-            loadingEl.textContent = "⚠️ Unable to load progress. Please try again later.";
-        }
+      try {
+        const res = await fetch(`${API_BASE}/progress/${USERNAME}`);
+        const data = await res.json();
+        completedTasks = data.html || [];
+        renderTasks();
+      } catch (err) {
+        console.error("Error fetching progress:", err);
+      }
     }
 
-    // Render tasks grouped by level
     function renderTasks() {
-        loadingEl.style.display = "none";
-        tasksListEl.innerHTML = "";
+      renderSection("beginnerTasks", tasks.beginner);
+      renderSection("intermediateTasks", tasks.intermediate);
+      renderSection("advancedTasks", tasks.advanced);
 
-        Object.keys(htmlTasks).forEach(level => {
-            const sectionTitle = document.createElement("h3");
-            sectionTitle.className = "task-section-title";
-            sectionTitle.textContent = `${level.charAt(0).toUpperCase() + level.slice(1)} Level`;
-            tasksListEl.appendChild(sectionTitle);
+      // Update Progress
+      const totalTasks = 30;
+      const completedCount = completedTasks.length;
+      const percentage = Math.round((completedCount / totalTasks) * 100);
 
-            htmlTasks[level].forEach(task => {
-                const isCompleted = completedTasks.includes(task.id);
+      document.getElementById("progressBar").style.width = `${percentage}%`;
+      document.getElementById("progressText").innerText = `${percentage}% Completed`;
+    }
 
-                const taskCard = document.createElement("div");
-                taskCard.className = "task-card";
+    function renderSection(containerId, taskList) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      taskList.forEach(task => {
+        const isCompleted = completedTasks.includes(task.id);
+        const li = document.createElement("li");
+        li.className = `task-item ${isCompleted ? "completed" : ""}`;
+        li.innerHTML = `
+          <span>${task.title}</span>
+          <button ${isCompleted ? "disabled" : ""} onclick="completeTask('${task.id}')">
+            ${isCompleted ? "Completed" : "Mark Done"}
+          </button>
+        `;
+        container.appendChild(li);
+      });
+    }
 
-                const taskName = document.createElement("span");
-                taskName.className = "task-name";
-                taskName.textContent = task.title;
-
-                const statusBtn = document.createElement("button");
-                statusBtn.className = `task-status ${isCompleted ? "completed" : "pending"}`;
-                statusBtn.textContent = isCompleted ? "Completed" : "Mark Complete";
-
-                statusBtn.addEventListener("click", () => toggleTask(task.id, isCompleted));
-
-                taskCard.appendChild(taskName);
-                taskCard.appendChild(statusBtn);
-                tasksListEl.appendChild(taskCard);
-            });
+    async function completeTask(taskId) {
+      try {
+        await fetch(`${API_BASE}/task/complete`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: USERNAME,
+            course: COURSE,
+            task_id: taskId
+          })
         });
-
-        updateProgress();
-    }
-
-    // Toggle task completion
-    async function toggleTask(taskId, isCompleted) {
-        if (isCompleted) return;
-
         completedTasks.push(taskId);
-
-        try {
-            await fetch(`${API_BASE}/task/complete`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: USERNAME,
-                    course: COURSE,
-                    task_id: taskId
-                })
-            });
-
-            renderTasks();
-        } catch (err) {
-            console.error("Error marking task complete:", err);
-            alert("Failed to update task status. Try again later.");
-        }
-    }
-
-    // Update progress bar
-    function updateProgress() {
-        const totalTasks = Object.values(htmlTasks).flat().length;
-        const percent = Math.round((completedTasks.length / totalTasks) * 100);
-        progressFillEl.style.width = `${percent}%`;
-        progressFillEl.textContent = `${percent}%`;
-        progressTextEl.textContent = `${percent}%`;
+        renderTasks();
+      } catch (err) {
+        console.error("Error completing task:", err);
+      }
     }
 
     fetchProgress();
-</script>
-
+  </script>
 </body>
 </html>
