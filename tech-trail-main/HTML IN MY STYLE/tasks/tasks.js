@@ -921,31 +921,62 @@ class HTMLLearningGame {
   }
   
   // Local Storage Management
-  saveGameState() {
+async saveGameState() {
     const stateToSave = {
-      ...this.gameState,
-      completedTasks: Array.from(this.gameState.completedTasks),
-      unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
-      failedAttempts: this.gameState.failedAttempts,
-      editorContent: this.gameState.editorContent
+        username: this.username, // Make sure to set this.username after login
+        course: "html", // Or set dynamically based on the course
+        completedTasks: Array.from(this.gameState.completedTasks),
+        unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
+        failedAttempts: this.gameState.failedAttempts,
+        editorContent: this.gameState.editorContent
     };
+
+    // Save in localStorage as a backup
     localStorage.setItem('htmlLearningGame', JSON.stringify(stateToSave));
-  }
-  
-  loadGameState() {
-    const saved = localStorage.getItem('htmlLearningGame');
-    if (saved) {
-      const parsedState = JSON.parse(saved);
-      this.gameState = {
-        ...parsedState,
-        completedTasks: new Set(parsedState.completedTasks || []),
-        unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-        failedAttempts: parsedState.failedAttempts || {},
-        editorContent: parsedState.editorContent || {}
-      };
+
+    // Save progress in backend
+    try {
+        await fetch("https://tech-trail-w2ap.onrender.com/task/save-progress", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(stateToSave)
+        });
+    } catch (error) {
+        console.error("Error syncing progress:", error);
     }
-  }
-  
+}  
+ async loadGameState() {
+    try {
+        const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${this.username}`);
+        const data = await res.json();
+
+        this.gameState = {
+            ...this.gameState,
+            completedTasks: new Set(data.html || []), // Adjust based on course
+            unlockedSolutions: new Set(data.unlockedSolutions || []),
+            failedAttempts: data.failedAttempts || {},
+            editorContent: data.editorContent || {}
+        };
+
+        // Also save a local backup
+        localStorage.setItem('htmlLearningGame', JSON.stringify(this.gameState));
+    } catch (error) {
+        console.error("Error loading progress:", error);
+
+        // Fallback to localStorage
+        const saved = localStorage.getItem('htmlLearningGame');
+        if (saved) {
+            const parsedState = JSON.parse(saved);
+            this.gameState = {
+                ...parsedState,
+                completedTasks: new Set(parsedState.completedTasks || []),
+                unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+                failedAttempts: parsedState.failedAttempts || {},
+                editorContent: parsedState.editorContent || {}
+            };
+        }
+    }
+}  
   // Event Listeners
   setupEventListeners() {
     // Back button
@@ -1548,4 +1579,3 @@ class HTMLLearningGame {
 document.addEventListener('DOMContentLoaded', () => {
   new HTMLLearningGame();
 });
-
