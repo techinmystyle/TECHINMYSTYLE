@@ -1,8 +1,14 @@
 User-agent: *
 Allow: /
-Sitemap: https://techinmystyle.com/sitemap.xml
 
-# Allow all courses
+# Disallow sensitive directories
+Disallow: /auth/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+Disallow: /api/
+
+# Allow all courses explicitly
 Allow: /HTML%20IN%20MY%20STYLE/
 Allow: /CSS%20IN%20MY%20STYLE/
 Allow: /JAVASCRIPT%20IN%20MY%20STYLE%20-%20BASIC/
@@ -14,3 +20,17 @@ Allow: /AI%20IN%20MY%20STYLE/
 Allow: /ML%20IN%20MY%20STYLE/
 Allow: /DL%20IN%20MY%20STYLE/
 Allow: /DSC%20IN%20MY%20STYLE/
+
+# Allow important pages
+Allow: /courses
+Allow: /certifications
+Allow: /about-us
+Allow: /stay-connected
+Allow: /leaderboard
+
+# Crawl delay for better server performance
+Crawl-delay: 1
+
+# Sitemap location
+Sitemap: https://techinmystyle.com/sitemap.xml
+Sitemap: https://techinmystyle.com/sitemap-courses.xml
