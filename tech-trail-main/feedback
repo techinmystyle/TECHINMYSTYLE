@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Center - TECH IN MY STYLE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="tech-no bg.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
+    <link rel="icon" type="image/png" href="./img/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="./img/favicon.svg" />
+    <link rel="shortcut icon" href="./img/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./img/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="TECH IN MY STYLE" />
+    <link rel="manifest" href="./img/site.webmanifest" />
+
+    <style>
+        :root {
+          --primary-light: #2196F3;
+          --secondary-light: #64B5F6;
+          --accent-light: #1976D2;
+          --bg-light: #ffffff;
+          --surface-light: rgba(255, 255, 255, 0.1);
+          --text-light: #333333;
+          --text-secondary-light: #666666;
+          
+          --primary-dark: #b388ff;
+          --secondary-dark: #9c64ff;
+          --accent-dark: #7c4dff;
+          --bg-dark: #0a0a0a;
+          --surface-dark: rgba(179, 136, 255, 0.1);
+          --text-dark: #ffffff;
+          --text-secondary-dark: #cccccc;
+          
+          --primary: var(--primary-light);
+          --secondary: var(--secondary-light);
+          --accent: var(--accent-light);
+          --bg: var(--bg-light);
+          --surface: var(--surface-light);
+          --text: var(--text-light);
+          --text-secondary: var(--text-secondary-light);
+          
+          --instagram: #E4405F;
+          --youtube: #FF0000;
+          --linkedin: #0077B5;
+          --twitter: #1DA1F2;
+          --telegram: #0088CC;
+          --whatsapp: #25D366;
+          
+          --font-primary: 'Poppins', sans-serif;
+          
+          --spacing-xs: 0.5rem;
+          --spacing-sm: 1rem;
+          --spacing-md: 1.5rem;
+          --spacing-lg: 2rem;
+          --spacing-xl: 3rem;
+          --spacing-2xl: 4rem;
+          
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-lg: 16px;
+          --radius-xl: 24px;
+          
+          --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+          --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+          --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+          --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+        }
+
+        [data-theme="dark"] {
+          --primary: var(--primary-dark);
+          --secondary: var(--secondary-dark);
+          --accent: var(--accent-dark);
+          --bg: var(--bg-dark);
+          --surface: var(--surface-dark);
+          --text: var(--text-dark);
+          --text-secondary: var(--text-secondary-dark);
+        }
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: var(--font-primary);
+          background: var(--bg);
+          color: var(--text);
+          line-height: 1.6;
+          overflow-x: hidden;
+          transition: all 0.3s ease;
+          width: 100%;
+          max-width: 100vw;
+          cursor: none;
+        }
+
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        a, button, .feedback-card, .social-card, .scroll-top, .nav-link, .switch, .dropdown-btn {
+            cursor: none;
+        }
+
+        @media (max-width: 768px) {
+            .custom-cursor {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+            
+            a, button, .feedback-card, .social-card, .scroll-top, .nav-link, .switch, .dropdown-btn {
+                cursor: pointer;
+            }
+        }
+
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 var(--spacing-md);
+          width: 100%;
+        }
+
+        #webgl-canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          pointer-events: none;
+        }
+
+        /* HEADER */
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          backdrop-filter: blur(20px);
+          background: var(--surface);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding: var(--spacing-sm) 0;
+          width: 100%;
+        }
+
+        .header .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+        }
+
+        .logo h2 a {
+          color: var(--primary);
+          font-weight: 700;
+          font-size: 1.2rem;
+          text-decoration: none;
+        }
+
+        .mobile-menu-btn {
+          display: none;
+          background: none;
+          border: none;
+          color: var(--text);
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
+          z-index: 1001;
+        }
+
+        .nav {
+          display: flex;
+          gap: var(--spacing-lg);
+          align-items: center;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: var(--spacing-lg);
+          align-items: center;
+        }
+
+        .nav-link {
+          color: var(--text);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.3s ease;
+          position: relative;
+          padding: 0.5rem 0;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+          color: var(--primary);
+        }
+
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--primary);
+          transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          width: 100%;
+        }
+
+        .theme-toggle {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-xs);
+          position: relative;
+          z-index: 1002;
+        }
+
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 28px;
+        }
+
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: var(--surface);
+          transition: 0.4s;
+          border-radius: 28px;
+          border: 2px solid var(--primary);
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 20px;
+          width: 20px;
+          left: 2px;
+          bottom: 2px;
+          background: var(--primary);
+          transition: 0.4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(22px);
+        }
+
+        .mobile-header-controls {
+          display: none;
+          align-items: center;
+          gap: var(--spacing-sm);
+        }
+
+        @media (max-width: 768px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+
+          .mobile-header-controls {
+            display: flex;
+          }
+
+          .nav-links {
+            position: fixed;
+            top: 70px;
+            left: -100%;
+            width: 100%;
+            height: calc(100vh - 70px);
+            background: var(--bg);
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            gap: var(--spacing-xl);
+            transition: left 0.3s ease;
+            padding-top: var(--spacing-2xl);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .nav-links.active {
+            left: 0;
+          }
+
+          .nav-link {
+            font-size: 1.2rem;
+            padding: var(--spacing-md) 0;
+            text-align: center;
+            width: 100%;
+          }
+
+          .nav .theme-toggle {
+            display: none;
+          }
+
+          .logo h2 a {
+            font-size: 1rem;
+          }
+
+          .switch {
+            width: 45px;
+            height: 24px;
+          }
+
+          .slider:before {
+            height: 16px;
+            width: 16px;
+          }
+
+          input:checked + .slider:before {
+            transform: translateX(19px);
+          }
+        }
+
+        /* Hero Section */
+        .hero {
+          min-height: 60vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding-top: 120px;
+          background: var(--surface);
+        }
+
+        .hero-content h1 {
+          font-size: clamp(2rem, 5vw, 4rem);
+          font-weight: 700;
+          margin-bottom: var(--spacing-md);
+          line-height: 1.2;
+        }
+
+        .hero-content p {
+          font-size: 1.2rem;
+          color: var(--text-secondary);
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        .color-change {
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* Feedback Center */
+        .feedback-center {
+          padding: var(--spacing-2xl) 0;
+        }
+
+        .feedback-center h2 {
+          text-align: center;
+          font-size: clamp(1.8rem, 4vw, 3rem);
+          font-weight: 700;
+          margin-bottom: var(--spacing-xl);
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .feedback-intro {
+          text-align: center;
+          max-width: 800px;
+          margin: 0 auto var(--spacing-2xl);
+          color: var(--text-secondary);
+          font-size: 1.1rem;
+          line-height: 1.8;
+        }
+
+        .feedback-card {
+          background: #fff;
+          backdrop-filter: blur(20px);
+          border-radius: var(--radius-lg);
+          padding: var(--spacing-xl);
+          text-align: center;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          color: #333;
+          margin-bottom: var(--spacing-xl);
+          box-shadow: var(--shadow-md);
+        }
+
+        [data-theme="dark"] .feedback-card {
+          background: #1a1a2e;
+          color: #f0f0f0;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feedback-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, var(--primary), var(--secondary));
+          transform: scaleX(0);
+          transition: transform 0.3s ease;
+        }
+
+        .feedback-card:hover::before {
+          transform: scaleX(1);
+        }
+
+        .feedback-card:hover {
+          transform: translateY(-10px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .feedback-icon {
+          margin-bottom: var(--spacing-lg);
+        }
+
+        .feedback-icon i {
+          font-size: 3rem;
+          color: var(--primary);
+        }
+
+        .feedback-card h3 {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: var(--spacing-md);
+          color: inherit;
+        }
+
+        .feedback-card p {
+          color: inherit;
+          margin-bottom: var(--spacing-lg);
+          line-height: 1.8;
+        }
+
+        /* Dropdown Button */
+        .dropdown-container {
+          position: relative;
+          margin-bottom: var(--spacing-lg);
+        }
+
+        .dropdown-btn {
+                    width: 100%;
+          padding: var(--spacing-md) var(--spacing-xl);
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          color: white;
+          border: none;
+          border-radius: var(--radius-lg);
+          font-family: var(--font-primary);
+          font-weight: 600;
+          font-size: 1.1rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: var(--spacing-sm);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .dropdown-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .dropdown-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .dropdown-btn:hover::before {
+          left: 100%;
+        }
+
+        .dropdown-btn i {
+          transition: transform 0.3s ease;
+        }
+
+        .dropdown-btn.active i {
+          transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+          max-height: 0;
+          overflow: hidden;
+          transition: max-height 0.3s ease;
+          background: var(--surface);
+          border-radius: var(--radius-md);
+          margin-top: var(--spacing-sm);
+        }
+
+        .dropdown-content.active {
+          max-height: 300px;
+        }
+
+        .dropdown-item {
+          padding: var(--spacing-md);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          color: var(--text);
+          font-size: 0.95rem;
+        }
+
+        .dropdown-item:last-child {
+          border-bottom: none;
+        }
+
+        .dropdown-item strong {
+          color: var(--primary);
+        }
+
+        /* Submit Button */
+        .btn {
+          padding: var(--spacing-md) var(--spacing-xl);
+          border: none;
+          border-radius: var(--radius-lg);
+          font-family: var(--font-primary);
+          font-weight: 600;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          text-decoration: none;
+          display: inline-block;
+          text-align: center;
+        }
+
+        .btn.primary {
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          color: white;
+          width: 100%;
+          padding: var(--spacing-lg) var(--spacing-xl);
+          font-size: 1.1rem;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .btn.primary:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .btn.primary::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .btn.primary:hover::before {
+          left: 100%;
+        }
+
+        /* Instagram Section */
+        .instagram-section {
+          padding: var(--spacing-2xl) 0;
+          background: var(--surface);
+        }
+
+        .instagram-section h2 {
+          text-align: center;
+          font-size: clamp(1.8rem, 4vw, 3rem);
+          font-weight: 700;
+          margin-bottom: var(--spacing-xl);
+          background: linear-gradient(45deg, var(--instagram), #F77737);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .instagram-card {
+          background: #fff;
+          border-radius: var(--radius-lg);
+          padding: var(--spacing-xl);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
+          color: #333;
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        [data-theme="dark"] .instagram-card {
+          background: #1a1a2e;
+          color: #f0f0f0;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .instagram-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, var(--instagram), #F77737);
+        }
+
+        .instagram-card:hover {
+          transform: translateY(-5px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .instagram-header {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-md);
+          margin-bottom: var(--spacing-lg);
+        }
+
+        .instagram-header i {
+          font-size: 2.5rem;
+          color: var(--instagram);
+        }
+
+        .instagram-info h3 {
+          font-size: 1.3rem;
+          font-weight: 600;
+          margin-bottom: var(--spacing-xs);
+          color: inherit;
+        }
+
+        .instagram-info p {
+          color: inherit;
+          font-size: 0.9rem;
+          margin-bottom: 0;
+        }
+
+        .instagram-content p {
+          color: inherit;
+          margin-bottom: var(--spacing-md);
+          line-height: 1.6;
+          text-align: left;
+        }
+
+        .instagram-reel {
+          background: rgba(0, 0, 0, 0.05);
+          padding: var(--spacing-sm);
+          border-radius: var(--radius-sm);
+          margin-bottom: var(--spacing-lg);
+          text-align: center;
+        }
+
+        [data-theme="dark"] .instagram-reel {
+          background: rgba(255, 255, 255, 0.1);
+        }
+
+        .reel-preview {
+          font-size: 0.9rem;
+          color: inherit;
+          font-style: italic;
+          margin-bottom: var(--spacing-sm);
+        }
+
+        .instagram-btn {
+          width: 100%;
+          background: transparent;
+          border: 2px solid var(--instagram);
+          color: var(--instagram);
+          transition: all 0.3s ease;
+          font-weight: 600;
+          padding: var(--spacing-md) var(--spacing-xl);
+          border-radius: var(--radius-lg);
+          font-size: 1rem;
+        }
+
+        .instagram-btn:hover {
+          background: var(--instagram);
+          color: white;
+          transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          padding: var(--spacing-2xl) 0 var(--spacing-lg);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: var(--spacing-2xl);
+          margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-brand h3 {
+          font-size: 1.5rem;
+          margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-brand p {
+          opacity: 0.9;
+          font-size: 1rem;
+        }
+
+        .footer-links {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--spacing-xl);
+        }
+
+        .footer-column h4 {
+          margin-bottom: var(--spacing-md);
+          font-weight: 600;
+          font-size: 1.1rem;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+          padding-bottom: var(--spacing-xs);
+          display: inline-block;
+        }
+
+        .footer-column a {
+          color: white;
+          text-decoration: none;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+          display: block;
+          margin-bottom: var(--spacing-xs);
+          padding: var(--spacing-xs) 0;
+          border-radius: var(--radius-sm);
+          font-size: 0.9rem;
+        }
+
+        .footer-column a i {
+          margin-right: var(--spacing-xs);
+          width: 16px;
+        }
+
+        .footer-column a:hover {
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.1);
+          padding-left: var(--spacing-sm);
+          transform: translateX(5px);
+        }
+
+        .footer-bottom {
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          padding-top: var(--spacing-lg);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .scroll-top {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .scroll-top:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-3px);
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+          .hero {
+            padding-top: 100px;
+            min-height: 50vh;
+          }
+
+          .hero-content p {
+            font-size: 1rem;
+            padding: 0 var(--spacing-sm);
+          }
+
+          .feedback-center {
+            padding: var(--spacing-xl) 0;
+          }
+
+          .feedback-card {
+            padding: var(--spacing-lg);
+          }
+
+          .instagram-section {
+            padding: var(--spacing-xl) 0;
+          }
+
+          .instagram-card {
+            padding: var(--spacing-lg);
+          }
+
+          .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: var(--spacing-xl);
+          }
+
+          .footer-links {
+            grid-template-columns: 1fr;
+            gap: var(--spacing-xl);
+            text-align: left;
+          }
+
+          .footer-column {
+            background: rgba(255, 255, 255, 0.1);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--spacing-md);
+          }
+
+          .footer-bottom {
+            flex-direction: column;
+            gap: var(--spacing-md);
+            text-align: center;
+          }
+        }
+
+        /* Loading Animation */
+        .loading {
+          opacity: 0;
+          transform: translateY(20px);
+          transition: all 0.6s ease;
+        }
+
+        .loading.loaded {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Prevent horizontal scroll */
+        body, html {
+          max-width: 100vw;
+          overflow-x: hidden;
+        }
+
+        * {
+          max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="webgl-canvas"></canvas>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h2><a href="index.html">TECH IN MY STYLE</a></h2>
+            </div>
+            
+            <!-- Mobile Header Controls -->
+            <div class="mobile-header-controls">
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav">
+                <div class="nav-links" id="navLinks">
+                    <a class='nav-link' href='/'>Home</a>
+                    <a class='nav-link' href='/courses'>Courses</a>
+                    <a class='nav-link' href='/about-us'>About Us</a>
+                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
+                    <a class='nav-link active' href='/feedback'>Feedback Center</a>
+                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
+                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
+                </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="desktopThemeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content" data-aos="fade-up">
+                <h1>Feedback <span class="color-change">Center</span></h1>
+                <p>Help us improve and create a better learning experience for everyone</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Center -->
+    <section class="feedback-center">
+        <div class="container">
+            <div class="feedback-intro" data-aos="fade-up">
+                <p>At Tech in My Style, we believe that learning is a journey — and like every journey, mistakes can happen along the way. If you notice any error on our website — such as broken links, incorrect content, or anything that needs improvement — we'd love to hear from you.</p>
+                <p><strong>Your feedback helps us create a better, cleaner, and more user-friendly learning platform for everyone. 💡</strong></p>
+            </div>
+
+            <div class="feedback-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feedback-icon">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <h3>📝 Share Your Feedback</h3>
+                <p>Please drop your feedback using the form below.</p>
+                
+                <!-- Dropdown Section -->
+                <div class="dropdown-container">
+                    <button class="dropdown-btn" id="dropdownBtn">
+                        <i class="fas fa-external-link-alt"></i>
+                        Submit Your Feedback Here
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="dropdownContent">
+                                                <div class="dropdown-item">
+                            <strong>When submitting, kindly:</strong>
+                        </div>
+                        <div class="dropdown-item">
+                            📷 <strong>Attach a screenshot</strong> of the issue (if possible)
+                        </div>
+                        <div class="dropdown-item">
+                            📝 <strong>Clearly describe the problem</strong>
+                        </div>
+                        <div class="dropdown-item">
+                            ⚡ This makes it easier for us to review and fix it quickly.
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn primary" onclick="openFeedbackForm()">
+                    <i class="fas fa-paper-plane"></i>
+                    Open Feedback Form
+                </button>
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
+                    <div class="feedback-card">
+                        <div class="feedback-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>📩 Connect With Us</h3>
+                        <p>You can also send us a direct message on our social platforms — we'll make sure to respond and resolve the issue.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6" data-aos="fade-left" data-aos-delay="300">
+                    <div class="feedback-card">
+                        <div class="feedback-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <h3>❤️ A Note to Our Learners</h3>
+                        <p>We're here because of you. If something goes wrong, please understand that it was not intentional — and we're always ready to make it right.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feedback-card mt-4" data-aos="fade-up" data-aos-delay="400">
+                <h3>🌟 Our Promise</h3>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="promise-item">
+                            <i class="fas fa-tools" style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p><strong>We try to fix everything</strong> as much as possible by ourselves</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="promise-item">
+                            <i class="fas fa-ear-listen" style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p><strong>We will listen</strong> to your concerns</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="promise-item">
+                            <i class="fas fa-bolt" style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p><strong>We will rectify errors</strong> quickly</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-3">
+                        <div class="promise-item">
+                            <i class="fas fa-chart-line" style="color: var(--primary); font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p><strong>We will keep improving</strong> to provide quality content</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4">
+                    <p><em>We sincerely apologize if anyone ever feels inconvenienced or disappointed.</em></p>
+                    <p><strong>If this platform can make a difference in even one learner's life, that brings us true happiness.</strong></p>
+                    <p>Stay connected, keep learning, and let's grow together. 🌱</p>
+                    <p><strong>— Team Tech in My Style</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section class="instagram-section">
+        <div class="container">
+            <h2 data-aos="fade-up">📷 Follow Us on Instagram</h2>
+            
+            <div class="instagram-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="instagram-header">
+                    <i class="fab fa-instagram"></i>
+                    <div class="instagram-info">
+                        <h3>Instagram</h3>
+                        <p>@techinmystyle</p>
+                    </div>
+                </div>
+                <div class="instagram-content">
+                    <p>Stay updated with our latest content, behind-the-scenes moments, and connect with our learning community!</p>
+                    <div class="instagram-reel">
+                        <div class="reel-preview">🎥 Check out our latest reel</div>
+                        <p><strong>"Hit the ❤️ if you like the website"</strong></p>
+                    </div>
+                </div>
+                <button class="btn instagram-btn" onclick="openInstagramReel()">
+                    <i class="fab fa-instagram"></i>
+                    View Instagram Reel
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>TECH IN MY STYLE</h3>
+                    <p>Empowering the next generation of developers with hands-on learning experiences and industry-recognized certifications.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <a href="">HOME</a>
+                        <a href="courses.html">COURSES</a>
+                        <a href="about-us.html">ABOUT US</a>
+                        <a href="stay-connected.html">STAY CONNECTED</a>
+                        <a href="feedback.html">FEEDBACK CENTER</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Courses</h4>
+                        <a href="/HTML IN MY STYLE/index.html">HTML IN MY STYLE</a>
+                        <a href="/CSS IN MY STYLE/index.html">CSS IN MY STYLE</a>
+                        <a href="/JAVASCRIPT IN MY STYLE - BASIC/index.html">JS IN MY STYLE (BASIC)</a>
+                        <a href="/JAVASCRIPT IN MY STYLE - INTERMEDIATE/index.html">JS IN MY STYLE (INTERMEDIATE)</a>
+                        <a href="/C IN MY STYLE/index.html">C IN MY STYLE</a>
+                        <a href="/JAVA IN MY STYLE/index.html">JAVA IN MY STYLE</a>
+                        <a href="/PYTHON IN MY STYLE/index.html">PYTHON IN MY STYLE</a>
+                        <a href="/ML IN MY STYLE/index.html">ML IN MY STYLE</a>
+                        <a href="/DL IN MY STYLE/index.html">DL IN MY STYLE</a>
+                        <a href="/DSC IN MY STYLE/index.html">DSC IN MY STYLE</a>
+                        <a href="/AI IN MY STYLE/index.html">AI IN MY STYLE</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="https://www.instagram.com/techinmystyle?igsh=YXIxdWl2NGFmdXZk"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.youtube.com/@TECHINMYSTYLE"><i class="fab fa-youtube"></i> YouTube</a>
+                        <a href="https://whatsapp.com/channel/0029VbAZrCD5fM5aOU10Av0d"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://t.me/Tech_in_my_style_bot"><i class="fab fa-telegram"></i> Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Tech In My Style. All rights reserved.</p>
+                <div class="scroll-top" onclick="scrollToTop()">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Initialize AOS
+    AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true,
+        mirror: false
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const menuIcon = mobileMenuBtn.querySelector('i');
+
+    mobileMenuBtn.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        
+        if (navLinks.classList.contains('active')) {
+            menuIcon.className = 'fas fa-times';
+            document.body.style.overflow = 'hidden';
+        } else {
+            menuIcon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close mobile menu when clicking on nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target) && !event.target.closest('.mobile-header-controls')) {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Sync Theme Toggles
+    const mobileThemeToggle = document.getElementById('themeToggle');
+    const desktopThemeToggle = document.getElementById('desktopThemeToggle');
+    const body = document.body;
+
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    if (currentTheme === 'dark') {
+        body.setAttribute('data-theme', 'dark');
+        mobileThemeToggle.checked = true;
+        desktopThemeToggle.checked = true;
+    }
+
+    function syncThemeToggles(isDark) {
+        mobileThemeToggle.checked = isDark;
+        desktopThemeToggle.checked = isDark;
+        
+        if (isDark) {
+            body.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            body.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+        }
+    }
+
+    mobileThemeToggle.addEventListener('change', function() {
+        syncThemeToggles(this.checked);
+    });
+
+    desktopThemeToggle.addEventListener('change', function() {
+        syncThemeToggles(this.checked);
+    });
+
+    // Dropdown functionality
+    const dropdownBtn = document.getElementById('dropdownBtn');
+    const dropdownContent = document.getElementById('dropdownContent');
+
+    dropdownBtn.addEventListener('click', function() {
+        dropdownContent.classList.toggle('active');
+        dropdownBtn.classList.toggle('active');
+    });
+
+    // Feedback Form Function
+    function openFeedbackForm() {
+        window.open('https://forms.gle/VJHwCcSGue7j1eJS7', '_blank');
+    }
+
+    // Instagram Reel Function
+    function openInstagramReel() {
+        window.open('https://www.instagram.com/reel/DOfaAEPCMEN/?igsh=MWhhanFmdDA3c2kyaw==', '_blank');
+    }
+
+    // WebGL Animation with Three.js
+    function initWebGL() {
+        const canvas = document.getElementById('webgl-canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            alpha: true,
+            antialias: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesCount = 1500;
+        
+        const posArray = new Float32Array(particlesCount * 3);
+        
+        for (let i = 0; i < particlesCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 5;
+        }
+        
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        
+        const getParticleColor = () => {
+            const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
+            return isDarkTheme ? 0xb388ff : 0x2196F3;
+        };
+        
+        let particlesMaterial = new THREE.PointsMaterial({
+            size: 0.02,
+            color: getParticleColor(),
+            transparent: true,
+            opacity: 0.8
+        });
+        
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+        
+        camera.position.z = 2;
+        
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetRotationX = 0;
+        let targetRotationY = 0;
+        let currentRotationX = 0;
+        let currentRotationY = 0;
+        let isMoving = false;
+        let moveTimeout;
+        
+        document.addEventListener('mousemove', (event) => {
+            mouseX = (event.clientX / window.innerWidth - 0.5) * 0.05;
+            mouseY = (event.clientY / window.innerHeight - 0.5) * 0.05;
+            
+            targetRotationX = mouseY;
+            targetRotationY = mouseX;
+            
+            isMoving = true;
+            
+            clearTimeout(moveTimeout);
+            
+            moveTimeout = setTimeout(() => {
+                isMoving = false;
+            }, 1000);
+        });
+        
+        function updateParticleColor() {
+            setTimeout(() => {
+                particlesMaterial.color.setHex(getParticleColor());
+            }, 100);
+        }
+        
+        mobileThemeToggle.addEventListener('change', updateParticleColor);
+        desktopThemeToggle.addEventListener('change', updateParticleColor);
+        
+        const animate = () => {
+            requestAnimationFrame(animate);
+            
+                        particlesMesh.rotation.x += 0.0002;
+            particlesMesh.rotation.y += 0.0002;
+            
+            if (isMoving) {
+                currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+                currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+                
+                particlesMesh.rotation.x += currentRotationX;
+                particlesMesh.rotation.y += currentRotationY;
+            } else {
+                currentRotationX *= 0.95;
+                currentRotationY *= 0.95;
+                
+                particlesMesh.rotation.x += currentRotationX;
+                particlesMesh.rotation.y += currentRotationY;
+            }
+            
+            renderer.render(scene, camera);
+        };
+        
+        animate();
+        
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    }
+
+    if (window.WebGLRenderingContext) {
+        try {
+            initWebGL();
+        } catch (e) {
+            console.log('WebGL initialization failed:', e);
+        }
+    }
+
+    // Custom cursor implementation
+    function initCustomCursor() {
+        const cursor = document.createElement('div');
+        cursor.classList.add('custom-cursor');
+        
+        const cursorDot = document.createElement('div');
+        cursorDot.classList.add('cursor-dot');
+        
+        cursor.appendChild(cursorDot);
+        document.body.appendChild(cursor);
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        const clickableElements = document.querySelectorAll('a, button, .feedback-card, .instagram-card, .scroll-top, .nav-link, .switch, .dropdown-btn');
+        clickableElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.style.width = '40px';
+                cursor.style.height = '40px';
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.style.width = '30px';
+                cursor.style.height = '30px';
+            });
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+                cursor.style.opacity = '0';
+            } else {
+                cursor.style.opacity = '1';
+            }
+        });
+    }
+
+    // Initialize custom cursor only on desktop
+    if (window.innerWidth > 768) {
+        initCustomCursor();
+    }
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+
+    // Header Background on Scroll
+    window.addEventListener('scroll', () => {
+        const header = document.querySelector('.header');
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.95)';
+            if (document.body.getAttribute('data-theme') === 'dark') {
+                header.style.background = 'rgba(10, 10, 10, 0.95)';
+            }
+        } else {
+            header.style.background = 'var(--surface)';
+        }
+    });
+
+    // Intersection Observer for Animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('loaded');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+        section.classList.add('loading');
+        observer.observe(section);
+    });
+
+    // Prevent horizontal scroll
+    document.addEventListener('DOMContentLoaded', function() {
+        document.body.style.overflowX = 'hidden';
+        document.documentElement.style.overflowX = 'hidden';
+    });
+
+    // Handle window resize for mobile optimization
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Add ripple effect to buttons
+    function addRippleEffect(element) {
+        element.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple-effect');
+            
+            this.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        });
+    }
+
+    // Add ripple effect to buttons
+    document.querySelectorAll('.btn').forEach(btn => {
+        addRippleEffect(btn);
+    });
+
+    // Add CSS for ripple effect
+    const rippleStyle = document.createElement('style');
+    rippleStyle.textContent = `
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.6);
+            transform: scale(0);
+            animation: ripple-animation 0.6s linear;
+            pointer-events: none;
+        }
+        
+        @keyframes ripple-animation {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+        
+        .btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .promise-item {
+            text-align: center;
+            padding: 1rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .promise-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        @media (max-width: 768px) {
+            .promise-item {
+                margin-bottom: 2rem;
+            }
+        }
+    `;
+    document.head.appendChild(rippleStyle);
+
+    // Smooth scroll for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Add loading states for external links
+    function addLoadingState(element, text = 'Opening...') {
+        const originalText = element.innerHTML;
+        element.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ${text}`;
+        element.disabled = true;
+        
+        setTimeout(() => {
+            element.innerHTML = originalText;
+            element.disabled = false;
+        }, 2000);
+    }
+
+    // Enhanced feedback form function with loading state
+    function openFeedbackForm() {
+        const btn = event.target;
+        addLoadingState(btn, 'Opening Form...');
+        
+        setTimeout(() => {
+            window.open('https://forms.gle/VJHwCcSGue7j1eJS7', '_blank');
+        }, 500);
+    }
+
+    // Enhanced Instagram function with loading state
+    function openInstagramReel() {
+        const btn = event.target;
+        addLoadingState(btn, 'Opening Instagram...');
+        
+        setTimeout(() => {
+            window.open('https://www.instagram.com/techinmystyle/?igsh=YXIxdWl2NGFmdXZk#', '_blank');
+        }, 500);
+    }
+
+    // Console log for debugging
+    console.log(`
+    📝 FEEDBACK CENTER - Ready!
+       
+       ✅ Feedback Form Integration Complete
+       ✅ Instagram Reel Card Added
+       ✅ Dropdown Instructions Working
+       ✅ Mobile Responsive Design
+       ✅ Theme Toggle Synchronized
+       ✅ Smooth Animations Active
+       ✅ Custom Cursor Enabled
+       ✅ WebGL Background Running
+       
+       Ready to collect feedback! 🚀
+    `);
+
+    // Disable right click and keyboard shortcuts for security
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    document.onkeydown = function(e) {
+        // Disable F12
+        if (e.keyCode === 123) return false;
+
+        // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+        if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            return false;
+        }
+
+        // Disable Ctrl+U (View Source)
+        if (e.ctrlKey && e.keyCode === 85) return false;
+
+        // Disable Ctrl+S (Save Page)
+        if (e.ctrlKey && e.keyCode === 83) return false;
+
+        // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
+        if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+            return false;
+        }
+
+        // Disable Ctrl+Shift+K (Firefox)
+        if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+    };
+
+    // Add success message for form submissions
+    function showSuccessMessage() {
+        const message = document.createElement('div');
+        message.innerHTML = `
+            <div style="
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(45deg, var(--primary), var(--secondary));
+                color: white;
+                padding: 1rem 2rem;
+                border-radius: 10px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideIn 0.5s ease;
+            ">
+                <i class="fas fa-check-circle"></i> Thank you for your feedback!
+            </div>
+        `;
+        
+        document.body.appendChild(message);
+        
+        setTimeout(() => {
+            message.remove();
+        }, 3000);
+    }
+
+    // Add slide-in animation
+    const slideInStyle = document.createElement('style');
+    slideInStyle.textContent = `
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+    `;
+    document.head.appendChild(slideInStyle);
+</script>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7G01YFBCVB');
+</script>
+    
+</body>
+</html>
+
+
+
