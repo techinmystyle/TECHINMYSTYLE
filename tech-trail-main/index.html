@@ -6,7 +6,7 @@
     
     <!-- SEO Meta Tags -->
     <title>Tech In My Style - Learn Programming & Web Development | HTML, CSS, JavaScript, Python</title>
-    <meta name="description" content="Master programming with Tech In My Style. Free courses in HTML, CSS, JavaScript, Python, Java, C, AI, ML & Data Science. Get MSME-approved certifications.">
+    <meta name="description" content="Master programming with Tech In My Style. Free courses in HTML, CSS, JavaScript, Python, Java, C, AI, ML & Data Science. Get MSME-approved certifications and boost your career.">
     <meta name="keywords" content="programming courses, HTML IN MY STYLE, CSS IN MY STYLE, JAVASCRIPT BASIC IN MY STYLE, PYTHON IN MY STYLE, JAVA IN MY STYLE, C programming, web development, coding bootcamp, MSME certification, tech education, learn programming">
     <meta name="author" content="Tech In My Style">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
@@ -21,7 +21,8 @@
     <meta property="og:description" content="Master HTML, CSS, JavaScript, Python, Java, C, AI, ML and Data Science with our beginner-friendly courses and get MSME-approved certifications.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://techinmystyle.com/">
-    <meta property="og:image" content="https://techinmystyle.com/images/og-image.jpg">
+    <meta property="og:image" content="https://techinmystyle.com/tech-no bg.png">
+    <meta property="og:image:alt" content="Tech In My Style - Programming Education Platform">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Tech In My Style">
@@ -30,10 +31,19 @@
     <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Tech In My Style - Learn Programming">
-    <meta name="twitter:description" content="Comprehensive programming courses with MSME certifications">
-    <meta name="twitter:image" content="https://techinmystyle.com/images/twitter-image.jpg">
+    <meta name="twitter:description" content="Comprehensive programming courses with MSME certifications. Learn HTML, CSS, JavaScript, Python, Java, C, AI, ML & Data Science.">
+    <meta name="twitter:image" content="https://techinmystyle.com/tech-no bg.png">
+    <meta name="twitter:image:alt" content="Tech In My Style Logo">
     <meta name="twitter:site" content="@techinmystyle">
     <meta name="twitter:creator" content="@techinmystyle">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#2196F3">
+    <meta name="msapplication-TileColor" content="#2196F3">
+    <meta name="application-name" content="Tech In My Style">
+    <meta name="apple-mobile-web-app-title" content="Tech In My Style">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="tech-no bg.png">
@@ -71,6 +81,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       "description": "Learn HTML, CSS, JavaScript, Python, Java, C, AI, ML, DL, and DSC in our unique style with comprehensive programming courses.",
       "url": "https://techinmystyle.com",
       "logo": "https://techinmystyle.com/tech-no bg.png",
+      "image": "https://techinmystyle.com/tech-no bg.png",
       "sameAs": [
         "https://www.instagram.com/tech_in_my_style",
         "https://youtube.com/@tech-in-my-style",
@@ -331,7 +342,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           display: none;
           background: none;
           border: none;
-          color: var(--text);
+                    color: var(--text);
           font-size: 1.5rem;
           cursor: pointer;
           padding: 0.5rem;
@@ -428,7 +439,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           transform: translateX(22px);
         }
         
-                .mobile-header-controls {
+        .mobile-header-controls {
           display: none;
           align-items: center;
           gap: var(--spacing-sm);
@@ -445,18 +456,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           .nav-links {
             position: fixed;
-            top: 70px;
+            top: 0;
             left: -100%;
             width: 100%;
-            height: calc(100vh - 70px);
+            height: 100vh;
             background: var(--bg);
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
-            gap: var(--spacing-xl);
+            gap: var(--spacing-2xl);
             transition: left 0.3s ease;
-            padding-top: var(--spacing-2xl);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            backdrop-filter: blur(20px);
           }
 
           .nav-links.active {
@@ -464,10 +475,29 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
 
           .nav-link {
-            font-size: 1.2rem;
-            padding: var(--spacing-md) 0;
+            font-size: 1.5rem;
+            font-weight: 600;
+            padding: var(--spacing-lg) var(--spacing-xl);
             text-align: center;
-            width: 100%;
+            width: auto;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--primary);
+            min-width: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+          }
+
+          .nav-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+          }
+
+          .nav-link::after {
+            display: none;
           }
 
           .nav .theme-toggle {
@@ -508,6 +538,12 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           .mobile-menu-btn {
             font-size: 1.3rem;
+          }
+
+          .nav-link {
+            font-size: 1.3rem;
+            padding: var(--spacing-md) var(--spacing-lg);
+            min-width: 180px;
           }
 
           .switch {
@@ -616,7 +652,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .btn.primary:hover {
           transform: translateY(-2px);
-          box-shadow: var(--shadow-lg);
+          box          -shadow: var(--shadow-lg);
         }
 
         .btn.secondary {
@@ -1191,7 +1227,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           left: -50%;
           width: 200%;
           height: 200%;
-          background: linear-gradient(45deg, transparent, rgba(33, 150, 243, 0.1), transparent);
+          background: linear-gradient(45deg          , transparent, rgba(33, 150, 243, 0.1), transparent);
           animation: shimmer 3s infinite;
         }
 
@@ -1603,7 +1639,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>"I turned wireframes into reality, styling each section not just to look good, but to make learning feel effortless."</p>
             </article>
             <article class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="./asadullah.png" alt="Developer" class="testimonial-avatar">
+                <img src="./asadullah.png" alt="Developer" class="testimonial-avatar                ">
                 <h4>Developer</h4>
                 <p>"With every function and event, I brought interactivity to life—because education today isn't static, it's dynamic."</p>
             </article>
@@ -1632,7 +1668,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 
-    <!-- Certification Section 
+    <!--Certification Section 
     <section id="certifications" class="certification">
         <div class="container">
             <div class="certification-content">
@@ -1805,7 +1841,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 body.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
             } else {
-                                body.setAttribute('data-theme', 'dark');
+                body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -1826,8 +1862,35 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         mobileMenuBtn.addEventListener('click', () => {
             navLinks.classList.toggle('active');
-            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
-            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+            const icon = mobileMenuBtn.querySelector('i');
+            
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu when clicking on a nav link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                navLinks.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
         });
 
         // WebGL Particle Animation
@@ -2117,14 +2180,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           "@type": "Answer",
           "text": "We teach HTML, CSS, JavaScript, Python, Java, C, AI, Machine Learning, Deep Learning, and Data Science through comprehensive, beginner-friendly courses."
         }
-      }, {
-        "@type": "Question",
-        "name": "Are the certifications recognized?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "Yes, our certifications are MSME-approved and recognized by leading tech companies to validate your programming skills."
-        }
-      }, {
+        
+        }, {
         "@type": "Question",
         "name": "How long does it take to complete a course?",
         "acceptedAnswer": {
@@ -2137,6 +2194,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </body>
 </html>
 
+            
 
 
-          
+
+
