@@ -342,11 +342,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           display: none;
           background: none;
           border: none;
-                    color: var(--text);
-          font-size: 1.5rem;
+          color: var(--text);
+          font-size: 1.8rem;
           cursor: pointer;
           padding: 0.5rem;
-          z-index: 1001;
+          z-index: 1002;
+                    border-radius: var(--radius-sm);
+          transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+          background: var(--surface);
+          color: var(--primary);
         }
 
         .nav {
@@ -445,29 +452,33 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           gap: var(--spacing-sm);
         }
 
+        /* Mobile Menu Styles - Improved for all devices */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
+            order: 2;
           }
 
           .mobile-header-controls {
             display: flex;
+            order: 1;
           }
 
           .nav-links {
             position: fixed;
             top: 0;
             left: -100%;
-            width: 100%;
+            width: 100vw;
             height: 100vh;
             background: var(--bg);
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: var(--spacing-2xl);
-            transition: left 0.3s ease;
-            z-index: 1000;
+            gap: var(--spacing-xl);
+            transition: left 0.4s ease;
+            z-index: 1001;
             backdrop-filter: blur(20px);
+            padding: var(--spacing-xl);
           }
 
           .nav-links.active {
@@ -475,19 +486,20 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
 
           .nav-link {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: 600;
-            padding: var(--spacing-lg) var(--spacing-xl);
+            padding: var(--spacing-md) var(--spacing-xl);
             text-align: center;
-            width: auto;
+            width: 100%;
+            max-width: 280px;
             background: var(--surface);
             border-radius: var(--radius-lg);
             border: 2px solid var(--primary);
-            min-width: 200px;
             display: flex;
             align-items: center;
             justify-content: center;
             transition: all 0.3s ease;
+            margin: var(--spacing-xs) 0;
           }
 
           .nav-link:hover {
@@ -523,6 +535,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
         }
 
+        /* Extra Small Mobile Devices */
         @media (max-width: 480px) {
           .container {
             padding: 0 var(--spacing-sm);
@@ -537,13 +550,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
 
           .mobile-menu-btn {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            padding: 0.4rem;
+          }
+
+          .nav-links {
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
           }
 
           .nav-link {
-            font-size: 1.3rem;
-            padding: var(--spacing-md) var(--spacing-lg);
-            min-width: 180px;
+            font-size: 1.1rem;
+            padding: var(--spacing-sm) var(--spacing-lg);
+            max-width: 250px;
           }
 
           .switch {
@@ -558,6 +577,98 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           input:checked + .slider:before {
             transform: translateX(16px);
+          }
+        }
+
+        /* Very Small Devices */
+        @media (max-width: 360px) {
+          .logo h1 {
+            font-size: 0.8rem;
+          }
+
+          .mobile-menu-btn {
+            font-size: 1.4rem;
+            padding: 0.3rem;
+          }
+
+          .nav-link {
+            font-size: 1rem;
+            padding: var(--spacing-sm) var(--spacing-md);
+            max-width: 220px;
+          }
+
+          .switch {
+            width: 36px;
+            height: 20px;
+          }
+
+          .slider:before {
+            height: 12px;
+            width: 12px;
+          }
+
+          input:checked + .slider:before {
+            transform: translateX(14px);
+          }
+        }
+
+        /* Large Mobile Devices */
+        @media (min-width: 481px) and (max-width: 768px) {
+          .nav-link {
+            font-size: 1.3rem;
+            padding: var(--spacing-md) var(--spacing-xl);
+            max-width: 300px;
+          }
+        }
+
+        /* Tablet Portrait */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+
+          .mobile-header-controls {
+            display: flex;
+          }
+
+          .nav-links {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100vw;
+            height: 100vh;
+            background: var(--bg);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: var(--spacing-xl);
+            transition: left 0.4s ease;
+            z-index: 1001;
+            backdrop-filter: blur(20px);
+          }
+
+          .nav-links.active {
+            left: 0;
+          }
+
+          .nav-link {
+            font-size: 1.4rem;
+            font-weight: 600;
+            padding: var(--spacing-lg) var(--spacing-2xl);
+            text-align: center;
+            width: auto;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--primary);
+            min-width: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+          }
+
+          .nav .theme-toggle {
+            display: none;
           }
         }
 
@@ -652,7 +763,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .btn.primary:hover {
           transform: translateY(-2px);
-          box          -shadow: var(--shadow-lg);
+          box-shadow: var(--shadow-lg);
         }
 
         .btn.secondary {
@@ -814,7 +925,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         }
 
         .course-content p {
-          color: var(--text-secondary);
+                    color: var(--text-secondary);
           margin-bottom: var(--spacing-lg);
         }
 
@@ -1227,7 +1338,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           left: -50%;
           width: 200%;
           height: 200%;
-          background: linear-gradient(45deg          , transparent, rgba(33, 150, 243, 0.1), transparent);
+          background: linear-gradient(45deg, transparent, rgba(33, 150, 243, 0.1), transparent);
           animation: shimmer 3s infinite;
         }
 
@@ -1372,7 +1483,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             font-size: 1.2rem;
             border-bottom: 2px solid rgba(255, 255, 255, 0.5);
             padding-bottom: var(--spacing-sm);
-            width: 100%;
+                        width: 100%;
           }
 
           .footer-column a {
@@ -1451,6 +1562,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           font-weight: 500;
           color: var(--primary);
         }
+
         .testimonial-avatar {
             width: 60px;
             height: 60px;
@@ -1496,13 +1608,34 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <!-- Desktop Navigation -->
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
-                    <a class='nav-link' href='/'>Home</a>
-                    <a class='nav-link' href='/courses'>Courses</a>
-                    <a class='nav-link' href='/about-us'>About Us</a>
-                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link active' href='/feedback'>Feedback Center</a>
-                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
-                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
+                    <a class='nav-link' href='/'>
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a class='nav-link' href='/courses'>
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+                    </a>
+                    <a class='nav-link' href='/about-us'>
+                        <i class="fas fa-users"></i>
+                        <span>About Us</span>
+                    </a>
+                    <a class='nav-link' href='/stay-connected'>
+                        <i class="fas fa-comments"></i>
+                        <span>Stay Connected</span>
+                    </a>
+                    <a class='nav-link active' href='/feedback'>
+                        <i class="fas fa-comment-dots"></i>
+                        <span>Feedback Center</span>
+                    </a>
+                    <a class='nav-link' href='/leaderboard'>
+                        <i class="fas fa-trophy"></i>
+                        <span>Leaderboard</span>
+                    </a>
+                    <a class='nav-link' href='#' onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
                 </div>
                 <!-- Desktop Theme Toggle -->
                 <div class="theme-toggle">
@@ -1639,7 +1772,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <p>"I turned wireframes into reality, styling each section not just to look good, but to make learning feel effortless."</p>
             </article>
             <article class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
-                <img src="./asadullah.png" alt="Developer" class="testimonial-avatar                ">
+                <img src="./asadullah.png" alt="Developer" class="testimonial-avatar">
                 <h4>Developer</h4>
                 <p>"With every function and event, I brought interactivity to life—because education today isn't static, it's dynamic."</p>
             </article>
@@ -1665,33 +1798,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
     </div>
 </section>
-
-
-
-    <!--Certification Section 
-    <section id="certifications" class="certification">
-        <div class="container">
-            <div class="certification-content">
-                <div class="certification-info" data-aos="fade-right">
-                    <h2>MSME-Recognized Certifications</h2>
-                    <p>Validate your skills with our comprehensive certification program. Our certificates are recognized by leading tech companies and will boost your career prospects.</p>
-                    <ul>
-                        <li><i class="fas fa-check"></i> HTML Certificate</li>
-                        <li><i class="fas fa-check"></i> CSS Certificate</li>
-                        <li><i class="fas fa-check"></i> JS Certificate</li>
-                        <li><i class="fas fa-check"></i> PYTHON Certificate</li>
-                        <li><i class="fas fa-check"></i> JAVA Certificate</li>
-                    </ul>
-                    <a class='btn primary' href='/certifications'>View More Certificates</a>
-                </div>
-                <div class="certification-image" data-aos="fade-left">
-                    <div class="certificate-sample">
-                        <img src="1.png" alt="Certificate of Completion - Tech In My Style MSME Approved Programming Certificate" loading="lazy">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>-->
 
 <!-- Stay Connected Section -->
 <section id="contact" class="contact">
@@ -1736,7 +1842,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                         <i class="fab fa-telegram"></i>
                         <span>Telegram</span>
                     </div>
-                    <div class="social-item" onclick="window.open('https://youtube.com/@tech-in-my-style?si=G48ugz-d8oO7-4Dw', '_blank')" style="cursor: pointer;">
+                    <div class="social-item" onclick="window.open('https://youtube.com/@tech-in-my-style?si=G48ugz-d8oO7-4Dw', '_blank'                    )" style="cursor: pointer;">
                         <i class="fab fa-youtube"></i>
                         <span>YouTube</span>
                     </div>
@@ -2107,7 +2213,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             console.log("Session check:", { username, isLoggedIn });
 
             if (!username || isLoggedIn !== "true") {
-                console.warn("User not logged in or session expired.");
+                              console.warn("User not logged in or session expired.");
                 logout();
                 return;
             }
@@ -2157,6 +2263,168 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 });
             });
         }
+
+        // Enhanced Mobile Menu Functionality
+        function enhanceMobileMenu() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinksContainer = document.getElementById('navLinks');
+
+            // Add icons to mobile nav links if not present
+            navLinks.forEach(link => {
+                const span = link.querySelector('span');
+                if (!span) {
+                    const text = link.textContent.trim();
+                    let icon = '';
+                    
+                    switch(text.toLowerCase()) {
+                        case 'home':
+                            icon = '<i class="fas fa-home"></i>';
+                            break;
+                        case 'courses':
+                            icon = '<i class="fas fa-book"></i>';
+                            break;
+                        case 'about us':
+                            icon = '<i class="fas fa-users"></i>';
+                            break;
+                        case 'stay connected':
+                            icon = '<i class="fas fa-comments"></i>';
+                            break;
+                        case 'feedback center':
+                            icon = '<i class="fas fa-comment-dots"></i>';
+                            break;
+                        case 'leaderboard':
+                            icon = '<i class="fas fa-trophy"></i>';
+                            break;
+                        case 'logout':
+                            icon = '<i class="fas fa-sign-out-alt"></i>';
+                            break;
+                        default:
+                            icon = '<i class="fas fa-circle"></i>';
+                    }
+                    
+                    link.innerHTML = `${icon} <span>${text}</span>`;
+                }
+            });
+
+            // Handle escape key to close mobile menu
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && navLinksContainer.classList.contains('active')) {
+                    navLinksContainer.classList.remove('active');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            });
+
+            // Prevent body scroll when mobile menu is open
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        if (navLinksContainer.classList.contains('active')) {
+                            document.body.style.overflow = 'hidden';
+                        } else {
+                            document.body.style.overflow = '';
+                        }
+                    }
+                });
+            });
+
+            observer.observe(navLinksContainer, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+
+        // Initialize enhanced mobile menu
+        enhanceMobileMenu();
+
+        // Responsive hamburger menu adjustments
+        function adjustHamburgerForDevice() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinksContainer = document.getElementById('navLinks');
+            
+            // Detect device type and adjust accordingly
+            const isMobile = window.innerWidth <= 480;
+            const isTablet = window.innerWidth > 480 && window.innerWidth <= 768;
+            const isLargeTablet = window.innerWidth > 768 && window.innerWidth <= 1024;
+            
+            if (isMobile) {
+                mobileMenuBtn.style.fontSize = '1.4rem';
+                mobileMenuBtn.style.padding = '0.3rem';
+            } else if (isTablet) {
+                mobileMenuBtn.style.fontSize = '1.5rem';
+                mobileMenuBtn.style.padding = '0.4rem';
+            } else if (isLargeTablet) {
+                mobileMenuBtn.style.fontSize = '1.6rem';
+                mobileMenuBtn.style.padding = '0.5rem';
+            }
+        }
+
+        // Call on load and resize
+        adjustHamburgerForDevice();
+        window.addEventListener('resize', adjustHamburgerForDevice);
+
+        // Touch events for better mobile interaction
+        let touchStartY = 0;
+        let touchEndY = 0;
+
+        document.addEventListener('touchstart', e => {
+            touchStartY = e.changedTouches[0].screenY;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipeGesture();
+        });
+
+        function handleSwipeGesture() {
+            const navLinksContainer = document.getElementById('navLinks');
+            const swipeThreshold = 50;
+            
+            if (navLinksContainer.classList.contains('active')) {
+                // Swipe up to close menu
+                if (touchStartY - touchEndY > swipeThreshold) {
+                    navLinksContainer.classList.remove('active');
+                    const icon = document.getElementById('mobileMenuBtn').querySelector('i');
+                    icon.classList.remove('fa-times');
+                    icon.classList.add('fa-bars');
+                }
+            }
+        }
+
+        // Accessibility improvements
+        function enhanceAccessibility() {
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinksContainer = document.getElementById('navLinks');
+            
+            // Add ARIA attributes
+            mobileMenuBtn.setAttribute('aria-label', 'Toggle navigation menu');
+            mobileMenuBtn.setAttribute('aria-expanded', 'false');
+            mobileMenuBtn.setAttribute('aria-controls', 'navLinks');
+            
+            navLinksContainer.setAttribute('role', 'navigation');
+            navLinksContainer.setAttribute('aria-label', 'Main navigation');
+            
+            // Update ARIA attributes when menu toggles
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach((mutation) => {
+                    if (mutation.attributeName === 'class') {
+                        const isActive = navLinksContainer.classList.contains('active');
+                        mobileMenuBtn.setAttribute('aria-expanded', isActive.toString());
+                    }
+                });
+            });
+            
+            observer.observe(navLinksContainer, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+
+        // Initialize accessibility enhancements
+        enhanceAccessibility();
+
     </script>
 
     <!-- Google Analytics -->
@@ -2194,7 +2462,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </body>
 </html>
 
-            
 
 
 
