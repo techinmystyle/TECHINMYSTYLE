@@ -1749,6 +1749,14 @@ document.getElementById('allCourses').scrollIntoView({behavior: 'smooth'});
         observer.observe(section);
     });
 
+            // Function to logout user and clear session
+        function logout() {
+            localStorage.clear();
+            window.location.href = "auth/login.html";
+        }
+
+
+
     // Handle window resize for mobile optimization
     window.addEventListener('resize', function() {
         if (window.innerWidth > 768) {
@@ -1795,6 +1803,8 @@ document.getElementById('allCourses').scrollIntoView({behavior: 'smooth'});
     // Disable Ctrl+Shift+K (Firefox)
     if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
   };
+
+    
 
 </script>
 
