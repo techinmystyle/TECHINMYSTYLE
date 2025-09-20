@@ -150,7 +150,7 @@
       pointer-events: none;
     }
 
-    /* HEADER WITH MOBILE-FIRST APPROACH */
+    /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
     .header {
       position: fixed;
       top: 0;
@@ -162,6 +162,7 @@
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
       padding: var(--spacing-sm) 0;
       width: 100%;
+      transition: all 0.3s ease;
     }
 
     .header .container {
@@ -183,24 +184,10 @@
       background: none;
       border: none;
       color: var(--text);
-      font-size: 1.8rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
       z-index: 1001;
-      position: relative;
-      width: 40px;
-      height: 40px;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-sm);
-      transition: all 0.3s ease;
-    }
-
-    .mobile-menu-btn:hover {
-        background: var(--surface);
-        color: var(--primary);
-    }
-
-    .mobile-menu-btn.active {
-        color: var(--primary);
     }
 
     .nav {
@@ -211,7 +198,7 @@
 
     .nav-links {
       display: flex;
-      gap: var(--spacing-lg);
+      gap: var(--spacing-md);
       align-items: center;
     }
 
@@ -222,6 +209,10 @@
       transition: color 0.3s ease;
       position: relative;
       padding: 0.5rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.3rem;
     }
 
     .nav-link:hover,
@@ -243,6 +234,15 @@
     .nav-link:hover::after,
     .nav-link.active::after {
       width: 100%;
+    }
+
+    .nav-link i {
+      font-size: 1.2rem;
+    }
+
+    .nav-link span {
+      font-size: 0.8rem;
+      font-weight: 500;
     }
 
     .theme-toggle {
@@ -301,29 +301,17 @@
       gap: var(--spacing-sm);
     }
 
-    /* Mobile Menu Overlay - IMPROVED */
-    .mobile-menu-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.5);
-        backdrop-filter: blur(10px);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.3s ease;
-        z-index: 999;
+    /* DESKTOP NAVIGATION STYLES */
+    @media (min-width: 769px) {
+      .nav-links {
+        gap: var(--spacing-lg);
+      }
     }
 
-    .mobile-menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
-    }
-
+    /* MOBILE NAVIGATION STYLES */
     @media (max-width: 768px) {
       .mobile-menu-btn {
-        display: flex;
+        display: block;
       }
 
       .mobile-header-controls {
@@ -332,71 +320,62 @@
 
       .nav-links {
         position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
+        top: 70px;
+        left: 0;
+        width: 100%;
         background: var(--bg);
         flex-direction: column;
         justify-content: flex-start;
         align-items: stretch;
         gap: 0;
-        transition: left 0.3s ease;
-        padding: 80px 0 20px 0;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: var(--shadow-xl);
-        z-index: 1000;
-        overflow-y: auto;
+        transition: all 0.3s ease;
+        padding: 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        max-height: 0;
+        overflow: hidden;
+        z-index: 999;
       }
 
       .nav-links.active {
-        left: 0;
+        max-height: calc(100vh - 70px);
+        overflow-y: auto;
+        padding: var(--spacing-md) 0;
       }
 
       .nav-link {
         font-size: 1.1rem;
-        padding: var(--spacing-md) var(--spacing-xl);
+        padding: var(--spacing-md) var(--spacing-lg);
         text-align: left;
         width: 100%;
-        display: block;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 0;
+        background: none;
+        border-radius: 0;
         transition: all 0.3s ease;
-        position: relative;
-        margin: 0;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .nav-link:last-child {
+        border-bottom: none;
       }
 
       .nav-link:hover {
-        background: var(--surface);
         color: var(--primary);
-        padding-left: calc(var(--spacing-xl) + 10px);
+        background: var(--surface);
+        transform: none;
+        padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+      }
+
+      .nav-link.active {
+        color: var(--primary);
+        background: var(--surface);
+        font-weight: 600;
       }
 
       .nav-link::after {
         display: none;
-      }
-
-      .nav-link::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 100%;
-        background: var(--primary);
-        transition: width 0.3s ease;
-      }
-
-      .nav-link:hover::before {
-        width: 4px;
-      }
-
-      .nav-link.active {
-        background: var(--surface);
-        color: var(--primary);
-      }
-
-      .nav-link.active::before {
-        width: 4px;
       }
 
       .nav .theme-toggle {
@@ -420,6 +399,13 @@
       input:checked + .slider:before {
         transform: translateX(19px);
       }
+      
+      /* Add icons to mobile nav links */
+      .nav-link i {
+        margin-right: var(--spacing-sm);
+        width: 20px;
+        text-align: center;
+      }
     }
 
     @media (max-width: 480px) {
@@ -429,6 +415,15 @@
 
       .header {
         padding: 0.5rem 0;
+      }
+
+      .nav-links {
+        top: 65px;
+      }
+
+      .nav-link {
+        font-size: 1rem;
+        padding: var(--spacing-sm) var(--spacing-md);
       }
 
       .logo h2 a {
@@ -1079,6 +1074,7 @@
 </head>
 <body>
     <canvas id="webgl-canvas"></canvas>
+    
     <!-- Header -->
 <header class="header">
     <div class="container">
@@ -1086,35 +1082,31 @@
             <h2><a href='/'>TECH IN MY STYLE</a></h2>
         </div>
         
-<!-- Mobile Menu Overlay -->
-<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-
-<!-- Mobile Header Controls (Theme Toggle + Menu Button) -->
-<div class="mobile-header-controls">
-    <div class="theme-toggle">
-        <i class="fas fa-sun"></i>
-        <label class="switch">
-            <input type="checkbox" id="themeToggle">
-            <span class="slider"></span>
-        </label>
-        <i class="fas fa-moon"></i>
-    </div>
-    <div class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="fas fa-bars"></i>
-    </div>
-</div>
-
+        <!-- Mobile Header Controls -->
+        <div class="mobile-header-controls">
+            <div class="theme-toggle">
+                <i class="fas fa-sun"></i>
+                <label class="switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider"></span>
+                </label>
+                <i class="fas fa-moon"></i>
+            </div>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
         
         <!-- Desktop Navigation -->
         <nav class="nav">
             <div class="nav-links" id="navLinks">
-                <a class='nav-link' href='/'>Home</a>
-                    <a class='nav-link' href='/courses'>Courses</a>
-                    <a class='nav-link' href='/about-us'>About Us</a>
-                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link' href='/feedback'>Feedback Center</a>
-                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
-                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
+                <a class='nav-link' href='/'><i class="fas fa-home"></i><span>Home</span></a>
+                <a class='nav-link' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                <a class='nav-link active' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
+                <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
+                <a class='nav-link' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
+                <a class='nav-link' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
             </div>
             <div class="theme-toggle">
                 <i class="fas fa-sun"></i>
@@ -1308,8 +1300,8 @@ Drives marketing strategies and technical operations. Builds strong brand presen
                             <a href="https://sailesh-portfolio-4315.netlify.app/"><i class="fas fa-user"></i></a>
                         </div>
                     </div>
-                </div>
-              <div class="team-member" data-aos="fade-up" data-aos-delay="300">
+                </div>  
+            <div class="team-member" data-aos="fade-up" data-aos-delay="300">
                     <div class="member-image">
                         <img src="./jayanth.png" alt="JAYANTH">
                     </div>
@@ -1394,75 +1386,44 @@ Leads brand promotions and community engagement efforts. Provides technical assi
         mirror: false
     });
 
-// Mobile Menu Toggle - FIXED VERSION WITH GAP CLICK FUNCTIONALITY
-const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-const navLinks = document.getElementById('navLinks');
-const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+    // Mobile Menu Toggle - IMPROVED IMPLEMENTATION
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    const menuIcon = mobileMenuBtn.querySelector('i');
+    const header = document.querySelector('.header');
 
-function toggleMobileMenu() {
-    const isActive = navLinks.classList.contains('active');
-    
-    if (isActive) {
-        // Close menu
-        navLinks.classList.remove('active');
-        mobileMenuOverlay.classList.remove('active');
-        mobileMenuBtn.classList.remove('active');
-        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-        document.body.style.overflow = '';
-    } else {
-        // Open menu
-        navLinks.classList.add('active');
-        mobileMenuOverlay.classList.add('active');
-        mobileMenuBtn.classList.add('active');
-        mobileMenuBtn.querySelector('i').classList.remove('fa-bars');
-        mobileMenuBtn.querySelector('i').classList.add('fa-times');
-        document.body.style.overflow = 'hidden';
-    }
-}
-
-// Mobile menu button click
-mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-
-// Close menu when clicking overlay (this handles the gap/right side clicks)
-mobileMenuOverlay.addEventListener('click', function(e) {
-    // Only close if clicking on the overlay itself, not on the nav menu
-    if (e.target === mobileMenuOverlay) {
-        toggleMobileMenu();
-    }
-});
-
-// Enhanced click outside detection for better mobile experience
-document.addEventListener('click', function(e) {
-    // Only apply on mobile screens
-    if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
-        // Check if click is outside the nav menu and not on the menu button
-        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
-            toggleMobileMenu();
-        }
-    }
-});
-
-// Close menu when clicking on nav links (mobile)
-document.querySelectorAll('.nav-link').forEach(link => {
-    link.addEventListener('click', () => {
-        if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
-            toggleMobileMenu();
+    mobileMenuBtn.addEventListener('click', function() {
+        navLinks.classList.toggle('active');
+        
+        if (navLinks.classList.contains('active')) {
+            menuIcon.className = 'fas fa-times';
+            header.style.borderBottom = 'none';
+        } else {
+            menuIcon.className = 'fas fa-bars';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         }
     });
-});
 
-// Close menu on window resize if window becomes larger
-window.addEventListener('resize', () => {
-    if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-        toggleMobileMenu();
-    }
-});
+    // Close mobile menu when clicking on nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+        });
+    });
 
-// Prevent clicks inside the nav menu from closing it
-navLinks.addEventListener('click', function(e) {
-    e.stopPropagation();
-});
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!navLinks.contains(event.target) && 
+            !mobileMenuBtn.contains(event.target) && 
+            !event.target.closest('.mobile-header-controls') &&
+            navLinks.classList.contains('active')) {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+        }
+    });
 
     // Sync Theme Toggles
     const mobileThemeToggle = document.getElementById('themeToggle');
@@ -1722,17 +1683,27 @@ navLinks.addEventListener('click', function(e) {
         document.documentElement.style.overflowX = 'hidden';
     });
 
+    // Handle window resize for mobile optimization
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            navLinks.classList.remove('active');
+            menuIcon.className = 'fas fa-bars';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+        }
+    });
+
     console.log(`
-    👥 ABOUT US PAGE - Mobile Navigation FIXED!
+    👥 ABOUT US PAGE - Improved Desktop and Mobile Navigation!
        
-       ✅ Enhanced Mobile Menu with Gap Click Detection
-       ✅ Overlay Click Closes Navigation
-       ✅ Click Outside Menu Area Closes It
-       ✅ Improved Touch Experience
-       ✅ Better Event Handling
-       ✅ Prevents Menu Content Clicks from Closing
+       ✅ Fixed Desktop Navigation with Icons
+       ✅ All Navigation Items in Single Line
+       ✅ Clean and Organized Layout
+       ✅ Improved Mobile Navigation
+       ✅ All Tabs Visible and Accessible
+       ✅ Smooth Transitions and Animations
+       ✅ Perfect Responsiveness for All Devices
        
-       Now clicking anywhere outside the menu (including the gap/right side) will close it! 🚀
+       Navigation Optimized for Both Desktop and Mobile! ⚡
     `);
     
     document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
@@ -1772,7 +1743,3 @@ navLinks.addEventListener('click', function(e) {
     </script>
 </body>
 </html>
-
-
-
-
