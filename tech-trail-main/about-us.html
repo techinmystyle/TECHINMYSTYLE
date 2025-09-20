@@ -183,10 +183,24 @@
       background: none;
       border: none;
       color: var(--text);
-      font-size: 1.5rem;
-      cursor: pointer;
-      padding: 0.5rem;
+      font-size: 1.8rem;
       z-index: 1001;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: all 0.3s ease;
+    }
+
+    .mobile-menu-btn:hover {
+        background: var(--surface);
+        color: var(--primary);
+    }
+
+    .mobile-menu-btn.active {
+        color: var(--primary);
     }
 
     .nav {
@@ -287,9 +301,29 @@
       gap: var(--spacing-sm);
     }
 
+    /* Mobile Menu Overlay - IMPROVED */
+    .mobile-menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+        z-index: 999;
+    }
+
+    .mobile-menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
     @media (max-width: 768px) {
       .mobile-menu-btn {
-        display: block;
+        display: flex;
       }
 
       .mobile-header-controls {
@@ -298,18 +332,21 @@
 
       .nav-links {
         position: fixed;
-        top: 70px;
+        top: 0;
         left: -100%;
-        width: 100%;
-        height: calc(100vh - 70px);
+        width: 280px;
+        height: 100vh;
         background: var(--bg);
         flex-direction: column;
         justify-content: flex-start;
-        align-items: center;
-        gap: var(--spacing-xl);
+        align-items: stretch;
+        gap: 0;
         transition: left 0.3s ease;
-        padding-top: var(--spacing-2xl);
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 80px 0 20px 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: var(--shadow-xl);
+        z-index: 1000;
+        overflow-y: auto;
       }
 
       .nav-links.active {
@@ -317,10 +354,49 @@
       }
 
       .nav-link {
-        font-size: 1.2rem;
-        padding: var(--spacing-md) 0;
-        text-align: center;
+        font-size: 1.1rem;
+        padding: var(--spacing-md) var(--spacing-xl);
+        text-align: left;
         width: 100%;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        margin: 0;
+      }
+
+      .nav-link:hover {
+        background: var(--surface);
+        color: var(--primary);
+        padding-left: calc(var(--spacing-xl) + 10px);
+      }
+
+      .nav-link::after {
+        display: none;
+      }
+
+      .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background: var(--primary);
+        transition: width 0.3s ease;
+      }
+
+      .nav-link:hover::before {
+        width: 4px;
+      }
+
+      .nav-link.active {
+        background: var(--surface);
+        color: var(--primary);
+      }
+
+      .nav-link.active::before {
+        width: 4px;
       }
 
       .nav .theme-toggle {
@@ -422,7 +498,7 @@
       }
     }
 
-    /* Our Story */
+        /* Our Story */
     .our-story {
       padding: var(--spacing-2xl) 0;
     }
@@ -458,6 +534,12 @@
 
     .story-text p:last-child {
       margin-bottom: 0;
+    }
+
+    [data-theme="dark"] .story-text {
+        background: #1a1a2e;
+        color: #f0f0f0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
 
     @media (max-width: 768px) {
@@ -506,6 +588,13 @@
       box-shadow: 0 4px 24px rgba(80,80,120,0.08);
       padding: 2rem 1.5rem;
       margin-bottom: 1.5rem;
+      color: #333;
+    }
+
+    [data-theme="dark"] .mv-card {
+        background: #1a1a2e;
+        color: #f0f0f0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
 
     .mv-header {
@@ -529,6 +618,7 @@
       font-size: 1.08em;
       line-height: 1.7;
       margin: 0;
+      color: inherit;
     }
 
     .vision .mv-header i {
@@ -600,6 +690,13 @@
       margin-bottom: 1.5rem;
       text-align: center;
       transition: all 0.3s ease;
+      color: #333;
+    }
+
+    [data-theme="dark"] .value-card {
+        background: #1a1a2e;
+        color: #f0f0f0;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
     }
 
     .value-card:hover {
@@ -621,9 +718,9 @@
 
     .value-card p {
       font-size: 1em;
-      color: #333;
       line-height: 1.6;
       margin: 0;
+      color: inherit;
     }
 
     @media (max-width: 768px) {
@@ -925,7 +1022,7 @@
       }
     }
 
-    @media (max-width: 480px) {
+        @media (max-width: 480px) {
       .footer {
         padding: var(--spacing-xl) 0 var(--spacing-md);
       }
@@ -979,243 +1076,6 @@
       max-width: 100%;
     }
 </style>
-<style>
-    /* Update the mission-vision section to handle dark theme better */
-    .mv-card {
-        flex: 1 1 340px;
-        min-width: 300px;
-        background: #fff; /* Light theme background */
-        border-radius: 18px;
-        box-shadow: 0 4px 24px rgba(80,80,120,0.08);
-        padding: 2rem 1.5rem;
-        margin-bottom: 1.5rem;
-        color: #333; /* Dark text for light background */
-    }
-
-    /* Dark theme adjustments */
-    [data-theme="dark"] .mv-card {
-        background: #1a1a2e; /* Dark theme background */
-        color: #f0f0f0; /* Light text for dark background */
-        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    }
-
-    /* Make sure the text in the mv-card is always visible */
-    .mv-card p {
-        font-size: 1.08em;
-        line-height: 1.7;
-        margin: 0;
-        color: inherit; /* Inherit from parent to respect theme */
-    }
-
-    /* Same for headers */
-    .mv-header h3 {
-        font-size: 1.25em;
-        font-weight: 600;
-        margin: 0;
-        /* Keep the specific colors for vision and mission headers */
-    }
-
-    /* Keep the specific icon colors */
-    .vision .mv-header i {
-        color: #4e73df;
-    }
-
-    .vision .mv-header h3 {
-        color: #4e73df;
-    }
-
-    .mission .mv-header i {
-        color: #E76F00;
-    }
-
-    .mission .mv-header h3 {
-        color: #E76F00;
-    }
-
-    /* Update story-text for dark theme */
-    .story-text {
-        border-radius: 18px;
-        box-shadow: 0 4px 24px rgba(80,80,120,0.08);
-        padding: 2.2rem 2rem 2rem 2rem;
-        font-size: 1.13rem;
-        color: #333;
-        line-height: 1.7;
-        background: #fff;
-    }
-
-    [data-theme="dark"] .story-text {
-        background: #1a1a2e;
-        color: #f0f0f0;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    }
-
-    /* Update value-card for dark theme */
-    .value-card {
-        flex: 1 1 260px;
-        min-width: 220px;
-        background: #fff;
-        border-radius: 16px;
-        box-shadow: 0 4px 24px rgba(80,80,120,0.08);
-        padding: 1.5rem 1.2rem;
-        margin-bottom: 1.5rem;
-        text-align: center;
-        transition: all 0.3s ease;
-        color: #333;
-    }
-
-    [data-theme="dark"] .value-card {
-        background: #1a1a2e;
-        color: #f0f0f0;
-        box-shadow: 0 4px 24px rgba(0,0,0,0.3);
-    }
-
-    .value-card p {
-        font-size: 1em;
-        line-height: 1.6;
-        margin: 0;
-        color: inherit;
-    }
-
-    /* Ensure the value card headers remain colored */
-    .value-card h3 {
-        font-size: 1.15em;
-        font-weight: 600;
-        margin: 0 0 0.5em 0;
-        color: #4e73df;
-    }
-    
-    .mobile-menu-btn {
-    display: none;
-    background: none;
-    border: none;
-    color: var(--text);
-    font-size: 1.8rem;
-    z-index: 1001;
-    position: relative;
-    width: 40px;
-    height: 40px;
-    align-items: center;
-    justify-content: center;
-    border-radius: var(--radius-sm);
-    transition: all 0.3s ease;
-}
-
-.mobile-menu-btn:hover {
-    background: var(--surface);
-    color: var(--primary);
-}
-
-.mobile-menu-btn.active {
-    color: var(--primary);
-}
-
-.mobile-header-controls {
-    display: none;
-    align-items: center;
-    gap: var(--spacing-sm);
-}
-
-/* Mobile Menu Overlay */
-.mobile-menu-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    z-index: 999;
-}
-
-.mobile-menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-@media (max-width: 768px) {
-    .mobile-menu-btn {
-        display: flex;
-    }
-
-    .mobile-header-controls {
-        display: flex;
-    }
-
-    .nav-links {
-        position: fixed;
-        top: 0;
-        left: -100%;
-        width: 280px;
-        height: 100vh;
-        background: var(--bg);
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: stretch;
-        gap: 0;
-        transition: left 0.3s ease;
-        padding: 80px 0 20px 0;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
-        box-shadow: var(--shadow-xl);
-        z-index: 1000;
-        overflow-y: auto;
-    }
-
-    .nav-links.active {
-        left: 0;
-    }
-
-    .nav-link {
-        font-size: 1.1rem;
-        padding: var(--spacing-md) var(--spacing-xl);
-        text-align: left;
-        width: 100%;
-        display: block;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-        position: relative;
-        margin: 0;
-    }
-
-    .nav-link:hover {
-        background: var(--surface);
-        color: var(--primary);
-        padding-left: calc(var(--spacing-xl) + 10px);
-    }
-
-    .nav-link::after {
-        display: none;
-    }
-
-    .nav-link::before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 0;
-        height: 100%;
-        background: var(--primary);
-        transition: width 0.3s ease;
-    }
-
-    .nav-link:hover::before {
-        width: 4px;
-    }
-
-    .nav-link.active {
-        background: var(--surface);
-        color: var(--primary);
-    }
-
-    .nav-link.active::before {
-        width: 4px;
-    }
-}
-
-</style>
-
 </head>
 <body>
     <canvas id="webgl-canvas"></canvas>
@@ -1496,7 +1356,7 @@ Leads brand promotions and community engagement efforts. Provides technical assi
                     <a href="/HTML IN MY STYLE/index.html">HTML IN MY STYLE</a>
                     <a href="/CSS IN MY STYLE/index.html">CSS IN MY STYLE</a>
                     <a href="/JAVASCRIPT IN MY STYLE - BASIC/index.html">JS IN MY STYLE (BASIC)</a>
-                    <a href="/JAVASCRIPT IN MY STYLE - INTERMEDIATE/index.html">JS IN MY STYLE (INTERMEDIATE)</a>
+                                        <a href="/JAVASCRIPT IN MY STYLE - INTERMEDIATE/index.html">JS IN MY STYLE (INTERMEDIATE)</a>
                     <a href="/C IN MY STYLE/index.html">C IN MY STYLE</a>
                     <a href="/JAVA IN MY STYLE/index.html">JAVA IN MY STYLE</a>
                     <a href="/PYTHON IN MY STYLE/index.html">PYTHON IN MY STYLE</a>
@@ -1534,7 +1394,7 @@ Leads brand promotions and community engagement efforts. Provides technical assi
         mirror: false
     });
 
-// Mobile Menu Toggle - FIXED VERSION
+// Mobile Menu Toggle - FIXED VERSION WITH GAP CLICK FUNCTIONALITY
 const mobileMenuBtn = document.getElementById('mobileMenuBtn');
 const navLinks = document.getElementById('navLinks');
 const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
@@ -1561,10 +1421,27 @@ function toggleMobileMenu() {
     }
 }
 
+// Mobile menu button click
 mobileMenuBtn.addEventListener('click', toggleMobileMenu);
 
-// Close menu when clicking overlay
-mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+// Close menu when clicking overlay (this handles the gap/right side clicks)
+mobileMenuOverlay.addEventListener('click', function(e) {
+    // Only close if clicking on the overlay itself, not on the nav menu
+    if (e.target === mobileMenuOverlay) {
+        toggleMobileMenu();
+    }
+});
+
+// Enhanced click outside detection for better mobile experience
+document.addEventListener('click', function(e) {
+    // Only apply on mobile screens
+    if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+        // Check if click is outside the nav menu and not on the menu button
+        if (!navLinks.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+            toggleMobileMenu();
+        }
+    }
+});
 
 // Close menu when clicking on nav links (mobile)
 document.querySelectorAll('.nav-link').forEach(link => {
@@ -1580,6 +1457,11 @@ window.addEventListener('resize', () => {
     if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
         toggleMobileMenu();
     }
+});
+
+// Prevent clicks inside the nav menu from closing it
+navLinks.addEventListener('click', function(e) {
+    e.stopPropagation();
 });
 
     // Sync Theme Toggles
@@ -1840,28 +1722,19 @@ window.addEventListener('resize', () => {
         document.documentElement.style.overflowX = 'hidden';
     });
 
-    // Handle window resize for mobile optimization
-    window.addEventListener('resize', function() {
-        if (window.innerWidth > 768) {
-            navLinks.classList.remove('active');
-            menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
-        }
-    });
-
     console.log(`
-    👥 ABOUT US PAGE - Mobile Footer Optimized!
+    👥 ABOUT US PAGE - Mobile Navigation FIXED!
        
-       ✅ Enhanced Footer with Better Mobile Layout
-       ✅ Organized Sections with Background Cards
-       ✅ Improved Visual Separation & Typography
-       ✅ Better Touch Targets for Mobile
-       ✅ Consistent with Main Page Footer
-       ✅ About-Specific Links Added
-       ✅ Professional Team Showcase
+       ✅ Enhanced Mobile Menu with Gap Click Detection
+       ✅ Overlay Click Closes Navigation
+       ✅ Click Outside Menu Area Closes It
+       ✅ Improved Touch Experience
+       ✅ Better Event Handling
+       ✅ Prevents Menu Content Clicks from Closing
        
-       Meet Our Amazing Team! 🚀
+       Now clicking anywhere outside the menu (including the gap/right side) will close it! 🚀
     `);
+    
     document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
   document.onkeydown = function(e) {
@@ -1880,7 +1753,7 @@ window.addEventListener('resize', () => {
     if (e.ctrlKey && e.keyCode === 83) return false;
 
     // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-    if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+        if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
       return false;
     }
 
@@ -1899,3 +1772,7 @@ window.addEventListener('resize', () => {
     </script>
 </body>
 </html>
+
+
+
+
