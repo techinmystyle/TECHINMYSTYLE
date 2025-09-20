@@ -159,7 +159,7 @@
           pointer-events: none;
         }
 
-        /* HEADER */
+        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
         .header {
           position: fixed;
           top: 0;
@@ -171,6 +171,7 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: var(--spacing-sm) 0;
           width: 100%;
+          transition: all 0.3s ease;
         }
 
         .header .container {
@@ -206,7 +207,7 @@
 
         .nav-links {
           display: flex;
-          gap: var(--spacing-lg);
+          gap: var(--spacing-md);
           align-items: center;
         }
 
@@ -217,6 +218,10 @@
           transition: color 0.3s ease;
           position: relative;
           padding: 0.5rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.3rem;
         }
 
         .nav-link:hover,
@@ -238,6 +243,15 @@
         .nav-link:hover::after,
         .nav-link.active::after {
           width: 100%;
+        }
+
+        .nav-link i {
+          font-size: 1.2rem;
+        }
+
+        .nav-link span {
+          font-size: 0.8rem;
+          font-weight: 500;
         }
 
         .theme-toggle {
@@ -296,6 +310,14 @@
           gap: var(--spacing-sm);
         }
 
+        /* DESKTOP NAVIGATION STYLES */
+        @media (min-width: 769px) {
+          .nav-links {
+            gap: var(--spacing-lg);
+          }
+        }
+
+        /* MOBILE NAVIGATION STYLES */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
@@ -308,28 +330,61 @@
           .nav-links {
             position: fixed;
             top: 70px;
-            left: -100%;
+            left: 0;
             width: 100%;
-            height: calc(100vh - 70px);
             background: var(--bg);
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
-            gap: var(--spacing-xl);
-            transition: left 0.3s ease;
-            padding-top: var(--spacing-2xl);
+            align-items: stretch;
+            gap: 0;
+            transition: all 0.3s ease;
+            padding: 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 0;
+            overflow: hidden;
+            z-index: 999;
           }
 
           .nav-links.active {
-            left: 0;
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: var(--spacing-md) 0;
           }
 
           .nav-link {
-            font-size: 1.2rem;
-            padding: var(--spacing-md) 0;
-            text-align: center;
+            font-size: 1.1rem;
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
             width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0;
+            background: none;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+          }
+
+          .nav-link:last-child {
+            border-bottom: none;
+          }
+
+          .nav-link:hover {
+            color: var(--primary);
+            background: var(--surface);
+            transform: none;
+            padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+          }
+
+          .nav-link.active {
+            color: var(--primary);
+            background: var(--surface);
+            font-weight: 600;
+          }
+
+          .nav-link::after {
+            display: none;
           }
 
           .nav .theme-toggle {
@@ -352,6 +407,54 @@
 
           input:checked + .slider:before {
             transform: translateX(19px);
+          }
+          
+          /* Add icons to mobile nav links */
+          .nav-link i {
+            margin-right: var(--spacing-sm);
+            width: 20px;
+            text-align: center;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .container {
+            padding: 0 var(--spacing-sm);
+          }
+
+          .header {
+            padding: 0.5rem 0;
+          }
+
+          .nav-links {
+            top: 65px;
+          }
+
+          .nav-link {
+            font-size: 1rem;
+            padding: var(--spacing-sm) var(--spacing-md);
+          }
+
+          .logo h2 a {
+            font-size: 0.9rem;
+          }
+
+          .mobile-menu-btn {
+            font-size: 1.3rem;
+          }
+
+          .switch {
+            width: 40px;
+            height: 22px;
+          }
+
+          .slider:before {
+            height: 14px;
+            width: 14px;
+          }
+
+          input:checked + .slider:before {
+            transform: translateX(16px);
           }
         }
 
@@ -899,7 +1002,7 @@
     <header class="header">
         <div class="container">
             <div class="logo">
-                <h2><a href="index.html">TECH IN MY STYLE</a></h2>
+                <h2><a href='/'>TECH IN MY STYLE</a></h2>
             </div>
             
             <!-- Mobile Header Controls -->
@@ -920,13 +1023,13 @@
             <!-- Desktop Navigation -->
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
-                    <a class='nav-link' href='/'>Home</a>
-                    <a class='nav-link' href='/courses'>Courses</a>
-                    <a class='nav-link' href='/about-us'>About Us</a>
-                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link active' href='/feedback'>Feedback Center</a>
-                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
-                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
+                    <a class='nav-link' href='/'><i class="fas fa-home"></i><span>Home</span></a>
+                    <a class='nav-link' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                    <a class='nav-link' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
+                    <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
+                    <a class='nav-link active' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
+                    <a class='nav-link' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                    <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
                 </div>
                 <div class="theme-toggle">
                     <i class="fas fa-sun"></i>
@@ -1143,20 +1246,21 @@
         mirror: false
     });
 
-    // Mobile Menu Toggle
+    // Mobile Menu Toggle - IMPROVED IMPLEMENTATION
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const navLinks = document.getElementById('navLinks');
     const menuIcon = mobileMenuBtn.querySelector('i');
+    const header = document.querySelector('.header');
 
     mobileMenuBtn.addEventListener('click', function() {
         navLinks.classList.toggle('active');
         
         if (navLinks.classList.contains('active')) {
             menuIcon.className = 'fas fa-times';
-            document.body.style.overflow = 'hidden';
+            header.style.borderBottom = 'none';
         } else {
             menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         }
     });
 
@@ -1165,16 +1269,19 @@
         link.addEventListener('click', () => {
             navLinks.classList.remove('active');
             menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         });
     });
 
     // Close mobile menu when clicking outside
     document.addEventListener('click', function(event) {
-        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target) && !event.target.closest('.mobile-header-controls')) {
+        if (!navLinks.contains(event.target) && 
+            !mobileMenuBtn.contains(event.target) && 
+            !event.target.closest('.mobile-header-controls') &&
+            navLinks.classList.contains('active')) {
             navLinks.classList.remove('active');
             menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         }
     });
 
@@ -1210,6 +1317,12 @@
     desktopThemeToggle.addEventListener('change', function() {
         syncThemeToggles(this.checked);
     });
+
+    // Function to logout user and clear session
+    function logout() {
+        localStorage.clear();
+        window.location.href = "auth/login.html";
+    }
 
     // Dropdown functionality
     const dropdownBtn = document.getElementById('dropdownBtn');
@@ -1439,7 +1552,7 @@
         if (window.innerWidth > 768) {
             navLinks.classList.remove('active');
             menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
+            header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
         }
     });
 
@@ -1560,18 +1673,16 @@
 
     // Console log for debugging
     console.log(`
-    📝 FEEDBACK CENTER - Ready!
+    📝 FEEDBACK CENTER - Hamburger Menu Updated!
        
-       ✅ Feedback Form Integration Complete
-       ✅ Instagram Reel Card Added
-       ✅ Dropdown Instructions Working
-       ✅ Mobile Responsive Design
-       ✅ Theme Toggle Synchronized
-       ✅ Smooth Animations Active
-       ✅ Custom Cursor Enabled
-       ✅ WebGL Background Running
+       ✅ Hamburger Menu Updated to Match Screenshots
+       ✅ Desktop Navigation with Icons
+       ✅ Mobile Navigation with Icons
+       ✅ Active State for Feedback Center
+       ✅ Smooth Transitions and Animations
+       ✅ Perfect Responsiveness for All Devices
        
-       Ready to collect feedback! 🚀
+       Navigation Optimized for Both Desktop and Mobile! ⚡
     `);
 
     // Disable right click and keyboard shortcuts for security
@@ -1657,6 +1768,3 @@
     
 </body>
 </html>
-
-
-
