@@ -151,7 +151,7 @@
             }
         }
 
-        /* HEADER WITH CLEAN MOBILE NAVIGATION */
+        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
         .header {
           position: fixed;
           top: 0;
@@ -163,6 +163,7 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: var(--spacing-sm) 0;
           width: 100%;
+          transition: all 0.3s ease;
         }
 
         .header .container {
@@ -198,7 +199,7 @@
 
         .nav-links {
           display: flex;
-          gap: var(--spacing-lg);
+          gap: var(--spacing-md);
           align-items: center;
         }
 
@@ -209,6 +210,10 @@
           transition: color 0.3s ease;
           position: relative;
           padding: 0.5rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.3rem;
         }
 
         .nav-link:hover,
@@ -230,6 +235,15 @@
         .nav-link:hover::after,
         .nav-link.active::after {
           width: 100%;
+        }
+
+        .nav-link i {
+          font-size: 1.2rem;
+        }
+
+        .nav-link span {
+          font-size: 0.8rem;
+          font-weight: 500;
         }
 
         .theme-toggle {
@@ -288,7 +302,14 @@
           gap: var(--spacing-sm);
         }
 
-        /* CLEAN MOBILE NAVIGATION STYLES */
+        /* DESKTOP NAVIGATION STYLES */
+        @media (min-width: 769px) {
+          .nav-links {
+            gap: var(--spacing-lg);
+          }
+        }
+
+        /* MOBILE NAVIGATION STYLES */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
@@ -301,34 +322,40 @@
           .nav-links {
             position: fixed;
             top: 70px;
-            left: -100%;
+            left: 0;
             width: 100%;
-            height: calc(100vh - 70px);
             background: var(--bg);
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
+            align-items: stretch;
             gap: 0;
-            transition: left 0.3s ease;
-            padding: var(--spacing-xl) var(--spacing-md);
+            transition: all 0.3s ease;
+            padding: 0;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            overflow-y: auto;
+            max-height: 0;
+            overflow: hidden;
+            z-index: 999;
           }
 
           .nav-links.active {
-            left: 0;
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: var(--spacing-md) 0;
           }
 
           .nav-link {
             font-size: 1.1rem;
-            padding: var(--spacing-md) 0;
-            text-align: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
             width: 100%;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 0;
             background: none;
             border-radius: 0;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
           }
 
           .nav-link:last-child {
@@ -339,11 +366,13 @@
             color: var(--primary);
             background: var(--surface);
             transform: none;
+            padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
           }
 
           .nav-link.active {
             color: var(--primary);
             background: var(--surface);
+            font-weight: 600;
           }
 
           .nav-link::after {
@@ -371,6 +400,13 @@
           input:checked + .slider:before {
             transform: translateX(19px);
           }
+          
+          /* Add icons to mobile nav links */
+          .nav-link i {
+            margin-right: var(--spacing-sm);
+            width: 20px;
+            text-align: center;
+          }
         }
 
         @media (max-width: 480px) {
@@ -384,13 +420,11 @@
 
           .nav-links {
             top: 65px;
-            height: calc(100vh - 65px);
-            padding: var(--spacing-lg) var(--spacing-sm);
           }
 
           .nav-link {
             font-size: 1rem;
-            padding: var(--spacing-sm) 0;
+            padding: var(--spacing-sm) var(--spacing-md);
           }
 
           .logo h2 a {
@@ -483,7 +517,7 @@
           gap: var(--spacing-xl);
         }
 
-                .category-card {
+        .category-card {
           background: var(--surface);
           backdrop-filter: blur(20px);
           border-radius: var(--radius-lg);
@@ -1000,9 +1034,30 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-                        <div class="logo">
+            <div class="logo">
                 <h2><a href='/'>TECH IN MY STYLE</a></h2>
             </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="nav">
+                <div class="nav-links" id="navLinks">
+                    <a class='nav-link' href='/'><i class="fas fa-home"></i><span>Home</span></a>
+                    <a class='nav-link active' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                    <a class='nav-link' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
+                    <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
+                    <a class='nav-link' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
+                    <a class='nav-link' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                    <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
+                </div>
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="desktopThemeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </nav>
             
             <!-- Mobile Header Controls -->
             <div class="mobile-header-controls">
@@ -1018,27 +1073,6 @@
                     <i class="fas fa-bars"></i>
                 </button>
             </div>
-            
-            <!-- Desktop Navigation -->
-            <nav class="nav">
-                <div class="nav-links" id="navLinks">
-                    <a class='nav-link' href='/'>Home</a>
-                    <a class='nav-link active' href='/courses'>Courses</a>
-                    <a class='nav-link' href='/about-us'>About Us</a>
-                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link' href='/feedback'>Feedback Center</a>
-                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
-                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
-                </div>
-                <div class="theme-toggle">
-                    <i class="fas fa-sun"></i>
-                    <label class="switch">
-                        <input type="checkbox" id="desktopThemeToggle">
-                        <span class="slider"></span>
-                    </label>
-                    <i class="fas fa-moon"></i>
-                </div>
-            </nav>
         </div>
     </header>
 
@@ -1339,20 +1373,21 @@
             offset: 20
         });
 
-        // Mobile Menu Toggle - CLEAN IMPLEMENTATION
+        // Mobile Menu Toggle - IMPROVED IMPLEMENTATION
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         const menuIcon = mobileMenuBtn.querySelector('i');
+        const header = document.querySelector('.header');
 
         mobileMenuBtn.addEventListener('click', function() {
             navLinks.classList.toggle('active');
             
             if (navLinks.classList.contains('active')) {
                 menuIcon.className = 'fas fa-times';
-                document.body.style.overflow = 'hidden';
+                header.style.borderBottom = 'none';
             } else {
                 menuIcon.className = 'fas fa-bars';
-                document.body.style.overflow = '';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
             }
         });
 
@@ -1361,7 +1396,7 @@
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.style.overflow = '';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
             });
         });
 
@@ -1369,10 +1404,11 @@
         document.addEventListener('click', function(event) {
             if (!navLinks.contains(event.target) && 
                 !mobileMenuBtn.contains(event.target) && 
-                !event.target.closest('.mobile-header-controls')) {
+                !event.target.closest('.mobile-header-controls') &&
+                navLinks.classList.contains('active')) {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.style.overflow = '';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
             }
         });
 
@@ -1745,22 +1781,22 @@
             if (window.innerWidth > 768) {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.style.overflow = '';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
             }
         });
 
         console.log(`
-        🎓 COURSES PAGE - Clean Mobile Navigation!
+        🎓 COURSES PAGE - Improved Desktop and Mobile Navigation!
            
-           ✅ Reverted to Clean Text-Based Navigation
-           ✅ Removed Button-Style Cards from Mobile Menu
-           ✅ All Navigation Items Properly Displayed
-           ✅ Clean Lines with Subtle Separators
-           ✅ Perfect Mobile Responsiveness
+           ✅ Fixed Desktop Navigation with Icons
+           ✅ All Navigation Items in Single Line
+           ✅ Clean and Organized Layout
+           ✅ Improved Mobile Navigation
            ✅ All Tabs Visible and Accessible
            ✅ Smooth Transitions and Animations
+           ✅ Perfect Responsiveness for All Devices
            
-           Mobile Navigation Cleaned & Optimized! ⚡
+           Navigation Optimized for Both Desktop and Mobile! ⚡
         `);
 
         // Disable developer tools and right-click
@@ -1802,6 +1838,3 @@
     </script>
 </body>
 </html>
-
-
-
