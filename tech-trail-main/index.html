@@ -375,10 +375,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           background: none;
           border: none;
           color: var(--text);
-          font-size: 1.5rem;
-          cursor: pointer;
-          padding: 0.5rem;
+          font-size: 1.8rem;
           z-index: 1001;
+          position: relative;
+          width: 40px;
+          height: 40px;
+          align-items: center;
+          justify-content: center;
+          border-radius: var(--radius-sm);
+          transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn:hover {
+          background: var(--surface);
+          color: var(--primary);
+        }
+
+        .mobile-menu-btn.active {
+          color: var(--primary);
         }
 
         .nav {
@@ -471,15 +485,35 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           transform: translateX(22px);
         }
         
-                .mobile-header-controls {
+        .mobile-header-controls {
           display: none;
           align-items: center;
           gap: var(--spacing-sm);
         }
 
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(10px);
+          opacity: 0;
+          visibility: hidden;
+          transition: all 0.3s ease;
+          z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+          opacity: 1;
+          visibility: visible;
+        }
+
         @media (max-width: 768px) {
           .mobile-menu-btn {
-            display: block;
+            display: flex;
           }
 
           .mobile-header-controls {
@@ -488,18 +522,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           .nav-links {
             position: fixed;
-            top: 70px;
+            top: 0;
             left: -100%;
-            width: 100%;
-            height: calc(100vh - 70px);
+            width: 280px;
+            height: 100vh;
             background: var(--bg);
             flex-direction: column;
             justify-content: flex-start;
-            align-items: center;
-            gap: var(--spacing-xl);
+            align-items: stretch;
+            gap: 0;
             transition: left 0.3s ease;
-            padding-top: var(--spacing-2xl);
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 80px 0 20px 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+            z-index: 1000;
+            overflow-y: auto;
           }
 
           .nav-links.active {
@@ -507,10 +544,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
 
           .nav-link {
-            font-size: 1.2rem;
-            padding: var(--spacing-md) 0;
-            text-align: center;
+            font-size: 1.1rem;
+            padding: var(--spacing-md) var(--spacing-xl);
+            text-align: left;
             width: 100%;
+            display: block;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0;
+          }
+
+          .nav-link:hover {
+            background: var(--surface);
+            color: var(--primary);
+            padding-left: calc(var(--spacing-xl) + 10px);
+          }
+
+          .nav-link::after {
+            display: none;
+          }
+
+          .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary);
+            transition: width 0.3s ease;
+          }
+
+          .nav-link:hover::before {
+            width: 4px;
+          }
+
+          .nav-link.active {
+            background: var(--surface);
+            color: var(--primary);
+          }
+
+          .nav-link.active::before {
+            width: 4px;
           }
 
           .nav .theme-toggle {
@@ -550,7 +626,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }
 
           .mobile-menu-btn {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
+            width: 35px;
+            height: 35px;
           }
 
           .switch {
@@ -565,6 +643,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           input:checked + .slider:before {
             transform: translateX(16px);
+          }
+
+          .nav-links {
+            width: 260px;
+          }
+
+          .nav-link {
+            font-size: 1rem;
+            padding: var(--spacing-sm) var(--spacing-lg);
+          }
+
+          .nav-link:hover {
+            padding-left: calc(var(--spacing-lg) + 8px);
           }
         }
 
@@ -1478,6 +1569,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <canvas id="webgl-canvas"></canvas>
     
+    <!-- Mobile Menu Overlay -->
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+    
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -1495,19 +1589,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </label>
                     <i class="fas fa-moon"></i>
                 </div>
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                <div class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
-                </button>
+                </div>
             </div>
             
             <!-- Desktop Navigation -->
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
-                    <a class='nav-link' href='/'>Home</a>
+                    <a class='nav-link active' href='/'>Home</a>
                     <a class='nav-link' href='/courses'>Courses</a>
                     <a class='nav-link' href='/about-us'>About Us</a>
                     <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link active' href='/feedback'>Feedback Center</a>
+                    <a class='nav-link' href='/feedback'>Feedback Center</a>
                     <a class='nav-link' href='/leaderboard'>Leaderboard</a>
                     <a class='nav-link' href='#' onclick="logout()">Logout</a>
                 </div>
@@ -1532,7 +1626,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h1>Learn to <span class="color-change">code</span> and <span class="color-change">create</span> with <span class="color-change">confidence</span></h1>
                 <div class="hero-buttons">
                     <a class='btn primary' href='/courses'>Explore Courses</a>
-                    <button class="btn secondary" onclick="scrollToSection('learn-more')">Learn More</button>
+                    <div class="btn secondary" onclick="scrollToSection('learn-more')">Learn More</div>
                 </div>
             </div>
         </div>
@@ -1590,7 +1684,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h3>HTML IN MY STYLE</h3>
                     <p>Master the building blocks of web development with comprehensive HTML training</p>
                     <a href="/HTML IN MY STYLE/index.html" title="Learn HTML Programming - Complete Tutorial">
-                        <button class="btn course-btn">Visit Course</button>
+                        <div class="btn course-btn">Visit Course</div>
                     </a>
                 </div>
             </article>
@@ -1604,7 +1698,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h3>CSS IN MY STYLE</h3>
                     <p>Create stunning designs and layouts with advanced CSS techniques</p>
                     <a href="/CSS IN MY STYLE/index.html" title="Learn CSS Styling - Complete Tutorial">
-                        <button class="btn course-btn">Visit Course</button>
+                        <div class="btn course-btn">Visit Course</div>
                     </a>
                 </div>
             </article>
@@ -1618,7 +1712,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     <h3>JAVASCRIPT BASIC IN MY STYLE</h3>
                     <p>Learn the building blocks of JavaScript, step by step</p>
                     <a href="/JAVASCRIPT IN MY STYLE - BASIC/index.html" title="Learn JavaScript Basic - Complete Tutorial">
-                        <button class="btn course-btn">Visit Course</button>
+                        <div class="btn course-btn">Visit Course</div>
                     </a>
                 </div>
             </article>
@@ -1848,7 +1942,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 body.removeAttribute('data-theme');
                 localStorage.setItem('theme', 'light');
             } else {
-                                body.setAttribute('data-theme', 'dark');
+                body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
             }
         }
@@ -1863,14 +1957,52 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             desktopThemeToggle.checked = true;
         }
 
-        // Mobile Menu Toggle
+        // Mobile Menu Toggle - FIXED VERSION
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
-
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.querySelector('i').classList.toggle('fa-bars');
-            mobileMenuBtn.querySelector('i').classList.toggle('fa-times');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        
+        function toggleMobileMenu() {
+            const isActive = navLinks.classList.contains('active');
+            
+            if (isActive) {
+                // Close menu
+                navLinks.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+                mobileMenuBtn.classList.remove('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+                document.body.style.overflow = '';
+            } else {
+                // Open menu
+                navLinks.classList.add('active');
+                mobileMenuOverlay.classList.add('active');
+                mobileMenuBtn.classList.add('active');
+                mobileMenuBtn.querySelector('i').classList.remove('fa-bars');
+                mobileMenuBtn.querySelector('i').classList.add('fa-times');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+        
+        // Close menu when clicking overlay
+        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+        
+        // Close menu when clicking on nav links (mobile)
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+        
+        // Close menu on window resize if window becomes larger
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+                toggleMobileMenu();
+            }
         });
 
         // WebGL Particle Animation
@@ -2179,7 +2311,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </script>
 </body>
 </html>
-
-
-
-          
