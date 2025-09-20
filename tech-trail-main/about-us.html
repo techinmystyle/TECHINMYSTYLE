@@ -1083,6 +1083,137 @@
         margin: 0 0 0.5em 0;
         color: #4e73df;
     }
+    
+    .mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.8rem;
+    z-index: 1001;
+    position: relative;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-btn:hover {
+    background: var(--surface);
+    color: var(--primary);
+}
+
+.mobile-menu-btn.active {
+    color: var(--primary);
+}
+
+.mobile-header-controls {
+    display: none;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+}
+
+.mobile-menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .mobile-header-controls {
+        display: flex;
+    }
+
+    .nav-links {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--bg);
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: stretch;
+        gap: 0;
+        transition: left 0.3s ease;
+        padding: 80px 0 20px 0;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: var(--shadow-xl);
+        z-index: 1000;
+        overflow-y: auto;
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    .nav-link {
+        font-size: 1.1rem;
+        padding: var(--spacing-md) var(--spacing-xl);
+        text-align: left;
+        width: 100%;
+        display: block;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        transition: all 0.3s ease;
+        position: relative;
+        margin: 0;
+    }
+
+    .nav-link:hover {
+        background: var(--surface);
+        color: var(--primary);
+        padding-left: calc(var(--spacing-xl) + 10px);
+    }
+
+    .nav-link::after {
+        display: none;
+    }
+
+    .nav-link::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 0;
+        height: 100%;
+        background: var(--primary);
+        transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::before {
+        width: 4px;
+    }
+
+    .nav-link.active {
+        background: var(--surface);
+        color: var(--primary);
+    }
+
+    .nav-link.active::before {
+        width: 4px;
+    }
+}
+
 </style>
 
 </head>
@@ -1095,20 +1226,24 @@
             <h2><a href='/'>TECH IN MY STYLE</a></h2>
         </div>
         
-        <!-- Mobile Header Controls -->
-        <div class="mobile-header-controls">
-            <div class="theme-toggle">
-                <i class="fas fa-sun"></i>
-                <label class="switch">
-                    <input type="checkbox" id="themeToggle">
-                    <span class="slider"></span>
-                </label>
-                <i class="fas fa-moon"></i>
-            </div>
-            <button class="mobile-menu-btn" id="mobileMenuBtn">
-                <i class="fas fa-bars"></i>
-            </button>
-        </div>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+<!-- Mobile Header Controls (Theme Toggle + Menu Button) -->
+<div class="mobile-header-controls">
+    <div class="theme-toggle">
+        <i class="fas fa-sun"></i>
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+        <i class="fas fa-moon"></i>
+    </div>
+    <div class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+    </div>
+</div>
+
         
         <!-- Desktop Navigation -->
         <nav class="nav">
@@ -1117,7 +1252,7 @@
                     <a class='nav-link' href='/courses'>Courses</a>
                     <a class='nav-link' href='/about-us'>About Us</a>
                     <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link active' href='/feedback'>Feedback Center</a>
+                    <a class='nav-link' href='/feedback'>Feedback Center</a>
                     <a class='nav-link' href='/leaderboard'>Leaderboard</a>
                     <a class='nav-link' href='#' onclick="logout()">Logout</a>
             </div>
@@ -1352,7 +1487,6 @@ Leads brand promotions and community engagement efforts. Provides technical assi
                     <h4>Quick Links</h4>
                     <a href="">HOME</a>
                     <a href='/courses'>COURSES</a>
-                    <a href='/certifications'>CERTIFICATIONS</a>
                     <a href='/about-us'>ABOUT US</a>
                     <a href='/stay-connected'>STAY CONNECTED</a>
                     <a href='/feedback'>Feedback-Center</a>
@@ -1400,40 +1534,53 @@ Leads brand promotions and community engagement efforts. Provides technical assi
         mirror: false
     });
 
-    // Mobile Menu Toggle
-    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-    const navLinks = document.getElementById('navLinks');
-    const menuIcon = mobileMenuBtn.querySelector('i');
+// Mobile Menu Toggle - FIXED VERSION
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const navLinks = document.getElementById('navLinks');
+const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
 
-    mobileMenuBtn.addEventListener('click', function() {
-        navLinks.classList.toggle('active');
-        
-        if (navLinks.classList.contains('active')) {
-            menuIcon.className = 'fas fa-times';
-            document.body.style.overflow = 'hidden';
-        } else {
-            menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
+function toggleMobileMenu() {
+    const isActive = navLinks.classList.contains('active');
+    
+    if (isActive) {
+        // Close menu
+        navLinks.classList.remove('active');
+        mobileMenuOverlay.classList.remove('active');
+        mobileMenuBtn.classList.remove('active');
+        mobileMenuBtn.querySelector('i').classList.remove('fa-times');
+        mobileMenuBtn.querySelector('i').classList.add('fa-bars');
+        document.body.style.overflow = '';
+    } else {
+        // Open menu
+        navLinks.classList.add('active');
+        mobileMenuOverlay.classList.add('active');
+        mobileMenuBtn.classList.add('active');
+        mobileMenuBtn.querySelector('i').classList.remove('fa-bars');
+        mobileMenuBtn.querySelector('i').classList.add('fa-times');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+// Close menu when clicking overlay
+mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
+
+// Close menu when clicking on nav links (mobile)
+document.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+        if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
+            toggleMobileMenu();
         }
     });
+});
 
-    // Close mobile menu when clicking on nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', () => {
-            navLinks.classList.remove('active');
-            menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
-        });
-    });
-
-    // Close mobile menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!navLinks.contains(event.target) && !mobileMenuBtn.contains(event.target) && !event.target.closest('.mobile-header-controls')) {
-            navLinks.classList.remove('active');
-            menuIcon.className = 'fas fa-bars';
-            document.body.style.overflow = '';
-        }
-    });
+// Close menu on window resize if window becomes larger
+window.addEventListener('resize', () => {
+    if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
+        toggleMobileMenu();
+    }
+});
 
     // Sync Theme Toggles
     const mobileThemeToggle = document.getElementById('themeToggle');
@@ -1467,6 +1614,14 @@ Leads brand promotions and community engagement efforts. Provides technical assi
     desktopThemeToggle.addEventListener('change', function() {
         syncThemeToggles(this.checked);
     });
+    
+            // Function to logout user and clear session
+        function logout() {
+            localStorage.clear();
+            window.location.href = "auth/login.html";
+        }
+
+
 
     // WebGL Animation with Three.js
     function initWebGL() {
