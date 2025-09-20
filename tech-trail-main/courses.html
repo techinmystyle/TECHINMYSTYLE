@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-        <!-- Favicon -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="tech-no bg.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
@@ -151,7 +151,7 @@
             }
         }
 
-        /* IMPROVED HEADER WITH BETTER MOBILE SUPPORT */
+        /* HEADER WITH CLEAN MOBILE NAVIGATION */
         .header {
           position: fixed;
           top: 0;
@@ -163,7 +163,6 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: var(--spacing-sm) 0;
           width: 100%;
-          height: 70px;
         }
 
         .header .container {
@@ -171,7 +170,6 @@
           justify-content: space-between;
           align-items: center;
           position: relative;
-          height: 100%;
         }
 
         .logo h2 a {
@@ -190,12 +188,6 @@
           cursor: pointer;
           padding: 0.5rem;
           z-index: 1001;
-          border-radius: var(--radius-sm);
-          transition: background-color 0.3s ease;
-        }
-
-        .mobile-menu-btn:hover {
-          background-color: var(--surface);
         }
 
         .nav {
@@ -296,68 +288,66 @@
           gap: var(--spacing-sm);
         }
 
-        /* MOBILE RESPONSIVE STYLES */
+        /* CLEAN MOBILE NAVIGATION STYLES */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
-            order: 2;
           }
 
           .mobile-header-controls {
             display: flex;
-            order: 1;
-          }
-
-          .logo {
-            flex: 1;
-            order: 0;
           }
 
           .nav-links {
             position: fixed;
             top: 70px;
-            left: 0;
-            width: 100vw;
+            left: -100%;
+            width: 100%;
             height: calc(100vh - 70px);
             background: var(--bg);
             flex-direction: column;
             justify-content: flex-start;
             align-items: center;
             gap: 0;
-            transition: transform 0.3s ease;
-            transform: translateX(-100%);
+            transition: left 0.3s ease;
             padding: var(--spacing-xl) var(--spacing-md);
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             overflow-y: auto;
-            z-index: 999;
           }
 
           .nav-links.active {
-            transform: translateX(0);
+            left: 0;
           }
 
           .nav-link {
             font-size: 1.1rem;
-            padding: var(--spacing-md) var(--spacing-lg);
+            padding: var(--spacing-md) 0;
             text-align: center;
             width: 100%;
-            max-width: 300px;
-            border-radius: var(--radius-md);
-            margin-bottom: var(--spacing-sm);
-            background: var(--surface);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0;
+            background: none;
+            border-radius: 0;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+          }
+
+          .nav-link:last-child {
+            border-bottom: none;
           }
 
           .nav-link:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-2px);
+            color: var(--primary);
+            background: var(--surface);
+            transform: none;
           }
 
           .nav-link.active {
-            background: var(--primary);
-            color: white;
+            color: var(--primary);
+            background: var(--surface);
+          }
+
+          .nav-link::after {
+            display: none;
           }
 
           .nav .theme-toggle {
@@ -381,11 +371,6 @@
           input:checked + .slider:before {
             transform: translateX(19px);
           }
-
-          /* Ensure proper stacking */
-          .header .container {
-            flex-wrap: nowrap;
-          }
         }
 
         @media (max-width: 480px) {
@@ -395,7 +380,6 @@
 
           .header {
             padding: 0.5rem 0;
-            height: 65px;
           }
 
           .nav-links {
@@ -406,8 +390,7 @@
 
           .nav-link {
             font-size: 1rem;
-            padding: var(--spacing-sm) var(--spacing-md);
-            margin-bottom: var(--spacing-xs);
+            padding: var(--spacing-sm) 0;
           }
 
           .logo h2 a {
@@ -416,7 +399,6 @@
 
           .mobile-menu-btn {
             font-size: 1.3rem;
-            padding: 0.3rem;
           }
 
           .switch {
@@ -432,11 +414,6 @@
           input:checked + .slider:before {
             transform: translateX(16px);
           }
-        }
-
-        /* Prevent body scroll when mobile menu is open */
-        body.mobile-menu-open {
-          overflow: hidden;
         }
 
         /* Hero Section */
@@ -483,8 +460,8 @@
             padding: 0 var(--spacing-sm);
           }
         }
-        
-                /* Course Categories */
+
+        /* Course Categories */
         .course-categories {
           padding: var(--spacing-2xl) 0;
         }
@@ -506,7 +483,7 @@
           gap: var(--spacing-xl);
         }
 
-        .category-card {
+                .category-card {
           background: var(--surface);
           backdrop-filter: blur(20px);
           border-radius: var(--radius-lg);
@@ -987,7 +964,7 @@
             padding: var(--spacing-md);
           }
 
-                    .footer-column h4 {
+          .footer-column h4 {
             font-size: 1.1rem;
           }
 
@@ -1023,7 +1000,7 @@
     <!-- Header -->
     <header class="header">
         <div class="container">
-            <div class="logo">
+                        <div class="logo">
                 <h2><a href='/'>TECH IN MY STYLE</a></h2>
             </div>
             
@@ -1292,7 +1269,7 @@
                         <li><span class="step-dot"></span>Databases (MySQL & JPA/Hibernate) <span class="step-desc">Integrate and manage data</span></li>
                         <li><span class="step-dot"></span>Frontend with Angular or React.js <span class="step-desc">Build scalable, interactive UIs</span></li>
                         <li><span class="step-dot"></span>User Authentication & Security <span class="step-desc">Secure your Java web apps</span></li>
-                                                <li><span class="step-dot"></span>Deployment <span class="step-desc">Deploy on AWS, Azure, or DigitalOcean</span></li>
+                        <li><span class="step-dot"></span>Deployment <span class="step-desc">Deploy on AWS, Azure, or DigitalOcean</span></li>
                         <li><span class="step-dot"></span>Capstone Project <span class="step-desc">Deliver a production-ready full-stack Java application</span></li>
                     </ul>
                     <div class="modern-path-note">This roadmap is a suggested learning journey for aspiring full-stack Java web developers.</div>
@@ -1309,7 +1286,7 @@
                     <h3>TECH IN MY STYLE</h3>
                     <p>Empowering the next generation of developers with hands-on learning experiences and industry-recognized certifications.</p>
                 </div>
-                <div class="footer-links">
+                                <div class="footer-links">
                     <div class="footer-column">
                         <h4>Quick Links</h4>
                         <a href="">HOME</a>
@@ -1362,7 +1339,7 @@
             offset: 20
         });
 
-        // Mobile Menu Toggle - IMPROVED
+        // Mobile Menu Toggle - CLEAN IMPLEMENTATION
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         const menuIcon = mobileMenuBtn.querySelector('i');
@@ -1372,11 +1349,9 @@
             
             if (navLinks.classList.contains('active')) {
                 menuIcon.className = 'fas fa-times';
-                document.body.classList.add('mobile-menu-open');
                 document.body.style.overflow = 'hidden';
             } else {
                 menuIcon.className = 'fas fa-bars';
-                document.body.classList.remove('mobile-menu-open');
                 document.body.style.overflow = '';
             }
         });
@@ -1386,7 +1361,6 @@
             link.addEventListener('click', () => {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.classList.remove('mobile-menu-open');
                 document.body.style.overflow = '';
             });
         });
@@ -1398,7 +1372,6 @@
                 !event.target.closest('.mobile-header-controls')) {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.classList.remove('mobile-menu-open');
                 document.body.style.overflow = '';
             }
         });
@@ -1488,21 +1461,16 @@
             let moveTimeout;
             
             document.addEventListener('mousemove', (event) => {
-                // Calculate mouse position
                 mouseX = (event.clientX / window.innerWidth - 0.5) * 0.05;
                 mouseY = (event.clientY / window.innerHeight - 0.5) * 0.05;
                 
-                // Set target rotation based on mouse position
                 targetRotationX = mouseY;
                 targetRotationY = mouseX;
                 
-                // Set moving flag
                 isMoving = true;
                 
-                // Clear previous timeout
                 clearTimeout(moveTimeout);
                 
-                // Set timeout to reset moving flag
                 moveTimeout = setTimeout(() => {
                     isMoving = false;
                 }, 1000);
@@ -1520,25 +1488,19 @@
             const animate = () => {
                 requestAnimationFrame(animate);
                 
-                // Very slow constant rotation when not moving
                 particlesMesh.rotation.x += 0.0002;
                 particlesMesh.rotation.y += 0.0002;
                 
-                // Smooth transition to target rotation when mouse moves
                 if (isMoving) {
-                    // Move towards target rotation
                     currentRotationX += (targetRotationX - currentRotationX) * 0.1;
                     currentRotationY += (targetRotationY - currentRotationY) * 0.1;
                     
-                    // Apply the rotation
                     particlesMesh.rotation.x += currentRotationX;
                     particlesMesh.rotation.y += currentRotationY;
                 } else {
-                    // Gradually return to static position
                     currentRotationX *= 0.95;
                     currentRotationY *= 0.95;
                     
-                    // Apply diminishing rotation
                     particlesMesh.rotation.x += currentRotationX;
                     particlesMesh.rotation.y += currentRotationY;
                 }
@@ -1579,7 +1541,6 @@
                 cursor.style.top = e.clientY + 'px';
             });
             
-            // Scale effect on clickable elements
             const clickableElements = document.querySelectorAll('a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch');
             clickableElements.forEach(element => {
                 element.addEventListener('mouseenter', () => {
@@ -1593,7 +1554,6 @@
                 });
             });
             
-            // Hide cursor when it leaves the window
             document.addEventListener('mouseout', (e) => {
                 if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
                     cursor.style.opacity = '0';
@@ -1603,7 +1563,6 @@
             });
         }
 
-        // Initialize custom cursor only on desktop
         if (window.innerWidth > 768) {
             initCustomCursor();
         }
@@ -1641,16 +1600,15 @@
             'Deep Learning': '/DL IN MY STYLE/index.html',
             'Artificial Intelligence': '/AI IN MY STYLE/index.html',
             'C Programming': '/C IN MY STYLE/index.html',
-            'Natural Language Processing': '#' // Coming soon
+            'Natural Language Processing': '#'
         };
 
-        // Course Enrollment with Redirect - Updated Logic
+        // Course Enrollment with Redirect
         document.querySelectorAll('.course-btn').forEach(button => {
             button.addEventListener('click', function() {
                 const courseCard = this.closest('.course-card');
                 const courseName = courseCard.querySelector('h3').textContent.trim();
                 
-                // Add ripple effect
                 const ripple = document.createElement('span');
                 ripple.classList.add('ripple');
                 this.appendChild(ripple);
@@ -1659,16 +1617,13 @@
                     ripple.remove();
                 }, 600);
                 
-                // Handle coming soon courses
                 if (this.textContent.trim() === 'Coming Soon') {
                     alert(`${courseName} is coming soon! Stay tuned for updates.`);
                     return;
                 }
-                                
-                // Get the course URL
+                
                 const courseUrl = courseUrls[courseName];
                 
-                // Redirect to course URL
                 if (courseUrl && courseUrl !== '#') {
                     window.open(courseUrl, '_blank');
                 } else {
@@ -1677,38 +1632,13 @@
             });
         });
 
-        // Map category cards to course sections
-        const categoryToCourse = {
-            'Frontend': {
-                'HTML': 'HTML Fundamentals',
-                'CSS': 'CSS',
-                'JS': 'JavaScript - Basic'
-            },
-            'Compiler Language': {
-                'JAVA': 'Java'
-            },
-            'Python': {
-                'Boost your python confidence': 'Python'
-            },
-            'Additionals': {
-                'ML': 'Machine Learning',
-                'DL': 'Deep Learning',
-                'AI': 'Artificial Intelligence',
-                'Data Science': 'Data Science'
-            }
-        };
-
-        // Add click event listeners to category cards
+        // Category card navigation
         document.querySelectorAll('.category-card').forEach(card => {
             card.addEventListener('click', function(event) {
                 const categoryTitle = this.querySelector('h3').textContent.trim();
-                const categoryText = this.querySelector('p').textContent.trim();
-                
-                // Determine which course to navigate to based on click target
-                let targetCourseName = null;
-                
-                // Check if a specific technology was clicked
                 const clickedText = event.target.textContent.trim();
+                
+                let targetCourseName = null;
                 
                 if (categoryTitle === 'Frontend') {
                     if (clickedText === 'HTML') {
@@ -1718,7 +1648,6 @@
                     } else if (clickedText === 'JS') {
                         targetCourseName = 'JavaScript - Basic';
                     } else {
-                        // Default to HTML if they clicked elsewhere on the card
                         targetCourseName = 'HTML Fundamentals';
                     }
                 } else if (categoryTitle === 'Compiler Language') {
@@ -1735,12 +1664,10 @@
                     } else if (clickedText.includes('Data Science')) {
                         targetCourseName = 'Data Science';
                     } else {
-                        // Default to ML if they clicked elsewhere on the card
                         targetCourseName = 'Machine Learning';
                     }
                 }
                 
-                // Find the target course card
                 if (targetCourseName) {
                     const allCourseCards = document.querySelectorAll('.course-card');
                     let targetCourse = null;
@@ -1752,15 +1679,11 @@
                         }
                     });
                     
-                    // Scroll to the target course if found
                     if (targetCourse) {
-                        // Scroll to the courses section first
                         document.getElementById('allCourses').scrollIntoView({behavior: 'smooth'});
-                        // Then after a short delay, scroll to the specific course
                         setTimeout(() => {
                             targetCourse.scrollIntoView({behavior: 'smooth', block: 'center'});
                             
-                            // Add a highlight effect
                             targetCourse.classList.add('highlight-course');
                             setTimeout(() => {
                                 targetCourse.classList.remove('highlight-course');
@@ -1773,26 +1696,23 @@
 
         // Immediate load for visible sections
         document.addEventListener('DOMContentLoaded', function() {
-            // Load hero section immediately
             const heroSection = document.querySelector('.hero');
             if (heroSection) {
                 heroSection.style.opacity = '1';
                 heroSection.style.transform = 'translateY(0)';
             }
 
-            // Load course categories immediately
             const categoriesSection = document.querySelector('.course-categories');
             if (categoriesSection) {
                 categoriesSection.style.opacity = '1';
                 categoriesSection.style.transform = 'translateY(0)';
             }
 
-            // Prevent horizontal scroll
             document.body.style.overflowX = 'hidden';
             document.documentElement.style.overflowX = 'hidden';
         });
 
-        // Faster intersection observer for remaining sections
+        // Intersection observer for remaining sections
         const observerOptions = {
             threshold: 0.05,
             rootMargin: '0px 0px -10px 0px'
@@ -1807,7 +1727,6 @@
             });
         }, observerOptions);
 
-        // Apply to remaining sections
         document.querySelectorAll('.all-courses, .learning-path').forEach(section => {
             section.style.opacity = '0';
             section.style.transform = 'translateY(20px)';
@@ -1826,35 +1745,26 @@
             if (window.innerWidth > 768) {
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
-                document.body.classList.remove('mobile-menu-open');
                 document.body.style.overflow = '';
             }
         });
 
-        // Prevent touch scroll when mobile menu is open
-        document.addEventListener('touchmove', function(e) {
-            if (document.body.classList.contains('mobile-menu-open')) {
-                e.preventDefault();
-            }
-        }, { passive: false });
-
         console.log(`
-        🎓 COURSES PAGE - Mobile Optimized!
+        🎓 COURSES PAGE - Clean Mobile Navigation!
            
-           ✅ Fixed Mobile Navigation Menu
-           ✅ Proper Menu Positioning & Height
-           ✅ All Navigation Items Visible
-           ✅ Improved Touch Targets
-           ✅ Better Mobile Responsiveness
-           ✅ Enhanced Theme Toggle Placement
-           ✅ Smooth Menu Transitions
-           ✅ Body Scroll Prevention When Menu Open
+           ✅ Reverted to Clean Text-Based Navigation
+           ✅ Removed Button-Style Cards from Mobile Menu
+           ✅ All Navigation Items Properly Displayed
+           ✅ Clean Lines with Subtle Separators
+           ✅ Perfect Mobile Responsiveness
+           ✅ All Tabs Visible and Accessible
+           ✅ Smooth Transitions and Animations
            
-           Mobile Menu Issues RESOLVED! ⚡
+           Mobile Navigation Cleaned & Optimized! ⚡
         `);
 
         // Disable developer tools and right-click
-        document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
 
         document.onkeydown = function(e) {
             // Disable F12
@@ -1892,8 +1802,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
