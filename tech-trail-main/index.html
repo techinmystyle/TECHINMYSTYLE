@@ -182,38 +182,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     }
     </script>
 
-    <!-- Breadcrumb Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BreadcrumbList",
-      "itemListElement": [{
-        "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": "https://techinmystyle.com"
-      }]
-    }
-    </script>
-
-    <!-- Website Structured Data -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Tech In My Style",
-      "url": "https://techinmystyle.com",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": {
-          "@type": "EntryPoint",
-          "urlTemplate": "https://techinmystyle.com/search?q={search_term_string}"
-        },
-        "query-input": "required name=search_term_string"
-      }
-    }
-    </script>
-
     <style>
         :root {
           --primary-light: #2196F3;
@@ -344,6 +312,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           pointer-events: none;
         }
 
+        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
         .header {
           position: fixed;
           top: 0;
@@ -355,6 +324,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           padding: var(--spacing-sm) 0;
           width: 100%;
+          transition: all 0.3s ease;
         }
 
         .header .container {
@@ -375,24 +345,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           background: none;
           border: none;
           color: var(--text);
-          font-size: 1.8rem;
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
           z-index: 1001;
-          position: relative;
-          width: 40px;
-          height: 40px;
-          align-items: center;
-          justify-content: center;
-          border-radius: var(--radius-sm);
-          transition: all 0.3s ease;
-        }
-
-        .mobile-menu-btn:hover {
-          background: var(--surface);
-          color: var(--primary);
-        }
-
-        .mobile-menu-btn.active {
-          color: var(--primary);
         }
 
         .nav {
@@ -403,7 +359,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
         .nav-links {
           display: flex;
-          gap: var(--spacing-lg);
+          gap: var(--spacing-md);
           align-items: center;
         }
 
@@ -414,9 +370,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           transition: color 0.3s ease;
           position: relative;
           padding: 0.5rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.3rem;
         }
 
-        .nav-link:hover {
+        .nav-link:hover,
+        .nav-link.active {
           color: var(--primary);
         }
 
@@ -431,8 +392,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           transition: width 0.3s ease;
         }
 
-        .nav-link:hover::after {
+        .nav-link:hover::after,
+        .nav-link.active::after {
           width: 100%;
+        }
+
+        .nav-link i {
+          font-size: 1.2rem;
+        }
+
+        .nav-link span {
+          font-size: 0.8rem;
+          font-weight: 500;
         }
 
         .theme-toggle {
@@ -484,36 +455,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         input:checked + .slider:before {
           transform: translateX(22px);
         }
-        
+
         .mobile-header-controls {
           display: none;
           align-items: center;
           gap: var(--spacing-sm);
         }
 
-        /* Mobile Menu Overlay */
-        .mobile-menu-overlay {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background: rgba(0, 0, 0, 0.5);
-          backdrop-filter: blur(10px);
-          opacity: 0;
-          visibility: hidden;
-          transition: all 0.3s ease;
-          z-index: 999;
+        /* DESKTOP NAVIGATION STYLES */
+        @media (min-width: 769px) {
+          .nav-links {
+            gap: var(--spacing-lg);
+          }
         }
 
-        .mobile-menu-overlay.active {
-          opacity: 1;
-          visibility: visible;
-        }
-
+        /* MOBILE NAVIGATION STYLES */
         @media (max-width: 768px) {
           .mobile-menu-btn {
-            display: flex;
+            display: block;
           }
 
           .mobile-header-controls {
@@ -522,71 +481,62 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           .nav-links {
             position: fixed;
-            top: 0;
-            left: -100%;
-            width: 280px;
-            height: 100vh;
+            top: 70px;
+            left: 0;
+            width: 100%;
             background: var(--bg);
             flex-direction: column;
             justify-content: flex-start;
             align-items: stretch;
             gap: 0;
-            transition: left 0.3s ease;
-            padding: 80px 0 20px 0;
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow-xl);
-            z-index: 1000;
-            overflow-y: auto;
+            transition: all 0.3s ease;
+            padding: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 0;
+            overflow: hidden;
+            z-index: 999;
           }
 
           .nav-links.active {
-            left: 0;
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: var(--spacing-md) 0;
           }
 
           .nav-link {
             font-size: 1.1rem;
-            padding: var(--spacing-md) var(--spacing-xl);
+            padding: var(--spacing-md) var(--spacing-lg);
             text-align: left;
             width: 100%;
-            display: block;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0;
+            background: none;
+            border-radius: 0;
             transition: all 0.3s ease;
-            position: relative;
-            margin: 0;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+          }
+
+          .nav-link:last-child {
+            border-bottom: none;
           }
 
           .nav-link:hover {
-            background: var(--surface);
             color: var(--primary);
-            padding-left: calc(var(--spacing-xl) + 10px);
+            background: var(--surface);
+            transform: none;
+            padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+          }
+
+          .nav-link.active {
+            color: var(--primary);
+            background: var(--surface);
+            font-weight: 600;
           }
 
           .nav-link::after {
             display: none;
-          }
-
-          .nav-link::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 0;
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.3s ease;
-          }
-
-          .nav-link:hover::before {
-            width: 4px;
-          }
-
-          .nav-link.active {
-            background: var(--surface);
-            color: var(--primary);
-          }
-
-          .nav-link.active::before {
-            width: 4px;
           }
 
           .nav .theme-toggle {
@@ -610,6 +560,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           input:checked + .slider:before {
             transform: translateX(19px);
           }
+          
+          /* Add icons to mobile nav links */
+          .nav-link i {
+            margin-right: var(--spacing-sm);
+            width: 20px;
+            text-align: center;
+          }
         }
 
         @media (max-width: 480px) {
@@ -621,14 +578,21 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
             padding: 0.5rem 0;
           }
 
+          .nav-links {
+            top: 65px;
+          }
+
+          .nav-link {
+            font-size: 1rem;
+            padding: var(--spacing-sm) var(--spacing-md);
+          }
+
           .logo h1 {
             font-size: 0.9rem;
           }
 
           .mobile-menu-btn {
-            font-size: 1.5rem;
-            width: 35px;
-            height: 35px;
+            font-size: 1.3rem;
           }
 
           .switch {
@@ -643,19 +607,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
           input:checked + .slider:before {
             transform: translateX(16px);
-          }
-
-          .nav-links {
-            width: 260px;
-          }
-
-          .nav-link {
-            font-size: 1rem;
-            padding: var(--spacing-sm) var(--spacing-lg);
-          }
-
-          .nav-link:hover {
-            padding-left: calc(var(--spacing-lg) + 8px);
           }
         }
 
@@ -1569,9 +1520,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
     <canvas id="webgl-canvas"></canvas>
     
-    <!-- Mobile Menu Overlay -->
-    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
-    
     <!-- Header -->
     <header class="header">
         <div class="container">
@@ -1579,7 +1527,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <h1>TECH IN MY STYLE</h1>
             </div>
             
-            <!-- Mobile Header Controls (Theme Toggle + Menu Button) -->
+            <!-- Mobile Header Controls -->
             <div class="mobile-header-controls">
                 <div class="theme-toggle">
                     <i class="fas fa-sun"></i>
@@ -1589,23 +1537,22 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                     </label>
                     <i class="fas fa-moon"></i>
                 </div>
-                <div class="mobile-menu-btn" id="mobileMenuBtn">
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
-                </div>
+                </button>
             </div>
             
             <!-- Desktop Navigation -->
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
-                    <a class='nav-link active' href='/'>Home</a>
-                    <a class='nav-link' href='/courses'>Courses</a>
-                    <a class='nav-link' href='/about-us'>About Us</a>
-                    <a class='nav-link' href='/stay-connected'>Stay Connected</a>
-                    <a class='nav-link' href='/feedback'>Feedback Center</a>
-                    <a class='nav-link' href='/leaderboard'>Leaderboard</a>
-                    <a class='nav-link' href='#' onclick="logout()">Logout</a>
+                    <a class='nav-link active' href='/'><i class="fas fa-home"></i><span>Home</span></a>
+                    <a class='nav-link' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                    <a class='nav-link' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
+                    <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
+                    <a class='nav-link' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
+                    <a class='nav-link' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                    <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
                 </div>
-                <!-- Desktop Theme Toggle -->
                 <div class="theme-toggle">
                     <i class="fas fa-sun"></i>
                     <label class="switch">
@@ -1932,23 +1879,70 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             once: true
         });
 
+        // Mobile Menu Toggle - IMPROVED IMPLEMENTATION
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+        const header = document.querySelector('.header');
+
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
+            
+            if (navLinks.classList.contains('active')) {
+                menuIcon.className = 'fas fa-times';
+                header.style.borderBottom = 'none';
+            } else {
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Close mobile menu when clicking on nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!navLinks.contains(event.target) && 
+                !mobileMenuBtn.contains(event.target) && 
+                !event.target.closest('.mobile-header-controls') &&
+                navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
         // Theme Toggle
         const themeToggle = document.getElementById('themeToggle');
         const desktopThemeToggle = document.getElementById('desktopThemeToggle');
         const body = document.body;
 
-        function toggleTheme() {
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                localStorage.setItem('theme', 'light');
-            } else {
+        function syncThemeToggles(isDark) {
+            themeToggle.checked = isDark;
+            desktopThemeToggle.checked = isDark;
+            
+            if (isDark) {
                 body.setAttribute('data-theme', 'dark');
                 localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
             }
         }
 
-        themeToggle.addEventListener('change', toggleTheme);
-        desktopThemeToggle.addEventListener('change', toggleTheme);
+        themeToggle.addEventListener('change', function() {
+            syncThemeToggles(this.checked);
+        });
+
+        desktopThemeToggle.addEventListener('change', function() {
+            syncThemeToggles(this.checked);
+        });
 
         // Load theme from localStorage
         if (localStorage.getItem('theme') === 'dark') {
@@ -1956,54 +1950,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             themeToggle.checked = true;
             desktopThemeToggle.checked = true;
         }
-
-        // Mobile Menu Toggle - FIXED VERSION
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
-        
-        function toggleMobileMenu() {
-            const isActive = navLinks.classList.contains('active');
-            
-            if (isActive) {
-                // Close menu
-                navLinks.classList.remove('active');
-                mobileMenuOverlay.classList.remove('active');
-                mobileMenuBtn.classList.remove('active');
-                mobileMenuBtn.querySelector('i').classList.remove('fa-times');
-                mobileMenuBtn.querySelector('i').classList.add('fa-bars');
-                document.body.style.overflow = '';
-            } else {
-                // Open menu
-                navLinks.classList.add('active');
-                mobileMenuOverlay.classList.add('active');
-                mobileMenuBtn.classList.add('active');
-                mobileMenuBtn.querySelector('i').classList.remove('fa-bars');
-                mobileMenuBtn.querySelector('i').classList.add('fa-times');
-                document.body.style.overflow = 'hidden';
-            }
-        }
-        
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-        
-        // Close menu when clicking overlay
-        mobileMenuOverlay.addEventListener('click', toggleMobileMenu);
-        
-        // Close menu when clicking on nav links (mobile)
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                if (window.innerWidth <= 768 && navLinks.classList.contains('active')) {
-                    toggleMobileMenu();
-                }
-            });
-        });
-        
-        // Close menu on window resize if window becomes larger
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768 && navLinks.classList.contains('active')) {
-                toggleMobileMenu();
-            }
-        });
 
         // WebGL Particle Animation
         function initWebGL() {
@@ -2258,6 +2204,29 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             // Disable Ctrl+Shift+K (Firefox)
             if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
         };
+
+        // Handle window resize for mobile optimization
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        console.log(`
+        🎓 HOME PAGE - Improved Desktop and Mobile Navigation!
+           
+           ✅ Fixed Desktop Navigation with Icons
+           ✅ All Navigation Items in Single Line
+           ✅ Clean and Organized Layout
+           ✅ Improved Mobile Navigation
+           ✅ All Tabs Visible and Accessible
+           ✅ Smooth Transitions and Animations
+           ✅ Perfect Responsiveness for All Devices
+           
+           Navigation Optimized for Both Desktop and Mobile! ⚡
+        `);
 
         // Service Worker Registration for PWA
         if ('serviceWorker' in navigator) {
