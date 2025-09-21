@@ -516,6 +516,7 @@
         .leaderboard-table-wrap {
           overflow-x: auto;
           margin: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+          -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -524,6 +525,7 @@
           margin-bottom: var(--spacing-sm);
           background: transparent;
           font-size: 16px;
+          min-width: 500px;
         }
 
         th {
@@ -537,6 +539,7 @@
           border-bottom: none;
           user-select: none;
           position: relative;
+          white-space: nowrap;
         }
 
         th::after {
@@ -556,6 +559,7 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           background: transparent;
           transition: all 0.3s ease;
+          white-space: nowrap;
         }
 
         td.user-cell {
@@ -564,6 +568,7 @@
           gap: var(--spacing-md);
           justify-content: flex-start;
           text-align: left;
+          white-space: nowrap;
         }
 
         .rank-medal {
@@ -678,6 +683,9 @@
           padding: var(--spacing-lg) var(--spacing-md);
           margin-bottom: var(--spacing-lg);
           border: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
         #progressModal {
@@ -755,15 +763,15 @@
         }
 
         .modal-table-wrap, .modal-chart-wrap, .chart-card {
-          flex: 1 1 320px;
-          min-width: 300px;
-          max-width: 420px;
+          flex: 1 1 300px;
+          min-width: 280px;
+          max-width: 400px;
         }
 
         .modal-summary {
-          flex: 1 1 340px;
-          min-width: 300px;
-          max-width: 420px;
+          flex: 1 1 300px;
+          min-width: 280px;
+          max-width: 400px;
           display: flex;
           flex-direction: column;
           align-items: stretch;
@@ -817,6 +825,24 @@
         .chart-card canvas {
           width: 100% !important;
           background: transparent !important;
+          max-height: 300px;
+        }
+
+        /* RESPONSIVE FIXES FOR ALL SCREEN SIZES */
+        @media (max-width: 1200px) {
+          .leaderboard-container {
+            margin: var(--spacing-lg) var(--spacing-md);
+          }
+        }
+
+        @media (max-width: 992px) {
+          .leaderboard-container {
+            margin: var(--spacing-md);
+          }
+          
+          .leaderboard-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+          }
         }
 
         @media (max-width: 768px) {
@@ -825,18 +851,18 @@
           }
 
           .leaderboard-container {
-            margin: var(--spacing-lg) var(--spacing-md);
+            margin: var(--spacing-sm);
             border-radius: var(--radius-lg);
           }
 
           .leaderboard-header {
-            padding: var(--spacing-xl) var(--spacing-lg);
+            padding: var(--spacing-lg) var(--spacing-md);
           }
 
           .controls {
             flex-direction: column;
-            gap: var(--spacing-md);
-            padding: var(--spacing-lg);
+            gap: var(--spacing-sm);
+            padding: var(--spacing-md);
           }
 
           .controls > * {
@@ -844,12 +870,24 @@
           }
 
           .leaderboard-table-wrap {
-            margin: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+            margin: 0 var(--spacing-sm) var(--spacing-md) var(--spacing-sm);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+          }
+
+          table {
+            font-size: 14px;
+            min-width: 400px;
+          }
+
+          th, td {
+            padding: var(--spacing-sm);
           }
 
           .back-btn {
-            margin: var(--spacing-lg);
+            margin: var(--spacing-sm);
             text-align: center;
+            width: calc(100% - var(--spacing-sm) * 2);
           }
 
           td.user-cell {
@@ -864,19 +902,112 @@
 
           #progressModal > div {
             max-height: 90vh;
-            padding: var(--spacing-xl) var(--spacing-lg);
-            gap: var(--spacing-lg);
+            padding: var(--spacing-md);
+            gap: var(--spacing-md);
+            width: 95%;
+            border-radius: var(--radius-lg);
           }
 
           .modal-content-bottom {
             flex-direction: column;
-            gap: var(--spacing-lg);
+            gap: var(--spacing-md);
           }
 
           .modal-table-wrap, .modal-chart-wrap, .chart-card, .modal-summary {
             flex: none;
             min-width: auto;
             max-width: none;
+            width: 100%;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .leaderboard-table-wrap {
+            margin: 0 var(--spacing-xs) var(--spacing-sm) var(--spacing-xs);
+          }
+
+          table {
+            font-size: 13px;
+            min-width: 350px;
+          }
+
+          th, td {
+            padding: var(--spacing-xs);
+          }
+
+          .controls {
+            padding: var(--spacing-sm);
+          }
+
+          #progressModal > div {
+            padding: var(--spacing-sm);
+          }
+
+          .modal-content-bottom {
+            gap: var(--spacing-sm);
+          }
+        }
+
+        @media (max-width: 480px) {
+          .leaderboard-container {
+            margin: var(--spacing-xs);
+            border-radius: var(--radius-md);
+          }
+
+          .leaderboard-header {
+            padding: var(--spacing-md);
+          }
+
+          .leaderboard-header h1 {
+            font-size: 1.5rem;
+          }
+
+          .leaderboard-header p {
+            font-size: 0.9rem;
+          }
+
+          table {
+            font-size: 12px;
+            min-width: 300px;
+          }
+
+          .avatar {
+            width: 28px;
+            height: 28px;
+            font-size: 0.9rem;
+          }
+
+          .controls {
+            padding: var(--spacing-xs);
+          }
+
+          .back-btn {
+            margin: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: 14px;
+          }
+
+          #progressModal > div {
+            padding: var(--spacing-xs);
+          }
+        }
+
+        @media (max-width: 380px) {
+          .leaderboard-header h1 {
+            font-size: 1.3rem;
+          }
+
+          .leaderboard-header p {
+            font-size: 0.8rem;
+          }
+
+          table {
+            font-size: 11px;
+            min-width: 280px;
+          }
+
+          th, td {
+            padding: 4px;
           }
         }
     </style>
@@ -897,36 +1028,36 @@
                 <h1>🏆 Tech Leaderboard</h1>
             </div>
             <nav class="nav">
-<div class="nav-links" id="navLinks">
-    <a href="/" class="nav-link active">
-        <i class="fas fa-home"></i>
-        <span>Home</span>
-    </a>
-    <a href="/courses" class="nav-link">
-        <i class="fas fa-book"></i>
-        <span>Courses</span>
-    </a>
-    <a href="/about-us" class="nav-link">
-        <i class="fas fa-info-circle"></i>
-        <span>About Us</span>
-    </a>
-    <a href="/stay-connected" class="nav-link">
-        <i class="fas fa-users"></i>
-        <span>Stay Connected</span>
-    </a>
-    <a href="/feedback" class="nav-link">
-        <i class="fas fa-comment"></i>
-        <span>Feedback Center</span>
-    </a>
-    <a href="/leaderboard" class="nav-link">
-        <i class="fas fa-trophy"></i>
-        <span>Leaderboard</span>
-    </a>
-    <a href="#" class="nav-link" onclick="logout()">
-        <i class="fas fa-arrow-right-from-bracket"></i>
-        <span>Logout</span>
-    </a>
-</div>
+                <div class="nav-links" id="navLinks">
+                    <a href="/" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                    <a href="/courses" class="nav-link">
+                        <i class="fas fa-book"></i>
+                        <span>Courses</span>
+                    </a>
+                    <a href="/about-us" class="nav-link">
+                        <i class="fas fa-info-circle"></i>
+                        <span>About Us</span>
+                    </a>
+                    <a href="/stay-connected" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        <span>Stay Connected</span>
+                    </a>
+                    <a href="/feedback" class="nav-link">
+                        <i class="fas fa-comment"></i>
+                        <span>Feedback Center</span>
+                    </a>
+                    <a href="/leaderboard" class="nav-link">
+                        <i class="fas fa-trophy"></i>
+                        <span>Leaderboard</span>
+                    </a>
+                    <a href="#" class="nav-link" onclick="logout()">
+                        <i class="fas fa-arrow-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
 
                 <div class="theme-toggle">
                     <label class="switch">
@@ -1003,7 +1134,7 @@
                     </table>
                 </div>
                 <div class="modal-chart-wrap chart-card">
-                    <canvas id="userProgressChart" width="360" height="300"></canvas>
+                    <canvas id="userProgressChart"></canvas>
                 </div>
                 <div class="modal-summary chart-card">
                     <select id="courseSummarySelect" aria-label="Select course for summary"></select>
@@ -1023,24 +1154,24 @@
                             </tr>
                         </tbody>
                     </table>
-                    <canvas id="courseSummaryPie" width="280" height="250"></canvas>
+                    <canvas id="courseSummaryPie"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // WebGL Particle Animation
+        // Optimized Particle Animation with Square Particles
         class ParticleSystem {
             constructor(canvas) {
                 this.canvas = canvas;
-                this.ctx = canvas.gl || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                this.ctx = canvas.getContext('2d');
                 this.particles = [];
-                this.particleCount = 1000;
+                this.particleCount = 20; // Reduced for better performance
                 this.mouse = { x: 0, y: 0 };
+                this.animationId = null;
                 
                 this.resizeCanvas();
-                this.initWebGL();
                 this.createParticles();
                 this.bindEvents();
                 this.animate();
@@ -1051,207 +1182,114 @@
                 this.canvas.height = window.innerHeight;
             }
 
-            initWebGL() {
-                if (!this.ctx) {
-                    // Fallback to 2D context
-                    this.ctx = this.canvas.getContext('2d');
-                    this.isWebGL = false;
-                    return;
-                }
-                
-                this.isWebGL = true;
-                const gl = this.ctx;
-                
-                // Vertex shader
-                const vertexShaderSource = `
-                    attribute vec2 a_position;
-                    attribute float a_size;
-                    attribute float a_alpha;
-                    uniform vec2 u_resolution;
-                    varying float v_alpha;
-                    
-                    void main() {
-                        vec2 zeroToOne = a_position / u_resolution;
-                        vec2 zeroToTwo = zeroToOne * 2.0;
-                        vec2 clipSpace = zeroToTwo - 1.0;
-                        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
-                        gl_PointSize = a_size;
-                        v_alpha = a_alpha;
-                    }
-                `;
-                
-                // Fragment shader
-                const fragmentShaderSource = `
-                    precision mediump float;
-                    varying float v_alpha;
-                    uniform vec3 u_color;
-                    
-                    void main() {
-                        float dist = length(gl_PointCoord - vec2(0.5));
-                        float alpha = v_alpha * (1.0 - smoothstep(0.0, 0.5, dist));
-                        gl_FragColor = vec4(u_color, alpha);
-                    }
-                `;
-                
-                this.program = this.createProgram(gl, vertexShaderSource, fragmentShaderSource);
-                this.setupAttributes();
-            }
-
-            createShader(gl, type, source) {
-                const shader = gl.createShader(type);
-                gl.shaderSource(shader, source);
-                gl.compileShader(shader);
-                return shader;
-            }
-
-            createProgram(gl, vertexSource, fragmentSource) {
-                const vertexShader = this.createShader(gl, gl.VERTEX_SHADER, vertexSource);
-                const fragmentShader = this.createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
-                
-                const program = gl.createProgram();
-                gl.attachShader(program, vertexShader);
-                gl.attachShader(program, fragmentShader);
-                gl.linkProgram(program);
-                
-                return program;
-            }
-
-            setupAttributes() {
-                const gl = this.ctx;
-                
-                this.positionBuffer = gl.createBuffer();
-                this.sizeBuffer = gl.createBuffer();
-                this.alphaBuffer = gl.createBuffer();
-                
-                this.positionLocation = gl.getAttribLocation(this.program, 'a_position');
-                this.sizeLocation = gl.getAttribLocation(this.program, 'a_size');
-                this.alphaLocation = gl.getAttribLocation(this.program, 'a_alpha');
-                
-                this.resolutionLocation = gl.getUniformLocation(this.program, 'u_resolution');
-                this.colorLocation = gl.getUniformLocation(this.program, 'u_color');
-            }
-
             createParticles() {
                 for (let i = 0; i < this.particleCount; i++) {
                     this.particles.push({
                         x: Math.random() * this.canvas.width,
                         y: Math.random() * this.canvas.height,
-                        vx: (Math.random() - 0.5) * 0.5,
-                        vy: (Math.random() - 0.5) * 0.5,
-                        size: Math.random() * 3 + 1,
-                        alpha: Math.random() * 0.5 + 0.2,
-                        baseAlpha: Math.random() * 0.5 + 0.2
+                        size: Math.random() * 20 + 15, // Larger size for squares
+                        speedX: (Math.random() - 0.5) * 0.3, // Slower movement
+                        speedY: (Math.random() - 0.5) * 0.3,
+                        color: this.getRandomColor(),
+                        opacity: Math.random() * 0.4 + 0.1
                     });
                 }
             }
 
+            getRandomColor() {
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                const baseColor = isDark ? '179, 136, 255' : '33, 150, 243';
+                return `rgba(${baseColor}, ${Math.random() * 0.3 + 0.1})`;
+            }
+
             updateParticles() {
                 this.particles.forEach(particle => {
-                    particle.x += particle.vx;
-                    particle.y += particle.vy;
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
                     
-                    if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
-                    if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+                    // Bounce off edges
+                    if (particle.x <= 0 || particle.x >= this.canvas.width) {
+                        particle.speedX *= -1;
+                    }
+                    if (particle.y <= 0 || particle.y >= this.canvas.height) {
+                        particle.speedY *= -1;
+                    }
                     
+                    // Mouse interaction - simplified for performance
                     const dx = this.mouse.x - particle.x;
                     const dy = this.mouse.y - particle.y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
                     
-                    if (distance < 100) {
-                        particle.alpha = particle.baseAlpha + (1 - distance / 100) * 0.5;
-                    } else {
-                        particle.alpha = particle.baseAlpha;
+                    if (distance < 150) {
+                        const force = (150 - distance) / 150;
+                        particle.x -= dx * force * 0.02;
+                        particle.y -= dy * force * 0.02;
                     }
                 });
             }
 
             render() {
-                if (this.isWebGL) {
-                    this.renderWebGL();
-                } else {
-                    this.renderCanvas2D();
-                }
-            }
-
-            renderWebGL() {
-                const gl = this.ctx;
+                // Clear canvas with fade effect
+                this.ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg');
+                this.ctx.globalAlpha = 0.1;
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                this.ctx.globalAlpha = 1;
                 
-                gl.viewport(0, 0, this.canvas.width, this.canvas.height);
-                gl.clearColor(0, 0, 0, 0);
-                gl.clear(gl.COLOR_BUFFER_BIT);
-                
-                gl.useProgram(this.program);
-                
-                // Set uniforms
-                gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height);
-                const isDark = document.body.getAttribute('data-theme') === 'dark';
-                gl.uniform3f(this.colorLocation, 
-                    isDark ? 0.7 : 0.13, 
-                    isDark ? 0.53 : 0.46, 
-                    isDark ? 1.0 : 0.95
-                );
-                
-                // Prepare data
-                const positions = new Float32Array(this.particles.length * 2);
-                const sizes = new Float32Array(this.particles.length);
-                const alphas = new Float32Array(this.particles.length);
-                
-                for (let i = 0; i < this.particles.length; i++) {
-                    const particle = this.particles[i];
-                    positions[i * 2] = particle.x;
-                    positions[i * 2 + 1] = particle.y;
-                    sizes[i] = particle.size;
-                    alphas[i] = particle.alpha;
-                }
-                
-                // Bind and set data
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
-                gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
-                gl.enableVertexAttribArray(this.positionLocation);
-                gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
-                
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.sizeBuffer);
-                gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
-                gl.enableVertexAttribArray(this.sizeLocation);
-                gl.vertexAttribPointer(this.sizeLocation, 1, gl.FLOAT, false, 0, 0);
-                
-                gl.bindBuffer(gl.ARRAY_BUFFER, this.alphaBuffer);
-                gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.STATIC_DRAW);
-                gl.enableVertexAttribArray(this.alphaLocation);
-                gl.vertexAttribPointer(this.alphaLocation, 1, gl.FLOAT, false, 0, 0);
-                
-                gl.enable(gl.BLEND);
-                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-                
-                gl.drawArrays(gl.POINTS, 0, this.particles.length);
-            }
-
-            renderCanvas2D() {
-                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                
-                const isDark = document.body.getAttribute('data-theme') === 'dark';
-                const color = isDark ? '179, 136, 255' : '33, 150, 243';
-                
+                // Draw particles
                 this.particles.forEach(particle => {
-                    this.ctx.beginPath();
-                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    this.ctx.fillStyle = `rgba(${color}, ${particle.alpha})`;
-                    this.ctx.fill();
+                    this.ctx.save();
+                    this.ctx.translate(particle.x, particle.y);
+                    
+                    // Draw outer square
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.globalAlpha = particle.opacity;
+                    this.ctx.fillRect(-particle.size/2, -particle.size/2, particle.size, particle.size);
+                    
+                    // Draw inner square (second ring)
+                    const isDark = document.body.getAttribute('data-theme') === 'dark';
+                    const innerColor = isDark ? '179, 136, 255' : '33, 150, 243';
+                    this.ctx.fillStyle = `rgba(${innerColor}, 0.3)`;
+                    this.ctx.globalAlpha = 1;
+                    this.ctx.fillRect(-particle.size/4, -particle.size/4, particle.size/2, particle.size/2);
+                    
+                    this.ctx.restore();
                 });
             }
 
             bindEvents() {
                 window.addEventListener('resize', () => this.resizeCanvas());
+                
+                // Throttle mousemove for performance
+                let mouseTimeout;
                 window.addEventListener('mousemove', (e) => {
-                    this.mouse.x = e.clientX;
-                    this.mouse.y = e.clientY;
+                    if (mouseTimeout) return;
+                    mouseTimeout = setTimeout(() => {
+                        this.mouse.x = e.clientX;
+                        this.mouse.y = e.clientY;
+                        mouseTimeout = null;
+                    }, 16); // ~60fps
                 });
+                
+                // Update colors when theme changes
+                const observer = new MutationObserver(() => {
+                    this.particles.forEach(particle => {
+                        particle.color = this.getRandomColor();
+                    });
+                });
+                
+                observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
             }
 
             animate() {
                 this.updateParticles();
                 this.render();
-                requestAnimationFrame(() => this.animate());
+                this.animationId = requestAnimationFrame(() => this.animate());
+            }
+
+            destroy() {
+                if (this.animationId) {
+                    cancelAnimationFrame(this.animationId);
+                }
             }
         }
 
@@ -1364,12 +1402,26 @@
             }
         }
 
+        // Debounce function for search input
+        function debounce(func, wait) {
+            let timeout;
+            return function(...args) {
+                clearTimeout(timeout);
+                timeout = setTimeout(() => func.apply(this, args), wait);
+            };
+        }
+
         // Initialize components
         document.addEventListener('DOMContentLoaded', () => {
-            new ParticleSystem(document.getElementById('webgl-canvas'));
+            const particleSystem = new ParticleSystem(document.getElementById('webgl-canvas'));
             new CustomCursor();
             new MobileNavigation();
             new ThemeToggle();
+            
+            // Cleanup on page unload
+            window.addEventListener('beforeunload', () => {
+                particleSystem.destroy();
+            });
         });
 
         // ORIGINAL LEADERBOARD FUNCTIONALITY (PRESERVED)
@@ -1411,18 +1463,27 @@
         function renderTable(data) {
             const tbody = document.getElementById("board");
             tbody.innerHTML = "";
+            
+            // Use document fragment for better performance
+            const fragment = document.createDocumentFragment();
+            
             data.forEach((userData, i) => {
-                tbody.innerHTML += `
-                <tr class="${i < 3 ? 'top-row' : ''}">
+                const tr = document.createElement('tr');
+                if (i < 3) tr.classList.add('top-row');
+                
+                tr.innerHTML = `
                   <td>${i < 3 ? medals[i] : (i + 1)}</td>
                   <td class="user-cell">
                     <span class="avatar">${getInitials(userData.user)}</span>
                     <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
                   </td>
                   <td>${userData.score}</td>
-                </tr>
                 `;
+                
+                fragment.appendChild(tr);
             });
+            
+            tbody.appendChild(fragment);
         }
 
         function updateChart(data) {
@@ -1441,6 +1502,11 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        duration: 750,
+                        easing: 'easeOutQuart'
+                    },
                     plugins: {
                         legend: {display: false},
                         datalabels: {
@@ -1461,10 +1527,14 @@
             });
         }
 
+        // Debounced search and sort
+        const debouncedSearchAndSort = debounce(applySearchAndSort, 300);
+
         function applySearchAndSort() {
             const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
             const sortValue = document.getElementById('sortSelect').value;
             let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
+            
             if(sortValue === "user") {
                 filtered.sort((a,b) => a.user.localeCompare(b.user));
             } else if(sortValue === "score") {
@@ -1472,6 +1542,7 @@
             } else { //rank
                 filtered.sort((a,b) => b.score - a.score);
             }
+            
             renderTable(filtered);
             updateChart(filtered);
         }
@@ -1534,6 +1605,11 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    },
                     plugins: {
                         legend: {display: true, position: 'bottom'},
                         datalabels: {
@@ -1588,6 +1664,11 @@
                 },
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true
+                    },
                     plugins: {
                         legend: {display: true, position: 'bottom'},
                         datalabels: {
@@ -1651,7 +1732,7 @@
             }
         });
 
-        document.getElementById("searchInput").addEventListener("input", applySearchAndSort);
+        document.getElementById("searchInput").addEventListener("input", debouncedSearchAndSort);
         document.getElementById("sortSelect").addEventListener("change", applySearchAndSort);
 
         document.addEventListener("keydown", function(e){
