@@ -1564,25 +1564,64 @@
         }
     });
 
-    // Contact Card Interactions
-    document.querySelectorAll('.contact-card .btn').forEach(button => {
-        button.addEventListener('click', function() {
-            const card = this.closest('.contact-card');
-            const title = card.querySelector('h3').textContent;
-            
-            switch(title) {
-                case 'Call Us':
-                    window.location.href = 'tel:+9491342710';
-                    break;
-                case 'Email Us':
-                    window.location.href = 'mailto:techinmystyle@gmail.com';
-                    break;
-                case 'Live Chat':
-                    alert('Live chat feature coming soon!');
-                    break;
-            }
-        });
+// Contact Card Interactions
+document.querySelectorAll('.contact-card .btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const card = this.closest('.contact-card');
+        const title = card.querySelector('h3').textContent;
+        
+        switch(title) {
+            case 'Call Us':
+                window.location.href = 'tel:+919491342710';
+                break;
+            case 'Email Us':
+                // Try mailto first, with fallback for desktop
+                const email = 'techinmystyle@gmail.com';
+                const subject = 'Inquiry from Website';
+                const mailtoLink = `mailto:${email}?subject=${encodeURIComponent(subject)}`;
+                
+                // Check if it's likely a mobile device
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                
+                if (isMobile) {
+                    window.location.href = mailtoLink;
+                } else {
+                    // For desktop, try mailto first, then fallback to copy email
+                    try {
+                        window.location.href = mailtoLink;
+                        // If mailto doesn't work after a short delay, show copy option
+                        setTimeout(() => {
+                            if (confirm('Email client not found. Would you like to copy the email address to clipboard?')) {
+                                navigator.clipboard.writeText(email).then(() => {
+                                    alert('Email address copied to clipboard!');
+                                }).catch(() => {
+                                    // Fallback for older browsers
+                                    const textArea = document.createElement('textarea');
+                                    textArea.value = email;
+                                    document.body.appendChild(textArea);
+                                    textArea.select();
+                                    document.execCommand('copy');
+                                    document.body.removeChild(textArea);
+                                    alert('Email address copied to clipboard!');
+                                });
+                            }
+                        }, 1000);
+                    } catch (error) {
+                        // Direct fallback to copy
+                        if (confirm('Email client not available. Would you like to copy the email address?')) {
+                            navigator.clipboard.writeText(email).then(() => {
+                                alert('Email address copied to clipboard!');
+                            });
+                        }
+                    }
+                }
+                break;
+            case 'Live Chat':
+                alert('Live chat feature coming soon!');
+                break;
+        }
     });
+});
 
     // Social Media Interactions
     document.querySelectorAll('.social-btn').forEach(button => {
