@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Leaderboard - Tech In My Style</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- Chart.js and Data Labels plugin -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <meta charset="UTF-8" />
+    <title>Leaderboard - Tech In My Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Chart.js and Data Labels plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 
-      <!-- Favicon -->
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="tech-no bg.png">
     <link rel="icon" type="image/png" sizes="32x32" href="./img/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="./img/favicon-16x16.png">
@@ -19,473 +23,1682 @@
     <meta name="apple-mobile-web-app-title" content="TECH IN MY STYLE" />
     <link rel="manifest" href="./img/site.webmanifest" />
 
-<style>
-:root {
-  --primary: #2e375c;
-  --primary-accent: #3574e6;
-  --bg: #f7faff;
-  --card: #fff;
-  --text: #23263a;
-  --header-bg: #3950a1;
-  --header-text: #fff;
-  --shadow: 0 8px 24px rgba(45,68,136,0.09);
-  --gold: #FFD700; --silver: #C0C0C0; --bronze: #CD7F32;
-}
-body.dark {
-  --bg: #15172b; --card: #23263a; --text: #edf0ff;
-  --header-bg: #23263a; --header-text: #fff;
-  --shadow: 0 8px 32px rgba(12,20,60,0.28);
-}
-html, body { height:100%; background:var(--bg); color:var(--text); margin:0; padding:0; font-family:Segoe UI,Tahoma,Geneva,Verdana,sans-serif;}
-body { min-height:100vh; display:flex; justify-content:center; align-items:flex-start; padding-top:40px;}
-.container { max-width:980px; width:100%; background:var(--card); border-radius:18px;
-box-shadow:var(--shadow); overflow:hidden; padding-bottom:24px;}
-.leaderboard-header { background:var(--header-bg); padding:32px 24px 20px 24px; text-align:center; }
-.leaderboard-header h1 { color:var(--header-text); font-size:2.3rem; margin:0 0 6px; font-weight:bold; letter-spacing:1px;}
-.leaderboard-header p { color:var(--header-text); font-size:1rem; opacity:0.73; margin:0; }
-.controls { display:flex; align-items:center; gap:14px; padding:18px 26px; background:var(--card);
-box-shadow:0 2px 10px rgba(44,86,178,0.02);}
-input[type="text"], select { padding:9px 14px; border-radius:7px; border:1px solid #e3e8f3; font-size:15px; min-width:152px;
-outline:none; transition:border 0.15s; background:var(--bg); color:var(--text); }
-select { min-width:124px;}
-.spacer { flex:1; }
-button.theme-toggle { background:var(--primary-accent); color:white; border:none; padding:8px 16px; border-radius:6px;
-cursor:pointer; font-size:16px; font-weight:500; box-shadow:0 2px 6px rgba(53,116,230,0.10);
-transition:background 0.14s;}
-button.theme-toggle:hover { background:#2a62d4;}
-.leaderboard-table-wrap { overflow-x: auto; margin: 0 24px 24px 24px; }
-table { width:100%; border-collapse:collapse; margin-bottom:8px; background:transparent; font-size:16px;}
-th { background:#f3f6fc; color:#496ae1; padding:14px 6px; text-transform:uppercase; letter-spacing:.5px; font-size:14px;
-font-weight:700; border-bottom:1.5px solid #e8ebf3; user-select:none;}
-td { text-align:center; padding:13px 6px; font-weight:500; border-bottom:1px solid #eef1f8; background:transparent; }
-td.user-cell { display:flex; align-items:center; gap:14px; justify-content:flex-start; text-align:left;}
-.rank-medal { font-size:1.23rem; user-select:none;}
-.gold { color:var(--gold); } .silver { color:var(--silver); } .bronze { color:var(--bronze);}
-tr.top-row { font-weight:700; background:#f8f5e8 !important; border-left:4px solid #e3c062; }
-tr:hover td { background: #e7f0ff; cursor: pointer; }
-body.dark tr:hover td { background: #23263a; }
-a.user-link { color: #3574e6; text-decoration: none; font-weight:600; border-bottom:1.5px dashed #3574e6;
-transition: text-decoration .18s; cursor:pointer;}
-a.user-link:hover { text-decoration: underline;}
-.avatar { width:38px; height:38px; background:#dbdef8; border-radius:50%; display:flex; align-items:center; justify-content:center;
-font-weight:bold; color:#4665cc; font-size:1.17rem; user-select:none; border:2px solid #edf0ff; box-shadow:0 1px 3px #bac4e642;}
-body.dark .avatar { background:#232945; color:#b2c2f7; border:1.5px solid #23263a;}
-.back-btn { margin:18px 24px 24px 24px; display:block; width:auto; padding:13px 24px; font-size:15px;
-border-radius:9px; background:linear-gradient(135deg,#2e375c,#5a75be); color:white; font-weight:500; border:none;
-cursor:pointer; letter-spacing:.2px; transition:background .18s; user-select: none;}
-.back-btn:hover { background:linear-gradient(135deg,#233165,#3e60b9);}
-canvas { max-width:99%; margin-top:24px;}
-.chart-card, .modal-table-wrap, .modal-chart-wrap {
-background:var(--card); border-radius:12px; box-shadow:0 3px 10px rgba(0,0,0,0.06); padding:18px 12px; margin-bottom:18px;
-}
-#progressModal { display:none; position:fixed; z-index:10000; top:0; left:0; width:100vw; height:100vh;
-background:rgba(0,0,0,0.32); align-items:center; justify-content:center; padding:12px; overflow-y:auto; }
-#progressModal > div { background:var(--card); border-radius:12px; padding:28px 24px 24px 24px; max-width:950px; width:100%;
-max-height:85vh; box-shadow:0 8px 32px #0002; display:flex; gap:40px; color:var(--text);
-position:relative; flex-direction:column; align-items:stretch;}
-#modalUser { font-weight:600; font-size:1.3rem; color:var(--primary-accent); margin-bottom:20px; text-align:center;}
-.closeModalBtn { position:absolute; top:10px; right:15px; font-size:22px; background:none; border:none; cursor:pointer; color:var(--text); z-index:10; user-select:none;}
-.modal-content-bottom { display:flex; flex-wrap:wrap; gap:30px; justify-content:center;}
-.modal-table-wrap, .modal-chart-wrap, .chart-card {
-flex:1 1 320px; min-width:300px; max-width:420px;
-}
-.modal-summary { flex:1 1 340px; min-width:300px; max-width:420px; display:flex; flex-direction:column; align-items:stretch;}
-#progressTable, #courseSummaryTable { width:100%;
-border-collapse:separate; border-spacing:0 8px; font-size:15px; background:var(--card); border-radius:12px;
-box-shadow:0 3px 10px rgba(0,0,0,0.06); overflow:hidden; margin-bottom:12px;}
-#progressTable th, #progressTable td, #courseSummaryTable th, #courseSummaryTable td { padding:12px 16px; text-align:center; background-color: #f7f9fc;
-border-bottom:none; font-weight:600; color: var(--text);}
-#progressTable th, #courseSummaryTable th { background-color:var(--primary-accent);
-color:white; user-select:none;}
-body.dark #progressTable th, body.dark #courseSummaryTable th { background-color:#1842a1;}
-#courseSummarySelect { font-size:15px; border-radius:6px; border:1px solid #ddd; appearance:none; cursor:pointer;
-margin-bottom:15px; padding:8px 10px; width:100%; user-select:none;}
-#courseSummaryTable th, #courseSummaryTable td { background:#f7f9fc; color:var(--text); font-weight:600;}
-body.dark #courseSummaryTable th { background:#1842a1; color:#fff;}
-#courseSummaryTable { margin-top:8px;}
-.chart-card canvas { width:100% !important; background:transparent !important;}
-@media (max-width:900px) { #progressModal>div { max-height:90vh;} }
-</style>
-</head>
-<body>
-<div class="container" role="main">
-<section class="leaderboard-header">
-<h1>🏆 Leaderboard</h1>
-<p>Click a username for full course progress details.</p>
-</section>
-<section class="controls" aria-label="Search and filter leaderboard">
-<input type="text" id="searchInput" aria-label="Search user" placeholder="🔍 Search user..." />
-<select id="sortSelect" aria-label="Sort leaderboard">
-<option value="rank">Sort by Rank</option>
-<option value="score">Sort by Score</option>
-<option value="user">Sort by Username</option>
-</select>
-<span class="spacer" aria-hidden="true"></span>
-<button class="theme-toggle" aria-pressed="false" aria-label="Toggle dark/light theme" onclick="toggleTheme()">🌙 Toggle Theme</button>
-</section>
-<section class="leaderboard-table-wrap" aria-label="Leaderboard table">
-<table>
-<thead>
-<tr>
-<th scope="col">Rank</th>
-<th scope="col">User</th>
-<th scope="col">Total Tasks</th>
-</tr>
-</thead>
-<tbody id="board" role="rowgroup"></tbody>
-</table>
-</section>
-<canvas id="scoreChart" height="90" role="img" aria-label="Bar chart of total tasks completed by users"></canvas>
-<button class="back-btn" onclick="goHome()">⬅ Back to Dashboard</button>
-</div>
-<!-- Modal for user progress, with summary -->
-<div id="progressModal" role="dialog" aria-modal="true" aria-labelledby="modalUser" tabindex="-1">
-<div>
-<button class="closeModalBtn" onclick="closeModal()" aria-label="Close modal">&times;</button>
-<div id="modalUser" aria-live="polite">User Progress</div>
-<div class="modal-content-bottom">
-<div class="modal-table-wrap chart-card">
-<table id="progressTable" aria-label="Course-wise progress table" hidden>
-<thead><tr><th>Course Name</th><th>Tasks Completed</th></tr></thead>
-<tbody id="progressTableBody"></tbody>
-</table>
-</div>
-<div class="modal-chart-wrap chart-card">
-<canvas id="userProgressChart" width="360" height="300"></canvas>
-</div>
-<!-- Removed userCourseProgressTable and userCoursePieChart -->
-<div class="modal-summary chart-card">
-<select id="courseSummarySelect" aria-label="Select course for summary"></select>
-<table id="courseSummaryTable" style="display: none;">
-<thead>
-<tr>
-<th>Course</th>
-<th>Completed</th>
-<th>Total</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td id="summaryCourse">&ndash;</td>
-<td id="summaryCompleted">0</td>
-<td id="summaryTotal">0</td>
-</tr>
-</tbody>
-</table>
-<canvas id="courseSummaryPie" width="280" height="250"></canvas>
-</div>
-</div>
-</div>
-</div>
-<script>
-Chart.register({
-  id: 'customBgCard',
-  beforeDraw: (chart) => {
-    const ctx = chart.canvas.getContext('2d');
-    ctx.save();
-    ctx.globalCompositeOperation = 'destination-over';
-    ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card') || '#fff';
-    ctx.fillRect(0, 0, chart.width, chart.height);
-    ctx.restore();
-  }
-});
-let leaderboardData = [];
-let courseTotals = {};
-let currentUserProgress = null;
-let progressChartInstance = null;
-let courseSummaryPieInstance = null;
-const medals = [
-  '<span class="rank-medal gold">🥇</span>',
-  '<span class="rank-medal silver">🥈</span>',
-  '<span class="rank-medal bronze">🥉</span>'
-];
-const chartCtx = document.getElementById('scoreChart').getContext('2d');
-let scoreChart;
-Chart.register(ChartDataLabels);
-// Helper: get user's initials
-function getInitials(name) {
-  if (!name) return "U";
-  const parts = name.split(/[ ._]/).filter(Boolean);
-  return parts.length === 1 ? parts[0][0].toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
-}
-function renderTable(data) {
-  const tbody = document.getElementById("board");
-  tbody.innerHTML = "";
-  data.forEach((userData, i) => {
-    tbody.innerHTML += `
-    <tr class="${i < 3 ? 'top-row' : ''}">
-      <td>${i < 3 ? medals[i] : (i + 1)}</td>
-      <td class="user-cell">
-        <span class="avatar">${getInitials(userData.user)}</span>
-        <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
-      </td>
-      <td>${userData.score}</td>
-    </tr>
-    `;
-  });
-}
-function updateChart(data) {
-  const labels = data.map(u => u.user);
-  const scores = data.map(u => u.score);
-  if(scoreChart) { scoreChart.destroy(); scoreChart = null; }
-  scoreChart = new Chart(chartCtx, {
-    type: 'bar',
-    data: {
-      labels,
-      datasets: [{
-        label: 'Total Tasks Completed',
-        data: scores,
-        backgroundColor: '#3574e6'
-      }],
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {display: false},
-        datalabels: {
-          color: 'white',
-          anchor: 'end',
-          align: 'top',
-          formatter: v => v
+    <style>
+        :root {
+          --primary-light: #2196F3;
+          --secondary-light: #64B5F6;
+          --accent-light: #1976D2;
+          --bg-light: #ffffff;
+          --surface-light: rgba(255, 255, 255, 0.1);
+          --text-light: #333333;
+          --text-secondary-light: #666666;
+          --primary-dark: #b388ff;
+          --secondary-dark: #9c64ff;
+          --accent-dark: #7c4dff;
+          --bg-dark: #0a0a0a;
+          --surface-dark: rgba(179, 136, 255, 0.1);
+          --text-dark: #ffffff;
+          --text-secondary-dark: #cccccc;
+          
+          --primary: var(--primary-light);
+          --secondary: var(--secondary-light);
+          --accent: var(--accent-light);
+          --bg: var(--bg-light);
+          --surface: var(--surface-light);
+          --text: var(--text-light);
+          --text-secondary: var(--text-secondary-light);
+          
+          --font-primary: 'Poppins', sans-serif;
+          
+          --spacing-xs: 0.5rem;
+          --spacing-sm: 1rem;
+          --spacing-md: 1.5rem;
+          --spacing-lg: 2rem;
+          --spacing-xl: 3rem;
+          --spacing-2xl: 4rem;
+          
+          --radius-sm: 8px;
+          --radius-md: 12px;
+          --radius-lg: 16px;
+          --radius-xl: 24px;
+          
+          --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+          --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+          --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+          --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+
+          --gold: #FFD700; 
+          --silver: #C0C0C0; 
+          --bronze: #CD7F32;
         }
-      },
-      scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { stepSize: 1 }
+
+        [data-theme="dark"] {
+          --primary: var(--primary-dark);
+          --secondary: var(--secondary-dark);
+          --accent: var(--accent-dark);
+          --bg: var(--bg-dark);
+          --surface: var(--surface-dark);
+          --text: var(--text-dark);
+          --text-secondary: var(--text-secondary-dark);
         }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
-}
-function applySearchAndSort() {
-  const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-  const sortValue = document.getElementById('sortSelect').value;
-  let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
-  if(sortValue === "user") {
-    filtered.sort((a,b) => a.user.localeCompare(b.user));
-  } else if(sortValue === "score") {
-    filtered.sort((a,b) => b.score - a.score);
-  } else { //rank
-    filtered.sort((a,b) => b.score - a.score);
-  }
-  renderTable(filtered);
-  updateChart(filtered);
-}
-async function loadCourseTotals() {
-  try {
-    const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
-    if(!res.ok) throw new Error("Failed to fetch course totals");
-    courseTotals = await res.json();
-  } catch {
-    courseTotals = {
-      "ai": 30,"ml":30,"dl":30,"java":30,"c":30,"html":30,
-      "css":30,"js":30,"js-intermediate":30,"python":30,"dsc":30
-    };
-  }
-}
-async function loadBoard() {
-  await loadCourseTotals();
-  try {
-    const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
-    if (!res.ok) throw new Error("Failed to fetch leaderboard");
-    leaderboardData = await res.json();
-    applySearchAndSort();
-  } catch(e) {
-    document.getElementById("board").innerHTML = `<tr><td colspan="3">⚠ Failed to load leaderboard.</td></tr>`;
-    console.error(e);
-  }
-}
-function toggleTheme() {
-  document.body.classList.toggle('dark');
-  const themeBtn = document.querySelector('.theme-toggle');
-  themeBtn.setAttribute('aria-pressed', document.body.classList.contains('dark') ? "true" : "false");
-}
-function goHome() {
-  window.location.href = "../index.html";
-}
-function closeModal() {
-  if(progressChartInstance) { progressChartInstance.destroy(); progressChartInstance=null;}
-  if(courseSummaryPieInstance) { courseSummaryPieInstance.destroy(); courseSummaryPieInstance=null;}
-  const modal = document.getElementById('progressModal');
-  if(modal) modal.style.display = 'none';
-}
-function renderProgressChart() {
-  if (!currentUserProgress) return;
-  const ctx = document.getElementById('userProgressChart').getContext('2d');
-  if(progressChartInstance){ progressChartInstance.destroy(); progressChartInstance=null;}
-  const labels = Object.keys(currentUserProgress);
-  const data = labels.map(c => currentUserProgress[c]?.length || 0);
-  const bgColors = [
-    '#3574e6','#56b881','#ef476f','#ffd166',
-    '#06d6a0','#118ab2','#b388eb','#f78fb3'
-  ];
-  progressChartInstance = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: labels.length ? labels : ['No Progress'],
-      datasets: [{
-        data: data.length ? data : [1],
-        backgroundColor: bgColors.slice(0, labels.length),
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {display: true, position: 'bottom'},
-        datalabels: {
-          color: '#fff',
-          font: {weight: 'bold', size: 14},
-          formatter: (value, context) => {
-            const {dataset} = context;
-            const total = dataset.data.reduce((a,b) => a+b, 0) || 1;
-            return ((value/total)*100).toFixed(1) + '%';
+
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        body {
+          font-family: var(--font-primary);
+          background: var(--bg);
+          color: var(--text);
+          line-height: 1.6;
+          overflow-x: hidden;
+          transition: all 0.3s ease;
+          width: 100%;
+          max-width: 100vw;
+          cursor: none;
+          min-height: 100vh;
+        }
+
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        a, button, .feature-card, .course-card, .scroll-top, .nav-link, .switch, .team-card, .social-item, .info-card, .user-link {
+            cursor: none;
+        }
+
+        @media (max-width: 768px) {
+            .custom-cursor {
+                display: none;
+            }
+            
+            body {
+                cursor: auto;
+            }
+            
+            a, button, .feature-card, .course-card, .scroll-top, .nav-link, .switch, .team-card, .social-item, .info-card, .user-link {
+                cursor: pointer;
+            }
+        }
+
+        .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 var(--spacing-md);
+          width: 100%;
+        }
+
+        #webgl-canvas {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          z-index: -1;
+          pointer-events: none;
+        }
+
+        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
+        .header {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          backdrop-filter: blur(20px);
+          background: var(--surface);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          padding: var(--spacing-sm) 0;
+          width: 100%;
+          transition: all 0.3s ease;
+        }
+
+        .header .container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          position: relative;
+        }
+
+        .logo h1 {
+          color: var(--primary);
+          font-weight: 700;
+          font-size: 1.2rem;
+        }
+
+        .mobile-menu-btn {
+          display: none;
+          background: none;
+          border: none;
+          color: var(--text);
+          font-size: 1.5rem;
+          cursor: pointer;
+          padding: 0.5rem;
+          z-index: 1001;
+        }
+
+        .nav {
+          display: flex;
+          gap: var(--spacing-lg);
+          align-items: center;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: var(--spacing-md);
+          align-items: center;
+        }
+
+        .nav-link {
+          color: var(--text);
+          text-decoration: none;
+          font-weight: 500;
+          transition: color 0.3s ease;
+          position: relative;
+          padding: 0.5rem 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.3rem;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+          color: var(--primary);
+        }
+
+        .nav-link::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--primary);
+          transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+          width: 100%;
+        }
+
+        .nav-link i {
+          font-size: 1.2rem;
+        }
+
+        .nav-link span {
+          font-size: 0.8rem;
+          font-weight: 500;
+        }
+
+        .theme-toggle {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-xs);
+          position: relative;
+          z-index: 1002;
+        }
+
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 50px;
+          height: 28px;
+        }
+
+        .switch input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+
+        .slider {
+          position: absolute;
+          cursor: pointer;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: var(--surface);
+          transition: 0.4s;
+          border-radius: 28px;
+          border: 2px solid var(--primary);
+        }
+
+        .slider:before {
+          position: absolute;
+          content: "";
+          height: 20px;
+          width: 20px;
+          left: 2px;
+          bottom: 2px;
+          background: var(--primary);
+          transition: 0.4s;
+          border-radius: 50%;
+        }
+
+        input:checked + .slider:before {
+          transform: translateX(22px);
+        }
+
+        .mobile-header-controls {
+          display: none;
+          align-items: center;
+          gap: var(--spacing-sm);
+        }
+
+        /* DESKTOP NAVIGATION STYLES */
+        @media (min-width: 769px) {
+          .nav-links {
+            gap: var(--spacing-lg);
           }
         }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
-}
-function updateCourseSummaryDropdown() {
-  const select = document.getElementById('courseSummarySelect');
-  select.innerHTML = '';
-  Object.keys(courseTotals).forEach(course => {
-    const opt = document.createElement('option');
-    opt.value = course;
-    opt.textContent = course;
-    select.appendChild(opt);
-  });
-  if(Object.keys(courseTotals).length > 0) select.value = Object.keys(courseTotals)[0];
-}
-function updateCourseSummary(course) {
-  if(!currentUserProgress||!courseTotals[course]){
-    document.getElementById('courseSummaryTable').style.display = 'none';
-    if(courseSummaryPieInstance){ courseSummaryPieInstance.destroy(); courseSummaryPieInstance = null; }
-    return;
-  }
-  document.getElementById('courseSummaryTable').style.display = '';
-  const total = courseTotals[course] ?? 0;
-  const completed = (currentUserProgress && currentUserProgress[course]) ? currentUserProgress[course].length : 0;
-  document.getElementById('summaryCourse').textContent = course;
-  document.getElementById('summaryTotal').textContent = total;
-  document.getElementById('summaryCompleted').textContent = completed;
-  const ctx = document.getElementById('courseSummaryPie').getContext('2d');
-  if(courseSummaryPieInstance) courseSummaryPieInstance.destroy();
-  courseSummaryPieInstance = new Chart(ctx, {
-    type: 'pie',
-    data: {
-      labels: ['Completed', 'Remaining'],
-      datasets: [{
-        data: [completed, Math.max(total-completed,0)],
-        backgroundColor: ['#56b881', '#dbdef8']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: {
-        legend: {display: true, position: 'bottom'},
-        datalabels: {
-          color: '#23263a',
-          font: {weight: 'bold'},
-          formatter: v => v,
+
+        /* MOBILE NAVIGATION STYLES */
+        @media (max-width: 768px) {
+          .mobile-menu-btn {
+            display: block;
+          }
+
+          .mobile-header-controls {
+            display: flex;
+          }
+
+          .nav-links {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--bg);
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: stretch;
+            gap: 0;
+            transition: all 0.3s ease;
+            padding: 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            max-height: 0;
+            overflow: hidden;
+            z-index: 999;
+          }
+
+          .nav-links.active {
+            max-height: calc(100vh - 70px);
+            overflow-y: auto;
+            padding: var(--spacing-md) 0;
+          }
+
+          .nav-link {
+            font-size: 1.1rem;
+            padding: var(--spacing-md) var(--spacing-lg);
+            text-align: left;
+            width: 100%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 0;
+            background: none;
+            border-radius: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            flex-direction: row;
+          }
+
+          .nav-link:last-child {
+            border-bottom: none;
+          }
+
+          .nav-link:hover {
+            color: var(--primary);
+            background: var(--surface);
+            transform: none;
+            padding-left: calc(var(--spacing-lg) + var(--spacing-sm));
+          }
+
+          .nav-link.active {
+            color: var(--primary);
+            background: var(--surface);
+            font-weight: 600;
+          }
+
+          .nav-link::after {
+            display: none;
+          }
+
+          .nav .theme-toggle {
+            display: none;
+          }
+
+          .logo h1 {
+            font-size: 1rem;
+          }
+
+          .switch {
+            width: 45px;
+            height: 24px;
+          }
+
+          .slider:before {
+            height: 16px;
+            width: 16px;
+          }
+
+          input:checked + .slider:before {
+            transform: translateX(19px);
+          }
+          
+          /* Add icons to mobile nav links */
+          .nav-link i {
+            margin-right: var(--spacing-sm);
+            width: 20px;
+            text-align: center;
+          }
         }
-      }
-    },
-    plugins: [ChartDataLabels]
-  });
-}
-async function loadUserProgress(username){
-  const modal = document.getElementById('progressModal');
-  if(!modal) return alert("Modal element not found.");
-  const modalUser = document.getElementById('modalUser');
-  modalUser.textContent = `Course Progress for ${username}`;
-  modal.style.display = 'flex';
-  currentUserProgress = null;
-  const progressTable = document.getElementById('progressTable');
-  const progressTableBody = document.getElementById('progressTableBody');
-  progressTable.hidden = true;
-  progressTableBody.innerHTML = '';
-  if(progressChartInstance){ progressChartInstance.destroy(); progressChartInstance=null;}
-  if(courseSummaryPieInstance){ courseSummaryPieInstance.destroy(); courseSummaryPieInstance = null;}
-  document.getElementById('courseSummarySelect').innerHTML='';
-  document.getElementById('courseSummaryTable').style.display = 'none';
-  try {
-    const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
-    if(!res.ok) throw new Error("Failed to fetch user progress");
-    const prog = await res.json();
-    currentUserProgress = prog;
-    const courses = Object.keys(prog);
-    if(courses.length === 0) {
-      progressTableBody.innerHTML = `<tr><td colspan="2">No task progress found for this user.</td></tr>`;
-    } else {
-      progressTableBody.innerHTML = courses.map(course => {
-        const taskCount = prog[course].length;
-        return `<tr><td>${course}</td><td>${taskCount}</td></tr>`;
-      }).join('');
-    }
-    progressTable.hidden = false;
-    renderProgressChart();
-    updateCourseSummaryDropdown();
-    const dropdown = document.getElementById('courseSummarySelect');
-    dropdown.onchange = (e)=>updateCourseSummary(e.target.value);
-    if(dropdown.value) updateCourseSummary(dropdown.value);
-  } catch(e) {
-    progressTableBody.innerHTML = `<tr><td colspan="2" style="color:#ea5252;">Failed to load progress data.</td></tr>`;
-    progressTable.hidden = false;
-    console.error(e);
-  }
-}
-document.addEventListener('click', function(e){
-  if(e.target.classList.contains('user-link')){
-    e.preventDefault();
-    loadUserProgress(e.target.getAttribute('data-username'));
-  }
-});
-document.getElementById("searchInput").addEventListener("input", applySearchAndSort);
-document.getElementById("sortSelect").addEventListener("change", applySearchAndSort);
-document.addEventListener("keydown", function(e){
-  if(document.getElementById('progressModal').style.display === 'flex'){
-    if(e.key === "Escape"){ closeModal(); }
-  }
-});
-loadBoard();
-  document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
-  document.onkeydown = function(e) {
-    // Disable F12
-    if (e.keyCode === 123) return false;
+        /* MAIN CONTENT STYLES */
+        .main-container {
+          margin-top: 80px;
+          min-height: calc(100vh - 80px);
+          position: relative;
+          z-index: 1;
+        }
 
-    // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-    if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-      return false;
-    }
+        .leaderboard-container {
+          max-width: 980px;
+          width: 100%;
+          background: var(--surface);
+          backdrop-filter: blur(20px);
+          border-radius: var(--radius-xl);
+          box-shadow: var(--shadow-xl);
+          overflow: hidden;
+          margin: var(--spacing-xl) auto;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-    // Disable Ctrl+U (View Source)
-    if (e.ctrlKey && e.keyCode === 85) return false;
+        .leaderboard-header {
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-lg) var(--spacing-xl);
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+        }
 
-    // Disable Ctrl+S (Save Page)
-    if (e.ctrlKey && e.keyCode === 83) return false;
+        .leaderboard-header::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+          animation: shimmer 3s infinite;
+        }
 
-    // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-    if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-      return false;
-    }
+        @keyframes shimmer {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
 
-    // Disable Ctrl+Shift+K (Firefox)
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
-  };
-</script>
+        .leaderboard-header h1 {
+          color: white;
+          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          margin: 0 0 var(--spacing-sm);
+          font-weight: 700;
+          letter-spacing: 1px;
+          position: relative;
+          z-index: 1;
+        }
 
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+        .leaderboard-header p {
+          color: rgba(255, 255, 255, 0.9);
+          font-size: 1rem;
+          opacity: 0.9;
+          margin: 0;
+          position: relative;
+          z-index: 1;
+        }
 
-  gtag('config', 'G-7G01YFBCVB');
-</script>
+        .controls {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-md);
+          padding: var(--spacing-lg) var(--spacing-xl);
+          background: var(--bg);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        input[type="text"], select {
+          padding: var(--spacing-sm) var(--spacing-md);
+          border-radius: var(--radius-sm);
+          border: 2px solid var(--primary);
+          font-size: 15px;
+          min-width: 152px;
+          outline: none;
+          transition: all 0.3s ease;
+          background: var(--surface);
+          color: var(--text);
+          backdrop-filter: blur(20px);
+        }
+
+        input[type="text"]:focus, select:focus {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+
+        select {
+          min-width: 124px;
+        }
+
+        .spacer {
+          flex: 1;
+        }
+
+        .leaderboard-table-wrap {
+          overflow-x: auto;
+          margin: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          margin-bottom: var(--spacing-sm);
+          background: transparent;
+          font-size: 16px;
+        }
+
+        th {
+          background: var(--primary);
+          color: white;
+          padding: var(--spacing-md) var(--spacing-sm);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          font-size: 14px;
+          font-weight: 700;
+          border-bottom: none;
+          user-select: none;
+          position: relative;
+        }
+
+        th::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: linear-gradient(90deg, var(--secondary), var(--primary));
+        }
+
+        td {
+          text-align: center;
+          padding: var(--spacing-md) var(--spacing-sm);
+          font-weight: 500;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          background: transparent;
+          transition: all 0.3s ease;
+        }
+
+        td.user-cell {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-md);
+          justify-content: flex-start;
+          text-align: left;
+        }
+
+        .rank-medal {
+          font-size: 1.23rem;
+          user-select: none;
+        }
+
+        .gold { color: var(--gold); }
+        .silver { color: var(--silver); }
+        .bronze { color: var(--bronze); }
+
+        tr.top-row {
+          font-weight: 700;
+          background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)) !important;
+          border-left: 4px solid var(--gold);
+        }
+
+        tr:hover td {
+          background: var(--surface);
+          transform: translateX(5px);
+        }
+
+        .user-link {
+          color: var(--primary);
+          text-decoration: none;
+          font-weight: 600;
+          border-bottom: 2px dashed var(--primary);
+          transition: all 0.3s ease;
+          padding: var(--spacing-xs) 0;
+        }
+
+        .user-link:hover {
+          color: var(--secondary);
+          border-bottom: 2px solid var(--secondary);
+          transform: translateY(-2px);
+        }
+
+        .avatar {
+          width: 38px;
+          height: 38px;
+          background: var(--primary);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: white;
+          font-size: 1.17rem;
+          user-select: none;
+          border: 2px solid var(--surface);
+          box-shadow: var(--shadow-sm);
+          transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+          transform: scale(1.1);
+          box-shadow: var(--shadow-md);
+        }
+
+        .back-btn {
+          margin: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+          display: block;
+          width: auto;
+          padding: var(--spacing-md) var(--spacing-xl);
+          font-size: 15px;
+          border-radius: var(--radius-md);
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          font-weight: 600;
+          border: none;
+          cursor: pointer;
+          letter-spacing: 0.2px;
+          transition: all 0.3s ease;
+          user-select: none;
+          box-shadow: var(--shadow-md);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .back-btn::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left 0.5s;
+        }
+
+        .back-btn:hover::before {
+          left: 100%;
+        }
+
+        .back-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        canvas {
+          max-width: 99%;
+          margin-top: var(--spacing-xl);
+          border-radius: var(--radius-md);
+          background: var(--surface) !important;
+        }
+
+        .chart-card, .modal-table-wrap, .modal-chart-wrap {
+          background: var(--surface);
+          backdrop-filter: blur(20px);
+          border-radius: var(--radius-md);
+          box-shadow: var(--shadow-md);
+          padding: var(--spacing-lg) var(--spacing-md);
+          margin-bottom: var(--spacing-lg);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        #progressModal {
+          display: none;
+          position: fixed;
+          z-index: 10000;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.8);
+          align-items: center;
+          justify-content: center;
+          padding: var(--spacing-md);
+          overflow-y: auto;
+          backdrop-filter: blur(10px);
+        }
+
+        #progressModal > div {
+          background: var(--bg);
+          border-radius: var(--radius-xl);
+          padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
+          max-width: 950px;
+          width: 100%;
+          max-height: 85vh;
+          box-shadow: var(--shadow-xl);
+          display: flex;
+          gap: var(--spacing-2xl);
+          color: var(--text);
+          position: relative;
+          flex-direction: column;
+          align-items: stretch;
+          border: 2px solid var(--primary);
+        }
+
+        #modalUser {
+          font-weight: 600;
+          font-size: 1.5rem;
+          color: var(--primary);
+          margin-bottom: var(--spacing-lg);
+          text-align: center;
+        }
+
+        .closeModalBtn {
+          position: absolute;
+          top: var(--spacing-md);
+          right: var(--spacing-lg);
+          font-size: 24px;
+          background: var(--surface);
+          border: 2px solid var(--primary);
+          cursor: pointer;
+          color: var(--primary);
+          z-index: 10;
+          user-select: none;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.3s ease;
+        }
+
+        .closeModalBtn:hover {
+          background: var(--primary);
+          color: white;
+          transform: rotate(90deg);
+        }
+
+        .modal-content-bottom {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--spacing-xl);
+          justify-content: center;
+        }
+
+        .modal-table-wrap, .modal-chart-wrap, .chart-card {
+          flex: 1 1 320px;
+          min-width: 300px;
+          max-width: 420px;
+        }
+
+        .modal-summary {
+          flex: 1 1 340px;
+          min-width: 300px;
+          max-width: 420px;
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        #progressTable, #courseSummaryTable {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 8px;
+          font-size: 15px;
+          background: var(--bg);
+          border-radius: var(--radius-md);
+          box-shadow: var(--shadow-sm);
+          overflow: hidden;
+          margin-bottom: var(--spacing-md);
+        }
+
+        #progressTable th, #progressTable td, #courseSummaryTable th, #courseSummaryTable td {
+          padding: var(--spacing-md) var(--spacing-lg);
+          text-align: center;
+          background-color: var(--surface);
+          border-bottom: none;
+          font-weight: 600;
+          color: var(--text);
+        }
+
+        #progressTable th, #courseSummaryTable th {
+          background: var(--primary);
+          color: white;
+          user-select: none;
+        }
+
+        #courseSummarySelect {
+          font-size: 15px;
+          border-radius: var(--radius-sm);
+          border: 2px solid var(--primary);
+          appearance: none;
+          cursor: pointer;
+          margin-bottom: var(--spacing-md);
+          padding: var(--spacing-sm) var(--spacing-md);
+          width: 100%;
+          user-select: none;
+          background: var(--surface);
+          color: var(--text);
+        }
+
+        #courseSummaryTable {
+          margin-top: var(--spacing-sm);
+        }
+
+        .chart-card canvas {
+          width: 100% !important;
+          background: transparent !important;
+        }
+
+        @media (max-width: 768px) {
+          .main-container {
+            margin-top: 70px;
+          }
+
+          .leaderboard-container {
+            margin: var(--spacing-lg) var(--spacing-md);
+            border-radius: var(--radius-lg);
+          }
+
+          .leaderboard-header {
+            padding: var(--spacing-xl) var(--spacing-lg);
+          }
+
+          .controls {
+            flex-direction: column;
+            gap: var(--spacing-md);
+            padding: var(--spacing-lg);
+          }
+
+          .controls > * {
+            width: 100%;
+          }
+
+          .leaderboard-table-wrap {
+            margin: 0 var(--spacing-lg) var(--spacing-lg) var(--spacing-lg);
+          }
+
+          .back-btn {
+            margin: var(--spacing-lg);
+            text-align: center;
+          }
+
+          td.user-cell {
+            gap: var(--spacing-sm);
+          }
+
+          .avatar {
+            width: 32px;
+            height: 32px;
+            font-size: 1rem;
+          }
+
+          #progressModal > div {
+            max-height: 90vh;
+            padding: var(--spacing-xl) var(--spacing-lg);
+            gap: var(--spacing-lg);
+          }
+
+          .modal-content-bottom {
+            flex-direction: column;
+            gap: var(--spacing-lg);
+          }
+
+          .modal-table-wrap, .modal-chart-wrap, .chart-card, .modal-summary {
+            flex: none;
+            min-width: auto;
+            max-width: none;
+          }
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Custom Cursor -->
+    <div class="custom-cursor">
+        <div class="cursor-dot"></div>
+    </div>
+
+    <!-- WebGL Background -->
+    <canvas id="webgl-canvas"></canvas>
+
+    <!-- Header with Navigation -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <h1>🏆 Tech Leaderboard</h1>
+            </div>
+            <nav class="nav">
+<div class="nav-links" id="navLinks">
+    <a href="/" class="nav-link active">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="/courses" class="nav-link">
+        <i class="fas fa-book"></i>
+        <span>Courses</span>
+    </a>
+    <a href="/about-us" class="nav-link">
+        <i class="fas fa-info-circle"></i>
+        <span>About Us</span>
+    </a>
+    <a href="/stay-connected" class="nav-link">
+        <i class="fas fa-users"></i>
+        <span>Stay Connected</span>
+    </a>
+    <a href="/feedback" class="nav-link">
+        <i class="fas fa-comment"></i>
+        <span>Feedback Center</span>
+    </a>
+    <a href="/leaderboard" class="nav-link">
+        <i class="fas fa-trophy"></i>
+        <span>Leaderboard</span>
+    </a>
+    <a href="#" class="nav-link" onclick="logout()">
+        <i class="fas fa-arrow-right-from-bracket"></i>
+        <span>Logout</span>
+    </a>
+</div>
+
+                <div class="theme-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="themeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </nav>
+            <div class="mobile-header-controls">
+                <div class="theme-toggle">
+                    <label class="switch">
+                        <input type="checkbox" id="mobileThemeToggle">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <div class="container">
+            <div class="leaderboard-container" role="main">
+                <section class="leaderboard-header">
+                    <h1>🏆 Leaderboard</h1>
+                    <p>Click a username for full course progress details.</p>
+                </section>
+                
+                <section class="controls" aria-label="Search and filter leaderboard">
+                    <input type="text" id="searchInput" aria-label="Search user" placeholder="🔍 Search user..." />
+                    <select id="sortSelect" aria-label="Sort leaderboard">
+                        <option value="rank">Sort by Rank</option>
+                        <option value="score">Sort by Score</option>
+                        <option value="user">Sort by Username</option>
+                    </select>
+                    <span class="spacer" aria-hidden="true"></span>
+                </section>
+                
+                <section class="leaderboard-table-wrap" aria-label="Leaderboard table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Rank</th>
+                                <th scope="col">User</th>
+                                <th scope="col">Total Tasks</th>
+                            </tr>
+                        </thead>
+                        <tbody id="board" role="rowgroup"></tbody>
+                    </table>
+                </section>
+                
+                <canvas id="scoreChart" height="90" role="img" aria-label="Bar chart of total tasks completed by users"></canvas>
+                
+                <button class="back-btn" onclick="goHome()">
+                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for user progress -->
+    <div id="progressModal" role="dialog" aria-modal="true" aria-labelledby="modalUser" tabindex="-1">
+        <div>
+            <button class="closeModalBtn" onclick="closeModal()" aria-label="Close modal">&times;</button>
+            <div id="modalUser" aria-live="polite">User Progress</div>
+            <div class="modal-content-bottom">
+                <div class="modal-table-wrap chart-card">
+                    <table id="progressTable" aria-label="Course-wise progress table" hidden>
+                        <thead><tr><th>Course Name</th><th>Tasks Completed</th></tr></thead>
+                        <tbody id="progressTableBody"></tbody>
+                    </table>
+                </div>
+                <div class="modal-chart-wrap chart-card">
+                    <canvas id="userProgressChart" width="360" height="300"></canvas>
+                </div>
+                <div class="modal-summary chart-card">
+                    <select id="courseSummarySelect" aria-label="Select course for summary"></select>
+                    <table id="courseSummaryTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Completed</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="summaryCourse">&ndash;</td>
+                                <td id="summaryCompleted">0</td>
+                                <td id="summaryTotal">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <canvas id="courseSummaryPie" width="280" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // WebGL Particle Animation
+        class ParticleSystem {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.gl || canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+                this.particles = [];
+                this.particleCount = 1000;
+                this.mouse = { x: 0, y: 0 };
+                
+                this.resizeCanvas();
+                this.initWebGL();
+                this.createParticles();
+                this.bindEvents();
+                this.animate();
+            }
+
+            resizeCanvas() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+
+            initWebGL() {
+                if (!this.ctx) {
+                    // Fallback to 2D context
+                    this.ctx = this.canvas.getContext('2d');
+                    this.isWebGL = false;
+                    return;
+                }
+                
+                this.isWebGL = true;
+                const gl = this.ctx;
+                
+                // Vertex shader
+                const vertexShaderSource = `
+                    attribute vec2 a_position;
+                    attribute float a_size;
+                    attribute float a_alpha;
+                    uniform vec2 u_resolution;
+                    varying float v_alpha;
+                    
+                    void main() {
+                        vec2 zeroToOne = a_position / u_resolution;
+                        vec2 zeroToTwo = zeroToOne * 2.0;
+                        vec2 clipSpace = zeroToTwo - 1.0;
+                        gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+                        gl_PointSize = a_size;
+                        v_alpha = a_alpha;
+                    }
+                `;
+                
+                // Fragment shader
+                const fragmentShaderSource = `
+                    precision mediump float;
+                    varying float v_alpha;
+                    uniform vec3 u_color;
+                    
+                    void main() {
+                        float dist = length(gl_PointCoord - vec2(0.5));
+                        float alpha = v_alpha * (1.0 - smoothstep(0.0, 0.5, dist));
+                        gl_FragColor = vec4(u_color, alpha);
+                    }
+                `;
+                
+                this.program = this.createProgram(gl, vertexShaderSource, fragmentShaderSource);
+                this.setupAttributes();
+            }
+
+            createShader(gl, type, source) {
+                const shader = gl.createShader(type);
+                gl.shaderSource(shader, source);
+                gl.compileShader(shader);
+                return shader;
+            }
+
+            createProgram(gl, vertexSource, fragmentSource) {
+                const vertexShader = this.createShader(gl, gl.VERTEX_SHADER, vertexSource);
+                const fragmentShader = this.createShader(gl, gl.FRAGMENT_SHADER, fragmentSource);
+                
+                const program = gl.createProgram();
+                gl.attachShader(program, vertexShader);
+                gl.attachShader(program, fragmentShader);
+                gl.linkProgram(program);
+                
+                return program;
+            }
+
+            setupAttributes() {
+                const gl = this.ctx;
+                
+                this.positionBuffer = gl.createBuffer();
+                this.sizeBuffer = gl.createBuffer();
+                this.alphaBuffer = gl.createBuffer();
+                
+                this.positionLocation = gl.getAttribLocation(this.program, 'a_position');
+                this.sizeLocation = gl.getAttribLocation(this.program, 'a_size');
+                this.alphaLocation = gl.getAttribLocation(this.program, 'a_alpha');
+                
+                this.resolutionLocation = gl.getUniformLocation(this.program, 'u_resolution');
+                this.colorLocation = gl.getUniformLocation(this.program, 'u_color');
+            }
+
+            createParticles() {
+                for (let i = 0; i < this.particleCount; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: Math.random() * 3 + 1,
+                        alpha: Math.random() * 0.5 + 0.2,
+                        baseAlpha: Math.random() * 0.5 + 0.2
+                    });
+                }
+            }
+
+            updateParticles() {
+                this.particles.forEach(particle => {
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    if (particle.x < 0 || particle.x > this.canvas.width) particle.vx *= -1;
+                    if (particle.y < 0 || particle.y > this.canvas.height) particle.vy *= -1;
+                    
+                    const dx = this.mouse.x - particle.x;
+                    const dy = this.mouse.y - particle.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        particle.alpha = particle.baseAlpha + (1 - distance / 100) * 0.5;
+                    } else {
+                        particle.alpha = particle.baseAlpha;
+                    }
+                });
+            }
+
+            render() {
+                if (this.isWebGL) {
+                    this.renderWebGL();
+                } else {
+                    this.renderCanvas2D();
+                }
+            }
+
+            renderWebGL() {
+                const gl = this.ctx;
+                
+                gl.viewport(0, 0, this.canvas.width, this.canvas.height);
+                gl.clearColor(0, 0, 0, 0);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                
+                gl.useProgram(this.program);
+                
+                // Set uniforms
+                gl.uniform2f(this.resolutionLocation, this.canvas.width, this.canvas.height);
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                gl.uniform3f(this.colorLocation, 
+                    isDark ? 0.7 : 0.13, 
+                    isDark ? 0.53 : 0.46, 
+                    isDark ? 1.0 : 0.95
+                );
+                
+                // Prepare data
+                const positions = new Float32Array(this.particles.length * 2);
+                const sizes = new Float32Array(this.particles.length);
+                const alphas = new Float32Array(this.particles.length);
+                
+                for (let i = 0; i < this.particles.length; i++) {
+                    const particle = this.particles[i];
+                    positions[i * 2] = particle.x;
+                    positions[i * 2 + 1] = particle.y;
+                    sizes[i] = particle.size;
+                    alphas[i] = particle.alpha;
+                }
+                
+                // Bind and set data
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.positionBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, positions, gl.STATIC_DRAW);
+                gl.enableVertexAttribArray(this.positionLocation);
+                gl.vertexAttribPointer(this.positionLocation, 2, gl.FLOAT, false, 0, 0);
+                
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.sizeBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, sizes, gl.STATIC_DRAW);
+                gl.enableVertexAttribArray(this.sizeLocation);
+                gl.vertexAttribPointer(this.sizeLocation, 1, gl.FLOAT, false, 0, 0);
+                
+                gl.bindBuffer(gl.ARRAY_BUFFER, this.alphaBuffer);
+                gl.bufferData(gl.ARRAY_BUFFER, alphas, gl.STATIC_DRAW);
+                gl.enableVertexAttribArray(this.alphaLocation);
+                gl.vertexAttribPointer(this.alphaLocation, 1, gl.FLOAT, false, 0, 0);
+                
+                gl.enable(gl.BLEND);
+                gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+                
+                gl.drawArrays(gl.POINTS, 0, this.particles.length);
+            }
+
+            renderCanvas2D() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                const isDark = document.body.getAttribute('data-theme') === 'dark';
+                const color = isDark ? '179, 136, 255' : '33, 150, 243';
+                
+                this.particles.forEach(particle => {
+                    this.ctx.beginPath();
+                    this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    this.ctx.fillStyle = `rgba(${color}, ${particle.alpha})`;
+                    this.ctx.fill();
+                });
+            }
+
+            bindEvents() {
+                window.addEventListener('resize', () => this.resizeCanvas());
+                window.addEventListener('mousemove', (e) => {
+                    this.mouse.x = e.clientX;
+                    this.mouse.y = e.clientY;
+                });
+            }
+
+            animate() {
+                this.updateParticles();
+                this.render();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+
+        // Custom Cursor
+        class CustomCursor {
+            constructor() {
+                this.cursor = document.querySelector('.custom-cursor');
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                document.addEventListener('mousemove', (e) => {
+                    this.cursor.style.left = e.clientX + 'px';
+                    this.cursor.style.top = e.clientY + 'px';
+                });
+
+                document.addEventListener('mousedown', () => {
+                    this.cursor.style.width = '25px';
+                    this.cursor.style.height = '25px';
+                });
+
+                document.addEventListener('mouseup', () => {
+                    this.cursor.style.width = '30px';
+                    this.cursor.style.height = '30px';
+                });
+            }
+        }
+
+        // Mobile Navigation
+        class MobileNavigation {
+            constructor() {
+                this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
+                this.navLinks = document.getElementById('navLinks');
+                this.bindEvents();
+            }
+
+            bindEvents() {
+                this.mobileMenuBtn.addEventListener('click', () => {
+                    this.toggleMenu();
+                });
+
+                // Close menu when clicking on a link
+                this.navLinks.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('nav-link')) {
+                        this.closeMenu();
+                    }
+                });
+
+                // Close menu when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!this.mobileMenuBtn.contains(e.target) && !this.navLinks.contains(e.target)) {
+                        this.closeMenu();
+                    }
+                });
+            }
+
+            toggleMenu() {
+                this.navLinks.classList.toggle('active');
+                const icon = this.mobileMenuBtn.querySelector('i');
+                icon.classList.toggle('fa-bars');
+                icon.classList.toggle('fa-times');
+            }
+
+            closeMenu() {
+                this.navLinks.classList.remove('active');
+                const icon = this.mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        }
+
+        // Theme Toggle
+        class ThemeToggle {
+            constructor() {
+                this.themeToggle = document.getElementById('themeToggle');
+                this.mobileThemeToggle = document.getElementById('mobileThemeToggle');
+                this.bindEvents();
+                this.loadTheme();
+            }
+
+            bindEvents() {
+                this.themeToggle.addEventListener('change', () => {
+                    this.toggleTheme();
+                });
+
+                this.mobileThemeToggle.addEventListener('change', () => {
+                    this.toggleTheme();
+                });
+            }
+
+            toggleTheme() {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                
+                document.body.setAttribute('data-theme', newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                // Sync both toggles
+                const isDark = newTheme === 'dark';
+                this.themeToggle.checked = isDark;
+                this.mobileThemeToggle.checked = isDark;
+            }
+
+            loadTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                document.body.setAttribute('data-theme', savedTheme);
+                const isDark = savedTheme === 'dark';
+                this.themeToggle.checked = isDark;
+                this.mobileThemeToggle.checked = isDark;
+            }
+        }
+
+        // Initialize components
+        document.addEventListener('DOMContentLoaded', () => {
+            new ParticleSystem(document.getElementById('webgl-canvas'));
+            new CustomCursor();
+            new MobileNavigation();
+            new ThemeToggle();
+        });
+
+        // ORIGINAL LEADERBOARD FUNCTIONALITY (PRESERVED)
+        Chart.register({
+            id: 'customBgCard',
+            beforeDraw: (chart) => {
+                const ctx = chart.canvas.getContext('2d');
+                ctx.save();
+                ctx.globalCompositeOperation = 'destination-over';
+                ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg') || '#fff';
+                ctx.fillRect(0, 0, chart.width, chart.height);
+                ctx.restore();
+            }
+        });
+
+        let leaderboardData = [];
+        let courseTotals = {};
+        let currentUserProgress = null;
+        let progressChartInstance = null;
+        let courseSummaryPieInstance = null;
+
+        const medals = [
+            '<span class="rank-medal gold">🥇</span>',
+            '<span class="rank-medal silver">🥈</span>',
+            '<span class="rank-medal bronze">🥉</span>'
+        ];
+
+        const chartCtx = document.getElementById('scoreChart').getContext('2d');
+        let scoreChart;
+        Chart.register(ChartDataLabels);
+
+        // Helper: get user's initials
+        function getInitials(name) {
+            if (!name) return "U";
+            const parts = name.split(/[ ._]/).filter(Boolean);
+            return parts.length === 1 ? parts[0][0].toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById("board");
+            tbody.innerHTML = "";
+            data.forEach((userData, i) => {
+                tbody.innerHTML += `
+                <tr class="${i < 3 ? 'top-row' : ''}">
+                  <td>${i < 3 ? medals[i] : (i + 1)}</td>
+                  <td class="user-cell">
+                    <span class="avatar">${getInitials(userData.user)}</span>
+                    <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
+                  </td>
+                  <td>${userData.score}</td>
+                </tr>
+                `;
+            });
+        }
+
+        function updateChart(data) {
+            const labels = data.map(u => u.user);
+            const scores = data.map(u => u.score);
+            if(scoreChart) { scoreChart.destroy(); scoreChart = null; }
+            scoreChart = new Chart(chartCtx, {
+                type: 'bar',
+                data: {
+                    labels,
+                    datasets: [{
+                        label: 'Total Tasks Completed',
+                        data: scores,
+                        backgroundColor: getComputedStyle(document.documentElement).getPropertyValue('--primary').trim()
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {display: false},
+                        datalabels: {
+                            color: 'white',
+                            anchor: 'end',
+                            align: 'top',
+                            formatter: v => v
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { stepSize: 1 }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        function applySearchAndSort() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const sortValue = document.getElementById('sortSelect').value;
+            let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
+            if(sortValue === "user") {
+                filtered.sort((a,b) => a.user.localeCompare(b.user));
+            } else if(sortValue === "score") {
+                filtered.sort((a,b) => b.score - a.score);
+            } else { //rank
+                filtered.sort((a,b) => b.score - a.score);
+            }
+            renderTable(filtered);
+            updateChart(filtered);
+        }
+
+        async function loadCourseTotals() {
+            try {
+                const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
+                if(!res.ok) throw new Error("Failed to fetch course totals");
+                courseTotals = await res.json();
+            } catch {
+                courseTotals = {
+                    "ai": 30,"ml":30,"dl":30,"java":30,"c":30,"html":30,
+                    "css":30,"js":30,"js-intermediate":30,"python":30,"dsc":30
+                };
+            }
+        }
+
+        async function loadBoard() {
+            await loadCourseTotals();
+            try {
+                const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
+                if (!res.ok) throw new Error("Failed to fetch leaderboard");
+                leaderboardData = await res.json();
+                applySearchAndSort();
+            } catch(e) {
+                document.getElementById("board").innerHTML = `<tr><td colspan="3">⚠ Failed to load leaderboard.</td></tr>`;
+                console.error(e);
+            }
+        }
+
+        function goHome() {
+            window.location.href = "../index.html";
+        }
+
+        function closeModal() {
+            if(progressChartInstance) { progressChartInstance.destroy(); progressChartInstance=null;}
+            if(courseSummaryPieInstance) { courseSummaryPieInstance.destroy(); courseSummaryPieInstance=null;}
+            const modal = document.getElementById('progressModal');
+            if(modal) modal.style.display = 'none';
+        }
+
+        function renderProgressChart() {
+            if (!currentUserProgress) return;
+            const ctx = document.getElementById('userProgressChart').getContext('2d');
+            if(progressChartInstance){ progressChartInstance.destroy(); progressChartInstance=null;}
+            const labels = Object.keys(currentUserProgress);
+            const data = labels.map(c => currentUserProgress[c]?.length || 0);
+            const bgColors = [
+                '#3574e6','#56b881','#ef476f','#ffd166',
+                '#06d6a0','#118ab2','#b388eb','#f78fb3'
+            ];
+            progressChartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels.length ? labels : ['No Progress'],
+                    datasets: [{
+                        data: data.length ? data : [1],
+                        backgroundColor: bgColors.slice(0, labels.length),
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {display: true, position: 'bottom'},
+                        datalabels: {
+                            color: '#fff',
+                            font: {weight: 'bold', size: 14},
+                            formatter: (value, context) => {
+                                const {dataset} = context;
+                                const total = dataset.data.reduce((a,b) => a+b, 0) || 1;
+                                return ((value/total)*100).toFixed(1) + '%';
+                            }
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        function updateCourseSummaryDropdown() {
+            const select = document.getElementById('courseSummarySelect');
+            select.innerHTML = '';
+            Object.keys(courseTotals).forEach(course => {
+                const opt = document.createElement('option');
+                opt.value = course;
+                opt.textContent = course;
+                select.appendChild(opt);
+            });
+            if(Object.keys(courseTotals).length > 0) select.value = Object.keys(courseTotals)[0];
+        }
+
+        function updateCourseSummary(course) {
+            if(!currentUserProgress||!courseTotals[course]){
+                document.getElementById('courseSummaryTable').style.display = 'none';
+                if(courseSummaryPieInstance){ courseSummaryPieInstance.destroy(); courseSummaryPieInstance = null; }
+                return;
+            }
+            document.getElementById('courseSummaryTable').style.display = '';
+            const total = courseTotals[course] ?? 0;
+            const completed = (currentUserProgress && currentUserProgress[course]) ? currentUserProgress[course].length : 0;
+            document.getElementById('summaryCourse').textContent = course;
+            document.getElementById('summaryTotal').textContent = total;
+            document.getElementById('summaryCompleted').textContent = completed;
+            const ctx = document.getElementById('courseSummaryPie').getContext('2d');
+            if(courseSummaryPieInstance) courseSummaryPieInstance.destroy();
+            courseSummaryPieInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Completed', 'Remaining'],
+                    datasets: [{
+                        data: [completed, Math.max(total-completed,0)],
+                        backgroundColor: ['#56b881', '#dbdef8']
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {display: true, position: 'bottom'},
+                        datalabels: {
+                            color: '#23263a',
+                            font: {weight: 'bold'},
+                            formatter: v => v,
+                        }
+                    }
+                },
+                plugins: [ChartDataLabels]
+            });
+        }
+
+        async function loadUserProgress(username){
+            const modal = document.getElementById('progressModal');
+            if(!modal) return alert("Modal element not found.");
+            const modalUser = document.getElementById('modalUser');
+            modalUser.textContent = `Course Progress for ${username}`;
+            modal.style.display = 'flex';
+            currentUserProgress = null;
+            const progressTable = document.getElementById('progressTable');
+            const progressTableBody = document.getElementById('progressTableBody');
+            progressTable.hidden = true;
+            progressTableBody.innerHTML = '';
+            if(progressChartInstance){ progressChartInstance.destroy(); progressChartInstance=null;}
+            if(courseSummaryPieInstance){ courseSummaryPieInstance.destroy(); courseSummaryPieInstance = null;}
+            document.getElementById('courseSummarySelect').innerHTML='';
+            document.getElementById('courseSummaryTable').style.display = 'none';
+            try {
+                const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
+                if(!res.ok) throw new Error("Failed to fetch user progress");
+                const prog = await res.json();
+                currentUserProgress = prog;
+                const courses = Object.keys(prog);
+                if(courses.length === 0) {
+                    progressTableBody.innerHTML = `<tr><td colspan="2">No task progress found for this user.</td></tr>`;
+                } else {
+                    progressTableBody.innerHTML = courses.map(course => {
+                        const taskCount = prog[course].length;
+                        return `<tr><td>${course}</td><td>${taskCount}</td></tr>`;
+                    }).join('');
+                }
+                progressTable.hidden = false;
+                renderProgressChart();
+                updateCourseSummaryDropdown();
+                const dropdown = document.getElementById('courseSummarySelect');
+                dropdown.onchange = (e)=>updateCourseSummary(e.target.value);
+                if(dropdown.value) updateCourseSummary(dropdown.value);
+            } catch(e) {
+                progressTableBody.innerHTML = `<tr><td colspan="2" style="color:#ea5252;">Failed to load progress data.</td></tr>`;
+                progressTable.hidden = false;
+                console.error(e);
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('click', function(e){
+            if(e.target.classList.contains('user-link')){
+                e.preventDefault();
+                loadUserProgress(e.target.getAttribute('data-username'));
+            }
+        });
+
+        document.getElementById("searchInput").addEventListener("input", applySearchAndSort);
+        document.getElementById("sortSelect").addEventListener("change", applySearchAndSort);
+
+        document.addEventListener("keydown", function(e){
+            if(document.getElementById('progressModal').style.display === 'flex'){
+                if(e.key === "Escape"){ closeModal(); }
+            }
+        });
+
+        // Load leaderboard data
+        loadBoard();
+
+        // Disable right click and dev tools (preserved from original)
+        document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+        document.onkeydown = function(e) {
+            // Disable F12
+            if (e.keyCode === 123) return false;
+
+            // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+                return false;
+            }
+
+            // Disable Ctrl+U (View Source)
+            if (e.ctrlKey && e.keyCode === 85) return false;
+
+            // Disable Ctrl+S (Save Page)
+            if (e.ctrlKey && e.keyCode === 83) return false;
+
+            // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
+            if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+                return false;
+            }
+
+            // Disable Ctrl+Shift+K (Firefox)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+        };
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-7G01YFBCVB');
+    </script>
 </body>
 </html>
