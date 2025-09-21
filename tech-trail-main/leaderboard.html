@@ -1,17 +1,18 @@
-<csartifact identifier="leaderboard-fixed" type="application/vnd.cs.code" language="html" title="Fixed Leaderboard HTML">
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
     <title>Leaderboard - Tech In My Style</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
     <!-- Chart.js and Data Labels plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
-    <!-- Font Awesome for icons -->
+    
+    <!-- Fonts and Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="tech-no bg.png">
@@ -31,8 +32,9 @@
           --accent-light: #1976D2;
           --bg-light: #ffffff;
           --surface-light: rgba(255, 255, 255, 0.1);
-          --text-light: #333333;
-          --text-secondary-light: #666666;
+          --text-light: #000000;
+          --text-secondary-light: #333333;
+          
           --primary-dark: #b388ff;
           --secondary-dark: #9c64ff;
           --accent-dark: #7c4dff;
@@ -68,9 +70,13 @@
           --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
           --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
 
-          --gold: #FFD700; 
-          --silver: #C0C0C0; 
+          /* Leaderboard specific colors */
+          --gold: #FFD700;
+          --silver: #C0C0C0;
           --bronze: #CD7F32;
+          --card: var(--bg-light);
+          --header-bg: var(--primary-light);
+          --header-text: #fff;
         }
 
         [data-theme="dark"] {
@@ -81,6 +87,8 @@
           --surface: var(--surface-dark);
           --text: var(--text-dark);
           --text-secondary: var(--text-secondary-dark);
+          --card: #23263a;
+          --header-bg: #23263a;
         }
 
         * {
@@ -102,46 +110,6 @@
           min-height: 100vh;
         }
 
-        .custom-cursor {
-            position: fixed;
-            width: 30px;
-            height: 30px;
-            border: 2px solid var(--primary);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            pointer-events: none;
-            z-index: 9999;
-            transition: width 0.2s, height 0.2s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .cursor-dot {
-            width: 6px;
-            height: 6px;
-            background-color: var(--primary);
-            border-radius: 50%;
-        }
-
-        a, button, .feature-card, .course-card, .scroll-top, .nav-link, .switch, .team-card, .social-item, .info-card, .user-link {
-            cursor: none;
-        }
-
-        @media (max-width: 768px) {
-            .custom-cursor {
-                display: none;
-            }
-            
-            body {
-                cursor: auto;
-            }
-            
-            a, button, .feature-card, .course-card, .scroll-top, .nav-link, .switch, .team-card, .social-item, .info-card, .user-link {
-                cursor: pointer;
-            }
-        }
-
         .container {
           max-width: 1200px;
           margin: 0 auto;
@@ -159,7 +127,50 @@
           pointer-events: none;
         }
 
-        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
+        /* Custom cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 30px;
+            height: 30px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 9999;
+            transition: width 0.2s, height 0.2s, opacity 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cursor-dot {
+            width: 6px;
+            height: 6px;
+            background-color: var(--primary);
+            border-radius: 50%;
+        }
+
+        a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch, .user-link, tr, select, input, .closeModalBtn {
+            cursor: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .custom-cursor {
+                display: none !important;
+            }
+            
+            body {
+                cursor: auto !important;
+            }
+            
+            a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch, .user-link, tr, select, input, .closeModalBtn {
+                cursor: pointer !important;
+            }
+        }
+
+        /* HEADER */
         .header {
           position: fixed;
           top: 0;
@@ -181,10 +192,11 @@
           position: relative;
         }
 
-        .logo h1 {
+        .logo h2 a {
           color: var(--primary);
           font-weight: 700;
           font-size: 1.2rem;
+          text-decoration: none;
         }
 
         .mobile-menu-btn {
@@ -309,14 +321,7 @@
           gap: var(--spacing-sm);
         }
 
-        /* DESKTOP NAVIGATION STYLES */
-        @media (min-width: 769px) {
-          .nav-links {
-            gap: var(--spacing-lg);
-          }
-        }
-
-        /* MOBILE NAVIGATION STYLES */
+        /* MOBILE NAVIGATION */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
@@ -390,25 +395,10 @@
             display: none;
           }
 
-          .logo h1 {
+          .logo h2 a {
             font-size: 1rem;
           }
 
-          .switch {
-            width: 45px;
-            height: 24px;
-          }
-
-          .slider:before {
-            height: 16px;
-            width: 16px;
-          }
-
-          input:checked + .slider:before {
-            transform: translateX(19px);
-          }
-          
-          /* Add icons to mobile nav links */
           .nav-link i {
             margin-right: var(--spacing-sm);
             width: 20px;
@@ -416,142 +406,132 @@
           }
         }
 
-        /* MAIN CONTENT STYLES */
-        .main-container {
-          margin-top: 80px;
-          min-height: calc(100vh - 80px);
-          position: relative;
-          z-index: 1;
-          padding-bottom: 40px; /* Add bottom padding for better spacing */
+        /* MAIN CONTENT */
+        .main-content {
+          padding-top: 120px;
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
         }
 
         .leaderboard-container {
-          max-width: 980px;
+          max-width: 1200px;
           width: 100%;
-          background: var(--surface);
-          backdrop-filter: blur(20px);
+          background: var(--card);
           border-radius: var(--radius-xl);
           box-shadow: var(--shadow-xl);
           overflow: hidden;
           margin: var(--spacing-xl) auto;
+          backdrop-filter: blur(20px);
           border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .leaderboard-header {
           background: linear-gradient(135deg, var(--primary), var(--secondary));
-          padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-lg) var(--spacing-xl);
+          padding: var(--spacing-2xl) var(--spacing-xl);
           text-align: center;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .leaderboard-header::before {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-          animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
+          color: white;
         }
 
         .leaderboard-header h1 {
-          color: white;
-          font-size: clamp(1.8rem, 4vw, 2.5rem);
+          font-size: clamp(2rem, 5vw, 3rem);
           margin: 0 0 var(--spacing-sm);
           font-weight: 700;
-          letter-spacing: 1px;
-          position: relative;
-          z-index: 1;
+          letter-spacing: -1px;
         }
 
         .leaderboard-header p {
-          color: rgba(255, 255, 255, 0.9);
-          font-size: 1rem;
+          font-size: 1.1rem;
           opacity: 0.9;
           margin: 0;
-          position: relative;
-          z-index: 1;
         }
 
         .controls {
           display: flex;
           align-items: center;
           gap: var(--spacing-md);
-          padding: var(--spacing-lg) var(--spacing-xl);
-          background: var(--bg);
+          padding: var(--spacing-xl) var(--spacing-xl);
+          background: var(--surface);
+          backdrop-filter: blur(10px);
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          flex-wrap: wrap;
         }
 
         input[type="text"], select {
           padding: var(--spacing-sm) var(--spacing-md);
-          border-radius: var(--radius-sm);
-          border: 2px solid var(--primary);
-          font-size: 15px;
-          min-width: 152px;
+          border-radius: var(--radius-md);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          font-size: 1rem;
+          font-family: var(--font-primary);
+          min-width: 200px;
           outline: none;
           transition: all 0.3s ease;
-          background: var(--surface);
+          background: var(--bg);
           color: var(--text);
-          backdrop-filter: blur(20px);
+          backdrop-filter: blur(10px);
         }
 
         input[type="text"]:focus, select:focus {
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
           transform: translateY(-2px);
-          box-shadow: var(--shadow-md);
         }
 
         select {
-          min-width: 124px;
+          min-width: 180px;
         }
 
         .spacer {
           flex: 1;
         }
 
+        .theme-toggle-btn {
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          color: white;
+          border: none;
+          padding: var(--spacing-sm) var(--spacing-lg);
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          font-family: var(--font-primary);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-xs);
+        }
+
+        .theme-toggle-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
+        }
+
         .leaderboard-table-wrap {
           overflow-x: auto;
           margin: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
-          -webkit-overflow-scrolling: touch;
         }
 
         table {
           width: 100%;
           border-collapse: collapse;
-          margin-bottom: var(--spacing-sm);
           background: transparent;
-          font-size: 16px;
-          min-width: 500px;
+          font-size: 1rem;
         }
 
         th {
-          background: var(--primary);
-          color: white;
+          background: var(--surface);
+          color: var(--primary);
           padding: var(--spacing-md) var(--spacing-sm);
           text-transform: uppercase;
-          letter-spacing: 0.5px;
-          font-size: 14px;
-          font-weight: 700;
-          border-bottom: none;
+          letter-spacing: 1px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border-bottom: 2px solid var(--primary);
           user-select: none;
-          position: relative;
-          white-space: nowrap;
-        }
-
-        th::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 3px;
-          background: linear-gradient(90deg, var(--secondary), var(--primary));
+          position: sticky;
+          top: 0;
+          backdrop-filter: blur(10px);
         }
 
         td {
@@ -561,7 +541,6 @@
           border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           background: transparent;
           transition: all 0.3s ease;
-          white-space: nowrap;
         }
 
         td.user-cell {
@@ -570,11 +549,10 @@
           gap: var(--spacing-md);
           justify-content: flex-start;
           text-align: left;
-          white-space: nowrap;
         }
 
         .rank-medal {
-          font-size: 1.23rem;
+          font-size: 1.5rem;
           user-select: none;
         }
 
@@ -584,43 +562,56 @@
 
         tr.top-row {
           font-weight: 700;
-          background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)) !important;
+          background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)) !important;
           border-left: 4px solid var(--gold);
         }
 
         tr:hover td {
           background: var(--surface);
-          transform: translateX(5px);
+          transform: scale(1.02);
+          cursor: pointer;
         }
 
         .user-link {
           color: var(--primary);
           text-decoration: none;
           font-weight: 600;
-          border-bottom: 2px dashed var(--primary);
           transition: all 0.3s ease;
-          padding: var(--spacing-xs) 0;
+          position: relative;
         }
 
         .user-link:hover {
           color: var(--secondary);
-          border-bottom: 2px solid var(--secondary);
-          transform: translateY(-2px);
+          transform: translateX(5px);
+        }
+
+        .user-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--primary);
+          transition: width 0.3s ease;
+        }
+
+        .user-link:hover::after {
+          width: 100%;
         }
 
         .avatar {
-          width: 38px;
-          height: 38px;
-          background: var(--primary);
+          width: 45px;
+          height: 45px;
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: bold;
           color: white;
-          font-size: 1.17rem;
+          font-size: 1.2rem;
           user-select: none;
-          border: 2px solid var(--surface);
           box-shadow: var(--shadow-sm);
           transition: all 0.3s ease;
         }
@@ -630,59 +621,39 @@
           box-shadow: var(--shadow-md);
         }
 
-        /* Chart container styling */
+        /* Chart Styles */
         .chart-container {
-          width: 90%;
-          height: 250px; /* Fixed height for the chart */
-          margin: 0 auto var(--spacing-xl) auto;
+          margin: var(--spacing-xl);
+          padding: var(--spacing-xl);
           background: var(--surface);
+          border-radius: var(--radius-lg);
           backdrop-filter: blur(10px);
-          border-radius: var(--radius-md);
-          padding: var(--spacing-md);
-          box-shadow: var(--shadow-md);
           border: 1px solid rgba(255, 255, 255, 0.1);
-          overflow: hidden;
         }
 
-        #scoreChart {
-          width: 100% !important;
-          height: 100% !important;
-          max-height: 100%;
+        canvas {
+          max-width: 100%;
+          height: auto !important;
         }
 
         .back-btn {
-          margin: var(--spacing-lg) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
-          display: block;
-          width: auto;
+          margin: var(--spacing-xl);
+          display: inline-flex;
+          align-items: center;
+          gap: var(--spacing-sm);
           padding: var(--spacing-md) var(--spacing-xl);
-          font-size: 15px;
-          border-radius: var(--radius-md);
+          font-size: 1rem;
+          border-radius: var(--radius-lg);
           background: linear-gradient(135deg, var(--primary), var(--secondary));
           color: white;
-          font-weight: 600;
+          font-weight: 500;
           border: none;
           cursor: pointer;
-          letter-spacing: 0.2px;
+          letter-spacing: 0.5px;
           transition: all 0.3s ease;
           user-select: none;
-          box-shadow: var(--shadow-md);
-          position: relative;
-          overflow: hidden;
-        }
-
-        .back-btn::before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: -100%;
-          width: 100%;
-          height: 100%;
-          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-          transition: left 0.5s;
-        }
-
-        .back-btn:hover::before {
-          left: 100%;
+          font-family: var(--font-primary);
+          text-decoration: none;
         }
 
         .back-btn:hover {
@@ -690,19 +661,7 @@
           box-shadow: var(--shadow-lg);
         }
 
-        .chart-card, .modal-table-wrap, .modal-chart-wrap {
-          background: var(--surface);
-          backdrop-filter: blur(20px);
-          border-radius: var(--radius-md);
-          box-shadow: var(--shadow-md);
-          padding: var(--spacing-lg) var(--spacing-md);
-          margin-bottom: var(--spacing-lg);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
+        /* Modal Styles */
         #progressModal {
           display: none;
           position: fixed;
@@ -711,21 +670,21 @@
           left: 0;
           width: 100vw;
           height: 100vh;
-          background: rgba(0, 0, 0, 0.8);
+          background: rgba(0, 0, 0, 0.5);
           align-items: center;
           justify-content: center;
           padding: var(--spacing-md);
           overflow-y: auto;
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(5px);
         }
 
         #progressModal > div {
-          background: var(--bg);
+          background: var(--card);
           border-radius: var(--radius-xl);
-          padding: var(--spacing-2xl) var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
-          max-width: 950px;
+          padding: var(--spacing-2xl);
+          max-width: 1000px;
           width: 100%;
-          max-height: 85vh;
+          max-height: 90vh;
           box-shadow: var(--shadow-xl);
           display: flex;
           gap: var(--spacing-2xl);
@@ -733,8 +692,7 @@
           position: relative;
           flex-direction: column;
           align-items: stretch;
-          border: 2px solid var(--primary);
-          overflow-y: auto; /* Allow scrolling */
+          overflow-y: auto;
         }
 
         #modalUser {
@@ -749,26 +707,26 @@
           position: absolute;
           top: var(--spacing-md);
           right: var(--spacing-lg);
-          font-size: 24px;
-          background: var(--surface);
-          border: 2px solid var(--primary);
+          font-size: 2rem;
+          background: none;
+          border: none;
           cursor: pointer;
-          color: var(--primary);
+          color: var(--text);
           z-index: 10;
           user-select: none;
+          transition: all 0.3s ease;
           width: 40px;
           height: 40px;
-          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          transition: all 0.3s ease;
+          border-radius: 50%;
         }
 
         .closeModalBtn:hover {
-          background: var(--primary);
-          color: white;
-          transform: rotate(90deg);
+          background: var(--surface);
+          color: var(--primary);
+          transform: scale(1.1);
         }
 
         .modal-content-bottom {
@@ -779,15 +737,20 @@
         }
 
         .modal-table-wrap, .modal-chart-wrap, .chart-card {
-          flex: 1 1 300px;
-          min-width: 280px;
-          max-width: 400px;
+          flex: 1 1 320px;
+          min-width: 300px;
+          max-width: 420px;
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          padding: var(--spacing-lg);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .modal-summary {
-          flex: 1 1 300px;
-          min-width: 280px;
-          max-width: 400px;
+          flex: 1 1 340px;
+          min-width: 300px;
+          max-width: 420px;
           display: flex;
           flex-direction: column;
           align-items: stretch;
@@ -796,21 +759,20 @@
         #progressTable, #courseSummaryTable {
           width: 100%;
           border-collapse: separate;
-          border-spacing: 0 8px;
-          font-size: 15px;
-          background: var(--bg);
+          border-spacing: 0 var(--spacing-xs);
+          font-size: 0.95rem;
+          background: transparent;
           border-radius: var(--radius-md);
-          box-shadow: var(--shadow-sm);
           overflow: hidden;
           margin-bottom: var(--spacing-md);
         }
 
         #progressTable th, #progressTable td, #courseSummaryTable th, #courseSummaryTable td {
-          padding: var(--spacing-md) var(--spacing-lg);
+          padding: var(--spacing-sm) var(--spacing-md);
           text-align: center;
-          background-color: var(--surface);
-          border-bottom: none;
-          font-weight: 600;
+          background: var(--bg);
+          border: none;
+          font-weight: 500;
           color: var(--text);
         }
 
@@ -818,303 +780,327 @@
           background: var(--primary);
           color: white;
           user-select: none;
+          font-weight: 600;
         }
 
         #courseSummarySelect {
-          font-size: 15px;
-          border-radius: var(--radius-sm);
-          border: 2px solid var(--primary);
+          font-size: 1rem;
+          border-radius: var(--radius-md);
+          border: 2px solid rgba(255, 255, 255, 0.1);
           appearance: none;
           cursor: pointer;
           margin-bottom: var(--spacing-md);
           padding: var(--spacing-sm) var(--spacing-md);
           width: 100%;
           user-select: none;
-          background: var(--surface);
+          background: var(--bg);
           color: var(--text);
+          font-family: var(--font-primary);
+          transition: all 0.3s ease;
         }
 
-        #courseSummaryTable {
-          margin-top: var(--spacing-sm);
+        #courseSummarySelect:focus {
+          border-color: var(--primary);
+          outline: none;
         }
 
-        .chart-card canvas {
+        /* Fix for pie chart canvas sizing */
+        #courseSummaryPie {
           width: 100% !important;
-          background: transparent !important;
-          max-height: 300px;
+          height: 250px !important;
+          max-height: 250px !important;
+          display: block !important;
         }
 
-        /* RESPONSIVE FIXES FOR ALL SCREEN SIZES */
+        #userProgressChart {
+          width: 100% !important;
+          height: 300px !important;
+          max-height: 300px !important;
+          display: block !important;
+        }
+
+        /* FOOTER */
+        .footer {
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          padding: var(--spacing-2xl) 0 var(--spacing-lg);
+        }
+
+        .footer-content {
+          display: grid;
+          grid-template-columns: 1fr 2fr;
+          gap: var(--spacing-2xl);
+          margin-bottom: var(--spacing-xl);
+        }
+
+        .footer-brand h3 {
+          font-size: 1.5rem;
+          margin-bottom: var(--spacing-sm);
+        }
+
+        .footer-brand p {
+          opacity: 0.9;
+          font-size: 1rem;
+        }
+
+        .footer-links {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: var(--spacing-xl);
+        }
+
+        .footer-column h4 {
+          margin-bottom: var(--spacing-md);
+          font-weight: 600;
+          font-size: 1.1rem;
+          border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+          padding-bottom: var(--spacing-xs);
+          display: inline-block;
+        }
+
+        .footer-column a {
+          color: white;
+          text-decoration: none;
+          opacity: 0.8;
+          transition: all 0.3s ease;
+          display: block;
+          margin-bottom: var(--spacing-xs);
+          padding: var(--spacing-xs) 0;
+          border-radius: var(--radius-sm);
+          font-size: 0.9rem;
+        }
+
+        .footer-column a:hover {
+          opacity: 1;
+          background: rgba(255, 255, 255, 0.1);
+          padding-left: var(--spacing-sm);
+          transform: translateX(5px);
+        }
+
+        .footer-column a i {
+          margin-right: var(--spacing-xs);
+          width: 16px;
+        }
+
+        .footer-bottom {
+          border-top: 1px solid rgba(255, 255, 255, 0.2);
+          padding-top: var(--spacing-lg);
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        .scroll-top {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .scroll-top:hover {
+          background: rgba(255, 255, 255, 0.3);
+          transform: translateY(-3px);
+        }
+
+        /* RESPONSIVE DESIGN */
         @media (max-width: 1200px) {
           .leaderboard-container {
-            margin: var(--spacing-lg) var(--spacing-md);
-          }
-          
-          .chart-container {
-            width: calc(100% - 40px);
-          }
-        }
-
-        @media (max-width: 992px) {
-          .leaderboard-container {
             margin: var(--spacing-md);
-          }
-          
-          .leaderboard-header {
-            padding: var(--spacing-xl) var(--spacing-lg);
-          }
-          
-          .chart-container {
-            height: 220px;
           }
         }
 
         @media (max-width: 768px) {
-          .main-container {
-            margin-top: 70px;
-          }
-
-          .leaderboard-container {
-            margin: var(--spacing-sm);
-            border-radius: var(--radius-lg);
-          }
-
-          .leaderboard-header {
-            padding: var(--spacing-lg) var(--spacing-md);
+          .main-content {
+            padding-top: 90px;
           }
 
           .controls {
             flex-direction: column;
-            gap: var(--spacing-sm);
-            padding: var(--spacing-md);
+            align-items: stretch;
+            gap: var(--spacing-md);
           }
 
-          .controls > * {
+          .spacer {
+            display: none;
+          }
+
+          input[type="text"], select {
+            min-width: auto;
             width: 100%;
           }
 
           .leaderboard-table-wrap {
-            margin: 0 var(--spacing-sm) var(--spacing-md) var(--spacing-sm);
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-          }
-
-          table {
-            font-size: 14px;
-            min-width: 400px;
+            margin: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
           }
 
           th, td {
             padding: var(--spacing-sm);
-          }
-
-          .back-btn {
-            margin: var(--spacing-sm);
-            text-align: center;
-            width: calc(100% - var(--spacing-sm) * 2);
-          }
-
-          td.user-cell {
-            gap: var(--spacing-sm);
+            font-size: 0.9rem;
           }
 
           .avatar {
-            width: 32px;
-            height: 32px;
+            width: 35px;
+            height: 35px;
             font-size: 1rem;
           }
-          
+
           .chart-container {
-            width: calc(100% - 20px);
-            height: 200px;
-            margin: 0 auto var(--spacing-md) auto;
+            margin: var(--spacing-md);
+            padding: var(--spacing-lg);
+          }
+
+          .back-btn {
+            margin: var(--spacing-md);
           }
 
           #progressModal > div {
-            max-height: 90vh;
-            padding: var(--spacing-md);
-            gap: var(--spacing-md);
-            width: 95%;
-            border-radius: var(--radius-lg);
+            padding: var(--spacing-xl);
+            gap: var(--spacing-lg);
           }
 
           .modal-content-bottom {
             flex-direction: column;
-            gap: var(--spacing-md);
           }
 
-          .modal-table-wrap, .modal-chart-wrap, .chart-card, .modal-summary {
-            flex: none;
-            min-width: auto;
+          .modal-table-wrap, .modal-chart-wrap, .modal-summary {
             max-width: none;
-            width: 100%;
-          }
-        }
-
-        @media (max-width: 576px) {
-          .leaderboard-table-wrap {
-            margin: 0 var(--spacing-xs) var(--spacing-sm) var(--spacing-xs);
+            min-width: auto;
           }
 
-          table {
-            font-size: 13px;
-            min-width: 350px;
+          .footer-content {
+            grid-template-columns: 1fr;
+            text-align: center;
+            gap: var(--spacing-xl);
           }
 
-          th, td {
-            padding: var(--spacing-xs);
+          .footer-links {
+            grid-template-columns: 1fr;
+            gap: var(--spacing-xl);
+            text-align: left;
           }
 
-          .controls {
-            padding: var(--spacing-sm);
-          }
-          
-          .chart-container {
-            height: 180px;
-          }
-
-          #progressModal > div {
-            padding: var(--spacing-sm);
-          }
-
-          .modal-content-bottom {
-            gap: var(--spacing-sm);
+          .footer-bottom {
+            flex-direction: column;
+            gap: var(--spacing-md);
+            text-align: center;
           }
         }
 
         @media (max-width: 480px) {
-          .leaderboard-container {
-            margin: var(--spacing-xs);
-            border-radius: var(--radius-md);
-          }
-
           .leaderboard-header {
-            padding: var(--spacing-md);
-          }
-
-          .leaderboard-header h1 {
-            font-size: 1.5rem;
-          }
-
-          .leaderboard-header p {
-            font-size: 0.9rem;
-          }
-
-          table {
-            font-size: 12px;
-            min-width: 300px;
-          }
-
-          .avatar {
-            width: 28px;
-            height: 28px;
-            font-size: 0.9rem;
+            padding: var(--spacing-xl) var(--spacing-md);
           }
 
           .controls {
-            padding: var(--spacing-xs);
+            padding: var(--spacing-lg) var(--spacing-md);
           }
 
-          .back-btn {
-            margin: var(--spacing-xs);
-            padding: var(--spacing-sm) var(--spacing-md);
-            font-size: 14px;
-          }
-          
-          .chart-container {
-            height: 160px;
-            padding: var(--spacing-sm);
-          }
-
-          #progressModal > div {
-            padding: var(--spacing-xs);
-          }
-        }
-
-        @media (max-width: 380px) {
-          .leaderboard-header h1 {
-            font-size: 1.3rem;
-          }
-
-          .leaderboard-header p {
-            font-size: 0.8rem;
-          }
-
-          table {
-            font-size: 11px;
-            min-width: 280px;
+          .leaderboard-table-wrap {
+            margin: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
           }
 
           th, td {
-            padding: 4px;
+            padding: var(--spacing-xs);
+            font-size: 0.8rem;
           }
-          
+
+          .user-cell {
+            gap: var(--spacing-sm);
+          }
+
+          .avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 0.9rem;
+          }
+
           .chart-container {
-            height: 150px;
+            margin: var(--spacing-sm);
+            padding: var(--spacing-md);
           }
+
+          .back-btn {
+            margin: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
+          }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .leaderboard-container {
+          animation: fadeInUp 0.6s ease-out;
+        }
+
+        html {
+          scroll-behavior: smooth;
+        }
+
+        /* Prevent horizontal scroll */
+        body, html {
+          max-width: 100vw;
+          overflow-x: hidden;
+        }
+
+        * {
+          max-width: 100%;
         }
     </style>
 </head>
-<body data-theme="light">
-    <!-- Custom Cursor -->
-    <div class="custom-cursor">
-        <div class="cursor-dot"></div>
-    </div>
-
-    <!-- WebGL Background -->
+<body>
     <canvas id="webgl-canvas"></canvas>
-
-    <!-- Header with Navigation -->
+    
+    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="logo">
-                <h1>🏆 Tech Leaderboard</h1>
+                <h2><a href='/'>TECH IN MY STYLE</a></h2>
             </div>
+            
+            <!-- Desktop Navigation -->
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
-                    <a href="/" class="nav-link active">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="/courses" class="nav-link">
-                        <i class="fas fa-book"></i>
-                        <span>Courses</span>
-                    </a>
-                    <a href="/about-us" class="nav-link">
-                        <i class="fas fa-info-circle"></i>
-                        <span>About Us</span>
-                    </a>
-                    <a href="/stay-connected" class="nav-link">
-                        <i class="fas fa-users"></i>
-                        <span>Stay Connected </span>
-                    </a>
-                                        <a href="/feedback" class="nav-link">
-                        <i class="fas fa-comment"></i>
-                        <span>Feedback Center</span>
-                    </a>
-                    <a href="/leaderboard" class="nav-link">
-                        <i class="fas fa-trophy"></i>
-                        <span>Leaderboard</span>
-                    </a>
-                    <a href="#" class="nav-link" onclick="logout()">
-                        <i class="fas fa-arrow-right-from-bracket"></i>
-                        <span>Logout</span>
-                    </a>
+                    <a class='nav-link' href='/'><i class="fas fa-home"></i><span>Home</span></a>
+                    <a class='nav-link' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                    <a class='nav-link' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
+                    <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
+                    <a class='nav-link' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
+                    <a class='nav-link active' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                    <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
                 </div>
-
                 <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="desktopThemeToggle">
+                        <span class="slider"></span>
+                    </label>
+                    <i class="fas fa-moon"></i>
+                </div>
+            </nav>
+            
+            <!-- Mobile Header Controls -->
+            <div class="mobile-header-controls">
+                <div class="theme-toggle">
+                    <i class="fas fa-sun"></i>
                     <label class="switch">
                         <input type="checkbox" id="themeToggle">
                         <span class="slider"></span>
                     </label>
-                </div>
-            </nav>
-            <div class="mobile-header-controls">
-                <div class="theme-toggle">
-                    <label class="switch">
-                        <input type="checkbox" id="mobileThemeToggle">
-                        <span class="slider"></span>
-                    </label>
+                    <i class="fas fa-moon"></i>
                 </div>
                 <button class="mobile-menu-btn" id="mobileMenuBtn">
                     <i class="fas fa-bars"></i>
@@ -1124,46 +1110,48 @@
     </header>
 
     <!-- Main Content -->
-    <main class="main-container">
-        <div class="container">
-            <div class="leaderboard-container" role="main">
-                <section class="leaderboard-header">
-                    <h1>🏆 Leaderboard</h1>
-                    <p>Click a username for full course progress details.</p>
-                </section>
-                
-                <section class="controls" aria-label="Search and filter leaderboard">
-                    <input type="text" id="searchInput" aria-label="Search user" placeholder="🔍 Search user..." />
-                    <select id="sortSelect" aria-label="Sort leaderboard">
-                        <option value="rank">Sort by Rank</option>
-                        <option value="score">Sort by Score</option>
-                        <option value="user">Sort by Username</option>
-                    </select>
-                    <span class="spacer" aria-hidden="true"></span>
-                </section>
-                
-                <section class="leaderboard-table-wrap" aria-label="Leaderboard table">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th scope="col">Rank</th>
-                                <th scope="col">User</th>
-                                <th scope="col">Total Tasks</th>
-                            </tr>
-                        </thead>
-                        <tbody id="board" role="rowgroup"></tbody>
-                    </table>
-                </section>
-                
-                <!-- Chart container for better styling and visibility -->
-                <div class="chart-container">
-                    <canvas id="scoreChart" aria-label="Bar chart of total tasks completed by users"></canvas>
-                </div>
-                
-                <button class="back-btn" onclick="goHome()">
-                    <i class="fas fa-arrow-left"></i> Back to Dashboard
+    <main class="main-content">
+        <div class="leaderboard-container" role="main">
+            <section class="leaderboard-header">
+                <h1>🏆 Leaderboard</h1>
+                <p>Click a username for full course progress details and track your learning journey.</p>
+            </section>
+            
+            <section class="controls" aria-label="Search and filter leaderboard">
+                <input type="text" id="searchInput" aria-label="Search user" placeholder="🔍 Search user..." />
+                <select id="sortSelect" aria-label="Sort leaderboard">
+                    <option value="rank">Sort by Rank</option>
+                    <option value="score">Sort by Score</option>
+                    <option value="user">Sort by Username</option>
+                </select>
+                <span class="spacer" aria-hidden="true"></span>
+                <button class="theme-toggle-btn" aria-pressed="false" aria-label="Toggle dark/light theme" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                    Toggle Theme
                 </button>
+            </section>
+            
+            <section class="leaderboard-table-wrap" aria-label="Leaderboard table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Total Tasks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="board" role="rowgroup"></tbody>
+                </table>
+            </section>
+            
+            <div class="chart-container">
+                <canvas id="scoreChart" height="90" role="img" aria-label="Bar chart of total tasks completed by users"></canvas>
             </div>
+            
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
         </div>
     </main>
 
@@ -1180,7 +1168,7 @@
                     </table>
                 </div>
                 <div class="modal-chart-wrap chart-card">
-                    <canvas id="userProgressChart"></canvas>
+                    <canvas id="userProgressChart" width="360" height="300"></canvas>
                 </div>
                 <div class="modal-summary chart-card">
                     <select id="courseSummarySelect" aria-label="Select course for summary"></select>
@@ -1200,1090 +1188,825 @@
                             </tr>
                         </tbody>
                     </table>
-                    <canvas id="courseSummaryPie"></canvas>
+                    <canvas id="courseSummaryPie" width="280" height="250"></canvas>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>TECH IN MY STYLE</h3>
+                    <p>Empowering the next generation of developers with hands-on learning experiences and industry-recognized certifications.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Quick Links</h4>
+                        <a href="/">HOME</a>
+                        <a href="/courses">COURSES</a>
+                        <a href="/about-us">ABOUT US</a>
+                        <a href="/stay-connected">STAY CONNECTED</a>
+                        <a href="/feedback">Feedback Center</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Courses</h4>
+                        <a href="/HTML IN MY STYLE/index.html">HTML IN MY STYLE</a>
+                        <a href="/CSS IN MY STYLE/index.html">CSS IN MY STYLE</a>
+                        <a href="/JAVASCRIPT IN MY STYLE - BASIC/index.html">JS IN MY STYLE (BASIC)</a>
+                        <a href="/PYTHON IN MY STYLE/index.html">PYTHON IN MY STYLE</a>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Support</h4>
+                        <a href="https://www.instagram.com/techinmystyle"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.youtube.com/@TECHINMYSTYLE"><i class="fab fa-youtube"></i> YouTube</a>
+                        <a href="https://whatsapp.com/channel/0029VbAZrCD5fM5aOU10Av0d"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a href="https://t.me/Tech_in_my_style_bot"><i class="fab fa-telegram"></i> Telegram</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TECH IN MY STYLE. All rights reserved.</p>
+                <div class="scroll-top" onclick="scrollToTop()">
+                    <i class="fas fa-arrow-up"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Improved WebGL Background with better performance
-        class ParticleSystem {
-            constructor(canvas) {
-                this.canvas = canvas;
-                this.ctx = canvas.getContext('2d');
-                this.particles = [];
-                this.particleCount = window.innerWidth < 768 ? 15 : 20; // Reduce for mobile
-                this.mouse = { x: 0, y: 0 };
-                this.animationId = null;
-                this.active = true;
-                
-                this.resizeCanvas();
-                this.createParticles();
-                this.bindEvents();
-                this.animate();
-            }
+        // Initialize AOS
+        AOS.init({
+            duration: 600,
+            easing: 'ease-in-out',
+            once: false,
+            mirror: true,
+            offset: 20
+        });
 
-            resizeCanvas() {
-                this.canvas.width = window.innerWidth;
-                this.canvas.height = window.innerHeight;
-            }
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const menuIcon = mobileMenuBtn.querySelector('i');
+        const header = document.querySelector('.header');
 
-            createParticles() {
-                this.particles = []; // Clear existing particles
-                for (let i = 0; i < this.particleCount; i++) {
-                    this.particles.push({
-                        x: Math.random() * this.canvas.width,
-                        y: Math.random() * this.canvas.height,
-                        size: Math.random() * 15 + 15, // Adjusted size for better visibility
-                        speedX: (Math.random() - 0.5) * 0.3, // Slower movement
-                        speedY: (Math.random() - 0.5) * 0.3,
-                        color: this.getRandomColor(),
-                        opacity: Math.random() * 0.3 + 0.1
-                    });
-                }
-            }
-
-            getRandomColor() {
-                const isDark = document.body.getAttribute('data-theme') === 'dark';
-                const baseColor = isDark ? '179, 136, 255' : '33, 150, 243';
-                return `rgba(${baseColor}, ${Math.random() * 0.2 + 0.1})`;
-            }
-
-            updateParticles() {
-                this.particles.forEach(particle => {
-                    particle.x += particle.speedX;
-                    particle.y += particle.speedY;
-                    
-                    // Bounce off edges with a small buffer
-                    if (particle.x <= 0 || particle.x >= this.canvas.width) {
-                        particle.speedX *= -1;
-                        // Move slightly away from the edge to prevent sticking
-                        particle.x = particle.x <= 0 ? 1 : this.canvas.width - 1;
-                    }
-                    if (particle.y <= 0 || particle.y >= this.canvas.height) {
-                        particle.speedY *= -1;
-                        // Move slightly away from the edge to prevent sticking
-                        particle.y = particle.y <= 0 ? 1 : this.canvas.height - 1;
-                    }
-                    
-                    // Mouse interaction - simplified for performance
-                    if (this.mouse.x && this.mouse.y) { // Only if mouse has moved
-                        const dx = this.mouse.x - particle.x;
-                        const dy = this.mouse.y - particle.y;
-                        const distance = Math.sqrt(dx * dx + dy * dy);
-                        
-                        if (distance < 150) {
-                            const force = (150 - distance) / 1500;
-                            particle.x -= dx * force;
-                            particle.y -= dy * force;
-                        }
-                    }
-                });
-            }
-
-            render() {
-                // Clear canvas with semi-transparent background for trail effect
-                this.ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--bg');
-                this.ctx.globalAlpha = 0.2; // Increased for better visibility
-                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-                this.ctx.globalAlpha = 1;
-                
-                // Draw particles
-                this.particles.forEach(particle => {
-                    this.ctx.save();
-                    this.ctx.translate(particle.x, particle.y);
-                    
-                    // Draw square particles with rounded corners
-                    this.ctx.fillStyle = particle.color;
-                    this.ctx.globalAlpha = particle.opacity;
-                    this.roundRect(this.ctx, -particle.size/2, -particle.size/2, 
-                                  particle.size, particle.size, 4);
-                    this.ctx.fill();
-                    
-                    // Draw inner square (second ring)
-                    const isDark = document.body.getAttribute('data-theme') === 'dark';
-                    const innerColor = isDark ? '179, 136, 255' : '33, 150, 243';
-                    this.ctx.fillStyle = `rgba(${innerColor}, 0.3)`;
-                    this.ctx.globalAlpha = particle.opacity * 2;
-                    this.roundRect(this.ctx, -particle.size/4, -particle.size/4, 
-                                  particle.size/2, particle.size/2, 2);
-                    this.ctx.fill();
-                    
-                    this.ctx.restore();
-                });
-            }
-
-            // Helper for rounded rectangles
-            roundRect(ctx, x, y, width, height, radius) {
-                if (width < 2 * radius) radius = width / 2;
-                if (height < 2 * radius) radius = height / 2;
-                ctx.beginPath();
-                ctx.moveTo(x + radius, y);
-                ctx.arcTo(x + width, y, x + width, y + height, radius);
-                ctx.arcTo(x + width, y + height, x, y + height, radius);
-                ctx.arcTo(x, y + height, x, y, radius);
-                ctx.arcTo(x, y, x + width, y, radius);
-                ctx.closePath();
-            }
-
-            bindEvents() {
-                window.addEventListener('resize', () => {
-                    this.resizeCanvas();
-                    this.createParticles(); // Recreate on resize
-                });
-                
-                // Throttle mousemove for performance
-                let mouseTimeout;
-                window.addEventListener('mousemove', (e) => {
-                    if (mouseTimeout) return;
-                    mouseTimeout = setTimeout(() => {
-                        this.mouse.x = e.clientX;
-                        this.mouse.y = e.clientY;
-                        mouseTimeout = null;
-                    }, 16); // ~60fps
-                });
-                
-                // Update colors when theme changes
-                const observer = new MutationObserver(() => {
-                    this.particles.forEach(particle => {
-                        particle.color = this.getRandomColor();
-                    });
-                });
-                
-                observer.observe(document.body, { attributes: true, attributeFilter: ['data-theme'] });
-                
-                // Pause animation when page is not visible to save resources
-                document.addEventListener('visibilitychange', () => {
-                    this.active = document.visibilityState === 'visible';
-                    if (this.active && !this.animationId) {
-                        this.animate();
-                    }
-                });
-            }
-
-            animate() {
-                if (!this.active) {
-                    this.animationId = null;
-                    return;
-                }
-                
-                this.updateParticles();
-                this.render();
-                this.animationId = requestAnimationFrame(() => this.animate());
-            }
-
-            destroy() {
-                if (this.animationId) {
-                    cancelAnimationFrame(this.animationId);
-                    this.animationId = null;
-                }
-                this.active = false;
-                this.particles = [];
-            }
-        }
-
-        // Custom Cursor with improved performance
-        class CustomCursor {
-            constructor() {
-                this.cursor = document.querySelector('.custom-cursor');
-                this.cursorVisible = true;
-                this.cursorEnabled = window.innerWidth > 768;
-                this.bindEvents();
-            }
-
-            bindEvents() {
-                // Only enable cursor on desktop
-                if (!this.cursorEnabled) {
-                    this.cursor.style.display = 'none';
-                    return;
-                }
-                
-                // Throttled mousemove for better performance
-                let lastX = 0;
-                let lastY = 0;
-                let rafId = null;
-                
-                document.addEventListener('mousemove', (e) => {
-                    lastX = e.clientX;
-                    lastY = e.clientY;
-                    
-                    // Show cursor
-                    if (!this.cursorVisible) {
-                        this.cursor.style.opacity = '1';
-                        this.cursorVisible = true;
-                    }
-                    
-                    // Throttle updates with requestAnimationFrame
-                    if (!rafId) {
-                        rafId = requestAnimationFrame(() => {
-                            this.cursor.style.transform = `translate(${lastX}px, ${lastY}px)`;
-                            rafId = null;
-                        });
-                    }
-                });
-
-                // Mouse events
-                document.addEventListener('mousedown', () => {
-                    if (this.cursorEnabled) {
-                        this.cursor.style.width = '25px';
-                        this.cursor.style.height = '25px';
-                    }
-                });
-
-                document.addEventListener('mouseup', () => {
-                    if (this.cursorEnabled) {
-                        this.cursor.style.width = '30px';
-                        this.cursor.style.height = '30px';
-                    }
-                });
-                
-                // Hide cursor when leaving window
-                document.addEventListener('mouseout', (e) => {
-                    if (e.relatedTarget === null) {
-                        this.cursor.style.opacity = '0';
-                        this.cursorVisible = false;
-                    }
-                });
-                
-                // Check for window resize
-                window.addEventListener('resize', () => {
-                    this.cursorEnabled = window.innerWidth > 768;
-                    this.cursor.style.display = this.cursorEnabled ? 'flex' : 'none';
-                });
-            }
-        }
-
-        // Mobile Navigation with improved functionality
-        class MobileNavigation {
-            constructor() {
-                this.mobileMenuBtn = document.getElementById('mobileMenuBtn');
-                this.navLinks = document.getElementById('navLinks');
-                this.isOpen = false;
-                this.bindEvents();
-            }
-
-            bindEvents() {
-                this.mobileMenuBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    this.toggleMenu();
-                });
-
-                // Close menu when clicking on a link
-                this.navLinks.addEventListener('click', (e) => {
-                    if (e.target.classList.contains('nav-link')) {
-                        this.closeMenu();
-                    }
-                });
-
-                // Close menu when clicking outside
-                document.addEventListener('click', (e) => {
-                    if (this.isOpen && !this.mobileMenuBtn.contains(e.target) && 
-                        !this.navLinks.contains(e.target)) {
-                        this.closeMenu();
-                    }
-                });
-                
-                // Close on escape key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && this.isOpen) {
-                        this.closeMenu();
-                    }
-                });
-                
-                // Handle resize events
-                window.addEventListener('resize', () => {
-                    if (window.innerWidth > 768 && this.isOpen) {
-                        this.closeMenu();
-                    }
-                });
-            }
-
-            toggleMenu() {
-                this.isOpen = !this.isOpen;
-                this.navLinks.classList.toggle('active');
-                const icon = this.mobileMenuBtn.querySelector('i');
-                icon.classList.toggle('fa-bars');
-                icon.classList.toggle('fa-times');
-                
-                // Prevent body scrolling when menu is open
-                document.body.style.overflow = this.isOpen ? 'hidden' : '';
-            }
-
-            closeMenu() {
-                if (!this.isOpen) return;
-                
-                this.isOpen = false;
-                this.navLinks.classList.remove('active');
-                const icon = this.mobileMenuBtn.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-                
-                // Restore body scrolling
-                document.body.style.overflow = '';
-            }
-        }
-
-        // Theme Toggle with improved functionality
-        class ThemeToggle {
-            constructor() {
-                this.themeToggle = document.getElementById('themeToggle');
-                this.mobileThemeToggle = document.getElementById('mobileThemeToggle');
-                this.bindEvents();
-                this.loadTheme();
-            }
-
-            bindEvents() {
-                this.themeToggle.addEventListener('change', () => {
-                    this.toggleTheme();
-                });
-
-                this.mobileThemeToggle.addEventListener('change', () => {
-                    this.toggleTheme();
-                });
-                
-                // Listen for system preference changes
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-                    if (localStorage.getItem('theme') === null) {
-                        // Only auto-switch if user hasn't manually set a preference
-                        const newTheme = e.matches ? 'dark' : 'light';
-                        document.body.setAttribute('data-theme', newTheme);
-                        const isDark = newTheme === 'dark';
-                        this.themeToggle.checked = isDark;
-                        this.mobileThemeToggle.checked = isDark;
-                    }
-                });
-            }
-
-            toggleTheme() {
-                const currentTheme = document.body.getAttribute('data-theme');
-                const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-                
-                document.body.setAttribute('data-theme', newTheme);
-                localStorage.setItem('theme', newTheme);
-                
-                // Sync both toggles
-                const isDark = newTheme === 'dark';
-                this.themeToggle.checked = isDark;
-                this.mobileThemeToggle.checked = isDark;
-                
-                // Refresh charts if they exist
-                if (window.scoreChart) {
-                    window.scoreChart.update();
-                }
-                if (window.progressChartInstance) {
-                    window.progressChartInstance.update();
-                }
-                if (window.courseSummaryPieInstance) {
-                    window.courseSummaryPieInstance.update();
-                }
-            }
-
-            loadTheme() {
-                // Check for saved theme or use system preference
-                let savedTheme = localStorage.getItem('theme');
-                
-                if (!savedTheme) {
-                    // Use system preference if no saved theme
-                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                    savedTheme = prefersDark ? 'dark' : 'light';
-                }
-                
-                document.body.setAttribute('data-theme', savedTheme);
-                const isDark = savedTheme === 'dark';
-                this.themeToggle.checked = isDark;
-                this.mobileThemeToggle.checked = isDark;
-            }
-        }
-
-        // Debounce function for search input
-        function debounce(func, wait) {
-            let timeout;
-            return function(...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), wait);
-            };
-        }
-
-        // Initialize components
-        document.addEventListener('DOMContentLoaded', () => {
-            const particleSystem = new ParticleSystem(document.getElementById('webgl-canvas'));
-            new CustomCursor();
-            new MobileNavigation();
-            new ThemeToggle();
+        mobileMenuBtn.addEventListener('click', function() {
+            navLinks.classList.toggle('active');
             
-            // Cleanup on page unload
-            window.addEventListener('beforeunload', () => {
-                particleSystem.destroy();
+            if (navLinks.classList.contains('active')) {
+                menuIcon.className = 'fas fa-times';
+                header.style.borderBottom = 'none';
+            } else {
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Close mobile menu when clicking on nav links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
             });
         });
 
-        // LEADERBOARD FUNCTIONALITY WITH FIXES FOR CHART RENDERING
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!navLinks.contains(event.target) && 
+                !mobileMenuBtn.contains(event.target) && 
+                !event.target.closest('.mobile-header-controls') &&
+                navLinks.classList.contains('active')) {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+            }
+        });
+
+        // Sync Theme Toggles
+        const mobileThemeToggle = document.getElementById('themeToggle');
+        const desktopThemeToggle = document.getElementById('desktopThemeToggle');
+        const body = document.body;
+
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        if (currentTheme === 'dark') {
+            body.setAttribute('data-theme', 'dark');
+            mobileThemeToggle.checked = true;
+            desktopThemeToggle.checked = true;
+        }
+
+        function syncThemeToggles(isDark) {
+            mobileThemeToggle.checked = isDark;
+            desktopThemeToggle.checked = isDark;
+            
+            if (isDark) {
+                body.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                body.removeAttribute('data-theme');
+                localStorage.setItem('theme', 'light');
+            }
+        }
+
+        mobileThemeToggle.addEventListener('change', function() {
+            syncThemeToggles(this.checked);
+        });
+
+        desktopThemeToggle.addEventListener('change', function() {
+            syncThemeToggles(this.checked);
+        });
+
+        // WebGL Animation with Three.js
+        function initWebGL() {
+            const canvas = document.getElementById('webgl-canvas');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                alpha: true,
+                antialias: true
+            });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesCount = 1500;
+            
+            const posArray = new Float32Array(particlesCount * 3);
+            
+            for (let i = 0; i < particlesCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 5;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const getParticleColor = () => {
+                const isDarkTheme = document.body.getAttribute('data-theme') === 'dark';
+                return isDarkTheme ? 0xb388ff : 0x2196F3;
+            };
+            
+            let particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: getParticleColor(),
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 2;
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let targetRotationX = 0;
+            let targetRotationY = 0;
+            let currentRotationX = 0;
+            let currentRotationY = 0;
+            let isMoving = false;
+            let moveTimeout;
+            
+            document.addEventListener('mousemove', (event) => {
+                mouseX = (event.clientX / window.innerWidth - 0.5) * 0.05;
+                mouseY = (event.clientY / window.innerHeight - 0.5) * 0.05;
+                
+                targetRotationX = mouseY;
+                targetRotationY = mouseX;
+                
+                isMoving = true;
+                
+                clearTimeout(moveTimeout);
+                
+                moveTimeout = setTimeout(() => {
+                    isMoving = false;
+                }, 1000);
+            });
+            
+            function updateParticleColor() {
+                setTimeout(() => {
+                    particlesMaterial.color.setHex(getParticleColor());
+                }, 100);
+            }
+            
+            mobileThemeToggle.addEventListener('change', updateParticleColor);
+            desktopThemeToggle.addEventListener('change', updateParticleColor);
+            
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0002;
+                particlesMesh.rotation.y += 0.0002;
+                
+                if (isMoving) {
+                    currentRotationX += (targetRotationX - currentRotationX) * 0.1;
+                    currentRotationY += (targetRotationY - currentRotationY) * 0.1;
+                    
+                    particlesMesh.rotation.x += currentRotationX;
+                    particlesMesh.rotation.y += currentRotationY;
+                } else {
+                    currentRotationX *= 0.95;
+                    currentRotationY *= 0.95;
+                    
+                    particlesMesh.rotation.x += currentRotationX;
+                    particlesMesh.rotation.y += currentRotationY;
+                }
+                
+                renderer.render(scene, camera);
+            };
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        if (window.WebGLRenderingContext) {
+            try {
+                initWebGL();
+            } catch (e) {
+                console.log('WebGL initialization failed:', e);
+            }
+        }
+
+        // Custom cursor implementation - improved
+        function initCustomCursor() {
+            if (window.innerWidth <= 768) return; // Don't initialize on mobile
+            
+            const cursor = document.createElement('div');
+            cursor.classList.add('custom-cursor');
+            
+            const cursorDot = document.createElement('div');
+            cursorDot.classList.add('cursor-dot');
+            
+            cursor.appendChild(cursorDot);
+            document.body.appendChild(cursor);
+            
+            let mouseX = 0;
+            let mouseY = 0;
+            let isVisible = true;
+            
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                
+                if (!isVisible) {
+                    cursor.style.opacity = '1';
+                    cursor.style.visibility = 'visible';
+                    isVisible = true;
+                }
+                
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
+            });
+            
+            // Handle hover effects
+            const clickableElements = document.querySelectorAll('a, button, tr, .user-link, .scroll-top, .nav-link, .switch, select, input, .closeModalBtn');
+            
+            function addHoverListeners() {
+                clickableElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        cursor.style.width = '40px';
+                        cursor.style.height = '40px';
+                    });
+                    
+                    element.addEventListener('mouseleave', () => {
+                        cursor.style.width = '30px';
+                        cursor.style.height = '30px';
+                    });
+                });
+            }
+            
+            addHoverListeners();
+            
+            // Handle mouse leaving window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursor.style.visibility = 'hidden';
+                isVisible = false;
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursor.style.visibility = 'visible';
+                isVisible = true;
+            });
+            
+            // Re-add listeners for dynamically created elements
+            const observer = new MutationObserver(() => {
+                addHoverListeners();
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+        initCustomCursor();
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Header Background on Scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                if (document.body.getAttribute('data-theme') === 'dark') {
+                    header.style.background = 'rgba(10, 10, 10, 0.95)';
+                }
+            } else {
+                header.style.background = 'var(--surface)';
+            }
+        });
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "auth/login.html";
+        }
+
+        // Handle window resize for mobile optimization
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                navLinks.classList.remove('active');
+                menuIcon.className = 'fas fa-bars';
+                header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+                
+                // Reinitialize cursor for desktop
+                if (!document.querySelector('.custom-cursor')) {
+                    initCustomCursor();
+                }
+            } else {
+                // Remove cursor on mobile
+                const existingCursor = document.querySelector('.custom-cursor');
+                if (existingCursor) {
+                    existingCursor.remove();
+                }
+            }
+        });
+
+        // LEADERBOARD FUNCTIONALITY
+        Chart.register({
+          id: 'customBgCard',
+          beforeDraw: (chart) => {
+            const ctx = chart.canvas.getContext('2d');
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card') || '#fff';
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          }
+        });
+
         let leaderboardData = [];
         let courseTotals = {};
         let currentUserProgress = null;
         let progressChartInstance = null;
         let courseSummaryPieInstance = null;
-        let scoreChart = null;
-
         const medals = [
-            '<span class="rank-medal gold">🥇</span>',
-            '<span class="rank-medal silver">🥈</span>',
-            '<span class="rank-medal bronze">🥉</span>'
+          '<span class="rank-medal gold">🥇</span>',
+          '<span class="rank-medal silver">🥈</span>',
+          '<span class="rank-medal bronze">🥉</span>'
         ];
+        const chartCtx = document.getElementById('scoreChart').getContext('2d');
+        let scoreChart;
+        Chart.register(ChartDataLabels);
 
         // Helper: get user's initials
         function getInitials(name) {
-            if (!name) return "U";
-            const parts = name.split(/[ ._]/).filter(Boolean);
-            return parts.length === 1 ? parts[0][0].toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
+          if (!name) return "U";
+          const parts = name.split(/[ ._]/).filter(Boolean);
+          return parts.length === 1 ? parts[0][0].toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
         }
 
         function renderTable(data) {
-            const tbody = document.getElementById("board");
-            tbody.innerHTML = "";
-            
-            // Use document fragment for better performance
-            const fragment = document.createDocumentFragment();
-            
-            data.forEach((userData, i) => {
-                const tr = document.createElement('tr');
-                if (i < 3) tr.classList.add('top-row');
-                
-                tr.innerHTML = `
-                  <td>${i < 3 ? medals[i] : (i + 1)}</td>
-                  <td class="user-cell">
-                    <span class="avatar">${getInitials(userData.user)}</span>
-                    <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
-                  </td>
-                  <td>${userData.score}</td>
-                `;
-                
-                fragment.appendChild(tr);
-            });
-            
-            tbody.appendChild(fragment);
+          const tbody = document.getElementById("board");
+          tbody.innerHTML = "";
+          data.forEach((userData, i) => {
+            tbody.innerHTML += `
+            <tr class="${i < 3 ? 'top-row' : ''}">
+              <td>${i < 3 ? medals[i] : (i + 1)}</td>
+              <td class="user-cell">
+                <span class="avatar">${getInitials(userData.user)}</span>
+                <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
+              </td>
+              <td>${userData.score}</td>
+            </tr>
+            `;
+          });
         }
 
-        // Create the chart with proper configuration
         function updateChart(data) {
-            const chartCtx = document.getElementById('scoreChart').getContext('2d');
-            const labels = data.map(u => u.user);
-            const scores = data.map(u => u.score);
-            
-            // Destroy existing chart if it exists
-            if (scoreChart) {
-                scoreChart.destroy();
-                scoreChart = null;
-            }
-            
-            // Set primary color
-            const primaryColor = getComputedStyle(document.documentElement)
-                .getPropertyValue('--primary').trim();
-            
-            // Register Chart.js plugins
-            Chart.register(ChartDataLabels);
-            
-            // Create new chart
-            scoreChart = new Chart(chartCtx, {
-                type: 'bar',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Total Tasks Completed',
-                        data: scores,
-                        backgroundColor: primaryColor,
-                        borderColor: primaryColor,
-                        borderWidth: 1,
-                        borderRadius: 4,
-                        barPercentage: 0.7,
-                        maxBarThickness: 50
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: {
-                        padding: {
-                            top: 20
-                        }
-                    },
-                    animation: {
-                        duration: 750,
-                        easing: 'easeOutQuart'
-                    },
-                    plugins: {
-                        legend: {
-                            display: false
-                        },
-                        datalabels: {
-                            color: 'white',
-                            anchor: 'end',
-                            align: 'top',
-                            font: {
-                                weight: 'bold'
-                            },
-                            formatter: v => v,
-                            padding: 6
-                        },
-                        tooltip: {
-                            enabled: true,
-                            backgroundColor: primaryColor,
-                            titleFont: {
-                                size: 14
-                            },
-                            bodyFont: {
-                                size: 13
-                            },
-                            padding: 10,
-                            cornerRadius: 6,
-                            displayColors: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            ticks: {
-                                stepSize: 1,
-                                precision: 0,
-                                font: {
-                                    size: 12
-                                }
-                            },
-                            grid: {
-                                color: 'rgba(200, 200, 200, 0.1)'
-                            }
-                        },
-                        x: {
-                            ticks: {
-                                font: {
-                                    size: 11
-                                },
-                                maxRotation: 45,
-                                minRotation: 45
-                            },
-                            grid: {
-                                display: false
-                            }
-                        }
-                    }
+          const labels = data.map(u => u.user);
+          const scores = data.map(u => u.score);
+          if(scoreChart) { scoreChart.destroy(); scoreChart = null; }
+          scoreChart = new Chart(chartCtx, {
+            type: 'bar',
+            data: {
+              labels,
+              datasets: [{
+                label: 'Total Tasks Completed',
+                data: scores,
+                backgroundColor: getComputedStyle(document.body).getPropertyValue('--primary') || '#2196F3',
+                borderColor: getComputedStyle(document.body).getPropertyValue('--primary') || '#2196F3',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false,
+              }],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {display: false},
+                datalabels: {
+                  color: 'white',
+                  anchor: 'end',
+                  align: 'top',
+                  formatter: v => v,
+                  font: {
+                    weight: 'bold',
+                    size: 12
+                  }
                 }
-            });
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { 
+                    stepSize: 1,
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
         }
-
-        // Debounced search and sort
-        const debouncedSearchAndSort = debounce(applySearchAndSort, 300);
 
         function applySearchAndSort() {
-            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
-            const sortValue = document.getElementById('sortSelect').value;
-            let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
-            
-            if(sortValue === "user") {
-                filtered.sort((a,b) => a.user.localeCompare(b.user));
-            } else if(sortValue === "score") {
-                filtered.sort((a,b) => b.score - a.score);
-            } else { //rank
-                filtered.sort((a,b) => b.score - a.score);
-            }
-            
-            renderTable(filtered);
-            updateChart(filtered);
+          const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+          const sortValue = document.getElementById('sortSelect').value;
+          let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
+          if(sortValue === "user") {
+            filtered.sort((a,b) => a.user.localeCompare(b.user));
+          } else if(sortValue === "score") {
+            filtered.sort((a,b) => b.score - a.score);
+          } else { //rank
+            filtered.sort((a,b) => b.score - a.score);
+          }
+          renderTable(filtered);
+          updateChart(filtered);
         }
 
         async function loadCourseTotals() {
-            try {
-                const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
-                if(!res.ok) throw new Error("Failed to fetch course totals");
-                courseTotals = await res.json();
-            } catch(err) {
-                console.error("Error loading course totals:", err);
-                courseTotals = {
-                    "ai": 30,"ml":30,"dl":30,"java":30,"c":30,"html":30,
-                    "css":30,"js":30,"js-intermediate":30,"python":30,"dsc":30
-                };
-            }
+          try {
+            const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
+            if(!res.ok) throw new Error("Failed to fetch course totals");
+            courseTotals = await res.json();
+          } catch {
+            courseTotals = {
+              "ai": 30,"ml":30,"dl":30,"java":30,"c":30,"html":30,
+              "css":30,"js":30,"js-intermediate":30,"python":30,"dsc":30
+            };
+          }
         }
 
         async function loadBoard() {
-            await loadCourseTotals();
-            try {
-                const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
-                if (!res.ok) throw new Error("Failed to fetch leaderboard");
-                leaderboardData = await res.json();
-                
-                // If leaderboard is empty, add some example data
-                if (!leaderboardData || leaderboardData.length === 0) {
-                    leaderboardData = [
-                        { user: "JohnDoe", score: 120 },
-                        { user: "AliceSmith", score: 115 },
-                        { user: "BobJohnson", score: 98 },
-                        { user: "SarahWilliams", score: 85 },
-                        { user: "MikeRobinson", score: 72 }
-                    ];
-                }
-                
-                applySearchAndSort();
-            } catch(e) {
-                console.error("Error loading leaderboard:", e);
-                
-                // Show an error message
-                document.getElementById("board").innerHTML = `
-                    <tr><td colspan="3">
-                        <div style="padding: 20px; text-align: center;">
-                            <i class="fas fa-exclamation-triangle" style="color: var(--primary); font-size: 24px;"></i>
-                            <p style="margin-top: 10px;">Failed to load leaderboard data. Please try again later.</p>
-                        </div>
-                    </td></tr>
-                `;
-                
-                // Create example data for demonstration
-                leaderboardData = [
-                    { user: "JohnDoe", score: 120 },
-                    { user: "AliceSmith", score: 115 },
-                    { user: "BobJohnson", score: 98 },
-                    { user: "SarahWilliams", score: 85 },
-                    { user: "MikeRobinson", score: 72 }
-                ];
-                
-                // Still attempt to render the chart with example data
-                updateChart(leaderboardData);
-            }
+          await loadCourseTotals();
+          try {
+            const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
+            if (!res.ok) throw new Error("Failed to fetch leaderboard");
+            leaderboardData = await res.json();
+            applySearchAndSort();
+          } catch(e) {
+            document.getElementById("board").innerHTML = `<tr><td colspan="3">⚠ Failed to load leaderboard.</td></tr>`;
+            console.error(e);
+          }
+        }
+
+        function toggleTheme() {
+          const isDark = document.body.getAttribute('data-theme') === 'dark';
+          syncThemeToggles(!isDark);
         }
 
         function goHome() {
-            window.location.href = "../index.html";
+          window.location.href = "../index.html";
         }
 
         function closeModal() {
-            if(progressChartInstance) { 
-                progressChartInstance.destroy(); 
-                progressChartInstance = null;
-            }
-            if(courseSummaryPieInstance) { 
-                courseSummaryPieInstance.destroy(); 
-                courseSummaryPieInstance = null;
-            }
-            const modal = document.getElementById('progressModal');
-            if(modal) modal.style.display = 'none';
-            
-            // Re-enable scrolling on body
-            document.body.style.overflow = '';
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          const modal = document.getElementById('progressModal');
+          if(modal) modal.style.display = 'none';
         }
 
         function renderProgressChart() {
-            if (!currentUserProgress) return;
-            const ctx = document.getElementById('userProgressChart').getContext('2d');
-            
-            if(progressChartInstance) { 
-                progressChartInstance.destroy(); 
-                progressChartInstance = null;
-            }
-            
-            const labels = Object.keys(currentUserProgress);
-            const data = labels.map(c => currentUserProgress[c]?.length || 0);
-            
-            // Vibrant color palette that works in both light and dark mode
-            const bgColors = [
-                '#3574e6','#56b881','#ef476f','#ffd166',
-                '#06d6a0','#118ab2','#b388eb','#f78fb3'
-            ];
-            
+          if (!currentUserProgress) return;
+          
+          const ctx = document.getElementById('userProgressChart').getContext('2d');
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          
+          const labels = Object.keys(currentUserProgress);
+          const data = labels.map(c => currentUserProgress[c]?.length || 0);
+          const bgColors = [
+            '#3574e6','#56b881','#ef476f','#ffd166',
+            '#06d6a0','#118ab2','#b388eb','#f78fb3'
+          ];
+          
+          if (labels.length === 0) {
+            // Show a placeholder chart if no data
             progressChartInstance = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: labels.length ? labels : ['No Progress'],
-                    datasets: [{
-                        data: data.length ? data : [1],
-                        backgroundColor: bgColors.slice(0, labels.length || 1),
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true
-                    },
-                    plugins: {
-                        legend: {
-                            display: true, 
-                            position: 'bottom',
-                            labels: {
-                                font: {
-                                    size: 11
-                                },
-                                padding: 15
-                            }
-                        },
-                        datalabels: {
-                            color: '#fff',
-                            font: {
-                                weight: 'bold', 
-                                size: 12
-                            },
-                            formatter: (value, context) => {
-                                const {dataset} = context;
-                                const total = dataset.data.reduce((a,b) => a+b, 0) || 1;
-                                const percentage = ((value/total)*100).toFixed(1);
-                                return percentage > 5 ? `${percentage}%` : ''; // Hide small slices
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0,0,0,0.7)',
-                            padding: 10,
-                            titleFont: {
-                                size: 14
-                            },
-                            bodyFont: {
-                                size: 13
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
+              type: 'pie',
+              data: {
+                labels: ['No Progress'],
+                datasets: [{
+                  data: [1],
+                  backgroundColor: ['#cccccc'],
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {display: true, position: 'bottom'},
+                  datalabels: {
+                    display: false
+                  }
+                }
+              },
+              plugins: [ChartDataLabels]
             });
+            return;
+          }
+          
+          progressChartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: data,
+                backgroundColor: bgColors.slice(0, labels.length),
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {display: true, position: 'bottom'},
+                datalabels: {
+                  color: '#fff',
+                  font: {weight: 'bold', size: 14},
+                  formatter: (value, context) => {
+                    const {dataset} = context;
+                    const total = dataset.data.reduce((a,b) => a+b, 0) || 1;
+                    return ((value/total)*100).toFixed(1) + '%';
+                  }
+                }
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
         }
 
         function updateCourseSummaryDropdown() {
-            const select = document.getElementById('courseSummarySelect');
-            select.innerHTML = '';
-            
-            // Sort courses alphabetically
-            const sortedCourses = Object.keys(courseTotals).sort();
-            
-            sortedCourses.forEach(course => {
-                const opt = document.createElement('option');
-                opt.value = course;
-                opt.textContent = course;
-                select.appendChild(opt);
-            });
-            
-            if(sortedCourses.length > 0) {
-                select.value = sortedCourses[0];
-            }
+          const select = document.getElementById('courseSummarySelect');
+          select.innerHTML = '';
+          
+          // Add a default option
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = 'Select a course';
+          select.appendChild(defaultOption);
+          
+          Object.keys(courseTotals).forEach(course => {
+            const opt = document.createElement('option');
+            opt.value = course;
+            opt.textContent = course.toUpperCase();
+            select.appendChild(opt);
+          });
         }
 
         function updateCourseSummary(course) {
-            if (!currentUserProgress || !courseTotals[course]) {
-                document.getElementById('courseSummaryTable').style.display = 'none';
-                if (courseSummaryPieInstance) { 
-                    courseSummaryPieInstance.destroy(); 
-                    courseSummaryPieInstance = null; 
-                }
-                return;
-            }
-            
-            document.getElementById('courseSummaryTable').style.display = '';
-            const total = courseTotals[course] ?? 0;
-            const completed = (currentUserProgress && currentUserProgress[course]) ? 
-                              currentUserProgress[course].length : 0;
-            
-            document.getElementById('summaryCourse').textContent = course;
-            document.getElementById('summaryTotal').textContent = total;
-            document.getElementById('summaryCompleted').textContent = completed;
-            
-            const ctx = document.getElementById('courseSummaryPie').getContext('2d');
-            
-            if (courseSummaryPieInstance) {
-                courseSummaryPieInstance.destroy();
-            }
-            
-            courseSummaryPieInstance = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Completed', 'Remaining'],
-                    datasets: [{
-                        data: [completed, Math.max(total-completed, 0)],
-                        backgroundColor: ['#56b881', '#dbdef8']
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    animation: {
-                        animateRotate: true,
-                        animateScale: true,
-                        duration: 800
-                    },
-                    plugins: {
-                        legend: {
-                            display: true, 
-                            position: 'bottom',
-                            labels: {
-                                font: {
-                                    size: 11
-                                },
-                                padding: 15
-                            }
-                        },
-                        datalabels: {
-                            color: (context) => {
-                                // Make label text visible against background
-                                return context.dataIndex === 0 ? '#fff' : '#333';
-                            },
-                            font: {
-                                weight: 'bold',
-                                size: 12
-                            },
-                            formatter: (value, context) => {
-                                const total = context.dataset.data.reduce((a,b) => a+b, 0);
-                                if (total === 0) return '';
-                                const percentage = ((value/total)*100).toFixed(0);
-                                return percentage > 5 ? `${percentage}%` : '';
-                            }
-                        },
-                                                tooltip: {
-                            backgroundColor: 'rgba(0,0,0,0.7)',
-                            padding: 10,
-                            callbacks: {
-                                label: (context) => {
-                                    const label = context.label || '';
-                                    const value = context.raw || 0;
-                                    const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
-                                    const percentage = ((value / total) * 100).toFixed(1);
-                                    return `${label}: ${value} (${percentage}%)`;
-                                }
-                            }
-                        }
+          const canvas = document.getElementById('courseSummaryPie');
+          const table = document.getElementById('courseSummaryTable');
+          
+          // Clean up previous chart
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          
+          if(!course || !currentUserProgress || !courseTotals[course]) {
+            table.style.display = 'none';
+            // Clear the canvas
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+          }
+          
+          // Show and update table
+          table.style.display = '';
+          const total = courseTotals[course] ?? 0;
+          const completed = (currentUserProgress && currentUserProgress[course]) ? currentUserProgress[course].length : 0;
+          
+          document.getElementById('summaryCourse').textContent = course.toUpperCase();
+          document.getElementById('summaryTotal').textContent = total;
+          document.getElementById('summaryCompleted').textContent = completed;
+          
+          // Create the pie chart
+          const ctx = canvas.getContext('2d');
+          const remaining = Math.max(total - completed, 0);
+          
+          courseSummaryPieInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: ['Completed', 'Remaining'],
+              datasets: [{
+                data: [completed, remaining],
+                backgroundColor: ['#56b881', 'rgba(255,255,255,0.3)'],
+                borderWidth: 2,
+                borderColor: '#fff'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true, 
+                  position: 'bottom',
+                  labels: {
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000',
+                    font: {
+                      size: 12
                     }
+                  }
                 },
-                plugins: [ChartDataLabels]
-            });
+                datalabels: {
+                  color: '#fff',
+                  font: {weight: 'bold', size: 12},
+                  formatter: (value, context) => {
+                    if (value === 0) return '';
+                    return value;
+                  }
+                }
+              },
+              layout: {
+                padding: 10
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
+          
+          // Force a redraw
+          setTimeout(() => {
+            if (courseSummaryPieInstance) {
+              courseSummaryPieInstance.update();
+            }
+          }, 100);
         }
 
         async function loadUserProgress(username) {
-            const modal = document.getElementById('progressModal');
-            if (!modal) return alert("Modal element not found.");
+          const modal = document.getElementById('progressModal');
+          if (!modal) return alert("Modal element not found.");
+          
+          const modalUser = document.getElementById('modalUser');
+          modalUser.textContent = `Course Progress for ${username}`;
+          modal.style.display = 'flex';
+          
+          // Reset progress data
+          currentUserProgress = null;
+          
+          const progressTable = document.getElementById('progressTable');
+          const progressTableBody = document.getElementById('progressTableBody');
+          progressTable.hidden = true;
+          progressTableBody.innerHTML = '';
+          
+          // Clean up previous charts
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          
+          // Reset dropdowns and tables
+          document.getElementById('courseSummarySelect').innerHTML = '';
+          document.getElementById('courseSummaryTable').style.display = 'none';
+          
+          try {
+            const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
+            if (!res.ok) throw new Error("Failed to fetch user progress");
             
-            const modalUser = document.getElementById('modalUser');
-            modalUser.textContent = `Course Progress for ${username}`;
-            modal.style.display = 'flex';
+            const prog = await res.json();
+            currentUserProgress = prog;
             
-            // Disable scrolling on body when modal is open
-            document.body.style.overflow = 'hidden';
-            
-            // Reset previous data
-            currentUserProgress = null;
-            const progressTable = document.getElementById('progressTable');
-            const progressTableBody = document.getElementById('progressTableBody');
-            progressTable.hidden = true;
-            progressTableBody.innerHTML = '<tr><td colspan="2" style="text-align:center;"><i class="fas fa-spinner fa-spin"></i> Loading...</td></tr>';
-            
-            if (progressChartInstance) { 
-                progressChartInstance.destroy(); 
-                progressChartInstance = null;
+            const courses = Object.keys(prog);
+            if (courses.length === 0) {
+              progressTableBody.innerHTML = `<tr><td colspan="2">No task progress found for this user.</td></tr>`;
+            } else {
+              progressTableBody.innerHTML = courses.map(course => {
+                const taskCount = prog[course].length;
+                return `<tr><td>${course.toUpperCase()}</td><td>${taskCount}</td></tr>`;
+              }).join('');
             }
-            if (courseSummaryPieInstance) { 
-                courseSummaryPieInstance.destroy(); 
-                courseSummaryPieInstance = null;
-            }
             
-            document.getElementById('courseSummarySelect').innerHTML = '';
-            document.getElementById('courseSummaryTable').style.display = 'none';
+            progressTable.hidden = false;
             
-            try {
-                const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
-                
-                if (!res.ok) {
-                    throw new Error(`Failed to fetch user progress: ${res.status}`);
-                }
-                
-                const prog = await res.json();
-                currentUserProgress = prog;
-                const courses = Object.keys(prog);
-                
-                if (courses.length === 0) {
-                    progressTableBody.innerHTML = `
-                        <tr>
-                            <td colspan="2" style="text-align:center;">
-                                <i class="fas fa-info-circle"></i> No task progress found for this user.
-                            </td>
-                        </tr>
-                    `;
-                } else {
-                    // Sort courses by completion count (descending)
-                    courses.sort((a, b) => prog[b].length - prog[a].length);
-                    
-                    progressTableBody.innerHTML = courses.map(course => {
-                        const taskCount = prog[course].length;
-                        const total = courseTotals[course] || 0;
-                        const percentage = total > 0 ? ((taskCount / total) * 100).toFixed(1) : 0;
-                        
-                        return `
-                            <tr>
-                                <td>${course}</td>
-                                <td>${taskCount}${total ? ` / ${total} (${percentage}%)` : ''}</td>
-                            </tr>
-                        `;
-                    }).join('');
-                }
-                
-                progressTable.hidden = false;
-                renderProgressChart();
-                updateCourseSummaryDropdown();
-                
-                const dropdown = document.getElementById('courseSummarySelect');
-                dropdown.onchange = (e) => updateCourseSummary(e.target.value);
-                
-                if (dropdown.value) {
-                    updateCourseSummary(dropdown.value);
-                }
-            } catch (e) {
-                console.error('Error loading user progress:', e);
-                
-                progressTableBody.innerHTML = `
-                    <tr>
-                        <td colspan="2" style="color:#ea5252; text-align:center;">
-                            <i class="fas fa-exclamation-circle"></i> Failed to load progress data.
-                            <br><small>Please try again later.</small>
-                        </td>
-                    </tr>
-                `;
-                progressTable.hidden = false;
-                
-                // Create some example data for demonstration
-                currentUserProgress = {
-                    "html": [1, 2, 3, 4, 5],
-                    "css": [1, 2, 3],
-                    "js": [1, 2, 3, 4],
-                    "python": [1, 2]
-                };
-                
-                renderProgressChart();
-                updateCourseSummaryDropdown();
-                
-                const dropdown = document.getElementById('courseSummarySelect');
-                dropdown.onchange = (e) => updateCourseSummary(e.target.value);
-                
-                if (dropdown.value) {
-                    updateCourseSummary(dropdown.value);
-                }
-            }
+            // Render charts with delay to ensure proper initialization
+            setTimeout(() => {
+              renderProgressChart();
+              updateCourseSummaryDropdown();
+              
+              const dropdown = document.getElementById('courseSummarySelect');
+              dropdown.onchange = (e) => updateCourseSummary(e.target.value);
+              
+              // Auto-select first course if available
+              if (courses.length > 0) {
+                dropdown.value = courses[0];
+                updateCourseSummary(courses[0]);
+              }
+            }, 200);
+            
+          } catch(e) {
+            progressTableBody.innerHTML = `<tr><td colspan="2" style="color:#ea5252;">Failed to load progress data.</td></tr>`;
+            progressTable.hidden = false;
+            console.error(e);
+          }
         }
 
-        // Event Listeners
+        // Event listeners
         document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('user-link')) {
-                e.preventDefault();
-                loadUserProgress(e.target.getAttribute('data-username'));
-            }
+          if (e.target.classList.contains('user-link')) {
+            e.preventDefault();
+            loadUserProgress(e.target.getAttribute('data-username'));
+          }
         });
 
-        document.getElementById("searchInput").addEventListener("input", debouncedSearchAndSort);
+        document.getElementById("searchInput").addEventListener("input", applySearchAndSort);
         document.getElementById("sortSelect").addEventListener("change", applySearchAndSort);
-
+        
         document.addEventListener("keydown", function(e) {
-            if (document.getElementById('progressModal').style.display === 'flex') {
-                if (e.key === "Escape") { 
-                    closeModal(); 
-                }
+          if (document.getElementById('progressModal').style.display === 'flex') {
+            if (e.key === "Escape") { 
+              closeModal(); 
             }
-        });
-
-        // Close modal when clicking outside of modal content
-        document.getElementById('progressModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
+          }
         });
 
         // Load leaderboard data
-        window.addEventListener('load', function() {
-            loadBoard();
-        });
-        
-        function logout() {
-            // Example logout functionality - replace with actual implementation
-            alert('Logout functionality would go here.');
-            // window.location.href = "/login.html";
-        }
+        loadBoard();
 
-        // Implement a resize observer for chart responsiveness
-        const resizeObserver = new ResizeObserver(entries => {
-            for (let entry of entries) {
-                if (entry.target.classList.contains('chart-container') && scoreChart) {
-                    // Give the container time to resize before updating chart
-                    setTimeout(() => {
-                        scoreChart.resize();
-                        scoreChart.update();
-                    }, 100);
-                }
-            }
-        });
-
-        // Start observing the chart container
-        document.querySelectorAll('.chart-container').forEach(container => {
-            resizeObserver.observe(container);
-        });
-
-        // Make sure the chart renders correctly on theme change
-        document.querySelectorAll('#themeToggle, #mobileThemeToggle').forEach(toggle => {
-            toggle.addEventListener('change', () => {
-                // Update charts when theme changes
-                if (scoreChart) {
-                    setTimeout(() => {
-                        scoreChart.update();
-                    }, 100);
-                }
-                
-                if (progressChartInstance) {
-                    setTimeout(() => {
-                        progressChartInstance.update();
-                    }, 100);
-                }
-                
-                if (courseSummaryPieInstance) {
-                    setTimeout(() => {
-                        courseSummaryPieInstance.update();
-                    }, 100);
-                }
-            });
-        });
-        
-        // Handle visibility change to optimize performance
-        document.addEventListener('visibilitychange', () => {
-            // Pause animations when page is not visible
-            if (document.visibilityState === 'hidden') {
-                if (scoreChart) {
-                    scoreChart.options.animation = false;
-                }
-            } else {
-                // Resume animations when page becomes visible again
-                if (scoreChart) {
-                    scoreChart.options.animation = {
-                        duration: 750,
-                        easing: 'easeOutQuart'
-                    };
-                }
-            }
-        });
-
-        // Disable right click and dev tools (preserved from original)
+        // Disable right click and dev tools
         document.addEventListener("contextmenu", (e) => e.preventDefault());
 
         document.onkeydown = function(e) {
-            // Disable F12
-            if (e.keyCode === 123) return false;
-
-            // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-                return false;
-            }
-
-            // Disable Ctrl+U (View Source)
-            if (e.ctrlKey && e.keyCode === 85) return false;
-
-            // Disable Ctrl+S (Save Page)
-            if (e.ctrlKey && e.keyCode === 83) return false;
-
-            // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-            if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-                return false;
-            }
-
-            // Disable Ctrl+Shift+K (Firefox)
-            if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+          if (e.keyCode === 123) return false;
+          if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            return false;
+          }
+          if (e.ctrlKey && e.keyCode === 85) return false;
+          if (e.ctrlKey && e.keyCode === 83) return false;
+          if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
         };
     </script>
 
@@ -2293,9 +2016,7 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-
       gtag('config', 'G-7G01YFBCVB');
     </script>
 </body>
 </html>
-                        
