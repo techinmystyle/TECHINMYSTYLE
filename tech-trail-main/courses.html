@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses - TECH IN MY STYLE</title>
+    <meta charset="UTF-8" />
+    <title>Leaderboard - Tech In My Style</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- Chart.js and Data Labels plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    
+    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -63,6 +69,14 @@
           --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
           --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
           --shadow-xl: 0 16px 64px rgba(0, 0, 0, 0.25);
+
+          /* Leaderboard specific colors */
+          --gold: #FFD700;
+          --silver: #C0C0C0;
+          --bronze: #CD7F32;
+          --card: var(--bg-light);
+          --header-bg: var(--primary-light);
+          --header-text: #fff;
         }
 
         [data-theme="dark"] {
@@ -73,6 +87,8 @@
           --surface: var(--surface-dark);
           --text: var(--text-dark);
           --text-secondary: var(--text-secondary-dark);
+          --card: #23263a;
+          --header-bg: #23263a;
         }
 
         * {
@@ -91,6 +107,7 @@
           width: 100%;
           max-width: 100vw;
           cursor: none;
+          min-height: 100vh;
         }
 
         .container {
@@ -120,10 +137,12 @@
             transform: translate(-50%, -50%);
             pointer-events: none;
             z-index: 9999;
-            transition: width 0.2s, height 0.2s;
+            transition: width 0.2s, height 0.2s, opacity 0.2s;
             display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 1;
+            visibility: visible;
         }
 
         .cursor-dot {
@@ -133,25 +152,25 @@
             border-radius: 50%;
         }
 
-        a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch {
-            cursor: none;
+        a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch, .user-link, tr, select, input, .closeModalBtn {
+            cursor: none !important;
         }
 
         @media (max-width: 768px) {
             .custom-cursor {
-                display: none;
+                display: none !important;
             }
             
             body {
-                cursor: auto;
+                cursor: auto !important;
             }
             
-            a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch {
-                cursor: pointer;
+            a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch, .user-link, tr, select, input, .closeModalBtn {
+                cursor: pointer !important;
             }
         }
 
-        /* HEADER WITH IMPROVED DESKTOP AND MOBILE NAVIGATION */
+        /* HEADER */
         .header {
           position: fixed;
           top: 0;
@@ -302,14 +321,7 @@
           gap: var(--spacing-sm);
         }
 
-        /* DESKTOP NAVIGATION STYLES */
-        @media (min-width: 769px) {
-          .nav-links {
-            gap: var(--spacing-lg);
-          }
-        }
-
-        /* MOBILE NAVIGATION STYLES */
+        /* MOBILE NAVIGATION */
         @media (max-width: 768px) {
           .mobile-menu-btn {
             display: block;
@@ -387,21 +399,6 @@
             font-size: 1rem;
           }
 
-          .switch {
-            width: 45px;
-            height: 24px;
-          }
-
-          .slider:before {
-            height: 16px;
-            width: 16px;
-          }
-
-          input:checked + .slider:before {
-            transform: translateX(19px);
-          }
-          
-          /* Add icons to mobile nav links */
           .nav-link i {
             margin-right: var(--spacing-sm);
             width: 20px;
@@ -409,433 +406,420 @@
           }
         }
 
-        @media (max-width: 480px) {
-          .container {
-            padding: 0 var(--spacing-sm);
-          }
-
-          .header {
-            padding: 0.5rem 0;
-          }
-
-          .nav-links {
-            top: 65px;
-          }
-
-          .nav-link {
-            font-size: 1rem;
-            padding: var(--spacing-sm) var(--spacing-md);
-          }
-
-          .logo h2 a {
-            font-size: 0.9rem;
-          }
-
-          .mobile-menu-btn {
-            font-size: 1.3rem;
-          }
-
-          .switch {
-            width: 40px;
-            height: 22px;
-          }
-
-          .slider:before {
-            height: 14px;
-            width: 14px;
-          }
-
-          input:checked + .slider:before {
-            transform: translateX(16px);
-          }
-        }
-
-        /* Hero Section */
-        .hero {
-          min-height: 60vh;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
+        /* MAIN CONTENT */
+        .main-content {
           padding-top: 120px;
-          background: var(--surface);
+          min-height: 100vh;
+          display: flex;
+          justify-content: center;
+          align-items: flex-start;
         }
 
-        .hero-content h1 {
-          font-size: clamp(2rem, 5vw, 4rem);
-          font-weight: 700;
-          margin-bottom: var(--spacing-md);
-          line-height: 1.2;
-          color: var(--text);
-        }
-
-        .hero-content p {
-          font-size: 1.2rem;
-          color: var(--text-secondary);
-          max-width: 600px;
-          margin: 0 auto;
-        }
-
-        .color-change {
-          background: linear-gradient(45deg, var(--primary), var(--secondary));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        @media (max-width: 768px) {
-          .hero {
-            padding-top: 100px;
-            min-height: 50vh;
-          }
-
-          .hero-content p {
-            font-size: 1rem;
-            padding: 0 var(--spacing-sm);
-          }
-        }
-
-        /* Course Categories */
-        .course-categories {
-          padding: var(--spacing-2xl) 0;
-        }
-
-        .course-categories h2 {
-          text-align: center;
-          font-size: clamp(1.8rem, 4vw, 3rem);
-          font-weight: 700;
-          margin-bottom: var(--spacing-2xl);
-          background: linear-gradient(45deg, var(--primary), var(--secondary));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .categories-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-          gap: var(--spacing-xl);
-        }
-
-        .category-card {
-          background: var(--surface);
-          backdrop-filter: blur(20px);
-          border-radius: var(--radius-lg);
-          padding: var(--spacing-xl);
-          text-align: center;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-
-        .category-card:hover {
-          transform: translateY(-10px);
-          box-shadow: var(--shadow-lg);
-        }
-
-        .category-card i {
-          font-size: 3rem;
-          color: var(--primary);
-          margin-bottom: var(--spacing-md);
-        }
-
-        .category-card h3 {
-          font-size: 1.5rem;
-          font-weight: 600;
-          margin-bottom: var(--spacing-sm);
-          color: var(--text);
-        }
-
-        .category-card p {
-          color: var(--text-secondary);
-          cursor: pointer;
-        }
-
-        @media (max-width: 768px) {
-          .course-categories {
-            padding: var(--spacing-xl) 0;
-          }
-
-          .categories-grid {
-            grid-template-columns: 1fr;
-            gap: var(--spacing-md);
-          }
-
-          .category-card {
-            padding: var(--spacing-lg);
-          }
-
-          .course-categories h2 {
-            margin-bottom: var(--spacing-xl);
-          }
-        }
-
-        /* All Courses */
-        .all-courses {
-          padding: var(--spacing-2xl) 0;
-          background: var(--surface);
-        }
-
-        .all-courses h2 {
-          text-align: center;
-          font-size: clamp(1.8rem, 4vw, 3rem);
-          font-weight: 700;
-          margin-bottom: var(--spacing-2xl);
-          background: linear-gradient(45deg, var(--primary), var(--secondary));
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text;
-        }
-
-        .courses-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: var(--spacing-xl);
-        }
-
-        .course-card {
-          background: var(--bg);
-          border-radius: var(--radius-lg);
-          overflow: hidden;
-          box-shadow: var(--shadow-md);
-          transition: all 0.3s ease;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          scroll-margin-top: 100px;
-        }
-
-        .course-card:hover {
-          transform: translateY(-10px);
+        .leaderboard-container {
+          max-width: 1200px;
+          width: 100%;
+          background: var(--card);
+          border-radius: var(--radius-xl);
           box-shadow: var(--shadow-xl);
+          overflow: hidden;
+          margin: var(--spacing-xl) auto;
+          backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .highlight-course {
-          box-shadow: 0 0 20px var(--primary) !important;
-          transform: translateY(-15px) !important;
-          transition: all 0.5s ease !important;
+        .leaderboard-header {
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          padding: var(--spacing-2xl) var(--spacing-xl);
+          text-align: center;
+          color: white;
         }
 
-        .course-image {
-          height: 200px;
-          background: linear-gradient(45deg, var(--primary), var(--secondary));
+        .leaderboard-header h1 {
+          font-size: clamp(2rem, 5vw, 3rem);
+          margin: 0 0 var(--spacing-sm);
+          font-weight: 700;
+          letter-spacing: -1px;
+        }
+
+        .leaderboard-header p {
+          font-size: 1.1rem;
+          opacity: 0.9;
+          margin: 0;
+        }
+
+        .controls {
           display: flex;
           align-items: center;
-          justify-content: center;
-          position: relative;
+          gap: var(--spacing-md);
+          padding: var(--spacing-xl) var(--spacing-xl);
+          background: var(--surface);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          flex-wrap: wrap;
         }
 
-        .course-image i {
-          font-size: 4rem;
-          color: white;
-        }
-
-        .course-content {
-          padding: var(--spacing-xl);
-        }
-
-        .course-content h3 {
-          font-size: 1.5rem;
-          font-weight: 600;
-          margin-bottom: var(--spacing-sm);
-          color: var(--text);
-        }
-
-        .course-content p {
-          color: var(--text-secondary);
-          margin-bottom: var(--spacing-md);
-        }
-
-        .btn {
-          padding: var(--spacing-md) var(--spacing-xl);
-          border: none;
-          border-radius: var(--radius-lg);
-          font-family: var(--font-primary);
-          font-weight: 600;
+        input[type="text"], select {
+          padding: var(--spacing-sm) var(--spacing-md);
+          border-radius: var(--radius-md);
+          border: 2px solid rgba(255, 255, 255, 0.1);
           font-size: 1rem;
-          cursor: pointer;
+          font-family: var(--font-primary);
+          min-width: 200px;
+          outline: none;
           transition: all 0.3s ease;
-          text-decoration: none;
-          display: inline-block;
-          text-align: center;
-          width: 100%;
+          background: var(--bg);
+          color: var(--text);
+          backdrop-filter: blur(10px);
         }
 
-        .course-btn {
-          background: var(--primary);
-          color: white;
-        }
-
-        .course-btn:hover {
-          background: var(--accent);
+        input[type="text"]:focus, select:focus {
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.1);
           transform: translateY(-2px);
         }
 
-        .btn.primary {
+        select {
+          min-width: 180px;
+        }
+
+        .spacer {
+          flex: 1;
+        }
+
+        .theme-toggle-btn {
           background: linear-gradient(45deg, var(--primary), var(--secondary));
           color: white;
+          border: none;
+          padding: var(--spacing-sm) var(--spacing-lg);
+          border-radius: var(--radius-md);
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          font-family: var(--font-primary);
+          transition: all 0.3s ease;
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-xs);
         }
 
-        @media (max-width: 768px) {
-          .all-courses {
-            padding: var(--spacing-xl) 0;
-          }
-
-          .courses-grid {
-            grid-template-columns: 1fr;
-            gap: var(--spacing-lg);
-          }
-
-          .course-content {
-            padding: var(--spacing-lg);
-          }
-
-          .all-courses h2 {
-            margin-bottom: var(--spacing-xl);
-          }
+        .theme-toggle-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: var(--shadow-md);
         }
 
-        /* Learning Path */
-        .learning-path {
-          padding: var(--spacing-2xl) 0;
-          background: linear-gradient(120deg, #f8fafc 60%, #e9f0fb 100%);
+        .leaderboard-table-wrap {
+          overflow-x: auto;
+          margin: 0 var(--spacing-xl) var(--spacing-xl) var(--spacing-xl);
         }
 
-        .learning-path h2 {
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          background: transparent;
+          font-size: 1rem;
+        }
+
+        th {
+          background: var(--surface);
+          color: var(--primary);
+          padding: var(--spacing-md) var(--spacing-sm);
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-size: 0.9rem;
+          font-weight: 600;
+          border-bottom: 2px solid var(--primary);
+          user-select: none;
+          position: sticky;
+          top: 0;
+          backdrop-filter: blur(10px);
+        }
+
+        td {
           text-align: center;
-          font-size: clamp(1.8rem, 4vw, 2.2rem);
-          font-weight: 700;
-          margin-bottom: var(--spacing-2xl);
-          letter-spacing: -1px;
-          color: #000000;
+          padding: var(--spacing-md) var(--spacing-sm);
+          font-weight: 500;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          background: transparent;
+          transition: all 0.3s ease;
         }
 
-        .modern-paths-grid {
+        td.user-cell {
+          display: flex;
+          align-items: center;
+          gap: var(--spacing-md);
+          justify-content: flex-start;
+          text-align: left;
+        }
+
+        .rank-medal {
+          font-size: 1.5rem;
+          user-select: none;
+        }
+
+        .gold { color: var(--gold); }
+        .silver { color: var(--silver); }
+        .bronze { color: var(--bronze); }
+
+        tr.top-row {
+          font-weight: 700;
+          background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05)) !important;
+          border-left: 4px solid var(--gold);
+        }
+
+        tr:hover td {
+          background: var(--surface);
+          transform: scale(1.02);
+          cursor: pointer;
+        }
+
+        .user-link {
+          color: var(--primary);
+          text-decoration: none;
+          font-weight: 600;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        .user-link:hover {
+          color: var(--secondary);
+          transform: translateX(5px);
+        }
+
+        .user-link::after {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          width: 0;
+          height: 2px;
+          background: var(--primary);
+          transition: width 0.3s ease;
+        }
+
+        .user-link:hover::after {
+          width: 100%;
+        }
+
+        .avatar {
+          width: 45px;
+          height: 45px;
+          background: linear-gradient(45deg, var(--primary), var(--secondary));
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: bold;
+          color: white;
+          font-size: 1.2rem;
+          user-select: none;
+          box-shadow: var(--shadow-sm);
+          transition: all 0.3s ease;
+        }
+
+        .avatar:hover {
+          transform: scale(1.1);
+          box-shadow: var(--shadow-md);
+        }
+
+        /* Chart Styles */
+        .chart-container {
+          margin: var(--spacing-xl);
+          padding: var(--spacing-xl);
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        canvas {
+          max-width: 100%;
+          height: auto !important;
+        }
+
+        .back-btn {
+          margin: var(--spacing-xl);
+          display: inline-flex;
+          align-items: center;
+          gap: var(--spacing-sm);
+          padding: var(--spacing-md) var(--spacing-xl);
+          font-size: 1rem;
+          border-radius: var(--radius-lg);
+          background: linear-gradient(135deg, var(--primary), var(--secondary));
+          color: white;
+          font-weight: 500;
+          border: none;
+          cursor: pointer;
+          letter-spacing: 0.5px;
+          transition: all 0.3s ease;
+          user-select: none;
+          font-family: var(--font-primary);
+          text-decoration: none;
+        }
+
+        .back-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        /* Modal Styles */
+        #progressModal {
+          display: none;
+          position: fixed;
+          z-index: 10000;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.5);
+          align-items: center;
+          justify-content: center;
+          padding: var(--spacing-md);
+          overflow-y: auto;
+          backdrop-filter: blur(5px);
+        }
+
+        #progressModal > div {
+          background: var(--card);
+          border-radius: var(--radius-xl);
+          padding: var(--spacing-2xl);
+          max-width: 1000px;
+          width: 100%;
+          max-height: 90vh;
+          box-shadow: var(--shadow-xl);
+          display: flex;
+          gap: var(--spacing-2xl);
+          color: var(--text);
+          position: relative;
+          flex-direction: column;
+          align-items: stretch;
+          overflow-y: auto;
+        }
+
+        #modalUser {
+          font-weight: 600;
+          font-size: 1.5rem;
+          color: var(--primary);
+          margin-bottom: var(--spacing-lg);
+          text-align: center;
+        }
+
+        .closeModalBtn {
+          position: absolute;
+          top: var(--spacing-md);
+          right: var(--spacing-lg);
+          font-size: 2rem;
+          background: none;
+          border: none;
+          cursor: pointer;
+          color: var(--text);
+          z-index: 10;
+          user-select: none;
+          transition: all 0.3s ease;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
+        }
+
+        .closeModalBtn:hover {
+          background: var(--surface);
+          color: var(--primary);
+          transform: scale(1.1);
+        }
+
+        .modal-content-bottom {
           display: flex;
           flex-wrap: wrap;
-          gap: 2.5rem;
+          gap: var(--spacing-xl);
           justify-content: center;
+        }
+
+        .modal-table-wrap, .modal-chart-wrap, .chart-card {
+          flex: 1 1 320px;
+          min-width: 300px;
+          max-width: 420px;
+          background: var(--surface);
+          border-radius: var(--radius-lg);
+          padding: var(--spacing-lg);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .modal-summary {
+          flex: 1 1 340px;
+          min-width: 300px;
+          max-width: 420px;
+          display: flex;
+          flex-direction: column;
           align-items: stretch;
         }
 
-        .modern-path-card {
-          background: #fff;
-          border-radius: 20px;
-          box-shadow: 0 6px 32px rgba(80, 80, 120, 0.10);
-          padding: 0 0 1.5rem 0;
-          flex: 1 1 340px;
-          min-width: 300px;
-          max-width: 430px;
-          display: flex;
-          flex-direction: column;
-          margin-bottom: 1.5rem;
-          transition: box-shadow 0.2s, transform 0.2s;
-          position: relative;
+        #progressTable, #courseSummaryTable {
+          width: 100%;
+          border-collapse: separate;
+          border-spacing: 0 var(--spacing-xs);
+          font-size: 0.95rem;
+          background: transparent;
+          border-radius: var(--radius-md);
+          overflow: hidden;
+          margin-bottom: var(--spacing-md);
         }
 
-        .modern-path-card:hover {
-          box-shadow: 0 12px 40px rgba(80, 80, 120, 0.18);
-          transform: translateY(-4px) scale(1.02);
+        #progressTable th, #progressTable td, #courseSummaryTable th, #courseSummaryTable td {
+          padding: var(--spacing-sm) var(--spacing-md);
+          text-align: center;
+          background: var(--bg);
+          border: none;
+          font-weight: 500;
+          color: var(--text);
         }
 
-        .modern-path-header {
-          display: flex;
-          align-items: center;
-          gap: 0.8em;
-          color: #fff;
-          font-size: 1.18em;
+        #progressTable th, #courseSummaryTable th {
+          background: var(--primary);
+          color: white;
+          user-select: none;
           font-weight: 600;
-          border-radius: 20px 20px 0 0;
-          padding: 1.2em 1.5em;
-          letter-spacing: -0.5px;
         }
 
-        .modern-path-header i {
-          font-size: 2.1em;
-          margin-right: 0.5em;
+        #courseSummarySelect {
+          font-size: 1rem;
+          border-radius: var(--radius-md);
+          border: 2px solid rgba(255, 255, 255, 0.1);
+          appearance: none;
+          cursor: pointer;
+          margin-bottom: var(--spacing-md);
+          padding: var(--spacing-sm) var(--spacing-md);
+          width: 100%;
+          user-select: none;
+          background: var(--bg);
+          color: var(--text);
+          font-family: var(--font-primary);
+          transition: all 0.3s ease;
         }
 
-        .modern-path-steps {
-          margin: 1.5em 0 1em 0;
-          padding: 0 2em;
-          list-style: none;
-          counter-reset: step;
+        #courseSummarySelect:focus {
+          border-color: var(--primary);
+          outline: none;
         }
 
-        .modern-path-steps li {
-          position: relative;
-          padding-left: 2.1em;
-          margin-bottom: 1.1em;
-          font-size: 1.08em;
-          line-height: 1.5;
-          color: #000000;
+        /* Fix for pie chart canvas sizing */
+        #courseSummaryPie {
+          width: 100% !important;
+          height: 250px !important;
+          max-height: 250px !important;
+          display: block !important;
         }
 
-        .modern-path-steps .step-dot {
-          position: absolute;
-          left: 0;
-          top: 0.45em;
-          width: 1.1em;
-          height: 1.1em;
-          background: #4e73df;
-          border-radius: 50%;
-          display: inline-block;
-          box-shadow: 0 2px 8px rgba(78,115,223,0.10);
-          border: 3px solid #fff;
+        #userProgressChart {
+          width: 100% !important;
+          height: 300px !important;
+          max-height: 300px !important;
+          display: block !important;
         }
 
-        .modern-path-card:nth-child(2) .modern-path-steps .step-dot {
-          background: #E76F00;
-        }
-
-        .modern-path-steps .step-desc {
-          display: block;
-          color: #333333;
-          font-size: 0.97em;
-          margin-left: 0.2em;
-          margin-top: 0.1em;
-        }
-
-        .modern-path-note {
-          color: #4e73df;
-          background: #f3f7ff;
-          border-radius: 0 0 18px 18px;
-          padding: 0.7em 2em 0.7em 2em;
-          font-size: 1em;
-          margin-top: 1.2em;
-          border-top: 1px solid #e9e9f0;
-        }
-
-        @media (max-width: 768px) {
-          .learning-path {
-            padding: var(--spacing-xl) 0;
-          }
-
-          .modern-paths-grid {
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-          }
-
-          .modern-path-card {
-            max-width: 100%;
-            min-width: auto;
-            flex: none;
-          }
-
-          .modern-path-header {
-            font-size: 1rem;
-            padding: 1rem;
-          }
-
-          .modern-path-steps {
-            padding: 0 1.5rem;
-          }
-
-          .modern-path-note {
-            padding: 0.7rem 1.5rem;
-          }
-        }
-
-        /* IMPROVED FOOTER SECTION */
+        /* FOOTER */
         .footer {
           background: linear-gradient(135deg, var(--primary), var(--secondary));
           color: white;
@@ -923,16 +907,75 @@
           transform: translateY(-3px);
         }
 
-        /* MOBILE FOOTER OPTIMIZATION */
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 1200px) {
+          .leaderboard-container {
+            margin: var(--spacing-md);
+          }
+        }
+
         @media (max-width: 768px) {
+          .main-content {
+            padding-top: 90px;
+          }
+
+          .controls {
+            flex-direction: column;
+            align-items: stretch;
+            gap: var(--spacing-md);
+          }
+
+          .spacer {
+            display: none;
+          }
+
+          input[type="text"], select {
+            min-width: auto;
+            width: 100%;
+          }
+
+          .leaderboard-table-wrap {
+            margin: 0 var(--spacing-md) var(--spacing-md) var(--spacing-md);
+          }
+
+          th, td {
+            padding: var(--spacing-sm);
+            font-size: 0.9rem;
+          }
+
+          .avatar {
+            width: 35px;
+            height: 35px;
+            font-size: 1rem;
+          }
+
+          .chart-container {
+            margin: var(--spacing-md);
+            padding: var(--spacing-lg);
+          }
+
+          .back-btn {
+            margin: var(--spacing-md);
+          }
+
+          #progressModal > div {
+            padding: var(--spacing-xl);
+            gap: var(--spacing-lg);
+          }
+
+          .modal-content-bottom {
+            flex-direction: column;
+          }
+
+          .modal-table-wrap, .modal-chart-wrap, .modal-summary {
+            max-width: none;
+            min-width: auto;
+          }
+
           .footer-content {
             grid-template-columns: 1fr;
             text-align: center;
             gap: var(--spacing-xl);
-          }
-
-          .footer-brand {
-            margin-bottom: var(--spacing-lg);
           }
 
           .footer-links {
@@ -941,76 +984,66 @@
             text-align: left;
           }
 
-          .footer-column {
-            background: rgba(255, 255, 255, 0.1);
-            padding: var(--spacing-lg);
-            border-radius: var(--radius-lg);
-            margin-bottom: var(--spacing-md);
-          }
-
-          .footer-column h4 {
-            text-align: center;
-            margin-bottom: var(--spacing-md);
-            font-size: 1.2rem;
-            border-bottom: 2px solid rgba(255, 255, 255, 0.5);
-            padding-bottom: var(--spacing-sm);
-            width: 100%;
-          }
-
-          .footer-column a {
-            font-size: 1rem;
-            padding: var(--spacing-sm);
-            margin-bottom: var(--spacing-sm);
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: var(--radius-md);
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-          }
-
-          .footer-column a:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateX(0);
-            padding-left: var(--spacing-md);
-          }
-
           .footer-bottom {
             flex-direction: column;
             gap: var(--spacing-md);
             text-align: center;
           }
-
-          .footer-bottom p {
-            font-size: 0.9rem;
-          }
         }
 
         @media (max-width: 480px) {
-          .footer {
-            padding: var(--spacing-xl) 0 var(--spacing-md);
+          .leaderboard-header {
+            padding: var(--spacing-xl) var(--spacing-md);
           }
 
-          .footer-content {
-            gap: var(--spacing-lg);
+          .controls {
+            padding: var(--spacing-lg) var(--spacing-md);
           }
 
-          .footer-column {
+          .leaderboard-table-wrap {
+            margin: 0 var(--spacing-sm) var(--spacing-sm) var(--spacing-sm);
+          }
+
+          th, td {
+            padding: var(--spacing-xs);
+            font-size: 0.8rem;
+          }
+
+          .user-cell {
+            gap: var(--spacing-sm);
+          }
+
+          .avatar {
+            width: 30px;
+            height: 30px;
+            font-size: 0.9rem;
+          }
+
+          .chart-container {
+            margin: var(--spacing-sm);
             padding: var(--spacing-md);
           }
 
-          .footer-column h4 {
-            font-size: 1.1rem;
+          .back-btn {
+            margin: var(--spacing-sm);
+            padding: var(--spacing-sm) var(--spacing-lg);
           }
+        }
 
-          .footer-column a {
-            font-size: 0.95rem;
-            padding: var(--spacing-sm);
+        /* Animations */
+        @keyframes fadeInUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
           }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
 
-          .scroll-top {
-            width: 45px;
-            height: 45px;
-          }
+        .leaderboard-container {
+          animation: fadeInUp 0.6s ease-out;
         }
 
         html {
@@ -1042,11 +1075,11 @@
             <nav class="nav">
                 <div class="nav-links" id="navLinks">
                     <a class='nav-link' href='/'><i class="fas fa-home"></i><span>Home</span></a>
-                    <a class='nav-link active' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
+                    <a class='nav-link' href='/courses'><i class="fas fa-book"></i><span>Courses</span></a>
                     <a class='nav-link' href='/about-us'><i class="fas fa-info-circle"></i><span>About Us</span></a>
                     <a class='nav-link' href='/stay-connected'><i class="fas fa-users"></i><span>Stay Connected</span></a>
                     <a class='nav-link' href='/feedback'><i class="fas fa-comment"></i><span>Feedback Center</span></a>
-                    <a class='nav-link' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
+                    <a class='nav-link active' href='/leaderboard'><i class="fas fa-trophy"></i><span>Leaderboard</span></a>
                     <a class='nav-link' href='#' onclick="logout()"><i class="fas fa-arrow-right-from-bracket"></i><span>Logout</span></a>
                 </div>
                 <div class="theme-toggle">
@@ -1076,243 +1109,92 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content" data-aos="fade-up">
-                <h1>Master <span class="color-change">tech skills</span> in your own <span class="color-change">style</span></h1>
-                <p>Comprehensive courses designed to take you from beginner to professional developer</p>
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="leaderboard-container" role="main">
+            <section class="leaderboard-header">
+                <h1>🏆 Leaderboard</h1>
+                <p>Click a username for full course progress details and track your learning journey.</p>
+            </section>
+            
+            <section class="controls" aria-label="Search and filter leaderboard">
+                <input type="text" id="searchInput" aria-label="Search user" placeholder="🔍 Search user..." />
+                <select id="sortSelect" aria-label="Sort leaderboard">
+                    <option value="rank">Sort by Rank</option>
+                    <option value="score">Sort by Score</option>
+                    <option value="user">Sort by Username</option>
+                </select>
+                <span class="spacer" aria-hidden="true"></span>
+                <button class="theme-toggle-btn" aria-pressed="false" aria-label="Toggle dark/light theme" onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i>
+                    Toggle Theme
+                </button>
+            </section>
+            
+            <section class="leaderboard-table-wrap" aria-label="Leaderboard table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th scope="col">Rank</th>
+                            <th scope="col">User</th>
+                            <th scope="col">Total Tasks</th>
+                        </tr>
+                    </thead>
+                    <tbody id="board" role="rowgroup"></tbody>
+                </table>
+            </section>
+            
+            <div class="chart-container">
+                <canvas id="scoreChart" height="90" role="img" aria-label="Bar chart of total tasks completed by users"></canvas>
             </div>
+            
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
         </div>
-    </section>
+    </main>
 
-    <!-- Course Categories -->
-    <section class="course-categories">
-        <div class="container">
-            <h2 data-aos="fade-up">Course Categories</h2>
-            <div class="categories-grid">
-                <div class="category-card" data-aos="fade-up" data-aos-delay="50">
-                    <i class="fas fa-code"></i>
-                    <h3>Frontend</h3>
-                    <p>HTML</p>
-                    <p>CSS</p>
-                    <p>JS</p>
+    <!-- Modal for user progress -->
+    <div id="progressModal" role="dialog" aria-modal="true" aria-labelledby="modalUser" tabindex="-1">
+        <div>
+            <button class="closeModalBtn" onclick="closeModal()" aria-label="Close modal">&times;</button>
+            <div id="modalUser" aria-live="polite">User Progress</div>
+            <div class="modal-content-bottom">
+                <div class="modal-table-wrap chart-card">
+                    <table id="progressTable" aria-label="Course-wise progress table" hidden>
+                        <thead><tr><th>Course Name</th><th>Tasks Completed</th></tr></thead>
+                        <tbody id="progressTableBody"></tbody>
+                    </table>
                 </div>
-                <div class="category-card" data-aos="fade-up" data-aos-delay="100">
-                    <i class="fas fa-server"></i>
-                    <h3>Compiler Language</h3>
-                    <p>JAVA</p>
+                <div class="modal-chart-wrap chart-card">
+                    <canvas id="userProgressChart" width="360" height="300"></canvas>
                 </div>
-                <div class="category-card" data-aos="fade-up" data-aos-delay="150">
-                    <i class="fab fa-python"></i>
-                    <h3>Python</h3>
-                    <p>Boost your python confidence</p>
-                </div>
-                <div class="category-card" data-aos="fade-up" data-aos-delay="200">
-                    <i class="fas fa-robot"></i>
-                    <h3>Additionals</h3>
-                    <p>ML</p>
-                    <p>DL</p>
-                    <p>AI</p>
-                    <p>Data Science</p>
-                </div>
-            </div>
-        </div>
-    </section>
-    
-    <!-- All Courses -->
-    <section class="all-courses" id="allCourses">
-        <div class="container">
-            <h2 data-aos="fade-up">All Courses</h2>
-            <div class="courses-grid">
-                <div class="course-card" data-aos="fade-up" data-aos-delay="50" id="html-course">
-                    <div class="course-image">
-                        <i class="fab fa-html5"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>HTML Fundamentals</h3>
-                        <p>Master the building blocks of web development with comprehensive HTML training</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="100" id="css-course">
-                    <div class="course-image">
-                        <i class="fab fa-css3-alt"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>CSS</h3>
-                        <p>Create stunning designs and layouts with advanced CSS techniques and frameworks</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="150" id="js-course">
-                    <div class="course-image">
-                        <i class="fab fa-js-square"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>JavaScript - Basic</h3>
-                        <p>Bring your websites to life with interactive JavaScript programming</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="200" id="java-course">
-                    <div class="course-image">
-                        <i class="fab fa-java"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Java</h3>
-                        <p>Master object-oriented programming with Java</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="250" id="python-course">
-                    <div class="course-image">
-                        <i class="fab fa-python"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Python</h3>
-                        <p>Start your python programming journey</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="300" id="ml-course">
-                    <div class="course-image">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Machine Learning</h3>
-                        <p>Build, Train, Test, Validate and learn</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="350" id="dl-course">
-                    <div class="course-image">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Deep Learning</h3>
-                        <p>Build Models using Deep learning and Deploy</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="400" id="ai-course">
-                    <div class="course-image">
-                       <i class="fas fa-brain"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Artificial Intelligence</h3>
-                        <p>Learn to simulate Human Intelligence</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="450" id="ds-course">
-                    <div class="course-image">
-                         <i class="fas fa-chart-bar"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>Data Science</h3>
-                        <p>Explore the world of Data</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="500" id="js-intermediate-course">
-                    <div class="course-image">
-                       <i class="fab fa-js-square"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>JavaScript - Intermediate</h3>
-                        <p>Beyond Validations, Learn the Behaviour of Web Pages</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="550" id="c-course">
-                    <div class="course-image">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <div class="course-content">
-                        <h3>C Programming</h3>
-                        <p>Master the fundamentals of C programming language</p>
-                        <button class="btn course-btn">Visit Course</button>
-                    </div>
-                </div>
-
-                <div class="course-card" data-aos="fade-up" data-aos-delay="600" id="nlp-course">
-                    <div class="course-image">
-                        <span style="position: relative; display: inline-block;">
-                            <i class="fas fa-user" style="position: absolute; left: 0; top: 0;"></i>
-                            <i class="fas fa-comment" style="position: absolute; left: 18px; top: 0; color: #4e73df;"></i>
-                        </span>
-                    </div>
-                    <div class="course-content">
-                        <h3>Natural Language Processing</h3>
-                        <p>Give machines the capacity to analyse, understand, and interpret human language</p>
-                        <button class="btn course-btn">Coming Soon</button>
-                    </div>
+                <div class="modal-summary chart-card">
+                    <select id="courseSummarySelect" aria-label="Select course for summary"></select>
+                    <table id="courseSummaryTable" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Course</th>
+                                <th>Completed</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td id="summaryCourse">&ndash;</td>
+                                <td id="summaryCompleted">0</td>
+                                <td id="summaryTotal">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <canvas id="courseSummaryPie" width="280" height="250"></canvas>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 
-    <!-- Learning Path -->
-    <section class="learning-path">
-        <div class="container">
-            <h2 data-aos="fade-up">🚦 Realistic Roadmaps for Aspiring Full-Stack Developers</h2>
-            <div class="modern-paths-grid">
-                <!-- Python Path -->
-                <div class="modern-path-card" data-aos="fade-up" data-aos-delay="50">
-                    <div class="modern-path-header" style="background:linear-gradient(90deg,#3776AB,#4e73df);">
-                        <i class="fab fa-python"></i>
-                        <span>Full-Stack Python for Web Development</span>
-                    </div>
-                    <ul class="modern-path-steps">
-                        <li><span class="step-dot"></span>HTML & CSS Fundamentals <span class="step-desc">Build the foundation of web structure and design</span></li>
-                        <li><span class="step-dot"></span>JavaScript Essentials <span class="step-desc">Add interactivity to your web pages</span></li>
-                        <li><span class="step-dot"></span>Python Programming Basics <span class="step-desc">Master Python syntax and core concepts</span></li>
-                        <li><span class="step-dot"></span>Version Control with Git & GitHub <span class="step-desc">Collaborate and manage your codebase</span></li>
-                        <li><span class="step-dot"></span>Backend with Flask <span class="step-desc">Create REST APIs and dynamic web apps</span></li>
-                        <li><span class="step-dot"></span>Databases (SQL & ORM) <span class="step-desc">Work with SQLite/PostgreSQL and SQLAlchemy</span></li>
-                        <li><span class="step-dot"></span>Frontend with React.js <span class="step-desc">Build modern, component-based UIs</span></li>
-                        <li><span class="step-dot"></span>User Authentication & Security <span class="step-desc">Implement login, registration, and secure your app</span></li>
-                        <li><span class="step-dot"></span>Deployment <span class="step-desc">Host your app on Heroku, Vercel, or AWS</span></li>
-                        <li><span class="step-dot"></span>Capstone Project <span class="step-desc">Build and deploy a full-stack Python web application</span></li>
-                    </ul>
-                    <div class="modern-path-note">This roadmap is a suggested learning journey for aspiring full-stack Python web developers.</div>
-                </div>
-                <!-- Java Path -->
-                <div class="modern-path-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="modern-path-header" style="background:linear-gradient(90deg,#E76F00,#f7b733);">
-                        <i class="fab fa-java"></i>
-                        <span>Full-Stack Java for Web Development</span>
-                    </div>
-                    <ul class="modern-path-steps">
-                        <li><span class="step-dot"></span>HTML & CSS Fundamentals <span class="step-desc">Structure and style your web pages</span></li>
-                        <li><span class="step-dot"></span>JavaScript Essentials <span class="step-desc">Add dynamic features to your sites</span></li>
-                        <li><span class="step-dot"></span>Java Programming Basics <span class="step-desc">Understand OOP and Java syntax</span></li>
-                        <li><span class="step-dot"></span>Version Control with Git & GitHub <span class="step-desc">Track and collaborate on code</span></li>
-                        <li><span class="step-dot"></span>Backend with Spring Boot <span class="step-desc">Develop robust RESTful APIs</span></li>
-                        <li><span class="step-dot"></span>Databases (MySQL & JPA/Hibernate) <span class="step-desc">Integrate and manage data</span></li>
-                        <li><span class="step-dot"></span>Frontend with Angular or React.js <span class="step-desc">Build scalable, interactive UIs</span></li>
-                        <li><span class="step-dot"></span>User Authentication & Security <span class="step-desc">Secure your Java web apps</span></li>
-                        <li><span class="step-dot"></span>Deployment <span class="step-desc">Deploy on AWS, Azure, or DigitalOcean</span></li>
-                        <li><span class="step-dot"></span>Capstone Project <span class="step-desc">Deliver a production-ready full-stack Java application</span></li>
-                    </ul>
-                    <div class="modern-path-note">This roadmap is a suggested learning journey for aspiring full-stack Java web developers.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- IMPROVED FOOTER -->
+    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -1320,32 +1202,25 @@
                     <h3>TECH IN MY STYLE</h3>
                     <p>Empowering the next generation of developers with hands-on learning experiences and industry-recognized certifications.</p>
                 </div>
-                                <div class="footer-links">
+                <div class="footer-links">
                     <div class="footer-column">
                         <h4>Quick Links</h4>
-                        <a href="">HOME</a>
-                        <a href='/courses'>COURSES</a>
-                        <a href='/about-us'>ABOUT US</a>
-                        <a href='/stay-connected'>STAY CONNECTED</a>
-                        <a href='/feedback'>Feedback-Center</a>
+                        <a href="/">HOME</a>
+                        <a href="/courses">COURSES</a>
+                        <a href="/about-us">ABOUT US</a>
+                        <a href="/stay-connected">STAY CONNECTED</a>
+                        <a href="/feedback">Feedback Center</a>
                     </div>
                     <div class="footer-column">
                         <h4>Courses</h4>
                         <a href="/HTML IN MY STYLE/index.html">HTML IN MY STYLE</a>
                         <a href="/CSS IN MY STYLE/index.html">CSS IN MY STYLE</a>
                         <a href="/JAVASCRIPT IN MY STYLE - BASIC/index.html">JS IN MY STYLE (BASIC)</a>
-                        <a href="/JAVASCRIPT IN MY STYLE - INTERMEDIATE/index.html">JS IN MY STYLE (INTERMEDIATE)</a>
-                        <a href="/C IN MY STYLE/index.html">C IN MY STYLE</a>
-                        <a href="/JAVA IN MY STYLE/index.html">JAVA IN MY STYLE</a>
                         <a href="/PYTHON IN MY STYLE/index.html">PYTHON IN MY STYLE</a>
-                        <a href="/ML IN MY STYLE/index.html">ML IN MY STYLE</a>
-                        <a href="/DL IN MY STYLE/index.html">DL IN MY STYLE</a>
-                        <a href="/DSC IN MY STYLE/index.html">DSC IN MY STYLE</a>
-                        <a href="/AI IN MY STYLE/index.html">AI IN MY STYLE</a>
                     </div>
                     <div class="footer-column">
                         <h4>Support</h4>
-                        <a href="https://www.instagram.com/techinmystyle?igsh=YXIxdWl2NGFmdXZk"><i class="fab fa-instagram"></i> Instagram</a>
+                        <a href="https://www.instagram.com/techinmystyle"><i class="fab fa-instagram"></i> Instagram</a>
                         <a href="https://www.youtube.com/@TECHINMYSTYLE"><i class="fab fa-youtube"></i> YouTube</a>
                         <a href="https://whatsapp.com/channel/0029VbAZrCD5fM5aOU10Av0d"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                         <a href="https://t.me/Tech_in_my_style_bot"><i class="fab fa-telegram"></i> Telegram</a>
@@ -1361,10 +1236,11 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script>
-        // Initialize AOS with minimal lazy loading
+        // Initialize AOS
         AOS.init({
             duration: 600,
             easing: 'ease-in-out',
@@ -1373,7 +1249,7 @@
             offset: 20
         });
 
-        // Mobile Menu Toggle - IMPROVED IMPLEMENTATION
+        // Mobile Menu Toggle
         const mobileMenuBtn = document.getElementById('mobileMenuBtn');
         const navLinks = document.getElementById('navLinks');
         const menuIcon = mobileMenuBtn.querySelector('i');
@@ -1561,8 +1437,10 @@
             }
         }
 
-        // Custom cursor implementation
+        // Custom cursor implementation - improved
         function initCustomCursor() {
+            if (window.innerWidth <= 768) return; // Don't initialize on mobile
+            
             const cursor = document.createElement('div');
             cursor.classList.add('custom-cursor');
             
@@ -1572,36 +1450,68 @@
             cursor.appendChild(cursorDot);
             document.body.appendChild(cursor);
             
+            let mouseX = 0;
+            let mouseY = 0;
+            let isVisible = true;
+            
             document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX + 'px';
-                cursor.style.top = e.clientY + 'px';
-            });
-            
-            const clickableElements = document.querySelectorAll('a, button, .category-card, .course-card, .scroll-top, .nav-link, .switch');
-            clickableElements.forEach(element => {
-                element.addEventListener('mouseenter', () => {
-                    cursor.style.width = '40px';
-                    cursor.style.height = '40px';
-                });
+                mouseX = e.clientX;
+                mouseY = e.clientY;
                 
-                element.addEventListener('mouseleave', () => {
-                    cursor.style.width = '30px';
-                    cursor.style.height = '30px';
-                });
+                if (!isVisible) {
+                    cursor.style.opacity = '1';
+                    cursor.style.visibility = 'visible';
+                    isVisible = true;
+                }
+                
+                cursor.style.left = mouseX + 'px';
+                cursor.style.top = mouseY + 'px';
             });
             
-            document.addEventListener('mouseout', (e) => {
-                if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
-                    cursor.style.opacity = '0';
-                } else {
-                    cursor.style.opacity = '1';
-                }
+            // Handle hover effects
+            const clickableElements = document.querySelectorAll('a, button, tr, .user-link, .scroll-top, .nav-link, .switch, select, input, .closeModalBtn');
+            
+            function addHoverListeners() {
+                clickableElements.forEach(element => {
+                    element.addEventListener('mouseenter', () => {
+                        cursor.style.width = '40px';
+                        cursor.style.height = '40px';
+                    });
+                    
+                    element.addEventListener('mouseleave', () => {
+                        cursor.style.width = '30px';
+                        cursor.style.height = '30px';
+                    });
+                });
+            }
+            
+            addHoverListeners();
+            
+            // Handle mouse leaving window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+                cursor.style.visibility = 'hidden';
+                isVisible = false;
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+                cursor.style.visibility = 'visible';
+                isVisible = true;
+            });
+            
+            // Re-add listeners for dynamically created elements
+            const observer = new MutationObserver(() => {
+                addHoverListeners();
+            });
+            
+            observer.observe(document.body, {
+                childList: true,
+                subtree: true
             });
         }
 
-        if (window.innerWidth > 768) {
-            initCustomCursor();
-        }
+        initCustomCursor();
 
         function scrollToTop() {
             window.scrollTo({
@@ -1623,154 +1533,6 @@
             }
         });
 
-        // Course URLs mapping
-        const courseUrls = {
-            'HTML Fundamentals': '/HTML IN MY STYLE/index.html',
-            'CSS': '/CSS IN MY STYLE/index.html',
-            'JavaScript - Basic': '/JAVASCRIPT IN MY STYLE - BASIC/index.html',
-            'JavaScript - Intermediate': '/JAVASCRIPT IN MY STYLE - INTERMEDIATE/index.html',
-            'Java': '/JAVA IN MY STYLE/index.html',
-            'Python': '/PYTHON IN MY STYLE/index.html',
-            'Machine Learning': '/ML IN MY STYLE/index.html',
-            'Data Science': '/DSC IN MY STYLE/index.html',
-            'Deep Learning': '/DL IN MY STYLE/index.html',
-            'Artificial Intelligence': '/AI IN MY STYLE/index.html',
-            'C Programming': '/C IN MY STYLE/index.html',
-            'Natural Language Processing': '#'
-        };
-
-        // Course Enrollment with Redirect
-        document.querySelectorAll('.course-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const courseCard = this.closest('.course-card');
-                const courseName = courseCard.querySelector('h3').textContent.trim();
-                
-                const ripple = document.createElement('span');
-                ripple.classList.add('ripple');
-                this.appendChild(ripple);
-                
-                setTimeout(() => {
-                    ripple.remove();
-                }, 600);
-                
-                if (this.textContent.trim() === 'Coming Soon') {
-                    alert(`${courseName} is coming soon! Stay tuned for updates.`);
-                    return;
-                }
-                
-                const courseUrl = courseUrls[courseName];
-                
-                if (courseUrl && courseUrl !== '#') {
-                    window.open(courseUrl, '_blank');
-                } else {
-                    alert(`${courseName} course page is under development. Coming soon!`);
-                }
-            });
-        });
-
-        // Category card navigation
-        document.querySelectorAll('.category-card').forEach(card => {
-            card.addEventListener('click', function(event) {
-                const categoryTitle = this.querySelector('h3').textContent.trim();
-                const clickedText = event.target.textContent.trim();
-                
-                let targetCourseName = null;
-                
-                if (categoryTitle === 'Frontend') {
-                    if (clickedText === 'HTML') {
-                        targetCourseName = 'HTML Fundamentals';
-                    } else if (clickedText === 'CSS') {
-                        targetCourseName = 'CSS';
-                    } else if (clickedText === 'JS') {
-                        targetCourseName = 'JavaScript - Basic';
-                    } else {
-                        targetCourseName = 'HTML Fundamentals';
-                    }
-                } else if (categoryTitle === 'Compiler Language') {
-                    targetCourseName = 'Java';
-                } else if (categoryTitle === 'Python') {
-                    targetCourseName = 'Python';
-                } else if (categoryTitle === 'Additionals') {
-                    if (clickedText.includes('ML')) {
-                        targetCourseName = 'Machine Learning';
-                    } else if (clickedText.includes('DL')) {
-                        targetCourseName = 'Deep Learning';
-                    } else if (clickedText.includes('AI')) {
-                        targetCourseName = 'Artificial Intelligence';
-                    } else if (clickedText.includes('Data Science')) {
-                        targetCourseName = 'Data Science';
-                    } else {
-                        targetCourseName = 'Machine Learning';
-                    }
-                }
-                
-                if (targetCourseName) {
-                    const allCourseCards = document.querySelectorAll('.course-card');
-                    let targetCourse = null;
-                    
-                    allCourseCards.forEach(course => {
-                        const courseTitle = course.querySelector('h3').textContent.trim();
-                        if (courseTitle === targetCourseName) {
-                            targetCourse = course;
-                        }
-                    });
-                    
-                    if (targetCourse) {
-                        document.getElementById('allCourses').scrollIntoView({behavior: 'smooth'});
-                        setTimeout(() => {
-                            targetCourse.scrollIntoView({behavior: 'smooth', block: 'center'});
-                            
-                            targetCourse.classList.add('highlight-course');
-                            setTimeout(() => {
-                                targetCourse.classList.remove('highlight-course');
-                            }, 2000);
-                        }, 500);
-                    }
-                }
-            });
-        });
-
-        // Immediate load for visible sections
-        document.addEventListener('DOMContentLoaded', function() {
-            const heroSection = document.querySelector('.hero');
-            if (heroSection) {
-                heroSection.style.opacity = '1';
-                heroSection.style.transform = 'translateY(0)';
-            }
-
-            const categoriesSection = document.querySelector('.course-categories');
-            if (categoriesSection) {
-                categoriesSection.style.opacity = '1';
-                categoriesSection.style.transform = 'translateY(0)';
-            }
-
-            document.body.style.overflowX = 'hidden';
-            document.documentElement.style.overflowX = 'hidden';
-        });
-
-        // Intersection observer for remaining sections
-        const observerOptions = {
-            threshold: 0.05,
-            rootMargin: '0px 0px -10px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.all-courses, .learning-path').forEach(section => {
-            section.style.opacity = '0';
-            section.style.transform = 'translateY(20px)';
-            section.style.transition = 'all 0.4s ease';
-            observer.observe(section);
-        });
-
-        // Function to logout user and clear session
         function logout() {
             localStorage.clear();
             window.location.href = "auth/login.html";
@@ -1782,59 +1544,479 @@
                 navLinks.classList.remove('active');
                 menuIcon.className = 'fas fa-bars';
                 header.style.borderBottom = '1px solid rgba(255, 255, 255, 0.1)';
+                
+                // Reinitialize cursor for desktop
+                if (!document.querySelector('.custom-cursor')) {
+                    initCustomCursor();
+                }
+            } else {
+                // Remove cursor on mobile
+                const existingCursor = document.querySelector('.custom-cursor');
+                if (existingCursor) {
+                    existingCursor.remove();
+                }
             }
         });
 
-        console.log(`
-        🎓 COURSES PAGE - Improved Desktop and Mobile Navigation!
-           
-           ✅ Fixed Desktop Navigation with Icons
-           ✅ All Navigation Items in Single Line
-           ✅ Clean and Organized Layout
-           ✅ Improved Mobile Navigation
-           ✅ All Tabs Visible and Accessible
-           ✅ Smooth Transitions and Animations
-           ✅ Perfect Responsiveness for All Devices
-           
-           Navigation Optimized for Both Desktop and Mobile! ⚡
-        `);
+        // LEADERBOARD FUNCTIONALITY
+        Chart.register({
+          id: 'customBgCard',
+          beforeDraw: (chart) => {
+            const ctx = chart.canvas.getContext('2d');
+            ctx.save();
+            ctx.globalCompositeOperation = 'destination-over';
+            ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card') || '#fff';
+            ctx.fillRect(0, 0, chart.width, chart.height);
+            ctx.restore();
+          }
+        });
 
-        // Disable developer tools and right-click
+        let leaderboardData = [];
+        let courseTotals = {};
+        let currentUserProgress = null;
+        let progressChartInstance = null;
+        let courseSummaryPieInstance = null;
+        const medals = [
+          '<span class="rank-medal gold">🥇</span>',
+          '<span class="rank-medal silver">🥈</span>',
+          '<span class="rank-medal bronze">🥉</span>'
+        ];
+        const chartCtx = document.getElementById('scoreChart').getContext('2d');
+        let scoreChart;
+        Chart.register(ChartDataLabels);
+
+        // Helper: get user's initials
+        function getInitials(name) {
+          if (!name) return "U";
+          const parts = name.split(/[ ._]/).filter(Boolean);
+          return parts.length === 1 ? parts[0][0].toUpperCase() : (parts[0][0] + parts[1][0]).toUpperCase();
+        }
+
+        function renderTable(data) {
+          const tbody = document.getElementById("board");
+          tbody.innerHTML = "";
+          data.forEach((userData, i) => {
+            tbody.innerHTML += `
+            <tr class="${i < 3 ? 'top-row' : ''}">
+              <td>${i < 3 ? medals[i] : (i + 1)}</td>
+              <td class="user-cell">
+                <span class="avatar">${getInitials(userData.user)}</span>
+                <a href="#" class="user-link" data-username="${userData.user}" tabindex="0">${userData.user}</a>
+              </td>
+              <td>${userData.score}</td>
+            </tr>
+            `;
+          });
+        }
+
+        function updateChart(data) {
+          const labels = data.map(u => u.user);
+          const scores = data.map(u => u.score);
+          if(scoreChart) { scoreChart.destroy(); scoreChart = null; }
+          scoreChart = new Chart(chartCtx, {
+            type: 'bar',
+            data: {
+              labels,
+              datasets: [{
+                label: 'Total Tasks Completed',
+                data: scores,
+                backgroundColor: getComputedStyle(document.body).getPropertyValue('--primary') || '#2196F3',
+                borderColor: getComputedStyle(document.body).getPropertyValue('--primary') || '#2196F3',
+                borderWidth: 2,
+                borderRadius: 8,
+                borderSkipped: false,
+              }],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {display: false},
+                datalabels: {
+                  color: 'white',
+                  anchor: 'end',
+                  align: 'top',
+                  formatter: v => v,
+                  font: {
+                    weight: 'bold',
+                    size: 12
+                  }
+                }
+              },
+              scales: {
+                y: {
+                  beginAtZero: true,
+                  ticks: { 
+                    stepSize: 1,
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                },
+                x: {
+                  ticks: {
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000'
+                  },
+                  grid: {
+                    color: 'rgba(255, 255, 255, 0.1)'
+                  }
+                }
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
+        }
+
+        function applySearchAndSort() {
+          const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+          const sortValue = document.getElementById('sortSelect').value;
+          let filtered = leaderboardData.filter(u => u.user.toLowerCase().includes(searchTerm));
+          if(sortValue === "user") {
+            filtered.sort((a,b) => a.user.localeCompare(b.user));
+          } else if(sortValue === "score") {
+            filtered.sort((a,b) => b.score - a.score);
+          } else { //rank
+            filtered.sort((a,b) => b.score - a.score);
+          }
+          renderTable(filtered);
+          updateChart(filtered);
+        }
+
+        async function loadCourseTotals() {
+          try {
+            const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
+            if(!res.ok) throw new Error("Failed to fetch course totals");
+            courseTotals = await res.json();
+          } catch {
+            courseTotals = {
+              "ai": 30,"ml":30,"dl":30,"java":30,"c":30,"html":30,
+              "css":30,"js":30,"js-intermediate":30,"python":30,"dsc":30
+            };
+          }
+        }
+
+        async function loadBoard() {
+          await loadCourseTotals();
+          try {
+            const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
+            if (!res.ok) throw new Error("Failed to fetch leaderboard");
+            leaderboardData = await res.json();
+            applySearchAndSort();
+          } catch(e) {
+            document.getElementById("board").innerHTML = `<tr><td colspan="3">⚠ Failed to load leaderboard.</td></tr>`;
+            console.error(e);
+          }
+        }
+
+        function toggleTheme() {
+          const isDark = document.body.getAttribute('data-theme') === 'dark';
+          syncThemeToggles(!isDark);
+        }
+
+        function goHome() {
+          window.location.href = "../index.html";
+        }
+
+        function closeModal() {
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          const modal = document.getElementById('progressModal');
+          if(modal) modal.style.display = 'none';
+        }
+
+        function renderProgressChart() {
+          if (!currentUserProgress) return;
+          
+          const ctx = document.getElementById('userProgressChart').getContext('2d');
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          
+          const labels = Object.keys(currentUserProgress);
+          const data = labels.map(c => currentUserProgress[c]?.length || 0);
+          const bgColors = [
+            '#3574e6','#56b881','#ef476f','#ffd166',
+            '#06d6a0','#118ab2','#b388eb','#f78fb3'
+          ];
+          
+          if (labels.length === 0) {
+            // Show a placeholder chart if no data
+            progressChartInstance = new Chart(ctx, {
+              type: 'pie',
+              data: {
+                labels: ['No Progress'],
+                datasets: [{
+                  data: [1],
+                  backgroundColor: ['#cccccc'],
+                }]
+              },
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {display: true, position: 'bottom'},
+                  datalabels: {
+                    display: false
+                  }
+                }
+              },
+              plugins: [ChartDataLabels]
+            });
+            return;
+          }
+          
+          progressChartInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: data,
+                backgroundColor: bgColors.slice(0, labels.length),
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {display: true, position: 'bottom'},
+                datalabels: {
+                  color: '#fff',
+                  font: {weight: 'bold', size: 14},
+                  formatter: (value, context) => {
+                    const {dataset} = context;
+                    const total = dataset.data.reduce((a,b) => a+b, 0) || 1;
+                    return ((value/total)*100).toFixed(1) + '%';
+                  }
+                }
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
+        }
+
+        function updateCourseSummaryDropdown() {
+          const select = document.getElementById('courseSummarySelect');
+          select.innerHTML = '';
+          
+          // Add a default option
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = 'Select a course';
+          select.appendChild(defaultOption);
+          
+          Object.keys(courseTotals).forEach(course => {
+            const opt = document.createElement('option');
+            opt.value = course;
+            opt.textContent = course.toUpperCase();
+            select.appendChild(opt);
+          });
+        }
+
+        function updateCourseSummary(course) {
+          const canvas = document.getElementById('courseSummaryPie');
+          const table = document.getElementById('courseSummaryTable');
+          
+          // Clean up previous chart
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          
+          if(!course || !currentUserProgress || !courseTotals[course]) {
+            table.style.display = 'none';
+            // Clear the canvas
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            return;
+          }
+          
+          // Show and update table
+          table.style.display = '';
+          const total = courseTotals[course] ?? 0;
+          const completed = (currentUserProgress && currentUserProgress[course]) ? currentUserProgress[course].length : 0;
+          
+          document.getElementById('summaryCourse').textContent = course.toUpperCase();
+          document.getElementById('summaryTotal').textContent = total;
+          document.getElementById('summaryCompleted').textContent = completed;
+          
+          // Create the pie chart
+          const ctx = canvas.getContext('2d');
+          const remaining = Math.max(total - completed, 0);
+          
+          courseSummaryPieInstance = new Chart(ctx, {
+            type: 'pie',
+            data: {
+              labels: ['Completed', 'Remaining'],
+              datasets: [{
+                data: [completed, remaining],
+                backgroundColor: ['#56b881', 'rgba(255,255,255,0.3)'],
+                borderWidth: 2,
+                borderColor: '#fff'
+              }]
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true, 
+                  position: 'bottom',
+                  labels: {
+                    color: getComputedStyle(document.body).getPropertyValue('--text') || '#000',
+                    font: {
+                      size: 12
+                    }
+                  }
+                },
+                datalabels: {
+                  color: '#fff',
+                  font: {weight: 'bold', size: 12},
+                  formatter: (value, context) => {
+                    if (value === 0) return '';
+                    return value;
+                  }
+                }
+              },
+              layout: {
+                padding: 10
+              }
+            },
+            plugins: [ChartDataLabels]
+          });
+          
+          // Force a redraw
+          setTimeout(() => {
+            if (courseSummaryPieInstance) {
+              courseSummaryPieInstance.update();
+            }
+          }, 100);
+        }
+
+        async function loadUserProgress(username) {
+          const modal = document.getElementById('progressModal');
+          if (!modal) return alert("Modal element not found.");
+          
+          const modalUser = document.getElementById('modalUser');
+          modalUser.textContent = `Course Progress for ${username}`;
+          modal.style.display = 'flex';
+          
+          // Reset progress data
+          currentUserProgress = null;
+          
+          const progressTable = document.getElementById('progressTable');
+          const progressTableBody = document.getElementById('progressTableBody');
+          progressTable.hidden = true;
+          progressTableBody.innerHTML = '';
+          
+          // Clean up previous charts
+          if(progressChartInstance) { 
+            progressChartInstance.destroy(); 
+            progressChartInstance = null;
+          }
+          if(courseSummaryPieInstance) { 
+            courseSummaryPieInstance.destroy(); 
+            courseSummaryPieInstance = null;
+          }
+          
+          // Reset dropdowns and tables
+          document.getElementById('courseSummarySelect').innerHTML = '';
+          document.getElementById('courseSummaryTable').style.display = 'none';
+          
+          try {
+            const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
+            if (!res.ok) throw new Error("Failed to fetch user progress");
+            
+            const prog = await res.json();
+            currentUserProgress = prog;
+            
+            const courses = Object.keys(prog);
+            if (courses.length === 0) {
+              progressTableBody.innerHTML = `<tr><td colspan="2">No task progress found for this user.</td></tr>`;
+            } else {
+              progressTableBody.innerHTML = courses.map(course => {
+                const taskCount = prog[course].length;
+                return `<tr><td>${course.toUpperCase()}</td><td>${taskCount}</td></tr>`;
+              }).join('');
+            }
+            
+            progressTable.hidden = false;
+            
+            // Render charts with delay to ensure proper initialization
+            setTimeout(() => {
+              renderProgressChart();
+              updateCourseSummaryDropdown();
+              
+              const dropdown = document.getElementById('courseSummarySelect');
+              dropdown.onchange = (e) => updateCourseSummary(e.target.value);
+              
+              // Auto-select first course if available
+              if (courses.length > 0) {
+                dropdown.value = courses[0];
+                updateCourseSummary(courses[0]);
+              }
+            }, 200);
+            
+          } catch(e) {
+            progressTableBody.innerHTML = `<tr><td colspan="2" style="color:#ea5252;">Failed to load progress data.</td></tr>`;
+            progressTable.hidden = false;
+            console.error(e);
+          }
+        }
+
+        // Event listeners
+        document.addEventListener('click', function(e) {
+          if (e.target.classList.contains('user-link')) {
+            e.preventDefault();
+            loadUserProgress(e.target.getAttribute('data-username'));
+          }
+        });
+
+        document.getElementById("searchInput").addEventListener("input", applySearchAndSort);
+        document.getElementById("sortSelect").addEventListener("change", applySearchAndSort);
+        
+        document.addEventListener("keydown", function(e) {
+          if (document.getElementById('progressModal').style.display === 'flex') {
+            if (e.key === "Escape") { 
+              closeModal(); 
+            }
+          }
+        });
+
+        // Load leaderboard data
+        loadBoard();
+
+        // Disable right click and dev tools
         document.addEventListener("contextmenu", (e) => e.preventDefault());
 
         document.onkeydown = function(e) {
-            // Disable F12
-            if (e.keyCode === 123) return false;
-
-            // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-            if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-                return false;
-            }
-
-            // Disable Ctrl+U (View Source)
-            if (e.ctrlKey && e.keyCode === 85) return false;
-
-            // Disable Ctrl+S (Save Page)
-            if (e.ctrlKey && e.keyCode === 83) return false;
-
-            // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-            if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-                return false;
-            }
-
-            // Disable Ctrl+Shift+K (Firefox)
-            if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+          if (e.keyCode === 123) return false;
+          if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+            return false;
+          }
+          if (e.ctrlKey && e.keyCode === 85) return false;
+          if (e.ctrlKey && e.keyCode === 83) return false;
+          if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+            return false;
+          }
+          if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
         };
     </script>
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-7G01YFBCVB"></script>
     <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'G-7G01YFBCVB');
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-7G01YFBCVB');
     </script>
 </body>
 </html>
