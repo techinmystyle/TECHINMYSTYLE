@@ -57,7 +57,11 @@ def register(user: RegisterData):
         "password": user.password,    # WARNING: Insecure! Use hashed passwords in production.
         "email": user.email,
         "progress": {},
-        "total_completed": 0
+        "total_completed": 0,
+        "unlocked_solutions": [],
+        "failed_attempts": {},
+        "theme": "light",
+        "editor_content": {}
     })
     return {"message": "success"}
 
@@ -102,11 +106,17 @@ def complete_task(task: TaskUpdate):
             }}
         )
     return {"message": "Task marked as complete."}
+
+# --- NEW: Save Progress Endpoint ---
 @app.post("/task/save-progress")
 def save_progress(data: dict):
     username = data.get("username")
     course = data.get("course")
     completed_tasks = data.get("completedTasks", [])
+    unlocked_solutions = data.get("unlockedSolutions", [])
+    failed_attempts = data.get("failedAttempts", {})
+    theme = data.get("theme", "light")
+    editor_content = data.get("editorContent", {})
 
     if not username or not course:
         return {"error": "Missing required fields"}
@@ -115,23 +125,52 @@ def save_progress(data: dict):
     if not user:
         return {"error": "User not found"}
 
+    # Update user progress with all data
     progress = user.get("progress", {})
     progress[course] = completed_tasks
 
+    # Calculate total completed tasks across all courses
     total_completed = sum(len(tasks) for tasks in progress.values())
+
+    # Update user document with comprehensive data
+    update_data = {
+        "progress": progress,
+        "total_completed": total_completed,
+        "unlocked_solutions": unlocked_solutions,
+        "failed_attempts": failed_attempts,
+        "theme": theme,
+        "editor_content": editor_content
+    }
 
     users_collection.update_one(
         {"username": username},
-        {"$set": {
-            "progress": progress,
-            "total_completed": total_completed
-        }}
+        {"$set": update_data}
     )
 
     return {
         "message": "Progress saved successfully",
         "progress": progress,
         "total_completed": total_completed
+    }
+
+# --- Enhanced Progress Endpoint ---
+@app.get("/progress/{username}")
+def get_progress(username: str):
+    user = users_collection.find_one({"username": username})
+    if not user:
+        return {}
+    
+    return {
+        "progress": user.get("progress", {}),
+        "total_completed": user.get("total_completed", 0),
+        "unlocked_solutions": user.get("unlocked_solutions", []),
+        "failed_attempts": user.get("failed_attempts", {}),
+        "theme": user.get("theme", "light"),
+        "editor_content": user.get("editor_content", {}),
+        # Return specific course data for easier access
+        "html": user.get("progress", {}).get("html", []),
+        "css": user.get("progress", {}).get("css", []),
+        "js": user.get("progress", {}).get("js", [])
     }
 
 # --- Leaderboard ---
@@ -149,16 +188,9 @@ def leaderboard():
         })
     return sorted(board, key=lambda x: x["score"], reverse=True)
 
-# --- Progress by username ---
-@app.get("/progress/{username}")
-def progress(username: str):
-    user = users_collection.find_one({"username": username})
-    if not user:
-        return {}
-    return user.get("progress", {})
-
+# --- Progress by username (Legacy endpoint) ---
 @app.post("/user/progress")
-def get_progress(user: dict):
+def get_user_progress(user: dict):
     username = user.get("username")
     password = user.get("password")
     user_data = users_collection.find_one({"username": username, "password": password})
@@ -227,7 +259,6 @@ Tech In My Style Team
         print("Error sending email:", e)
         return generic_error
 
-
 # --- Frontend protection route ---
 @app.get("/", response_class=HTMLResponse)
 async def home():
@@ -261,11 +292,12 @@ async def home():
     </body>
     </html>
     """
-    return HTMLResponse(content=html_content)
-
+    
+        return HTMLResponse(content=html_content)
 
 # --- Uvicorn entry point for local/dev ---
-if _name_ == "_main_":
+if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run("main:app", host="0.0.0.0", port=port)
+
