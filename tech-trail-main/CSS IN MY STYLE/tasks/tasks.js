@@ -1,9 +1,10 @@
 // API Base URL - Update this to match your FastAPI endpoint
-const API_BASE = "https://tech-trail-w2ap.onrender.com"; // your FastAPI endpoint
+const API_BASE = "https://tech-trail-w2ap.onrender.com";
 
 // Game State Management
 class CSSLearningGame {
   constructor() {
+    this.username = null;
     this.gameState = {
       exp: 0,
       completedTasks: new Set(),
@@ -360,7 +361,7 @@ li {
         }
       },
 
-      'intermediate-2': {
+            'intermediate-2': {
         title: 'CSS Grid Layout',
         level: 'intermediate',
         exp: 20,
@@ -494,8 +495,8 @@ li {
         validate: (code) => {
           const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
           const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-          const hasMediaQuery = /@media\s*$\s*max-width\s*:\s*600px\s*$/i.test(code);
-          const hasMediaFontSize = /@media\s*$[^}]+$\s*\{[^}]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
+          const hasMediaQuery = /@media\s*$[^}]*max-width\s*:\s*600px\s*$/i.test(code);
+          const hasMediaFontSize = /@media\s*$[^}]+$[^}]*\{[^}]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
           return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
         }
       },
@@ -667,7 +668,7 @@ li {
       },
 
       // ADVANCED TASKS (10 tasks - 30 EXP each)
-      'advanced-1': {
+            'advanced-1': {
         title: 'Advanced Flexbox Layout',
         level: 'advanced',
         exp: 30,
@@ -971,7 +972,7 @@ li {
         validate: (code) => {
           const hasBlurredFilter = /\.blurred\s*\{[^}]*filter\s*:\s*blur\s*$\s*5px\s*$/i.test(code);
           const hasEnhancedFilter = /\.enhanced\s*\{[^}]*filter\s*:\s*brightness\s*$\s*1\.5\s*$\s+contrast\s*$\s*1\.2\s*$/i.test(code);
-          const hasGrayscaleFilter = /\.grayscale\s*\{[^}]*filter\s*:\s*grayscale\s*$\s*100%\s*$/i.test(code);
+                    const hasGrayscaleFilter = /\.grayscale\s*\{[^}]*filter\s*:\s*grayscale\s*$\s*100%\s*$/i.test(code);
           return hasBlurredFilter && hasEnhancedFilter && hasGrayscaleFilter;
         }
       },
@@ -1116,12 +1117,116 @@ li {
     this.init();
   }
   
-  init() {
-    this.loadGameState();
+  async init() {
+    // Check if user is logged in first
+    this.username = localStorage.getItem("username");
+    if (!this.username) {
+      alert("Please log in first to access the course!");
+      window.location.href = "../../login.html"; // Adjust path as needed
+      return;
+    }
+
+    await this.loadGameState();
     this.setupEventListeners();
     this.generateTaskCards();
     this.updateUI();
     this.updateTheme();
+  }
+
+  // FIXED: Load game state from MongoDB with fallback to localStorage
+  async loadGameState() {
+    try {
+      // First, try to load from MongoDB
+      const response = await fetch(`${API_BASE}/progress/${this.username}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Loaded progress from server:", data);
+        
+        // Convert server data to local game state
+        const cssTasks = data.css || [];
+        
+        // Calculate EXP from completed tasks
+        let calculatedExp = 0;
+        cssTasks.forEach(taskId => {
+          if (this.tasks[taskId]) {
+            calculatedExp += this.tasks[taskId].exp;
+          }
+        });
+        
+        this.gameState = {
+          exp: calculatedExp,
+          completedTasks: new Set(cssTasks),
+          unlockedSolutions: new Set(data.unlocked_solutions || []),
+          failedAttempts: data.failed_attempts || {},
+          theme: data.theme || 'light',
+          editorContent: data.editor_content || {},
+          htmlContent: data.html_content || {}
+        };
+        
+        console.log(`Loaded ${cssTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
+      } else {
+        throw new Error('Failed to load from server');
+      }
+    } catch (error) {
+      console.error("Error loading from server, trying localStorage:", error);
+      
+      // Fallback to localStorage
+      const saved = localStorage.getItem('cssLearningGame');
+      if (saved) {
+        try {
+          const parsedState = JSON.parse(saved);
+          this.gameState = {
+            exp: parsedState.exp || 0,
+            completedTasks: new Set(parsedState.completedTasks || []),
+            unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+            failedAttempts: parsedState.failedAttempts || {},
+            theme: parsedState.theme || 'light',
+            editorContent: parsedState.editorContent || {},
+            htmlContent: parsedState.htmlContent || {}
+          };
+          console.log("Loaded from localStorage as fallback");
+        } catch (parseError) {
+          console.error("Error parsing localStorage data:", parseError);
+        }
+      }
+    }
+  }
+
+  // FIXED: Save game state to both MongoDB and localStorage
+  async saveGameState() {
+    const stateToSave = {
+      username: this.username,
+      course: "css",
+      completedTasks: Array.from(this.gameState.completedTasks),
+      unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
+      failedAttempts: this.gameState.failedAttempts,
+      theme: this.gameState.theme,
+      editorContent: this.gameState.editorContent,
+      htmlContent: this.gameState.htmlContent
+    };
+
+    // Always save to localStorage first (immediate backup)
+    localStorage.setItem('cssLearningGame', JSON.stringify(stateToSave));
+
+    // Save to MongoDB
+    try {
+      const response = await fetch(`${API_BASE}/task/save-progress`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stateToSave)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Progress saved to server:", result);
+      } else {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error saving to server:", error);
+      // Data is still saved locally, so user can continue
+    }
   }
   
   // Generate task cards dynamically
@@ -1196,7 +1301,7 @@ li {
       'beginner-2': 'Apply font properties to control text appearance',
       'beginner-3': 'Add background colors to elements',
       'beginner-4': 'Align text content within elements',
-      'beginner-5': 'Control spacing around elements with margins',
+            'beginner-5': 'Control spacing around elements with margins',
       'beginner-6': 'Add internal spacing with padding properties',
       'beginner-7': 'Create borders around elements',
       'beginner-8': 'Set element dimensions with width and height',
@@ -1225,34 +1330,6 @@ li {
     };
     
     return descriptions[taskId] || 'Complete this CSS task to earn EXP';
-  }
-  
-  // Local Storage Management
-  saveGameState() {
-    const stateToSave = {
-      ...this.gameState,
-      completedTasks: Array.from(this.gameState.completedTasks),
-      unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
-      failedAttempts: this.gameState.failedAttempts,
-      editorContent: this.gameState.editorContent,
-      htmlContent: this.gameState.htmlContent
-    };
-    localStorage.setItem('cssLearningGame', JSON.stringify(stateToSave));
-  }
-  
-  loadGameState() {
-    const saved = localStorage.getItem('cssLearningGame');
-    if (saved) {
-      const parsedState = JSON.parse(saved);
-      this.gameState = {
-        ...parsedState,
-        completedTasks: new Set(parsedState.completedTasks || []),
-        unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-        failedAttempts: parsedState.failedAttempts || {},
-        editorContent: parsedState.editorContent || {},
-        htmlContent: parsedState.htmlContent || {}
-      };
-    }
   }
   
   // Event Listeners
@@ -1621,7 +1698,7 @@ li {
     }
   }
   
-  // Submit Task Completion with proper EXP calculation
+  // FIXED: Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
@@ -1629,60 +1706,46 @@ li {
     // Check if task is already completed to prevent duplicate EXP
     if (this.gameState.completedTasks.has(taskId)) {
       console.warn('Task already completed, not adding EXP again');
-      this.showTaskAnswer();
+            this.showTaskAnswer();
       return;
     }
     
-    // Check if user is logged in
-    let username = localStorage.getItem("username");
-    if (!username) {
-      alert("Please log in first to save your progress!");
-      window.location.href = "login.html";
-      return;
-    }
-
-    // Add to completed tasks and EXP only once
+    // Add to completed tasks and EXP
     this.gameState.completedTasks.add(taskId);
     this.gameState.exp += task.exp;
     delete this.gameState.editorContent[taskId];
     delete this.gameState.htmlContent[taskId];
     
-    // Save state immediately
-    this.saveGameState();
-    this.updateUI();
-
-    // Debug log to track EXP calculation
     console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
-    // Send completion to MongoDB via API
+    // Save state immediately
+    await this.saveGameState();
+    this.updateUI();
+
+    // Send completion to MongoDB via individual task completion API
     try {
       const response = await fetch(`${API_BASE}/task/complete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: username,
+          username: this.username,
           course: "css",
           task_id: taskId
         })
       });
 
-      const data = await response.json();
-      
-      if (response.ok && data.message && data.message.toLowerCase().includes("complete")) {
-        console.log("Task completion saved to database:", data);
-        this.showTaskAnswer();
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Task completion confirmed by server:", data);
       } else {
-        throw new Error(data.detail || "Unexpected response from server");
+        throw new Error(`Server responded with ${response.status}`);
       }
     } catch (error) {
-      console.error("Error saving task completion:", error);
-      // Show success message anyway since local state is updated
-      this.showTaskAnswer();
-      // Optional: Show a warning that progress wasn't saved to server
-      setTimeout(() => {
-        alert("Task completed locally! Note: Progress may not be synced to server.");
-      }, 2000);
+      console.error("Error confirming task completion with server:", error);
+      // Task is still marked complete locally
     }
+
+    this.showTaskAnswer();
   }
   
   // Show the answer after task completion
@@ -1865,8 +1928,8 @@ li {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (4.png)');
-        alert('Certificate template not found. Please ensure 4.png is in the same directory.');
+        console.error('Could not load certificate image (3.png)');
+        alert('Certificate template not found. Please ensure 3.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
@@ -1902,26 +1965,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
-  document.onkeydown = function(e) {
-    // Disable F12
-    if (e.keyCode === 123) return false;
+document.onkeydown = function(e) {
+  // Disable F12
+  if (e.keyCode === 123) return false;
 
-    // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-    if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-      return false;
-    }
+  // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+  if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+    return false;
+  }
 
-    // Disable Ctrl+U (View Source)
-    if (e.ctrlKey && e.keyCode === 85) return false;
+  // Disable Ctrl+U (View Source)
+  if (e.ctrlKey && e.keyCode === 85) return false;
 
-    // Disable Ctrl+S (Save Page)
-    if (e.ctrlKey && e.keyCode === 83) return false;
+  // Disable Ctrl+S (Save Page)
+  if (e.ctrlKey && e.keyCode === 83) return false;
 
-    // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-    if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-      return false;
-    }
+  // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
+  if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+    return false;
+  }
 
-    // Disable Ctrl+Shift+K (Firefox)
-    if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
-  };
+  // Disable Ctrl+Shift+K (Firefox)
+  if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+};
+
+
+
+
+
