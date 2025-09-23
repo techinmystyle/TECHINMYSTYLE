@@ -1,9 +1,10 @@
 // API Base URL - Update this to match your FastAPI endpoint
-const API_BASE = "https://tech-trail-w2ap.onrender.com"; // your FastAPI endpoint
+const API_BASE = "https://tech-trail-w2ap.onrender.com";
 
 // Game State Management
 class HTMLLearningGame {
   constructor() {
+    this.username = null;
     this.gameState = {
       exp: 0,
       completedTasks: new Set(),
@@ -350,7 +351,7 @@ class HTMLLearningGame {
         title: 'Nested Lists',
         level: 'intermediate',
         exp: 20,
-        instructions: `
+                instructions: `
           <h4>Task: Create Nested Lists</h4>
           <p><strong>Instructions:</strong> Create an unordered list with:</p>
           <ul>
@@ -678,7 +679,7 @@ class HTMLLearningGame {
 </form>`,
         validate: (code) => {
           const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
-          const expected = `<form> <label>upload your resume:</label> <input type="file" accept=".pdf,.doc,.docx"> <button type="submit">upload</button> </form>`;
+                    const expected = `<form> <label>upload your resume:</label> <input type="file" accept=".pdf,.doc,.docx"> <button type="submit">upload</button> </form>`;
           return normalized === expected;
         }
       },
@@ -809,8 +810,16 @@ class HTMLLearningGame {
     this.init();
   }
   
-  init() {
-    this.loadGameState();
+  async init() {
+    // Check if user is logged in first
+    this.username = localStorage.getItem("username");
+    if (!this.username) {
+      alert("Please log in first to access the course!");
+      window.location.href = "../../login.html"; // Adjust path as needed
+      return;
+    }
+
+    await this.loadGameState();
     this.setupEventListeners();
     this.generateTaskCards();
     this.updateUI();
@@ -920,63 +929,99 @@ class HTMLLearningGame {
     return descriptions[taskId] || 'Complete this HTML task to earn EXP';
   }
   
-  // Local Storage Management
-async saveGameState() {
+  // FIXED: Load game state from MongoDB with fallback to localStorage
+  async loadGameState() {
+    try {
+      // First, try to load from MongoDB
+      const response = await fetch(`${API_BASE}/progress/${this.username}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Loaded progress from server:", data);
+        
+        // Convert server data to local game state
+        const htmlTasks = data.html || [];
+        
+        // Calculate EXP from completed tasks
+        let calculatedExp = 0;
+        htmlTasks.forEach(taskId => {
+          if (this.tasks[taskId]) {
+            calculatedExp += this.tasks[taskId].exp;
+          }
+        });
+        
+        this.gameState = {
+          exp: calculatedExp,
+          completedTasks: new Set(htmlTasks),
+          unlockedSolutions: new Set(data.unlocked_solutions || []),
+          failedAttempts: data.failed_attempts || {},
+          theme: data.theme || 'light',
+          editorContent: data.editor_content || {}
+        };
+        
+        console.log(`Loaded ${htmlTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
+      } else {
+        throw new Error('Failed to load from server');
+      }
+    } catch (error) {
+      console.error("Error loading from server, trying localStorage:", error);
+      
+      // Fallback to localStorage
+      const saved = localStorage.getItem('htmlLearningGame');
+      if (saved) {
+        try {
+          const parsedState = JSON.parse(saved);
+          this.gameState = {
+            exp: parsedState.exp || 0,
+            completedTasks: new Set(parsedState.completedTasks || []),
+            unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+            failedAttempts: parsedState.failedAttempts || {},
+            theme: parsedState.theme || 'light',
+            editorContent: parsedState.editorContent || {}
+          };
+          console.log("Loaded from localStorage as fallback");
+        } catch (parseError) {
+          console.error("Error parsing localStorage data:", parseError);
+        }
+      }
+    }
+  }
+
+  // FIXED: Save game state to both MongoDB and localStorage
+  async saveGameState() {
     const stateToSave = {
-        username: this.username, // Make sure to set this.username after login
-        course: "html", // Or set dynamically based on the course
-        completedTasks: Array.from(this.gameState.completedTasks),
-        unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
-        failedAttempts: this.gameState.failedAttempts,
-        editorContent: this.gameState.editorContent
+      username: this.username,
+      course: "html",
+      completedTasks: Array.from(this.gameState.completedTasks),
+      unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
+      failedAttempts: this.gameState.failedAttempts,
+      theme: this.gameState.theme,
+      editorContent: this.gameState.editorContent
     };
 
-    // Save in localStorage as a backup
+    // Always save to localStorage first (immediate backup)
     localStorage.setItem('htmlLearningGame', JSON.stringify(stateToSave));
 
-    // Save progress in backend
+    // Save to MongoDB
     try {
-        await fetch("https://tech-trail-w2ap.onrender.com/task/save-progress", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(stateToSave)
-        });
+      const response = await fetch(`${API_BASE}/task/save-progress`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stateToSave)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+                console.log("Progress saved to server:", result);
+      } else {
+        throw new Error(`Server responded with ${response.status}`);
+      }
     } catch (error) {
-        console.error("Error syncing progress:", error);
+      console.error("Error saving to server:", error);
+      // Data is still saved locally, so user can continue
     }
-}  
- async loadGameState() {
-    try {
-        const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${this.username}`);
-        const data = await res.json();
-
-        this.gameState = {
-            ...this.gameState,
-            completedTasks: new Set(data.html || []), // Adjust based on course
-            unlockedSolutions: new Set(data.unlockedSolutions || []),
-            failedAttempts: data.failedAttempts || {},
-            editorContent: data.editorContent || {}
-        };
-
-        // Also save a local backup
-        localStorage.setItem('htmlLearningGame', JSON.stringify(this.gameState));
-    } catch (error) {
-        console.error("Error loading progress:", error);
-
-        // Fallback to localStorage
-        const saved = localStorage.getItem('htmlLearningGame');
-        if (saved) {
-            const parsedState = JSON.parse(saved);
-            this.gameState = {
-                ...parsedState,
-                completedTasks: new Set(parsedState.completedTasks || []),
-                unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-                failedAttempts: parsedState.failedAttempts || {},
-                editorContent: parsedState.editorContent || {}
-            };
-        }
-    }
-}  
+  }
+  
   // Event Listeners
   setupEventListeners() {
     // Back button
@@ -1160,7 +1205,7 @@ async saveGameState() {
     }
   }
   
-  // Task Modal Management - FIXED: Properly reset validation state
+  // Task Modal Management
   openTaskModal(taskId) {
     this.currentTask = taskId;
     const task = this.tasks[taskId];
@@ -1173,7 +1218,7 @@ async saveGameState() {
     const savedContent = this.gameState.editorContent[taskId] || '';
     document.getElementById('codeEditor').value = savedContent;
     
-    // FIXED: Properly reset validation state
+    // Reset validation state
     this.resetValidationState();
     
     // Update solution button state
@@ -1193,7 +1238,7 @@ async saveGameState() {
     this.currentTask = null;
   }
   
-  // FIXED: Properly reset all button states and feedback
+  // Reset all button states and feedback
   resetValidationState() {
     const validateBtn = document.getElementById('validateCode');
     const submitBtn = document.getElementById('submitCode');
@@ -1290,67 +1335,53 @@ async saveGameState() {
     }
   }
   
-  // FIXED: MongoDB Integration - Submit Task Completion with proper EXP calculation
+  // FIXED: Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
     
-    // FIXED: Check if task is already completed to prevent duplicate EXP
+    // Check if task is already completed to prevent duplicate EXP
     if (this.gameState.completedTasks.has(taskId)) {
       console.warn('Task already completed, not adding EXP again');
       this.showTaskAnswer();
       return;
     }
     
-    // Check if user is logged in
-    let username = localStorage.getItem("username");
-    if (!username) {
-      alert("Please log in first to save your progress!");
-      window.location.href = "login.html";
-      return;
-    }
-
-    // FIXED: Add to completed tasks and EXP only once
+    // Add to completed tasks and EXP
     this.gameState.completedTasks.add(taskId);
     this.gameState.exp += task.exp;
     delete this.gameState.editorContent[taskId];
     
-    // Save state immediately
-    this.saveGameState();
-    this.updateUI();
-
-    // Debug log to track EXP calculation
     console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
-    // Send completion to MongoDB via API
+    // Save state immediately
+    await this.saveGameState();
+    this.updateUI();
+
+    // Send completion to MongoDB via individual task completion API
     try {
       const response = await fetch(`${API_BASE}/task/complete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: username,
+          username: this.username,
           course: "html",
           task_id: taskId
         })
       });
 
-      const data = await response.json();
-      
-      if (response.ok && data.message && data.message.toLowerCase().includes("complete")) {
-        console.log("Task completion saved to database:", data);
-        this.showTaskAnswer();
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Task completion confirmed by server:", data);
       } else {
-        throw new Error(data.detail || "Unexpected response from server");
+        throw new Error(`Server responded with ${response.status}`);
       }
     } catch (error) {
-      console.error("Error saving task completion:", error);
-      // Show success message anyway since local state is updated
-      this.showTaskAnswer();
-      // Optional: Show a warning that progress wasn't saved to server
-      setTimeout(() => {
-        alert("Task completed locally! Note: Progress may not be synced to server.");
-      }, 2000);
+      console.error("Error confirming task completion with server:", error);
+      // Task is still marked complete locally
     }
+
+    this.showTaskAnswer();
   }
   
   // Show the answer after task completion
@@ -1410,7 +1441,7 @@ async saveGameState() {
     if (!isAlreadyUnlocked) {
       this.showValidationFeedback('Solution revealed! 5 EXP deducted. Study the code and try to understand it.', 'error');
     } else {
-      this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
+            this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
     }
   }
   
@@ -1559,7 +1590,7 @@ async saveGameState() {
     }
   }
 
-  // FIXED: Add method to reset all game data (for debugging)
+  // Add method to reset all game data (for debugging)
   resetGameData() {
     this.gameState = {
       exp: 0,
@@ -1579,3 +1610,7 @@ async saveGameState() {
 document.addEventListener('DOMContentLoaded', () => {
   new HTMLLearningGame();
 });
+
+
+
+
