@@ -64,7 +64,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg-primary);
   color: var(--text-primary);
   line-height: 1.6;
@@ -1857,38 +1857,4 @@ body {
     min-height: 250px;
     font-size: 0.8125rem;
   }
-}
-
-/* Certificate SVG specific styles */
-.certificate-template {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.certificate-template svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.certificate-template .name-text,
-.certificate-template .date-text {
-  font-family: 'Arial', sans-serif; /* Fallback to Arial for SVG text */
-  font-weight: bold;
-  fill: #053c59; /* Dark blue color */
-}
-
-/* Specific styles for the text elements within the SVG for name and date */
-.certificate-template #userNameText {
-  font-size: 48px; /* Adjusted based on visual estimation for the given SVG */
-  text-anchor: middle;
-}
-
-.certificate-template #currentDateText {
-  font-size: 20px; /* Adjusted based on visual estimation for the given SVG */
-  text-anchor: middle;
 }
