@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HTML in My Style - Learn HTML Interactively</title>
-  <link rel="stylesheet" href="tasks.css">
+  <link rel="stylesheet" href="styles.css">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="./img/TECH.png" type="image/svg+xml">
 </head>
@@ -275,7 +275,8 @@
                 <p>Complete all 30 tasks to unlock your certificate!</p>
               </div>
             </div>
-            <img src="4.png" alt="Certificate Preview" class="certificate-image">
+            <!-- Certificate template will be rendered here by JavaScript -->
+            <div id="certificateTemplate" class="certificate-template"></div>
           </div>
           
           <div class="certificate-actions" id="certificateActions">
@@ -306,10 +307,10 @@
     <div class="modal-overlay" id="taskModal">
       <div class="modal">
         <div class="modal-header">
-                    <h3 class="modal-title" id="modalTitle">Task Title</h3>
+          <h3 class="modal-title" id="modalTitle">Task Title</h3>
           <button class="btn btn-close" id="closeModal">
             <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
@@ -382,7 +383,7 @@
     </div>
   </div>
 
-  <script src="tasks.js"></script>
+  <script src="script.js"></script>
 
 <script>
   document.getElementById("backBtn").addEventListener("click", function () {
