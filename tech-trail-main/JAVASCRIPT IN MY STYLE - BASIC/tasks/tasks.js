@@ -1,10 +1,10 @@
-
 // API Base URL - Update this to match your FastAPI endpoint
-const API_BASE = "https://tech-trail-w2ap.onrender.com"; // your FastAPI endpoint
+const API_BASE = "https://tech-trail-w2ap.onrender.com";
 
 // Game State Management
 class JSLearningGame {
   constructor() {
+    this.username = null;
     this.gameState = {
       exp: 0,
       completedTasks: new Set(),
@@ -132,8 +132,8 @@ console.log("Lowercase:", message.toLowerCase());
 console.log("Length:", message.length);`,
         validate: (code) => {
           const hasMessage = /let\s+message\s*=|var\s+message\s*=|const\s+message\s*=/i.test(code);
-          const hasToUpperCase = /\.toUpperCase\(\)/i.test(code);
-          const hasToLowerCase = /\.toLowerCase\(\)/i.test(code);
+          const hasToUpperCase = /\.toUpperCase$$/i.test(code);
+          const hasToLowerCase = /\.toLowerCase$$/i.test(code);
           const hasLength = /\.length/i.test(code);
           return hasMessage && hasToUpperCase && hasToLowerCase && hasLength;
         }
@@ -301,7 +301,7 @@ let result = greet("John");
 console.log(result);`,
         validate: (code) => {
           const hasFunction = /function\s+greet/i.test(code);
-          const hasParameter = /greet\s*\(\s*\w+\s*\)/i.test(code);
+          const hasParameter = /greet\s*$\s*\w+\s*$/i.test(code);
           const hasReturn = /return/i.test(code);
           const hasFunctionCall = /greet\s*\(/i.test(code);
           return hasFunction && hasParameter && hasReturn && hasFunctionCall;
@@ -351,7 +351,7 @@ console.log("Full object:", person);`,
           const hasDotNotation = /person\./i.test(code);
           const hasNewProperty = /person\.\w+\s*=/i.test(code);
           const hasObjectBraces = /\{[\s\S]*\}/i.test(code);
-          return hasPersonObject && hasDotNotation && hasNewProperty && hasObjectBraces;
+                    return hasPersonObject && hasDotNotation && hasNewProperty && hasObjectBraces;
         }
       },
 
@@ -455,7 +455,6 @@ button.addEventListener("click", function() {
         }
       },
 
-      // Continue with more beginner tasks...
       'beginner-11': {
         title: 'While Loops',
         level: 'beginner',
@@ -689,7 +688,7 @@ console.log("Rounded:", rounded);
 let maximum = Math.max(15, 8, 23);
 console.log("Maximum:", maximum);`,
         validate: (code) => {
-          const hasMathRandom = /Math\.random\(\)/i.test(code);
+          const hasMathRandom = /Math\.random$$/i.test(code);
           const hasMathRound = /Math\.round\(/i.test(code);
           const hasMathMax = /Math\.max\(/i.test(code);
           const hasConsoleLog = /console\.log/i.test(code);
@@ -697,7 +696,6 @@ console.log("Maximum:", maximum);`,
         }
       },
 
-      // Continue with remaining tasks...
       'beginner-16': {
         title: 'Date Object',
         level: 'beginner',
@@ -730,9 +728,9 @@ console.log("Year:", now.getFullYear());
 console.log("Month:", now.getMonth() + 1); // +1 because months are 0-indexed
 console.log("Day:", now.getDate());`,
         validate: (code) => {
-          const hasNewDate = /new Date\(\)/i.test(code);
-          const hasGetFullYear = /\.getFullYear\(\)/i.test(code);
-          const hasGetMonth = /\.getMonth\(\)/i.test(code);
+          const hasNewDate = /new Date$$/i.test(code);
+          const hasGetFullYear = /\.getFullYear$$/i.test(code);
+          const hasGetMonth = /\.getMonth$$/i.test(code);
           const hasConsoleLog = /console\.log/i.test(code);
           return hasNewDate && hasGetFullYear && hasGetMonth && hasConsoleLog;
         }
@@ -747,7 +745,7 @@ console.log("Day:", now.getDate());`,
           <p><strong>Instructions:</strong> Use template literals:</p>
           <ul>
             <li>Create variables for name and age</li>
-            <li>Use template literals (backticks) to create a message</li>
+                        <li>Use template literals (backticks) to create a message</li>
             <li>Include both variables in the template</li>
             <li>Log the formatted message</li>
           </ul>
@@ -912,7 +910,6 @@ console.log("Parsed object:", parsedObject);`,
         }
       },
 
-      // Continue with remaining 10 tasks...
       'beginner-21': {
         title: 'Try-Catch Blocks',
         level: 'beginner',
@@ -1073,7 +1070,7 @@ button {
 }`,
         validate: (code) => {
           const hasGetElementById = /document\.getElementById/i.test(code);
-          const hasIncludes = /\.includes\s*\(\s*"@"\s*\)/i.test(code);
+          const hasIncludes = /\.includes\s*$\s*"@"\s*$/i.test(code);
           const hasLength = /\.length/i.test(code);
           const hasTextContent = /\.textContent/i.test(code);
           return hasGetElementById && hasIncludes && hasLength && hasTextContent;
@@ -1115,7 +1112,7 @@ console.log("Even numbers:", evenNumbers);
 let greaterThanFive = numbers.filter(num => num > 5);
 console.log("Greater than 5:", greaterThanFive);`,
         validate: (code) => {
-          const hasNumbers = /numbers\s*=.*\[.*\]/i.test(code);
+          const hasNumbers = /numbers\s*=.*$$.*$$/i.test(code);
           const hasFilter = /\.filter\(/i.test(code);
           const hasModulo = /%\s*2\s*===\s*0/i.test(code);
           const hasGreaterThan = />\s*5/i.test(code);
@@ -1133,7 +1130,7 @@ console.log("Greater than 5:", greaterThanFive);`,
           <ul>
             <li>Create an object called <code>calculator</code></li>
             <li>Add methods for add, subtract, multiply, divide</li>
-            <li>Each method should take two parameters and return result</li>
+                        <li>Each method should take two parameters and return result</li>
             <li>Test all methods and log results</li>
           </ul>
           <p><strong>Reward:</strong> 10 EXP</p>
@@ -1222,7 +1219,7 @@ console.log(person2.introduce());`,
           const hasClass = /class\s+Person/i.test(code);
           const hasConstructor = /constructor\s*\(/i.test(code);
           const hasThis = /this\./i.test(code);
-          const hasIntroduce = /introduce\s*\(\s*\)/i.test(code);
+          const hasIntroduce = /introduce\s*$\s*$/i.test(code);
           const hasNew = /new\s+Person/i.test(code);
           return hasClass && hasConstructor && hasThis && hasIntroduce && hasNew;
         }
@@ -1272,9 +1269,9 @@ console.log("First color:", first);
 console.log("Second color:", second);`,
         validate: (code) => {
           const hasObjectDestructuring = /\{\s*name\s*,\s*age\s*,\s*city\s*\}\s*=/i.test(code);
-          const hasArrayDestructuring = /\[\s*\w+\s*,\s*\w+\s*\]\s*=/i.test(code);
+          const hasArrayDestructuring = /$$\s*\w+\s*,\s*\w+\s*$$\s*=/i.test(code);
           const hasPersonObject = /person\s*=\s*\{/i.test(code);
-          const hasArray = /\[.*red.*green.*blue.*\]/i.test(code);
+          const hasArray = /$$.*red.*green.*blue.*$$/i.test(code);
           return hasObjectDestructuring && hasArrayDestructuring && hasPersonObject && hasArray;
         }
       },
@@ -1504,8 +1501,16 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     this.init();
   }
   
-  init() {
-    this.loadGameState();
+  async init() {
+    // Check if user is logged in first
+    this.username = localStorage.getItem("username");
+    if (!this.username) {
+      alert("Please log in first to access the course!");
+      window.location.href = "../../login.html"; // Adjust path as needed
+      return;
+    }
+
+    await this.loadGameState();
     this.setupEventListeners();
     this.generateTaskCards();
     this.updateUI();
@@ -1542,7 +1547,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
             ${icon}
           </svg>
         </div>
-        <div class="task-info">
+                <div class="task-info">
           <h3 class="task-title">${task.title}</h3>
           <p class="task-description">${this.getTaskDescription(taskId)}</p>
         </div>
@@ -1607,33 +1612,102 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     return descriptions[taskId] || 'Complete this JavaScript task to earn EXP';
   }
   
-  // Local Storage Management
-  saveGameState() {
+  // FIXED: Load game state from MongoDB with fallback to localStorage
+  async loadGameState() {
+    try {
+      // First, try to load from MongoDB
+      const response = await fetch(`${API_BASE}/progress/${this.username}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Loaded progress from server:", data);
+        
+        // Convert server data to local game state
+        const jsTasks = data.javascript || [];
+        
+        // Calculate EXP from completed tasks
+        let calculatedExp = 0;
+        jsTasks.forEach(taskId => {
+          if (this.tasks[taskId]) {
+            calculatedExp += this.tasks[taskId].exp;
+          }
+        });
+        
+        this.gameState = {
+          exp: calculatedExp,
+          completedTasks: new Set(jsTasks),
+          unlockedSolutions: new Set(data.unlocked_solutions || []),
+          failedAttempts: data.failed_attempts || {},
+          theme: data.theme || 'light',
+          editorContent: data.editor_content || {},
+          htmlContent: data.html_content || {},
+          cssContent: data.css_content || {}
+        };
+        
+        console.log(`Loaded ${jsTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
+      } else {
+        throw new Error('Failed to load from server');
+      }
+    } catch (error) {
+      console.error("Error loading from server, trying localStorage:", error);
+      
+      // Fallback to localStorage
+      const saved = localStorage.getItem('jsLearningGame');
+      if (saved) {
+        try {
+          const parsedState = JSON.parse(saved);
+          this.gameState = {
+            exp: parsedState.exp || 0,
+            completedTasks: new Set(parsedState.completedTasks || []),
+            unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+            failedAttempts: parsedState.failedAttempts || {},
+            theme: parsedState.theme || 'light',
+            editorContent: parsedState.editorContent || {},
+            htmlContent: parsedState.htmlContent || {},
+            cssContent: parsedState.cssContent || {}
+          };
+          console.log("Loaded from localStorage as fallback");
+        } catch (parseError) {
+          console.error("Error parsing localStorage data:", parseError);
+        }
+      }
+    }
+  }
+
+  // FIXED: Save game state to both MongoDB and localStorage
+  async saveGameState() {
     const stateToSave = {
-      ...this.gameState,
+      username: this.username,
+      course: "javascript",
       completedTasks: Array.from(this.gameState.completedTasks),
       unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
       failedAttempts: this.gameState.failedAttempts,
+      theme: this.gameState.theme,
       editorContent: this.gameState.editorContent,
       htmlContent: this.gameState.htmlContent,
       cssContent: this.gameState.cssContent
     };
+
+    // Always save to localStorage first (immediate backup)
     localStorage.setItem('jsLearningGame', JSON.stringify(stateToSave));
-  }
-  
-  loadGameState() {
-    const saved = localStorage.getItem('jsLearningGame');
-    if (saved) {
-      const parsedState = JSON.parse(saved);
-      this.gameState = {
-        ...parsedState,
-        completedTasks: new Set(parsedState.completedTasks || []),
-        unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-        failedAttempts: parsedState.failedAttempts || {},
-        editorContent: parsedState.editorContent || {},
-        htmlContent: parsedState.htmlContent || {},
-        cssContent: parsedState.cssContent || {}
-      };
+
+    // Save to MongoDB
+    try {
+      const response = await fetch(`${API_BASE}/task/save-progress`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stateToSave)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Progress saved to server:", result);
+      } else {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error saving to server:", error);
+      // Data is still saved locally, so user can continue
     }
   }
   
@@ -1858,7 +1932,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       certificateActions.classList.add('enabled');
     } else {
       certificateStatus.innerHTML = `
-        <svg class="icon lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg class="icon lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
           <circle cx="12" cy="16" r="1"></circle>
           <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
@@ -2012,7 +2086,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     }
   }
   
-  // Submit Task Completion with proper EXP calculation
+  // FIXED: Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
@@ -2024,57 +2098,43 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       return;
     }
     
-    // Check if user is logged in
-    let username = localStorage.getItem("username");
-    if (!username) {
-      alert("Please log in first to save your progress!");
-      window.location.href = "login.html";
-      return;
-    }
-
-    // Add to completed tasks and EXP only once
+    // Add to completed tasks and EXP
     this.gameState.completedTasks.add(taskId);
     this.gameState.exp += task.exp;
     delete this.gameState.editorContent[taskId];
     delete this.gameState.htmlContent[taskId];
     delete this.gameState.cssContent[taskId];
     
-    // Save state immediately
-    this.saveGameState();
-    this.updateUI();
-
-    // Debug log to track EXP calculation
     console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
-    // Send completion to MongoDB via API
+    // Save state immediately
+    await this.saveGameState();
+    this.updateUI();
+
+    // Send completion to MongoDB via individual task completion API
     try {
       const response = await fetch(`${API_BASE}/task/complete`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          username: username,
+          username: this.username,
           course: "javascript",
           task_id: taskId
         })
       });
 
-      const data = await response.json();
-      
-      if (response.ok && data.message && data.message.toLowerCase().includes("complete")) {
-        console.log("Task completion saved to database:", data);
-        this.showTaskAnswer();
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Task completion confirmed by server:", data);
       } else {
-        throw new Error(data.detail || "Unexpected response from server");
+        throw new Error(`Server responded with ${response.status}`);
       }
     } catch (error) {
-      console.error("Error saving task completion:", error);
-      // Show success message anyway since local state is updated
-      this.showTaskAnswer();
-      // Optional: Show a warning that progress wasn't saved to server
-      setTimeout(() => {
-        alert("Task completed locally! Note: Progress may not be synced to server.");
-      }, 2000);
+      console.error("Error confirming task completion with server:", error);
+      // Task is still marked complete locally
     }
+
+    this.showTaskAnswer();
   }
   
   // Show the answer after task completion
@@ -2258,8 +2318,8 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (3.png)');
-        alert('Certificate template not found. Please ensure 3.png is in the same directory.');
+        console.error('Could not load certificate image (1.png)');
+        alert('Certificate template not found. Please ensure 1.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
@@ -2293,4 +2353,8 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
 document.addEventListener('DOMContentLoaded', () => {
   new JSLearningGame();
 });
+
+
+
+
 
