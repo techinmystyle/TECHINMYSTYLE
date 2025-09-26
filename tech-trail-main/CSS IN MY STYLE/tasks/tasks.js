@@ -525,12 +525,13 @@ li {
 .box:hover {
   transform: scale(1.2);
 }`,
-        validate: (code) => {
-          const hasBoxRotate = /\.box\s*\{[^}]*transform\s*:\s*rotate\s*$\s*45deg\s*$/i.test(code);
-          const hasTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
-          const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\s*$\s*1\.2\s*$/i.test(code);
-          return hasBoxRotate && hasTransition && hasBoxHoverScale;
-        }
+       validate: (code) => {
+  const hasBoxRotate = /\.box\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
+  const hasTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
+  const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
+  return hasBoxRotate && hasTransition && hasBoxHoverScale;
+}
+
       },
 
       'intermediate-7': {
