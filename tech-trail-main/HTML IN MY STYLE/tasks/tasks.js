@@ -1573,8 +1573,7 @@ class HTMLLearningGame {
   }
 
   async downloadCertificate() {
-        const userName = this.username;
-
+    const userName = document.getElementById('userName').value.trim();
     
     if (!userName) {
       alert('Please enter your name to generate the certificate.');
@@ -1590,9 +1589,13 @@ class HTMLLearningGame {
       const userNameTextElement = svgElement.querySelector('#userNameText');
       if (userNameTextElement) userNameTextElement.textContent = userName;
 
+      const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
       const currentDateTextElement = svgElement.querySelector('#currentDateText');
-      if (currentDateTextElement) currentDateTextElement.textContent = 'September 26, 2025';
-
+      if (currentDateTextElement) currentDateTextElement.textContent = currentDate;
 
       // Serialize the SVG to a string
       const svgData = new XMLSerializer().serializeToString(svgElement);
