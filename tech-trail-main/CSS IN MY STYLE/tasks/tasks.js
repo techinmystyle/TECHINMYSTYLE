@@ -1592,96 +1592,96 @@ li {
     
     preview.srcdoc = previewContent;
   }
-  
   // Certificate Generation
-  async downloadCertificate() {
-    const userName = document.getElementById('userName').value.trim();
-    
-    if (!userName) {
-      alert('Please enter your name to generate the certificate.');
-      return;
-    }
-    
-    try {
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      const img = new Image();
-      
-      img.onload = () => {
-        try {
-          // Set canvas size to match your certificate image
-          canvas.width = img.width;
-          canvas.height = img.height;
-          
-          // Draw the certificate background image
-          ctx.drawImage(img, 0, 0);
-          
-          // Calculate positions based on your certificate layout
-          const centerX = canvas.width / 2;
-          
-          // USER NAME POSITIONING
-          ctx.fillStyle = '#2d3748';
-          ctx.font = 'bold 48px Arial, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          
-          const nameY = canvas.height * 0.45;
-          ctx.fillText(userName, centerX, nameY);
-          
-          // CURRENT DATE POSITIONING
-          ctx.fillStyle = '#4a5568';
-          ctx.font = '28px Arial, sans-serif';
-          
-          const currentDate = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-          
-          const dateY = canvas.height * 0.85;
-          ctx.fillText(currentDate, centerX, dateY);
-          
-          // Convert to blob and download
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
-              
-              document.body.appendChild(a);
-              a.click();
-              
-              setTimeout(() => {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-              }, 100);
-              
-              alert('🎉 Certificate downloaded successfully!');
-            } else {
-              throw new Error('Failed to create certificate blob');
-            }
-          }, 'image/png/ai', 1.0);
-          
-        } catch (error) {
-          console.error('Error processing certificate:', error);
-          alert('Error generating certificate. Please try again.');
-        }
-      };
-      
-      img.onerror = () => {
-        console.error('Could not load certificate image (CSS.png)');
-        alert('Certificate template not found. Please ensure 3.png is in the same directory.');
-      };
-      
-      img.crossOrigin = 'anonymous';
-      img.src = 'CSS.png';
-      
-    } catch (error) {
-      console.error('Error in downloadCertificate:', error);
-      alert('Error generating certificate. Please try again.');
-    }
+async downloadCertificate() {
+  const userName = document.getElementById('userName').value.trim();
+  
+  if (!userName) {
+    alert('Please enter your name to generate the certificate.');
+    return;
   }
+
+  try {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const img = new Image();
+    
+    img.onload = () => {
+      try {
+        // Set canvas size to match your certificate image
+        canvas.width = img.width;
+        canvas.height = img.height;
+        
+        // Draw the certificate background image
+        ctx.drawImage(img, 0, 0);
+        
+        // Calculate positions based on your certificate layout
+        const centerX = canvas.width / 2;
+        
+        // USER NAME POSITIONING
+        ctx.fillStyle = '#2d3748';
+        ctx.font = 'bold 48px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        
+        const nameY = canvas.height * 0.45;
+        ctx.fillText(userName, centerX, nameY);
+        
+        // CURRENT DATE POSITIONING
+        ctx.fillStyle = '#4a5568';
+        ctx.font = '28px Arial, sans-serif';
+        
+        const currentDate = new Date().toLocaleDateString('en-US', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric'
+        });
+        
+        const dateY = canvas.height * 0.85;
+        ctx.fillText(currentDate, centerX, dateY);
+        
+        // Convert to blob and download
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
+            
+            document.body.appendChild(a);
+            a.click();
+            
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 100);
+            
+            alert('🎉 Certificate downloaded successfully!');
+          } else {
+            throw new Error('Failed to create certificate blob');
+          }
+        }, 'image/png', 1.0); // ✅ fixed MIME type
+        
+      } catch (error) {
+        console.error('Error processing certificate:', error);
+        alert('Error generating certificate. Please try again.');
+      }
+    };
+    
+    img.onerror = () => {
+      console.error('Could not load certificate image (CSS.png)');
+      alert('Certificate template not found. Please ensure CSS.png is in the same directory.'); // ✅ fixed alert message
+    };
+    
+    img.crossOrigin = 'anonymous';
+    img.src = 'CSS.png';  // ✅ use exported PNG, not .ai
+    
+  } catch (error) {
+    console.error('Error in downloadCertificate:', error);
+    alert('Error generating certificate. Please try again.');
+  }
+}
+
 
   // Add method to reset all game data (for debugging)
   resetGameData() {
