@@ -1670,12 +1670,12 @@ li {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (CSS.ai)');
+        console.error('Could not load certificate image (CSS.png)');
         alert('Certificate template not found. Please ensure 3.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
-      img.src = 'CSS.ai';
+      img.src = 'CSS.png';
       
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
