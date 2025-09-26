@@ -1582,7 +1582,7 @@ class HTMLLearningGame {
       };
       
       img.crossOrigin = 'anonymous';
-      img.src = '5.png';
+      img.src = '15.png';
       
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
