@@ -1528,7 +1528,7 @@ class HTMLLearningGame {
           
           // USER NAME POSITIONING
           ctx.fillStyle = '#2d3748';
-          ctx.font = 'bold 48px Arial, sans-serif';
+          ctx.font = 'bold 80px Arial, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
           
@@ -1537,7 +1537,7 @@ class HTMLLearningGame {
           
           // CURRENT DATE POSITIONING
           ctx.fillStyle = '#4a5568';
-          ctx.font = '28px Arial, sans-serif';
+          ctx.font = '60px Arial, sans-serif';
           
           const currentDate = new Date().toLocaleDateString('en-US', {
             year: 'numeric',
