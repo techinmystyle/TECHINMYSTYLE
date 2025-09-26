@@ -492,13 +492,14 @@ li {
     font-size: 14px;
   }
 }`,
-        validate: (code) => {
-          const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
-          const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-          const hasMediaQuery = /@media\s*$[^}]*max-width\s*:\s*600px\s*$/i.test(code);
-          const hasMediaFontSize = /@media\s*$[^}]+$[^}]*\{[^}]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
-          return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
-        }
+      validate: (code) => {
+  const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
+  const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
+  const hasMediaQuery = /@media\s*\(max-width\s*:\s*600px\)/i.test(code);
+  const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
+  return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
+}
+
       },
 
       'intermediate-6': {
