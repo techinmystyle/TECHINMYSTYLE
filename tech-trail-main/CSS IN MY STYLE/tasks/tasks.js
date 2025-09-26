@@ -1919,7 +1919,7 @@ li {
             } else {
               throw new Error('Failed to create certificate blob');
             }
-          }, 'image/png', 1.0);
+          }, 'image/png/ai', 1.0);
           
         } catch (error) {
           console.error('Error processing certificate:', error);
@@ -1928,12 +1928,12 @@ li {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (3.png)');
+        console.error('Could not load certificate image (CSS.ai)');
         alert('Certificate template not found. Please ensure 3.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
-      img.src = '3.png';
+      img.src = 'CSS.ai';
       
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
