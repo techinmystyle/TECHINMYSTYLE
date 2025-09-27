@@ -19,7 +19,7 @@ class HTMLLearningGame {
       'beginner-1': {
         title: 'Basic HTML Structure',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Create Basic HTML Structure</h4>
           <p><strong>Instructions:</strong> Create a basic HTML document with the following elements:</p>
@@ -43,7 +43,7 @@ class HTMLLearningGame {
       'beginner-2': {
         title: 'HTML Headings',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Create HTML Headings</h4>
           <p><strong>Instructions:</strong> Create the following heading structure:</p>
@@ -67,7 +67,7 @@ class HTMLLearningGame {
       'beginner-3': {
         title: 'Text Formatting',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Text Formatting</h4>
           <p><strong>Instructions:</strong> Create the following formatted text:</p>
@@ -91,7 +91,7 @@ class HTMLLearningGame {
       'beginner-4': {
         title: 'Line Breaks and Horizontal Rules',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Line Breaks and Horizontal Rules</h4>
           <p><strong>Instructions:</strong> Create the following structure:</p>
@@ -115,7 +115,7 @@ class HTMLLearningGame {
       'beginner-5': {
         title: 'HTML Comments',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: HTML Comments</h4>
           <p><strong>Instructions:</strong> Create the following:</p>
@@ -139,7 +139,7 @@ class HTMLLearningGame {
       'beginner-6': {
         title: 'Basic Div Elements',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Basic Div Elements</h4>
           <p><strong>Instructions:</strong> Create the following structure:</p>
@@ -165,7 +165,7 @@ class HTMLLearningGame {
       'beginner-7': {
         title: 'Span Elements',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Span Elements</h4>
           <p><strong>Instructions:</strong> Create a paragraph with:</p>
@@ -187,7 +187,7 @@ class HTMLLearningGame {
       'beginner-8': {
         title: 'Preformatted Text',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Preformatted Text</h4>
           <p><strong>Instructions:</strong> Create a pre element with the following code:</p>
@@ -209,7 +209,7 @@ class HTMLLearningGame {
       'beginner-9': {
         title: 'Blockquotes',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Blockquotes</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -231,7 +231,7 @@ class HTMLLearningGame {
       'beginner-10': {
         title: 'Address Element',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Address Element</h4>
           <p><strong>Instructions:</strong> Create an address element with:</p>
@@ -254,7 +254,7 @@ class HTMLLearningGame {
       'intermediate-1': {
         title: 'Unordered Lists',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Create Unordered Lists</h4>
           <p><strong>Instructions:</strong> Create an unordered list with:</p>
@@ -280,7 +280,7 @@ class HTMLLearningGame {
       'intermediate-2': {
         title: 'Ordered Lists',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Create Ordered Lists</h4>
           <p><strong>Instructions:</strong> Create an ordered list with:</p>
@@ -306,7 +306,7 @@ class HTMLLearningGame {
       'intermediate-3': {
         title: 'Basic Links',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Create Basic Links</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -328,7 +328,7 @@ class HTMLLearningGame {
       'intermediate-4': {
         title: 'Images',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Add Images</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -350,7 +350,7 @@ class HTMLLearningGame {
       'intermediate-5': {
         title: 'Nested Lists',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
                 instructions: `
           <h4>Task: Create Nested Lists</h4>
           <p><strong>Instructions:</strong> Create an unordered list with:</p>
@@ -384,7 +384,7 @@ class HTMLLearningGame {
       'intermediate-6': {
         title: 'Tables Basic',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Create Basic Table</h4>
           <p><strong>Instructions:</strong> Create a table with:</p>
@@ -419,7 +419,7 @@ class HTMLLearningGame {
       'intermediate-7': {
         title: 'Description Lists',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Create Description Lists</h4>
           <p><strong>Instructions:</strong> Create a description list with:</p>
@@ -445,7 +445,7 @@ class HTMLLearningGame {
       'intermediate-8': {
         title: 'Abbreviations and Acronyms',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Abbreviations and Acronyms</h4>
           <p><strong>Instructions:</strong> Create:&lt;/p&gt;
@@ -467,7 +467,7 @@ class HTMLLearningGame {
       'intermediate-9': {
         title: 'Code and Keyboard Elements',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Code and Keyboard Elements</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -489,7 +489,7 @@ class HTMLLearningGame {
       'intermediate-10': {
         title: 'Time and Date Elements',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: Time and Date Elements</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -512,7 +512,7 @@ class HTMLLearningGame {
       'advanced-1': {
         title: 'Contact Form',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Create a Contact Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -540,7 +540,7 @@ class HTMLLearningGame {
       'advanced-2': {
         title: 'Registration Form',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Create Registration Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -568,7 +568,7 @@ class HTMLLearningGame {
       'advanced-3': {
         title: 'Survey Form with Radio Buttons',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Survey Form with Radio Buttons</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -599,7 +599,7 @@ class HTMLLearningGame {
       'advanced-4': {
         title: 'Checkbox Form',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Checkbox Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -630,7 +630,7 @@ class HTMLLearningGame {
       'advanced-5': {
         title: 'Select Dropdown',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Select Dropdown</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -661,7 +661,7 @@ class HTMLLearningGame {
       'advanced-6': {
         title: 'File Upload Form',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: File Upload Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -687,7 +687,7 @@ class HTMLLearningGame {
       'advanced-7': {
         title: 'Form with Fieldset',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Form with Fieldset</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -717,7 +717,7 @@ class HTMLLearningGame {
       'advanced-8': {
         title: 'Number and Range Inputs',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Number and Range Inputs</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -745,7 +745,7 @@ class HTMLLearningGame {
       'advanced-9': {
         title: 'Search and URL Inputs',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Search and URL Inputs</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -771,7 +771,7 @@ class HTMLLearningGame {
       'advanced-10': {
         title: 'Complete Registration Form',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Complete Registration Form</h4>
           <p><strong>Instructions:</strong> Create a comprehensive form with:</p>
