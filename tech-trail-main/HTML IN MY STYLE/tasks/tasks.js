@@ -1421,21 +1421,37 @@ class HTMLLearningGame {
     }, 3000);
   }
   
-  showSolution() {
+  updateSolutionButton() {
+    const showSolutionBtn = document.getElementById('showSolution');
+    if (!showSolutionBtn) return;
+
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
-    const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
+    const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
+    const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
-    if (!isAlreadyUnlocked) {
-      // Deduct EXP
-      let expPenalty = 20; // default for beginner
-      if (task.level === 'intermediate') expPenalty = 40;
-      if (task.level === 'advanced') expPenalty = 60;
-
-      this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty);
-      this.gameState.unlockedSolutions.add(taskId);
-      this.updateExpCounter();
+    // Calculate EXP penalty based on level
+    let expPenalty = 20; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 40;
+    if (task.level === 'advanced') expPenalty = 60;
+    
+    if (isUnlocked) {
+      showSolutionBtn.disabled = false;
+      showSolutionBtn.textContent = 'Show Solution';
+    } else if (failedAttempts >= 2) {
+      showSolutionBtn.disabled = false;
+      // Adjust the message if the user has less EXP than the penalty
+      if (this.gameState.exp < expPenalty) {
+        showSolutionBtn.textContent = `Show Solution (EXP will be 0)`;
+      } else {
+        showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+      }
+    } else {
+      showSolutionBtn.disabled = true;
+      showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
     }
+  }
+
     
     // Show solution in editor
     document.getElementById('codeEditor').value = task.solution;
