@@ -131,12 +131,13 @@ console.log("Uppercase:", message.toUpperCase());
 console.log("Lowercase:", message.toLowerCase());
 console.log("Length:", message.length);`,
         validate: (code) => {
-          const hasMessage = /let\s+message\s*=|var\s+message\s*=|const\s+message\s*=/i.test(code);
-          const hasToUpperCase = /\.toUpperCase$$/i.test(code);
-          const hasToLowerCase = /\.toLowerCase$$/i.test(code);
-          const hasLength = /\.length/i.test(code);
-          return hasMessage && hasToUpperCase && hasToLowerCase && hasLength;
-        }
+  const hasMessage = /let\s+message\s*=|var\s+message\s*=|const\s+message\s*=/i.test(code);
+  const hasToUpperCase = /\.toUpperCase\(\)/i.test(code);
+  const hasToLowerCase = /\.toLowerCase\(\)/i.test(code);
+  const hasLength = /\.length/i.test(code);
+  return hasMessage && hasToUpperCase && hasToLowerCase && hasLength;
+}
+
       },
 
       'beginner-4': {
