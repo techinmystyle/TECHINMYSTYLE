@@ -1674,7 +1674,7 @@ async downloadCertificate() {
     };
     
     img.crossOrigin = 'anonymous';
-    img.src = 'CSS.png';  // ✅ use exported PNG, not .ai
+    img.src = 'CSS-01.png';  // ✅ use exported PNG, not .ai
     
   } catch (error) {
     console.error('Error in downloadCertificate:', error);
