@@ -361,7 +361,7 @@ li {
         }
       },
 
-            'intermediate-2': {
+      'intermediate-2': {
         title: 'CSS Grid Layout',
         level: 'intermediate',
         exp: 20,
@@ -492,14 +492,13 @@ li {
     font-size: 14px;
   }
 }`,
-      validate: (code) => {
-  const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
-  const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-  const hasMediaQuery = /@media\s*\(max-width\s*:\s*600px\)/i.test(code);
-  const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
-  return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
-}
-
+        validate: (code) => {
+          const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
+          const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
+          const hasMediaQuery = /@media\s*\(max-width\s*:\s*600px\)/i.test(code);
+          const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
+          return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
+        }
       },
 
       'intermediate-6': {
@@ -525,90 +524,92 @@ li {
 .box:hover {
   transform: scale(1.2);
 }`,
-       validate: (code) => {
-  const hasBoxRotate = /\.box\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
-  const hasTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
-  const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
-  return hasBoxRotate && hasTransition && hasBoxHoverScale;
-}
-
+        validate: (code) => {
+          const hasBoxRotate = /\.box\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
+          const hasTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
+          const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
+          return hasBoxRotate && hasTransition && hasBoxHoverScale;
+        }
       },
-// ---------------- INTERMEDIATE ----------------
 
-'intermediate-7': {
-  title: 'CSS Shadows',
-  level: 'intermediate',
-  exp: 20,
-  instructions: `    <h4>Task: CSS Transitions</h4>
-    <p><strong>Instructions:</strong> Add a smooth hover effect:</p>
-    <ul>
-      <li>Make button background blue (#3498db)</li>
-      <li>On hover, change background to green (#2ecc71)</li>
-      <li>Add transition duration of 0.3s for smooth effect</li>
-    </ul>
-    <p><strong>Reward:</strong> 20 EXP</p>
-`, 
-  htmlContent: `<div class="card">
+      'intermediate-7': {
+        title: 'CSS Shadows',
+        level: 'intermediate',
+        exp: 20,
+        instructions: `
+          <h4>Task: CSS Transitions</h4>
+          <p><strong>Instructions:</strong> Add a smooth hover effect:</p>
+          <ul>
+            <li>Make button background blue (#3498db)</li>
+            <li>On hover, change background to green (#2ecc71)</li>
+            <li>Add transition duration of 0.3s for smooth effect</li>
+          </ul>
+          <p><strong>Reward:</strong> 20 EXP</p>
+        `,
+        htmlContent: `<div class="card">
   <h3 class="text">Shadowed Text</h3>
   <p>This card has a shadow effect.</p>
 </div>`,
-  solution: `.card {
+        solution: `.card {
   box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .text {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }`,
-  validate: (code) => {
-    const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
-    const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
-    return hasCardBoxShadow && hasTextShadow;
-  }
-},
+        validate: (code) => {
+          const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
+          const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
+          return hasCardBoxShadow && hasTextShadow;
+        }
+      },
 
-'intermediate-8': {
-  title: 'CSS Gradients',
-  level: 'intermediate',
-  exp: 20,
-  instructions: `    <h4>Task: CSS Flexbox Layout</h4>
-    <p><strong>Instructions:</strong> Use flexbox to center items:</p>
-    <ul>
-      <li>Make .container a flexbox</li>
-      <li>Center items horizontally and vertically</li>
-      <li>Give child divs width 100px, height 100px, background red</li>
-    </ul>
-    <p><strong>Reward:</strong> 20 EXP</p>`,
-  htmlContent: `<div class="header"><h2>Gradient Header</h2></div>
+      'intermediate-8': {
+        title: 'CSS Gradients',
+        level: 'intermediate',
+        exp: 20,
+        instructions: `
+          <h4>Task: CSS Flexbox Layout</h4>
+          <p><strong>Instructions:</strong> Use flexbox to center items:</p>
+          <ul>
+            <li>Make .container a flexbox</li>
+            <li>Center items horizontally and vertically</li>
+            <li>Give child divs width 100px, height 100px, background red</li>
+          </ul>
+          <p><strong>Reward:</strong> 20 EXP</p>
+        `,
+        htmlContent: `<div class="header"><h2>Gradient Header</h2></div>
 <div class="circle">Radial Gradient</div>`,
-  solution: `.header {
+        solution: `.header {
   background: linear-gradient(to right, blue, purple);
 }
 
 .circle {
   background: radial-gradient(circle, red, yellow);
 }`,
-  validate: (code) => {
-    const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
-    const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
-    return hasHeaderLinearGradient && hasCircleRadialGradient;
-  }
-},
+        validate: (code) => {
+          const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
+          const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
+          return hasHeaderLinearGradient && hasCircleRadialGradient;
+        }
+      },
 
-'intermediate-9': {
-  title: 'CSS Animations',
-  level: 'intermediate',
-  exp: 20,
-  instructions: `    <h4>Task: CSS Grid Layout</h4>
-    <p><strong>Instructions:</strong> Use grid for layout:</p>
-    <ul>
-      <li>Make .grid-container display: grid</li>
-      <li>Define 3 equal columns</li>
-      <li>Give child items background lightgray and padding 10px</li>
-    </ul>
-    <p><strong>Reward:</strong> 20 EXP</p>
-`,
-  htmlContent: `<div class="ball">Bouncing Ball</div>`,
-  solution: `@keyframes bounce {
+      'intermediate-9': {
+        title: 'CSS Animations',
+        level: 'intermediate',
+        exp: 20,
+        instructions: `
+          <h4>Task: CSS Grid Layout</h4>
+          <p><strong>Instructions:</strong> Use grid for layout:</p>
+          <ul>
+            <li>Make .grid-container display: grid</li>
+            <li>Define 3 equal columns</li>
+            <li>Give child items background lightgray and padding 10px</li>
+          </ul>
+          <p><strong>Reward:</strong> 20 EXP</p>
+        `,
+        htmlContent: `<div class="ball">Bouncing Ball</div>`,
+        solution: `@keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-20px); }
 }
@@ -616,68 +617,68 @@ li {
 .ball {
   animation: bounce 2s infinite;
 }`,
-  validate: (code) => {
-    const hasKeyframes = /@keyframes\s+bounce/i.test(code);
-    const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
-    const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
-    const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
-    return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
-  }
-},
+        validate: (code) => {
+          const hasKeyframes = /@keyframes\s+bounce/i.test(code);
+          const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
+          const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
+          const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
+          return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
+        }
+      },
 
-'intermediate-10': {
-  title: 'CSS Variables',
-  level: 'intermediate',
-  exp: 20,
-  instructions: `    <h4>Task: CSS Animation</h4>
-    <p><strong>Instructions:</strong> Animate a box:</p>
-    <ul>
-      <li>Create a keyframes "moveRight"</li>
-      <li>Animate .box from left: 0 to left: 200px</li>
-      <li>Duration: 2s infinite alternate</li>
-    </ul>
-    <p><strong>Reward:</strong> 20 EXP</p>
-`,
-  htmlContent: `<div class="primary">Primary Color</div>
+      'intermediate-10': {
+        title: 'CSS Variables',
+        level: 'intermediate',
+        exp: 20,
+        instructions: `
+          <h4>Task: CSS Animation</h4>
+          <p><strong>Instructions:</strong> Animate a box:</p>
+          <ul>
+            <li>Create a keyframes "moveRight"</li>
+            <li>Animate .box from left: 0 to left: 200px</li>
+            <li>Duration: 2s infinite alternate</li>
+          </ul>
+          <p><strong>Reward:</strong> 20 EXP</p>
+        `,
+        htmlContent: `<div class="primary">Primary Color</div>
 <div class="secondary">Secondary Color</div>`,
-  solution: `:root {
+        solution: `:root {
   --primary-color: #3498db;
   --secondary-color: #e74c3c;
 }
 
 .primary { background: var(--primary-color); }
 .secondary { background: var(--secondary-color); }`,
-  validate: (code) => {
-    const hasRootPrimary = /:root\s*\{[^}]*--primary-color\s*:\s*#3498db/i.test(code);
-    const hasRootSecondary = /:root\s*\{[^}]*--secondary-color\s*:\s*#e74c3c/i.test(code);
-    const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
-    const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
-    return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
-  }
-},
+        validate: (code) => {
+          const hasRootPrimary = /:root\s*\{[^}]*--primary-color\s*:\s*#3498db/i.test(code);
+          const hasRootSecondary = /:root\s*\{[^}]*--secondary-color\s*:\s*#e74c3c/i.test(code);
+          const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
+          const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
+          return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
+        }
+      },
 
-
- // ---------------- ADVANCED ----------------
-
-'advanced-1': {
-  title: 'Advanced Flexbox Layout',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: Responsive Navbar</h4>
-    <p><strong>Instructions:</strong> Build a navbar:</p>
-    <ul>
-      <li>Use flexbox for horizontal layout</li>
-      <li>On screens smaller than 600px, stack vertically</li>
-      <li>Style links with padding and hover effect</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="flex-container">
+      // ADVANCED TASKS
+      'advanced-1': {
+        title: 'Advanced Flexbox Layout',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: Responsive Navbar</h4>
+          <p><strong>Instructions:</strong> Build a navbar:</p>
+          <ul>
+            <li>Use flexbox for horizontal layout</li>
+            <li>On screens smaller than 600px, stack vertically</li>
+            <li>Style links with padding and hover effect</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="flex-container">
   <div class="item">Item 1</div>
   <div class="item">Item 2</div>
   <div class="item">Item 3</div>
 </div>`,
-  solution: `.flex-container {
+        solution: `.flex-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -686,35 +687,36 @@ li {
 .item {
   flex: 1;
 }`,
-  validate: (code) => {
-    const hasFlexContainer = /\.flex-container\s*\{[^}]*display\s*:\s*flex/i.test(code);
-    const hasJustify = /\.flex-container\s*\{[^}]*justify-content\s*:\s*space-between/i.test(code);
-    const hasAlign = /\.flex-container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
-    const hasItemFlex = /\.item\s*\{[^}]*flex\s*:\s*1/i.test(code);
-    return hasFlexContainer && hasJustify && hasAlign && hasItemFlex;
-  }
-},
+        validate: (code) => {
+          const hasFlexContainer = /\.flex-container\s*\{[^}]*display\s*:\s*flex/i.test(code);
+          const hasJustify = /\.flex-container\s*\{[^}]*justify-content\s*:\s*space-between/i.test(code);
+          const hasAlign = /\.flex-container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
+          const hasItemFlex = /\.item\s*\{[^}]*flex\s*:\s*1/i.test(code);
+          return hasFlexContainer && hasJustify && hasAlign && hasItemFlex;
+        }
+      },
 
-'advanced-2': {
-  title: 'Advanced Grid Layout',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: Card Layout with Grid</h4>
-    <p><strong>Instructions:</strong> Create card layout:</p>
-    <ul>
-      <li>Create a grid with 3 cards per row</li>
-      <li>Each card has shadow, padding, and border-radius</li>
-      <li>On small screens, make 1 card per row</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="grid-container">
+      'advanced-2': {
+        title: 'Advanced Grid Layout',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: Card Layout with Grid</h4>
+          <p><strong>Instructions:</strong> Create card layout:</p>
+          <ul>
+            <li>Create a grid with 3 cards per row</li>
+            <li>Each card has shadow, padding, and border-radius</li>
+            <li>On small screens, make 1 card per row</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="grid-container">
   <div class="header">Header</div>
   <div class="sidebar">Sidebar</div>
   <div class="main">Main Content</div>
   <div class="footer">Footer</div>
 </div>`,
-  solution: `.grid-container {
+        solution: `.grid-container {
   display: grid;
   grid-template-areas: 
     "header header"
@@ -727,90 +729,93 @@ li {
 .sidebar { grid-area: sidebar; }
 .main { grid-area: main; }
 .footer { grid-area: footer; }`,
-  validate: (code) => {
-    const hasGridContainer = /\.grid-container\s*\{[^}]*display\s*:\s*grid/i.test(code);
-    const hasGridAreas = /\.grid-container\s*\{[^}]*grid-template-areas/i.test(code);
-    const hasGridCols = /\.grid-container\s*\{[^}]*grid-template-columns/i.test(code);
-    const hasHeader = /\.header\s*\{[^}]*grid-area\s*:\s*header/i.test(code);
-    const hasSidebar = /\.sidebar\s*\{[^}]*grid-area\s*:\s*sidebar/i.test(code);
-    const hasMain = /\.main\s*\{[^}]*grid-area\s*:\s*main/i.test(code);
-    const hasFooter = /\.footer\s*\{[^}]*grid-area\s*:\s*footer/i.test(code);
-    return hasGridContainer && hasGridAreas && hasGridCols && hasHeader && hasSidebar && hasMain && hasFooter;
-  }
-},
+        validate: (code) => {
+          const hasGridContainer = /\.grid-container\s*\{[^}]*display\s*:\s*grid/i.test(code);
+          const hasGridAreas = /\.grid-container\s*\{[^}]*grid-template-areas/i.test(code);
+          const hasGridCols = /\.grid-container\s*\{[^}]*grid-template-columns/i.test(code);
+          const hasHeader = /\.header\s*\{[^}]*grid-area\s*:\s*header/i.test(code);
+          const hasSidebar = /\.sidebar\s*\{[^}]*grid-area\s*:\s*sidebar/i.test(code);
+          const hasMain = /\.main\s*\{[^}]*grid-area\s*:\s*main/i.test(code);
+          const hasFooter = /\.footer\s*\{[^}]*grid-area\s*:\s*footer/i.test(code);
+          return hasGridContainer && hasGridAreas && hasGridCols && hasHeader && hasSidebar && hasMain && hasFooter;
+        }
+      },
 
-'advanced-3': {
-  title: 'Complex Animations',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: CSS Modal Popup</h4>
-    <p><strong>Instructions:</strong> Create a modal:</p>
-    <ul>
-      <li>Create a modal centered on screen</li>
-      <li>Use semi-transparent background overlay</li>
-      <li>Hide modal by default, show with a class .active</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="element">Animated Element</div>`,
-  solution: `@keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
+      'advanced-3': {
+        title: 'Complex Animations',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: CSS Modal Popup</h4>
+          <p><strong>Instructions:</strong> Create a modal:</p>
+          <ul>
+            <li>Create a modal centered on screen</li>
+            <li>Use semi-transparent background overlay</li>
+            <li>Hide modal by default, show with a class .active</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="element">Animated Element</div>`,
+        solution: `@keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
 @keyframes pulse { 0%,100% {transform: scale(1);} 50% {transform: scale(1.1);} }
 .element { animation: spin 2s linear infinite, pulse 1s ease-in-out infinite; }`,
-  validate: (code) => {
-    const hasSpinKeyframes = /@keyframes\s+spin/i.test(code);
-    const hasPulseKeyframes = /@keyframes\s+pulse/i.test(code);
-    const hasRotate360 = /transform\s*:\s*rotate\(\s*360deg\s*\)/i.test(code);
-    const hasScale1_1 = /transform\s*:\s*scale\(\s*1\.1\s*\)/i.test(code);
-    const hasElementAnimation = /\.element\s*\{[^}]*animation\s*:[^}]*spin[^}]*pulse/i.test(code) ||
-                                /\.element\s*\{[^}]*animation\s*:[^}]*pulse[^}]*spin/i.test(code);
-    return hasSpinKeyframes && hasPulseKeyframes && hasRotate360 && hasScale1_1 && hasElementAnimation;
-  }
-},
+        validate: (code) => {
+          const hasSpinKeyframes = /@keyframes\s+spin/i.test(code);
+          const hasPulseKeyframes = /@keyframes\s+pulse/i.test(code);
+          const hasRotate360 = /transform\s*:\s*rotate\(\s*360deg\s*\)/i.test(code);
+          const hasScale1_1 = /transform\s*:\s*scale\(\s*1\.1\s*\)/i.test(code);
+          const hasElementAnimation = /\.element\s*\{[^}]*animation\s*:[^}]*spin[^}]*pulse/i.test(code) ||
+                                     /\.element\s*\{[^}]*animation\s*:[^}]*pulse[^}]*spin/i.test(code);
+          return hasSpinKeyframes && hasPulseKeyframes && hasRotate360 && hasScale1_1 && hasElementAnimation;
+        }
+      },
 
-'advanced-4': {
-  title: 'CSS Custom Properties Advanced',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: Image Gallery with Flexbox</h4>
-    <p><strong>Instructions:</strong> Build a gallery:</p>
-    <ul>
-      <li>Arrange images in a row using flexbox</li>
-      <li>Wrap images to next line if space is small</li>
-      <li>Add hover effect to scale image slightly</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="card"><h3>Themed Card</h3><p>This card uses CSS custom properties.</p></div>`,
-  solution: `:root { --theme-primary:#3498db; --theme-secondary:#2ecc71; --theme-accent:#e74c3c; }
+      'advanced-4': {
+        title: 'CSS Custom Properties Advanced',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: Image Gallery with Flexbox</h4>
+          <p><strong>Instructions:</strong> Build a gallery:</p>
+          <ul>
+            <li>Arrange images in a row using flexbox</li>
+            <li>Wrap images to next line if space is small</li>
+            <li>Add hover effect to scale image slightly</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="card"><h3>Themed Card</h3><p>This card uses CSS custom properties.</p></div>`,
+        solution: `:root { --theme-primary:#3498db; --theme-secondary:#2ecc71; --theme-accent:#e74c3c; }
 .theme-dark { --theme-primary:#2c3e50; --theme-secondary:#27ae60; --theme-accent:#c0392b; }
 .card { background:var(--theme-primary); border:2px solid var(--theme-secondary); color:var(--theme-accent); }`,
-  validate: (code) => {
-    const hasRootPrimary = /:root\s*\{[^}]*--theme-primary/i.test(code);
-    const hasRootSecondary = /:root\s*\{[^}]*--theme-secondary/i.test(code);
-    const hasRootAccent = /:root\s*\{[^}]*--theme-accent/i.test(code);
-    const hasThemeDark = /\.theme-dark\s*\{[^}]*--theme-primary/i.test(code);
-    const hasCardVarPrimary = /\.card\s*\{[^}]*background\s*:\s*var\(\s*--theme-primary\s*\)/i.test(code);
-    const hasCardVarSecondary = /\.card\s*\{[^}]*border\s*:[^}]*var\(\s*--theme-secondary\s*\)/i.test(code);
-    const hasCardVarAccent = /\.card\s*\{[^}]*color\s*:\s*var\(\s*--theme-accent\s*\)/i.test(code);
-    return hasRootPrimary && hasRootSecondary && hasRootAccent && hasThemeDark &&
-           hasCardVarPrimary && hasCardVarSecondary && hasCardVarAccent;
-  }
-},
+        validate: (code) => {
+          const hasRootPrimary = /:root\s*\{[^}]*--theme-primary/i.test(code);
+          const hasRootSecondary = /:root\s*\{[^}]*--theme-secondary/i.test(code);
+          const hasRootAccent = /:root\s*\{[^}]*--theme-accent/i.test(code);
+          const hasThemeDark = /\.theme-dark\s*\{[^}]*--theme-primary/i.test(code);
+          const hasCardVarPrimary = /\.card\s*\{[^}]*background\s*:\s*var\(\s*--theme-primary\s*\)/i.test(code);
+          const hasCardVarSecondary = /\.card\s*\{[^}]*border\s*:[^}]*var\(\s*--theme-secondary\s*\)/i.test(code);
+          const hasCardVarAccent = /\.card\s*\{[^}]*color\s*:\s*var\(\s*--theme-accent\s*\)/i.test(code);
+          return hasRootPrimary && hasRootSecondary && hasRootAccent && hasThemeDark &&
+                 hasCardVarPrimary && hasCardVarSecondary && hasCardVarAccent;
+        }
+      },
 
-'advanced-5': {
-  title: 'CSS Grid + Flexbox Combo',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: Sticky Header</h4>
-    <p><strong>Instructions:</strong> Make sticky header:</p>
-    <ul>
-      <li>Make header stick to top when scrolling</li>
-      <li>Add background color and box-shadow for visibility</li>
-      <li>Ensure content below is not overlapped</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="dashboard">
+      'advanced-5': {
+        title: 'CSS Grid + Flexbox Combo',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: Sticky Header</h4>
+          <p><strong>Instructions:</strong> Make sticky header:</p>
+          <ul>
+            <li>Make header stick to top when scrolling</li>
+            <li>Add background color and box-shadow for visibility</li>
+            <li>Ensure content below is not overlapped</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="dashboard">
   <aside class="sidebar">Sidebar</aside>
   <main class="content">
     <div class="card">Card 1</div>
@@ -818,152 +823,156 @@ li {
     <div class="card">Card 3</div>
   </main>
 </div>`,
-  solution: `.dashboard { display:grid; grid-template-columns:250px 1fr; gap:20px; }
+        solution: `.dashboard { display:grid; grid-template-columns:250px 1fr; gap:20px; }
 .sidebar { background:#eee; }
 .content { display:flex; gap:10px; flex-wrap:wrap; }
 .card { flex:1 1 calc(33% - 10px); }`,
-  validate: (code) => {
-    const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
-    const hasGridTemplate = /\.dashboard\s*\{[^}]*grid-template-columns/i.test(code);
-    const hasContentFlex = /\.content\s*\{[^}]*display\s*:\s*flex/i.test(code);
-    const hasContentWrap = /\.content\s*\{[^}]*flex-wrap/i.test(code);
-    const hasCardFlex = /\.card\s*\{[^}]*flex\s*:\s*1\s+1\s+calc\(/i.test(code);
-    return hasDashboardGrid && hasGridTemplate && hasContentFlex && hasContentWrap && hasCardFlex;
-  }
-},
+        validate: (code) => {
+          const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
+          const hasGridTemplate = /\.dashboard\s*\{[^}]*grid-template-columns/i.test(code);
+          const hasContentFlex = /\.content\s*\{[^}]*display\s*:\s*flex/i.test(code);
+          const hasContentWrap = /\.content\s*\{[^}]*flex-wrap/i.test(code);
+          const hasCardFlex = /\.card\s*\{[^}]*flex\s*:\s*1\s+1\s+calc\(/i.test(code);
+          return hasDashboardGrid && hasGridTemplate && hasContentFlex && hasContentWrap && hasCardFlex;
+        }
+      },
 
-'advanced-6': {
-  title: 'CSS Clipping and Masking',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: CSS Tooltip</h4>
-    <p><strong>Instructions:</strong> Create tooltip:</p>
-    <ul>
-      <li>Create a tooltip that appears on hover</li>
-      <li>Position tooltip above the element</li>
-      <li>Add fade-in transition effect</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="circle">Circular Clip</div><div class="triangle">Triangle Clip</div>`,
-  solution: `.circle { clip-path: circle(50%); }
+      'advanced-6': {
+        title: 'CSS Clipping and Masking',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: CSS Tooltip</h4>
+          <p><strong>Instructions:</strong> Create tooltip:</p>
+          <ul>
+            <li>Create a tooltip that appears on hover</li>
+            <li>Position tooltip above the element</li>
+            <li>Add fade-in transition effect</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="circle">Circular Clip</div><div class="triangle">Triangle Clip</div>`,
+        solution: `.circle { clip-path: circle(50%); }
 .triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }`,
-  validate: (code) => {
-    const hasCircleClip = /\.circle\s*\{[^}]*clip-path\s*:\s*circle\(\s*50%\s*\)/i.test(code);
-    const hasTriangleClip = /\.triangle\s*\{[^}]*clip-path\s*:\s*polygon\(\s*50%\s+0%\s*,\s*0%\s+100%\s*,\s*100%\s+100%\s*\)/i.test(code);
-    return hasCircleClip && hasTriangleClip;
-  }
-},
+        validate: (code) => {
+          const hasCircleClip = /\.circle\s*\{[^}]*clip-path\s*:\s*circle\(\s*50%\s*\)/i.test(code);
+          const hasTriangleClip = /\.triangle\s*\{[^}]*clip-path\s*:\s*polygon\(\s*50%\s+0%\s*,\s*0%\s+100%\s*,\s*100%\s+100%\s*\)/i.test(code);
+          return hasCircleClip && hasTriangleClip;
+        }
+      },
 
-'advanced-7': {
-  title: 'CSS Filter Effects',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: CSS Progress Bar</h4>
-    <p><strong>Instructions:</strong> Build a progress bar:</p>
-    <ul>
-      <li>Create a progress bar container</li>
-      <li>Inner bar should animate width from 0 to 70%</li>
-      <li>Add transition effect for smooth fill</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="blurred">Blurred Element</div><div class="enhanced">Enhanced Element</div><div class="grayscale">Grayscale Element</div>`,
-  solution: `.blurred { filter: blur(5px); }
+      'advanced-7': {
+        title: 'CSS Filter Effects',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: CSS Progress Bar</h4>
+          <p><strong>Instructions:</strong> Build a progress bar:</p>
+          <ul>
+            <li>Create a progress bar container</li>
+            <li>Inner bar should animate width from 0 to 70%</li>
+            <li>Add transition effect for smooth fill</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="blurred">Blurred Element</div><div class="enhanced">Enhanced Element</div><div class="grayscale">Grayscale Element</div>`,
+        solution: `.blurred { filter: blur(5px); }
 .enhanced { filter: brightness(1.5) contrast(1.2); }
 .grayscale { filter: grayscale(100%); }`,
-  validate: (code) => {
-    const hasBlurredFilter = /\.blurred\s*\{[^}]*filter\s*:\s*blur\(\s*5px\s*\)/i.test(code);
-    const hasEnhancedFilter = /\.enhanced\s*\{[^}]*filter\s*:\s*brightness\(\s*1\.5\s*\)\s+contrast\(\s*1\.2\s*\)/i.test(code);
-    const hasGrayscaleFilter = /\.grayscale\s*\{[^}]*filter\s*:\s*grayscale\(\s*100%\s*\)/i.test(code);
-    return hasBlurredFilter && hasEnhancedFilter && hasGrayscaleFilter;
-  }
-},
+        validate: (code) => {
+          const hasBlurredFilter = /\.blurred\s*\{[^}]*filter\s*:\s*blur\(\s*5px\s*\)/i.test(code);
+          const hasEnhancedFilter = /\.enhanced\s*\{[^}]*filter\s*:\s*brightness\(\s*1\.5\s*\)\s+contrast\(\s*1\.2\s*\)/i.test(code);
+          const hasGrayscaleFilter = /\.grayscale\s*\{[^}]*filter\s*:\s*grayscale\(\s*100%\s*\)/i.test(code);
+          return hasBlurredFilter && hasEnhancedFilter && hasGrayscaleFilter;
+        }
+      },
 
-'advanced-8': {
-  title: 'CSS 3D Transforms',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: CSS Accordion</h4>
-    <p><strong>Instructions:</strong> Create accordion:</p>
-    <ul>
-      <li>Create collapsible panels using CSS only</li>
-      <li>Use hidden checkbox/input to toggle visibility</li>
-      <li>Add smooth max-height transition</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="container"><div class="cube">3D Cube</div></div>`,
-  solution: `.container { perspective: 1000px; }
+      'advanced-8': {
+        title: 'CSS 3D Transforms',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: CSS Accordion</h4>
+          <p><strong>Instructions:</strong> Create accordion:</p>
+          <ul>
+            <li>Create collapsible panels using CSS only</li>
+            <li>Use hidden checkbox/input to toggle visibility</li>
+            <li>Add smooth max-height transition</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="container"><div class="cube">3D Cube</div></div>`,
+        solution: `.container { perspective: 1000px; }
 .cube { transform: rotateX(45deg) rotateY(45deg); transform-style: preserve-3d; }`,
-  validate: (code) => {
-    const hasContainerPerspective = /\.container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
-    const hasCubeRotateX = /\.cube\s*\{[^}]*transform\s*:[^}]*rotateX\(\s*45deg\s*\)/i.test(code);
-    const hasCubeRotateY = /\.cube\s*\{[^}]*transform\s*:[^}]*rotateY\(\s*45deg\s*\)/i.test(code);
-    const hasCubeTransformStyle = /\.cube\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
-    return hasContainerPerspective && hasCubeRotateX && hasCubeRotateY && hasCubeTransformStyle;
-  }
-},
+        validate: (code) => {
+          const hasContainerPerspective = /\.container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
+          const hasCubeRotateX = /\.cube\s*\{[^}]*transform\s*:[^}]*rotateX\(\s*45deg\s*\)/i.test(code);
+          const hasCubeRotateY = /\.cube\s*\{[^}]*transform\s*:[^}]*rotateY\(\s*45deg\s*\)/i.test(code);
+          const hasCubeTransformStyle = /\.cube\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
+          return hasContainerPerspective && hasCubeRotateX && hasCubeRotateY && hasCubeTransformStyle;
+        }
+      },
 
-'advanced-9': {
-  title: 'CSS Scroll Animations',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: CSS Loader Animation</h4>
-    <p><strong>Instructions:</strong> Create a loader:</p>
-    <ul>
-      <li>Create a circular spinner loader</li>
-      <li>Use border and border-top with different colors</li>
-      <li>Animate rotation infinitely</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="sticky">Sticky Header</div><div class="scroll-element">Scroll Animation Element</div><div style="height:200vh;">Scroll content</div>`,
-  solution: `html { scroll-behavior: smooth; }
+      'advanced-9': {
+        title: 'CSS Scroll Animations',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: CSS Loader Animation</h4>
+          <p><strong>Instructions:</strong> Create a loader:</p>
+          <ul>
+            <li>Create a circular spinner loader</li>
+            <li>Use border and border-top with different colors</li>
+            <li>Animate rotation infinitely</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="sticky">Sticky Header</div><div class="scroll-element">Scroll Animation Element</div><div style="height:200vh;">Scroll content</div>`,
+        solution: `html { scroll-behavior: smooth; }
 .sticky { position: sticky; top: 0; }
 .scroll-element { transform: translateY(100px); transition: transform 0.6s ease; }`,
-  validate: (code) => {
-    const hasHtmlScrollBehavior = /html\s*\{[^}]*scroll-behavior\s*:\s*smooth/i.test(code);
-    const hasStickyPosition = /\.sticky\s*\{[^}]*position\s*:\s*sticky/i.test(code);
-    const hasStickyTop = /\.sticky\s*\{[^}]*top\s*:\s*0/i.test(code);
-    const hasScrollTransform = /\.scroll-element\s*\{[^}]*transform\s*:\s*translateY\(\s*100px\s*\)/i.test(code);
-    const hasScrollTransition = /\.scroll-element\s*\{[^}]*transition\s*:[^}]*transform/i.test(code);
-    return hasHtmlScrollBehavior && hasStickyPosition && hasStickyTop && hasScrollTransform && hasScrollTransition;
-  }
-},
+        validate: (code) => {
+          const hasHtmlScrollBehavior = /html\s*\{[^}]*scroll-behavior\s*:\s*smooth/i.test(code);
+          const hasStickyPosition = /\.sticky\s*\{[^}]*position\s*:\s*sticky/i.test(code);
+          const hasStickyTop = /\.sticky\s*\{[^}]*top\s*:\s*0/i.test(code);
+          const hasScrollTransform = /\.scroll-element\s*\{[^}]*transform\s*:\s*translateY\(\s*100px\s*\)/i.test(code);
+          const hasScrollTransition = /\.scroll-element\s*\{[^}]*transition\s*:[^}]*transform/i.test(code);
+          return hasHtmlScrollBehavior && hasStickyPosition && hasStickyTop && hasScrollTransform && hasScrollTransition;
+        }
+      },
 
-'advanced-10': {
-  title: 'Complete CSS Layout System',
-  level: 'advanced',
-  exp: 30,
-  instructions: `    <h4>Task: Parallax Scrolling</h4>
-    <p><strong>Instructions:</strong> Add parallax effect:</p>
-    <ul>
-      <li>Create a background image with background-attachment: fixed</li>
-      <li>Add overlay content that scrolls normally</li>
-      <li>Ensure parallax effect works smoothly on large screens</li>
-    </ul>
-    <p><strong>Reward:</strong> 30 EXP</p>
-`,
-  htmlContent: `<div class="layout">...</div>`,
-  solution: `:root { --primary: #3498db; --secondary: #2ecc71; }
+      'advanced-10': {
+        title: 'Complete CSS Layout System',
+        level: 'advanced',
+        exp: 30,
+        instructions: `
+          <h4>Task: Parallax Scrolling</h4>
+          <p><strong>Instructions:</strong> Add parallax effect:</p>
+          <ul>
+            <li>Create a background image with background-attachment: fixed</li>
+            <li>Add overlay content that scrolls normally</li>
+            <li>Ensure parallax effect works smoothly on large screens</li>
+          </ul>
+          <p><strong>Reward:</strong> 30 EXP</p>
+        `,
+        htmlContent: `<div class="layout">...</div>`,
+        solution: `:root { --primary: #3498db; --secondary: #2ecc71; }
 .layout { display:grid; grid-template-areas:"header header" "nav main" "sidebar main" "footer footer"; grid-template-columns:200px 1fr; gap:10px; transition:all 0.3s ease; }
 .header { grid-area: header; background: var(--primary); }
 .footer { grid-area: footer; background: var(--secondary); }
 @media (max-width:768px) { .layout { grid-template-columns:1fr; grid-template-areas:"header" "nav" "main" "sidebar" "footer"; } }`,
-  validate: (code) => {
-    const hasRootVars = /:root\s*\{[^}]*--primary/i.test(code);
-    const hasLayoutGrid = /\.layout\s*\{[^}]*display\s*:\s*grid/i.test(code);
-    const hasGridAreas = /\.layout\s*\{[^}]*grid-template-areas/i.test(code);
-    const hasGridColumns = /\.layout\s*\{[^}]*grid-template-columns/i.test(code);
-    const hasMediaQuery = /@media\s*\(max-width\s*:\s*768px\)/i.test(code);
-    const hasHeaderArea = /\.header\s*\{[^}]*grid-area\s*:\s*header/i.test(code);
-    const hasVarUsage = /var\(\s*--primary\s*\)/i.test(code);
-    return hasRootVars && hasLayoutGrid && hasGridAreas && hasGridColumns &&
-           hasMediaQuery && hasHeaderArea && hasVarUsage;
-  }
-}
-
+        validate: (code) => {
+          const hasRootVars = /:root\s*\{[^}]*--primary/i.test(code);
+          const hasLayoutGrid = /\.layout\s*\{[^}]*display\s*:\s*grid/i.test(code);
+          const hasGridAreas = /\.layout\s*\{[^}]*grid-template-areas/i.test(code);
+          const hasGridColumns = /\.layout\s*\{[^}]*grid-template-columns/i.test(code);
+          const hasMediaQuery = /@media\s*\(max-width\s*:\s*768px\)/i.test(code);
+          const hasHeaderArea = /\.header\s*\{[^}]*grid-area\s*:\s*header/i.test(code);
+          const hasVarUsage = /var\(\s*--primary\s*\)/i.test(code);
+          return hasRootVars && hasLayoutGrid && hasGridAreas && hasGridColumns &&
+                 hasMediaQuery && hasHeaderArea && hasVarUsage;
+        }
+      }
     };
     
     this.currentTask = null;
@@ -986,7 +995,7 @@ li {
     this.updateTheme();
   }
 
-  // FIXED: Load game state from MongoDB with fallback to localStorage
+  // Load game state from MongoDB with fallback to localStorage
   async loadGameState() {
     try {
       // First, try to load from MongoDB
@@ -1046,7 +1055,7 @@ li {
     }
   }
 
-  // FIXED: Save game state to both MongoDB and localStorage
+  // Save game state to both MongoDB and localStorage
   async saveGameState() {
     const stateToSave = {
       username: this.username,
@@ -1154,7 +1163,7 @@ li {
       'beginner-2': 'Apply font properties to control text appearance',
       'beginner-3': 'Add background colors to elements',
       'beginner-4': 'Align text content within elements',
-            'beginner-5': 'Control spacing around elements with margins',
+      'beginner-5': 'Control spacing around elements with margins',
       'beginner-6': 'Add internal spacing with padding properties',
       'beginner-7': 'Create borders around elements',
       'beginner-8': 'Set element dimensions with width and height',
@@ -1551,7 +1560,7 @@ li {
     }
   }
   
-  // FIXED: Submit Task Completion with proper MongoDB sync
+  // Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
@@ -1559,7 +1568,7 @@ li {
     // Check if task is already completed to prevent duplicate EXP
     if (this.gameState.completedTasks.has(taskId)) {
       console.warn('Task already completed, not adding EXP again');
-            this.showTaskAnswer();
+      this.showTaskAnswer();
       return;
     }
     
@@ -1841,8 +1850,3 @@ document.onkeydown = function(e) {
   // Disable Ctrl+Shift+K (Firefox)
   if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
 };
-
-
-
-
-
