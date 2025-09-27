@@ -1638,9 +1638,9 @@ li {
     
     if (!isAlreadyUnlocked) {
       // Calculate EXP penalty based on level
-      let expPenalty = 5; // default for beginner
-      if (task.level === 'intermediate') expPenalty = 10;
-      if (task.level === 'advanced') expPenalty = 15;
+      let expPenalty = 20; // default for beginner
+      if (task.level === 'intermediate') expPenalty = 40;
+      if (task.level === 'advanced') expPenalty = 60;
       
       // Deduct EXP
       this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty);
