@@ -539,7 +539,15 @@ li {
   title: 'CSS Shadows',
   level: 'intermediate',
   exp: 20,
-  instructions: `...`, // unchanged
+  instructions: `    <h4>Task: CSS Transitions</h4>
+    <p><strong>Instructions:</strong> Add a smooth hover effect:</p>
+    <ul>
+      <li>Make button background blue (#3498db)</li>
+      <li>On hover, change background to green (#2ecc71)</li>
+      <li>Add transition duration of 0.3s for smooth effect</li>
+    </ul>
+    <p><strong>Reward:</strong> 20 EXP</p>
+`, 
   htmlContent: `<div class="card">
   <h3 class="text">Shadowed Text</h3>
   <p>This card has a shadow effect.</p>
@@ -562,7 +570,14 @@ li {
   title: 'CSS Gradients',
   level: 'intermediate',
   exp: 20,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Flexbox Layout</h4>
+    <p><strong>Instructions:</strong> Use flexbox to center items:</p>
+    <ul>
+      <li>Make .container a flexbox</li>
+      <li>Center items horizontally and vertically</li>
+      <li>Give child divs width 100px, height 100px, background red</li>
+    </ul>
+    <p><strong>Reward:</strong> 20 EXP</p>`,
   htmlContent: `<div class="header"><h2>Gradient Header</h2></div>
 <div class="circle">Radial Gradient</div>`,
   solution: `.header {
@@ -583,7 +598,15 @@ li {
   title: 'CSS Animations',
   level: 'intermediate',
   exp: 20,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Grid Layout</h4>
+    <p><strong>Instructions:</strong> Use grid for layout:</p>
+    <ul>
+      <li>Make .grid-container display: grid</li>
+      <li>Define 3 equal columns</li>
+      <li>Give child items background lightgray and padding 10px</li>
+    </ul>
+    <p><strong>Reward:</strong> 20 EXP</p>
+`,
   htmlContent: `<div class="ball">Bouncing Ball</div>`,
   solution: `@keyframes bounce {
   0%, 100% { transform: translateY(0); }
@@ -606,7 +629,15 @@ li {
   title: 'CSS Variables',
   level: 'intermediate',
   exp: 20,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Animation</h4>
+    <p><strong>Instructions:</strong> Animate a box:</p>
+    <ul>
+      <li>Create a keyframes "moveRight"</li>
+      <li>Animate .box from left: 0 to left: 200px</li>
+      <li>Duration: 2s infinite alternate</li>
+    </ul>
+    <p><strong>Reward:</strong> 20 EXP</p>
+`,
   htmlContent: `<div class="primary">Primary Color</div>
 <div class="secondary">Secondary Color</div>`,
   solution: `:root {
@@ -632,7 +663,15 @@ li {
   title: 'Advanced Flexbox Layout',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: Responsive Navbar</h4>
+    <p><strong>Instructions:</strong> Build a navbar:</p>
+    <ul>
+      <li>Use flexbox for horizontal layout</li>
+      <li>On screens smaller than 600px, stack vertically</li>
+      <li>Style links with padding and hover effect</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="flex-container">
   <div class="item">Item 1</div>
   <div class="item">Item 2</div>
@@ -660,7 +699,15 @@ li {
   title: 'Advanced Grid Layout',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: Card Layout with Grid</h4>
+    <p><strong>Instructions:</strong> Create card layout:</p>
+    <ul>
+      <li>Create a grid with 3 cards per row</li>
+      <li>Each card has shadow, padding, and border-radius</li>
+      <li>On small screens, make 1 card per row</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="grid-container">
   <div class="header">Header</div>
   <div class="sidebar">Sidebar</div>
@@ -696,7 +743,15 @@ li {
   title: 'Complex Animations',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Modal Popup</h4>
+    <p><strong>Instructions:</strong> Create a modal:</p>
+    <ul>
+      <li>Create a modal centered on screen</li>
+      <li>Use semi-transparent background overlay</li>
+      <li>Hide modal by default, show with a class .active</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="element">Animated Element</div>`,
   solution: `@keyframes spin { from {transform: rotate(0deg);} to {transform: rotate(360deg);} }
 @keyframes pulse { 0%,100% {transform: scale(1);} 50% {transform: scale(1.1);} }
@@ -716,7 +771,15 @@ li {
   title: 'CSS Custom Properties Advanced',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: Image Gallery with Flexbox</h4>
+    <p><strong>Instructions:</strong> Build a gallery:</p>
+    <ul>
+      <li>Arrange images in a row using flexbox</li>
+      <li>Wrap images to next line if space is small</li>
+      <li>Add hover effect to scale image slightly</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="card"><h3>Themed Card</h3><p>This card uses CSS custom properties.</p></div>`,
   solution: `:root { --theme-primary:#3498db; --theme-secondary:#2ecc71; --theme-accent:#e74c3c; }
 .theme-dark { --theme-primary:#2c3e50; --theme-secondary:#27ae60; --theme-accent:#c0392b; }
@@ -738,7 +801,15 @@ li {
   title: 'CSS Grid + Flexbox Combo',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: Sticky Header</h4>
+    <p><strong>Instructions:</strong> Make sticky header:</p>
+    <ul>
+      <li>Make header stick to top when scrolling</li>
+      <li>Add background color and box-shadow for visibility</li>
+      <li>Ensure content below is not overlapped</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="dashboard">
   <aside class="sidebar">Sidebar</aside>
   <main class="content">
@@ -765,7 +836,15 @@ li {
   title: 'CSS Clipping and Masking',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Tooltip</h4>
+    <p><strong>Instructions:</strong> Create tooltip:</p>
+    <ul>
+      <li>Create a tooltip that appears on hover</li>
+      <li>Position tooltip above the element</li>
+      <li>Add fade-in transition effect</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="circle">Circular Clip</div><div class="triangle">Triangle Clip</div>`,
   solution: `.circle { clip-path: circle(50%); }
 .triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); }`,
@@ -780,7 +859,15 @@ li {
   title: 'CSS Filter Effects',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Progress Bar</h4>
+    <p><strong>Instructions:</strong> Build a progress bar:</p>
+    <ul>
+      <li>Create a progress bar container</li>
+      <li>Inner bar should animate width from 0 to 70%</li>
+      <li>Add transition effect for smooth fill</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="blurred">Blurred Element</div><div class="enhanced">Enhanced Element</div><div class="grayscale">Grayscale Element</div>`,
   solution: `.blurred { filter: blur(5px); }
 .enhanced { filter: brightness(1.5) contrast(1.2); }
@@ -797,7 +884,15 @@ li {
   title: 'CSS 3D Transforms',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Accordion</h4>
+    <p><strong>Instructions:</strong> Create accordion:</p>
+    <ul>
+      <li>Create collapsible panels using CSS only</li>
+      <li>Use hidden checkbox/input to toggle visibility</li>
+      <li>Add smooth max-height transition</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="container"><div class="cube">3D Cube</div></div>`,
   solution: `.container { perspective: 1000px; }
 .cube { transform: rotateX(45deg) rotateY(45deg); transform-style: preserve-3d; }`,
@@ -814,7 +909,15 @@ li {
   title: 'CSS Scroll Animations',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: CSS Loader Animation</h4>
+    <p><strong>Instructions:</strong> Create a loader:</p>
+    <ul>
+      <li>Create a circular spinner loader</li>
+      <li>Use border and border-top with different colors</li>
+      <li>Animate rotation infinitely</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="sticky">Sticky Header</div><div class="scroll-element">Scroll Animation Element</div><div style="height:200vh;">Scroll content</div>`,
   solution: `html { scroll-behavior: smooth; }
 .sticky { position: sticky; top: 0; }
@@ -833,7 +936,15 @@ li {
   title: 'Complete CSS Layout System',
   level: 'advanced',
   exp: 30,
-  instructions: `...`,
+  instructions: `    <h4>Task: Parallax Scrolling</h4>
+    <p><strong>Instructions:</strong> Add parallax effect:</p>
+    <ul>
+      <li>Create a background image with background-attachment: fixed</li>
+      <li>Add overlay content that scrolls normally</li>
+      <li>Ensure parallax effect works smoothly on large screens</li>
+    </ul>
+    <p><strong>Reward:</strong> 30 EXP</p>
+`,
   htmlContent: `<div class="layout">...</div>`,
   solution: `:root { --primary: #3498db; --secondary: #2ecc71; }
 .layout { display:grid; grid-template-areas:"header header" "nav main" "sidebar main" "footer footer"; grid-template-columns:200px 1fr; gap:10px; transition:all 0.3s ease; }
