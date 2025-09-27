@@ -157,7 +157,7 @@ class HTMLLearningGame {
 </div>`,
         validate: (code) => {
           const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
-          const expected = `<div> <h22>section 1</h22> </div> <div> <p>content for section 1</p> </div>`;
+          const expected = `<div> <h2>section 1</h2> </div> <div> <p>content for section 1</p> </div>`;
           return normalized === expected;
         }
       },
@@ -448,7 +448,7 @@ class HTMLLearningGame {
         exp: 20,
         instructions: `
           <h4>Task: Abbreviations and Acronyms</h4>
-          <p><strong>Instructions:</strong> Create:&lt;/p&gt;
+          <p><strong>Instructions:</strong> Create:&amp;lt;/p&amp;gt;
           <ul>
             <li>A paragraph with "I love <abbr title="HyperText Markup Language">HTML</abbr>"</li>
             <li>A paragraph with "And <abbr title="Cascading Style Sheets">CSS</abbr> too"</li>
@@ -1286,8 +1286,13 @@ class HTMLLearningGame {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
     } else if (failedAttempts >= 2) {
-      showSolutionBtn.disabled = false;
-      showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+      if (this.gameState.exp < expPenalty) {
+        showSolutionBtn.disabled = true; // Disable if not enough EXP to pay penalty
+        showSolutionBtn.textContent = `Not enough EXP (${expPenalty} required)`;
+      } else {
+        showSolutionBtn.disabled = false;
+        showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+      }
     } else {
       showSolutionBtn.disabled = true;
       showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
@@ -1421,37 +1426,29 @@ class HTMLLearningGame {
     }, 3000);
   }
   
-  updateSolutionButton() {
-    const showSolutionBtn = document.getElementById('showSolution');
-    if (!showSolutionBtn) return;
-
+  showSolution() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
-    const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
-    const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
+    const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
     let expPenalty = 20; // default for beginner
     if (task.level === 'intermediate') expPenalty = 40;
     if (task.level === 'advanced') expPenalty = 60;
     
-    if (isUnlocked) {
-      showSolutionBtn.disabled = false;
-      showSolutionBtn.textContent = 'Show Solution';
-    } else if (failedAttempts >= 2) {
-      showSolutionBtn.disabled = false;
-      // Adjust the message if the user has less EXP than the penalty
-      if (this.gameState.exp < expPenalty) {
-        showSolutionBtn.textContent = `Show Solution (EXP will be 0)`;
-      } else {
-        showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
-      }
-    } else {
-      showSolutionBtn.disabled = true;
-      showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
+    // Check if the user has enough EXP to reveal the solution
+    if (!isAlreadyUnlocked && this.gameState.exp < expPenalty) {
+      this.showValidationFeedback(`You don't have enough EXP to view this solution. You need at least ${expPenalty} EXP.`, 'error');
+      return; // Prevent showing the solution if EXP is insufficient
     }
-  }
 
+    // Deduct EXP only if solution is not already unlocked
+    if (!isAlreadyUnlocked) {
+      this.gameState.exp -= expPenalty; // Deduct directly, as we've already checked for negative
+      this.gameState.unlockedSolutions.add(taskId);
+      this.saveGameState();
+      this.updateExpCounter();
+    }
     
     // Show solution in editor
     document.getElementById('codeEditor').value = task.solution;
