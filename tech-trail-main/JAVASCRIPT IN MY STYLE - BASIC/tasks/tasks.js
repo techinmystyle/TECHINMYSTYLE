@@ -1573,7 +1573,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
             ${icon}
           </svg>
         </div>
-                <div class="task-info">
+        <div class="task-info">
           <h3 class="task-title">${task.title}</h3>
           <p class="task-description">${this.getTaskDescription(taskId)}</p>
         </div>
@@ -2040,6 +2040,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     }
   }
 
+  // FIXED: Update solution button with proper EXP check
   updateSolutionButton() {
     const showSolutionBtn = document.getElementById('showSolution');
     if (!showSolutionBtn) return;
@@ -2050,22 +2051,34 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 20; // default for beginner
-    if (task.level === 'intermediate') expPenalty = 40;
-    if (task.level === 'advanced') expPenalty = 60;
+    let expPenalty = 10; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 20;
+    if (task.level === 'advanced') expPenalty = 30;
     
     if (isUnlocked) {
+      // Solution already unlocked
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
+      showSolutionBtn.style.color = '#28a745';
     } else if (failedAttempts >= 2) {
+      // Check if user has enough EXP
+      const hasEnoughExp = this.gameState.exp >= expPenalty;
+      
       showSolutionBtn.disabled = false;
-      showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+      if (hasEnoughExp) {
+        showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+        showSolutionBtn.style.color = '#ffc107';
+      } else {
+        showSolutionBtn.textContent = `Need ${expPenalty} EXP (You have ${this.gameState.exp})`;
+        showSolutionBtn.style.color = '#dc3545';
+      }
     } else {
+      // Not enough failed attempts yet
       showSolutionBtn.disabled = true;
       showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
+      showSolutionBtn.style.color = '#6c757d';
     }
   }
-
 
   // Code Validation and Submission
   validateCode() {
@@ -2200,36 +2213,77 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     }, 3000);
   }
 
+  // FIXED: Show solution with proper EXP validation and confirmation
   showSolution() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
     const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
+    const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
 
-    if (!isAlreadyUnlocked) {
-      // Deduct EXP
-      this.gameState.exp = Math.max(0, this.gameState.exp - 5);
-      this.gameState.unlockedSolutions.add(taskId);
-      this.updateExpCounter();
+    // Calculate EXP penalty based on level
+    let expPenalty = 20; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 20;
+    if (task.level === 'advanced') expPenalty = 30;
+
+    // If already unlocked, just show the solution
+    if (isAlreadyUnlocked) {
+      this.displaySolution();
+      return;
     }
 
-    // Switch to JS mode and show solution
-    this.switchEditorMode('js');
-    document.getElementById('codeEditor').value = task.solution;
-    this.gameState.editorContent[taskId] = task.solution;
+    // Check if user has failed enough times
+    if (failedAttempts < 2) {
+      this.showValidationFeedback(`You need to attempt this task ${2 - failedAttempts} more times before you can purchase the solution.`, 'error');
+      return;
+    }
+
+    // Check if user has enough EXP
+    if (this.gameState.exp < expPenalty) {
+      this.showValidationFeedback(`You need ${expPenalty} EXP to view the solution. You currently have ${this.gameState.exp} EXP. Complete more tasks to earn EXP!`, 'error');
+      return;
+    }
+
+    // Show confirmation dialog
+    const confirmPurchase = confirm(
+      `Are you sure you want to view the solution?\n\n` +
+      `This will cost ${expPenalty} EXP.\n` +
+      `Your current EXP: ${this.gameState.exp}\n` +
+      `EXP after purchase: ${this.gameState.exp - expPenalty}\n\n` +
+      `Click OK to proceed or Cancel to go back.`
+    );
+
+    if (!confirmPurchase) {
+      return;
+    }
+
+    // Deduct EXP and unlock solution
+    this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty);
+    this.gameState.unlockedSolutions.add(taskId);
+    this.updateExpCounter();
     this.saveGameState();
 
-    // Update live preview
-    this.updateLivePreview();
+    // Display the solution
+    this.displaySolution();
 
     // Update button
     this.updateSolutionButton();
 
     // Show feedback
-    if (!isAlreadyUnlocked) {
-      this.showValidationFeedback('Solution revealed! 5 EXP deducted. Study the code and try to understand it.', 'error');
-    } else {
-      this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
-    }
+    this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'success');
+  }
+
+  // Helper method to display the solution
+  displaySolution() {
+    const task = this.tasks[this.currentTask];
+    
+    // Switch to JS mode and show solution
+    this.switchEditorMode('js');
+    document.getElementById('codeEditor').value = task.solution;
+    this.gameState.editorContent[this.currentTask] = task.solution;
+    this.saveGameState();
+
+    // Update live preview
+    this.updateLivePreview();
   }
 
   updateLivePreview() {
