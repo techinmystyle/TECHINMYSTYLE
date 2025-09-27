@@ -2296,7 +2296,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
 
           // USER NAME POSITIONING
           ctx.fillStyle = '#2d3748';
-          ctx.font = 'bold 48px Arial, sans-serif';
+          ctx.font = 'bold 100px Montserrat Bold, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
 
@@ -2305,7 +2305,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
 
           // CURRENT DATE POSITIONING
           ctx.fillStyle = '#4a5568';
-          ctx.font = '28px Arial, sans-serif';
+          ctx.font = '65px Arial, sans-serif';
 
           const currentDate = new Date().toLocaleDateString('en-US', {
             year: 'numeric',
