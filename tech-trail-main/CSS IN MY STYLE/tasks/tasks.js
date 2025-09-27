@@ -15,7 +15,7 @@ class CSSLearningGame {
             htmlContent: {} // Store HTML content for each task
         };
 
-        this.currentEditorMode = 'html'; // 'html' or 'css'
+        this.currentEditorMode = 'css'; // 'html' or 'css'
 
         this.tasks = {
             // BEGINNER TASKS (10 tasks - 10 EXP each)
@@ -23,6 +23,7 @@ class CSSLearningGame {
                 title: 'Basic CSS Selectors',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to use element selectors to style HTML elements.',
                 instructions: `
                     <h4>Task: Basic CSS Selectors</h4>
                     <p><strong>Instructions:</strong> Style the HTML elements with CSS:</p>
@@ -57,6 +58,7 @@ span {
                 title: 'CSS Font Properties',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to control font size, weight, and family.',
                 instructions: `
                     <h4>Task: CSS Font Properties</h4>
                     <p><strong>Instructions:</strong> Apply font styling:</p>
@@ -88,6 +90,7 @@ p {
                 title: 'CSS Background Colors',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to apply background colors to elements.',
                 instructions: `
                     <h4>Task: CSS Background Colors</h4>
                     <p><strong>Instructions:</strong> Apply background colors:</p>
@@ -117,6 +120,7 @@ p {
                 title: 'CSS Text Alignment',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to align text in different ways.',
                 instructions: `
                     <h4>Task: CSS Text Alignment</h4>
                     <p><strong>Instructions:</strong> Align text elements:</p>
@@ -145,6 +149,7 @@ p {
                 title: 'CSS Margins',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to add space around elements using margins.',
                 instructions: `
                     <h4>Task: CSS Margins</h4>
                     <p><strong>Instructions:</strong> Apply margins:</p>
@@ -173,6 +178,7 @@ p {
                 title: 'CSS Padding',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to add internal spacing using padding.',
                 instructions: `
                     <h4>Task: CSS Padding</h4>
                     <p><strong>Instructions:</strong> Apply padding:</p>
@@ -202,11 +208,12 @@ p {
                 title: 'CSS Borders',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to add borders around elements.',
                 instructions: `
                     <h4>Task: CSS Borders</h4>
                     <p><strong>Instructions:</strong> Add borders:</p>
                     <ul>
-                        <li>Give the box border: 2px solid black</li>
+                        <li>Give the div border: 2px solid black</li>
                         <li>Give the paragraph border-bottom: 1px solid red</li>
                     </ul>
                     <p><strong>Reward:</strong> 10 EXP</p>
@@ -231,6 +238,7 @@ p {
                 title: 'CSS Width and Height',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to control element dimensions.',
                 instructions: `
                     <h4>Task: CSS Width and Height</h4>
                     <p><strong>Instructions:</strong> Set dimensions:</p>
@@ -262,6 +270,7 @@ p {
                 title: 'CSS List Styling',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to style lists and list items.',
                 instructions: `
                     <h4>Task: CSS List Styling</h4>
                     <p><strong>Instructions:</strong> Style the list:</p>
@@ -293,6 +302,7 @@ li {
                 title: 'CSS Class Selectors',
                 level: 'beginner',
                 exp: 10,
+                description: 'Learn to use class selectors to target specific elements.',
                 instructions: `
                     <h4>Task: CSS Class Selectors</h4>
                     <p><strong>Instructions:</strong> Style elements with classes:</p>
@@ -323,6 +333,7 @@ li {
                 title: 'CSS Flexbox Basics',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn the fundamentals of CSS Flexbox layout.',
                 instructions: `
                     <h4>Task: CSS Flexbox Basics</h4>
                     <p><strong>Instructions:</strong> Create a flex container:</p>
@@ -346,7 +357,7 @@ li {
                 validate: (code) => {
                     const hasContainerFlex = /\.container\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasJustify = /\.container\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
-                                        const hasAlign = /\.container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
+                    const hasAlign = /\.container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
                     return hasContainerFlex && hasJustify && hasAlign;
                 }
             },
@@ -354,12 +365,13 @@ li {
                 title: 'CSS Grid Layout',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to create layouts using CSS Grid.',
                 instructions: `
                     <h4>Task: CSS Grid Layout</h4>
                     <p><strong>Instructions:</strong> Build a grid layout:</p>
                     <ul>
                         <li>Make the container display: grid</li>
-                        <li>Define 3 equal columns</li>
+                        <li>Define 3 equal columns with grid-template-columns: 1fr 1fr 1fr</li>
                         <li>Add gap: 10px between items</li>
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
@@ -388,6 +400,7 @@ li {
                 title: 'CSS Positioning',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn different positioning methods.',
                 instructions: `
                     <h4>Task: CSS Positioning</h4>
                     <p><strong>Instructions:</strong> Position elements:</p>
@@ -423,6 +436,7 @@ li {
                 title: 'CSS Hover Effects',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to create interactive hover effects.',
                 instructions: `
                     <h4>Task: CSS Hover Effects</h4>
                     <p><strong>Instructions:</strong> Add hover effects:</p>
@@ -454,6 +468,7 @@ li {
                 title: 'CSS Responsive Design',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to create responsive layouts with media queries.',
                 instructions: `
                     <h4>Task: CSS Responsive Design</h4>
                     <p><strong>Instructions:</strong> Create responsive layout:</p>
@@ -481,7 +496,7 @@ li {
                 validate: (code) => {
                     const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
                     const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-                    const hasMediaQuery = /@media\s*$[^)]*max-width\s*:\s*600px[^)]*$/i.test(code);
+                    const hasMediaQuery = /@media\s*\([^)]*max-width\s*:\s*600px[^)]*\)/i.test(code);
                     const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
                     return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
                 }
@@ -490,14 +505,15 @@ li {
                 title: 'CSS Animations',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to create CSS keyframe animations.',
                 instructions: `
                     <h4>Task: CSS Animations</h4>
                     <p><strong>Instructions:</strong> Create bouncing animation:</p>
                     <ul>
                         <li>Create @keyframes bounce animation</li>
-                        <li>0% and 100%: translateY(0)</li>
-                        <li>50%: translateY(-20px)</li>
-                        <li>Apply animation to .ball: bounce 2s infinite</li>
+                        <li>0% and 100%: transform: translateY(0)</li>
+                        <li>50%: transform: translateY(-20px)</li>
+                        <li>Apply animation to .ball: animation: bounce 2s infinite</li>
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
                 `,
@@ -512,8 +528,8 @@ li {
 }`,
                 validate: (code) => {
                     const hasKeyframes = /@keyframes\s+bounce/i.test(code);
-                    const hasTranslateY0 = /transform\s*:\s*translateY$\s*0\s*$/i.test(code);
-                    const hasTranslateYNeg20 = /transform\s*:\s*translateY$\s*-20px\s*$/i.test(code);
+                    const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
+                    const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
                     const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
                     return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
                 }
@@ -522,6 +538,7 @@ li {
                 title: 'CSS Shadows',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to add depth with box and text shadows.',
                 instructions: `
                     <h4>Task: CSS Shadows</h4>
                     <p><strong>Instructions:</strong> Add shadow effects:</p>
@@ -543,8 +560,8 @@ li {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }`,
                 validate: (code) => {
-                    const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
-                    const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*$/i.test(code);
+                    const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
+                    const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
                     return hasCardBoxShadow && hasTextShadow;
                 }
             },
@@ -552,12 +569,13 @@ li {
                 title: 'CSS Gradients',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to create beautiful gradients.',
                 instructions: `
                     <h4>Task: CSS Gradients</h4>
                     <p><strong>Instructions:</strong> Create gradient backgrounds:</p>
                     <ul>
-                        <li>Give .header linear-gradient(to right, blue, purple)</li>
-                        <li>Give .circle radial-gradient(circle, red, yellow)</li>
+                        <li>Give .header background: linear-gradient(to right, blue, purple)</li>
+                        <li>Give .circle background: radial-gradient(circle, red, yellow)</li>
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
                 `,
@@ -573,48 +591,51 @@ li {
   background: radial-gradient(circle, red, yellow);
 }`,
                 validate: (code) => {
-                    const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient$\s*to\s+right\s*,\s*blue\s*,\s*purple\s*$/i.test(code);
-                    const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient$\s*circle\s*,\s*red\s*,\s*yellow\s*$/i.test(code);
+                    const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
+                    const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
                     return hasHeaderLinearGradient && hasCircleRadialGradient;
                 }
             },
             'intermediate-9': {
-                title: 'CSS Keyframe Animation',
+                title: 'CSS Transform',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to transform elements with scale, rotate, and translate.',
                 instructions: `
-                    <h4>Task: CSS Keyframe Animation</h4>
-                    <p><strong>Instructions:</strong> Animate movement:</p>
+                    <h4>Task: CSS Transform</h4>
+                    <p><strong>Instructions:</strong> Apply transforms:</p>
                     <ul>
-                        <li>Create @keyframes moveRight</li>
-                        <li>0%: left: 0</li>
-                        <li>100%: left: 200px</li>
-                        <li>Apply to .ball: moveRight 2s infinite alternate</li>
+                        <li>Make .box transform: scale(1.2) on hover</li>
+                        <li>Make .rotate transform: rotate(45deg)</li>
+                        <li>Add transition: transform 0.3s to .box</li>
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
                 `,
-                htmlContent: `<div class="ball">Moving Ball</div>`,
-                solution: `@keyframes moveRight {
-  0% { left: 0; }
-  100% { left: 200px; }
+                htmlContent: `<div class="box">Hover to Scale</div>
+<div class="rotate">Rotated Box</div>`,
+                solution: `.box {
+  transition: transform 0.3s;
 }
 
-.ball {
-  animation: moveRight 2s infinite alternate;
-  position: relative;
+.box:hover {
+  transform: scale(1.2);
+}
+
+.rotate {
+  transform: rotate(45deg);
 }`,
                 validate: (code) => {
-                    const hasKeyframes = /@keyframes\s+moveRight/i.test(code);
-                    const hasLeft0 = /left\s*:\s*0;/i.test(code);
-                    const hasLeft200 = /left\s*:\s*200px;/i.test(code);
-                    const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*moveRight\s+2s\s+infinite\s+alternate/i.test(code);
-                    return hasKeyframes && hasLeft0 && hasLeft200 && hasBallAnimation;
+                    const hasBoxTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
+                    const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
+                    const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
+                    return hasBoxTransition && hasBoxHoverScale && hasRotateTransform;
                 }
             },
             'intermediate-10': {
                 title: 'CSS Variables',
                 level: 'intermediate',
                 exp: 20,
+                description: 'Learn to use CSS custom properties (variables).',
                 instructions: `
                     <h4>Task: CSS Variables</h4>
                     <p><strong>Instructions:</strong> Use CSS custom properties:</p>
@@ -643,8 +664,8 @@ li {
                 validate: (code) => {
                     const hasRootPrimary = /:root\s*\{[^}]*--primary-color/i.test(code);
                     const hasRootSecondary = /:root\s*\{[^}]*--secondary-color/i.test(code);
-                    const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var$\s*--primary-color\s*$/i.test(code);
-                                        const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var$\s*--secondary-color\s*$/i.test(code);
+                    const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
+                    const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
                     return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
                 }
             },
@@ -653,9 +674,10 @@ li {
                 title: 'Advanced Flexbox Layout',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create complex layouts with advanced Flexbox properties.',
                 instructions: `
-                    <h4>Task: Responsive Navbar</h4>
-                    <p><strong>Instructions:</strong> Build a navbar:</p>
+                    <h4>Task: Advanced Flexbox Layout</h4>
+                    <p><strong>Instructions:</strong> Build a responsive navbar:</p>
                     <ul>
                         <li>Make .navbar display: flex with justify-content: space-between</li>
                         <li>Make .menu display: flex with list-style: none</li>
@@ -705,7 +727,7 @@ li {
                 validate: (code) => {
                     const hasNavbarFlex = /\.navbar\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasMenuFlex = /\.menu\s*\{[^}]*display\s*:\s*flex/i.test(code);
-                    const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba$\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*$/i.test(code);
+                    const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba\(\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*\)/i.test(code);
                     return hasNavbarFlex && hasMenuFlex && hasLinkHover;
                 }
             },
@@ -713,13 +735,13 @@ li {
                 title: 'Advanced Grid Layout',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create responsive card layouts using CSS Grid.',
                 instructions: `
-                    <h4>Task: Card Layout with Grid</h4>
+                    <h4>Task: Advanced Grid Layout</h4>
                     <p><strong>Instructions:</strong> Create responsive card layout:</p>
                     <ul>
-                        <li>Make .dashboard display: grid with repeat(auto-fit, minmax(250px, 1fr))</li>
+                        <li>Make .dashboard display: grid with grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))</li>
                         <li>Add gap: 20px and padding: 20px</li>
-                        <li>Style .card with background: white, border-radius: 8px, padding: 20px</li>
                         <li>Add hover effect: transform: translateY(-5px) for .card:hover</li>
                     </ul>
                     <p><strong>Reward:</strong> 30 EXP</p>
@@ -752,9 +774,9 @@ li {
 }`,
                 validate: (code) => {
                     const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
-                    const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat$auto-fit,\s*minmax\(250px,\s*1fr$\)/i.test(code);
+                    const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat\(auto-fit,\s*minmax\(250px,\s*1fr\)\)/i.test(code);
                     const hasGap = /\.dashboard\s*\{[^}]*gap\s*:\s*20px/i.test(code);
-                    const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY$\s*-5px\s*$/i.test(code);
+                    const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY\(\s*-5px\s*\)/i.test(code);
                     return hasDashboardGrid && hasAutoFit && hasGap && hasCardHover;
                 }
             },
@@ -762,11 +784,12 @@ li {
                 title: 'CSS Modal Popup',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create a modal popup using pure CSS.',
                 instructions: `
                     <h4>Task: CSS Modal Popup</h4>
                     <p><strong>Instructions:</strong> Create a modal:</p>
                     <ul>
-                        <li>Make .modal-overlay position: fixed with full screen coverage</li>
+                        <li>Make .modal-overlay position: fixed with full screen coverage (top: 0, left: 0, width: 100%, height: 100%)</li>
                         <li>Set background-color: rgba(0, 0, 0, 0.5)</li>
                         <li>Use display: flex with justify-content: center and align-items: center</li>
                         <li>Style .modal-content with background: white, border-radius: 8px, padding: 20px</li>
@@ -804,69 +827,25 @@ li {
 }`,
                 validate: (code) => {
                     const hasOverlayFixed = /\.modal-overlay\s*\{[^}]*position\s*:\s*fixed/i.test(code);
-                    const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*$/i.test(code);
+                    const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*\)/i.test(code);
                     const hasOverlayFlex = /\.modal-overlay\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasContentRadius = /\.modal-content\s*\{[^}]*border-radius\s*:\s*8px/i.test(code);
                     return hasOverlayFixed && hasOverlayBackground && hasOverlayFlex && hasContentRadius;
                 }
             },
             'advanced-4': {
-                title: 'Image Gallery with Flexbox',
+                title: 'CSS Sticky Header',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create a sticky navigation header.',
                 instructions: `
-                    <h4>Task: Image Gallery with Flexbox</h4>
-                    <p><strong>Instructions:</strong> Build a responsive gallery:</p>
-                    <ul>
-                        <li>Make .gallery display: flex with flex-wrap: wrap</li>
-                        <li>Add gap: 15px</li>
-                        <li>Style images with max-width: 100%, height: auto, border-radius: 8px</li>
-                        <li>Add hover effect: transform: scale(1.05) for .gallery img:hover</li>
-                    </ul>
-                    <p><strong>Reward:</strong> 30 EXP</p>
-                `,
-                htmlContent: `<div class="gallery">
-  <img src="image1.jpg" alt="Gallery Image 1">
-  <img src="image2.jpg" alt="Gallery Image 2">
-  <img src="image3.jpg" alt="Gallery Image 3">
-  <img src="image4.jpg" alt="Gallery Image 4">
-</div>`,
-                solution: `.gallery {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-.gallery img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
-  transition: transform 0.3s;
-}
-
-.gallery img:hover {
-  transform: scale(1.05);
-}`,
-                validate: (code) => {
-                    const hasGalleryFlex = /\.gallery\s*\{[^}]*display\s*:\s*flex/i.test(code);
-                    const hasFlexWrap = /\.gallery\s*\{[^}]*flex-wrap\s*:\s*wrap/i.test(code);
-                    const hasGap = /\.gallery\s*\{[^}]*gap\s*:\s*15px/i.test(code);
-                    const hasImageHover = /\.gallery\s+img:hover\s*\{[^}]*transform\s*:\s*scale$\s*1\.05\s*$/i.test(code);
-                    return hasGalleryFlex && hasFlexWrap && hasGap && hasImageHover;
-                }
-            },
-            'advanced-5': {
-                title: 'Sticky Header',
-                level: 'advanced',
-                exp: 30,
-                instructions: `
-                    <h4>Task: Sticky Header</h4>
+                    <h4>Task: CSS Sticky Header</h4>
                     <p><strong>Instructions:</strong> Make sticky header:</p>
                     <ul>
                         <li>Make .sticky-header position: sticky with top: 0</li>
                         <li>Add background-color: #333 and box-shadow: 0 2px 4px rgba(0,0,0,0.1)</li>
                         <li>Set z-index: 100</li>
-                        <li>Give .content margin-top: 60px for spacing</li>
+                        <li>Give .content enough content to scroll and demonstrate stickiness</li>
                     </ul>
                     <p><strong>Reward:</strong> 30 EXP</p>
                 `,
@@ -889,20 +868,30 @@ li {
 }
 
 .content {
-  margin-top: 60px;
+  height: 200vh;
+  padding: 20px;
+}
+
+.content section {
+  height: 300px;
+  margin: 20px 0;
+  background: #f0f0f0;
+  padding: 20px;
+  border-radius: 8px;
 }`,
                 validate: (code) => {
                     const hasHeaderSticky = /\.sticky-header\s*\{[^}]*position\s*:\s*sticky/i.test(code);
                     const hasHeaderTop = /\.sticky-header\s*\{[^}]*top\s*:\s*0/i.test(code);
-                    const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
-                    const hasContentMargin = /\.content\s*\{[^}]*margin-top\s*:\s*60px/i.test(code);
-                    return hasHeaderSticky && hasHeaderTop && hasHeaderShadow && hasContentMargin;
+                    const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
+                    const hasZIndex = /\.sticky-header\s*\{[^}]*z-index\s*:\s*100/i.test(code);
+                    return hasHeaderSticky && hasHeaderTop && hasHeaderShadow && hasZIndex;
                 }
             },
-            'advanced-6': {
+            'advanced-5': {
                 title: 'CSS Tooltip',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create interactive tooltips with pure CSS.',
                 instructions: `
                     <h4>Task: CSS Tooltip</h4>
                     <p><strong>Instructions:</strong> Create tooltip:</p>
@@ -946,23 +935,24 @@ li {
                     const hasContainerPosition = /\.tooltip-container\s*\{[^}]*position\s*:\s*relative/i.test(code);
                     const hasTooltipPosition = /\.tooltip\s*\{[^}]*position\s*:\s*absolute/i.test(code);
                     const hasTooltipTop = /\.tooltip\s*\{[^}]*top\s*:\s*-30px/i.test(code);
-                    const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX$\s*-50%\s*$/i.test(code);
+                    const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX\(\s*-50%\s*\)/i.test(code);
                     const hasOpacityTransition = /\.tooltip\s*\{[^}]*transition\s*:\s*opacity\s+0\.3s/i.test(code);
-                                        const hasPointerEventsNone = /\.tooltip\s*\{[^}]*pointer-events\s*:\s*none/i.test(code);
+                    const hasPointerEventsNone = /\.tooltip\s*\{[^}]*pointer-events\s*:\s*none/i.test(code);
                     const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
                     return hasContainerPosition && hasTooltipPosition && hasTooltipTop && hasTooltipTransform && hasOpacityTransition && hasPointerEventsNone && hasHoverEffect;
                 }
             },
-            'advanced-7': {
+            'advanced-6': {
                 title: 'CSS Progress Bar',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create animated progress bars.',
                 instructions: `
                     <h4>Task: CSS Progress Bar</h4>
                     <p><strong>Instructions:</strong> Build a progress bar:</p>
                     <ul>
                         <li>Style .progress-bar-container with width: 100%, height: 20px, background-color: #eee, border-radius: 10px</li>
-                        <li>Style .progress-fill with height: 100%, width: 0%, transition: width 0.5s ease</li>
+                        <li>Style .progress-fill with height: 100%, width: 75%, transition: width 0.5s ease</li>
                         <li>Add linear gradient background for .progress-fill</li>
                     </ul>
                     <p><strong>Reward:</strong> 30 EXP</p>
@@ -980,7 +970,7 @@ li {
 
 .progress-fill {
   height: 100%;
-  width: 0%;
+  width: 75%;
   background: linear-gradient(to right, #3498db, #e74c3c);
   transition: width 0.5s ease;
 }`,
@@ -993,10 +983,11 @@ li {
                     return hasContainerWidth && hasContainerHeight && hasContainerRadius && hasFillHeight && hasFillTransition;
                 }
             },
-            'advanced-8': {
+            'advanced-7': {
                 title: 'CSS Accordion',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create a collapsible accordion using CSS.',
                 instructions: `
                     <h4>Task: CSS Accordion</h4>
                     <p><strong>Instructions:</strong> Create accordion:</p>
@@ -1065,10 +1056,11 @@ li {
                     return hasInputHidden && hasLabelBlock && hasLabelPadding && hasLabelCursor && hasContentMaxHeight && hasContentTransition && hasContentOverflow;
                 }
             },
-            'advanced-9': {
+            'advanced-8': {
                 title: 'CSS Loader Animation',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create animated loading spinners.',
                 instructions: `
                     <h4>Task: CSS Loader Animation</h4>
                     <p><strong>Instructions:</strong> Create a spinner loader:</p>
@@ -1106,60 +1098,122 @@ li {
                     return hasSpinKeyframes && hasLoaderSize && hasLoaderHeight && hasBorderTransparent && hasBorderTop && hasBorderRadius && hasAnimation;
                 }
             },
-            'advanced-10': {
-                title: 'Parallax Scrolling',
+            'advanced-9': {
+                title: 'CSS 3D Transforms',
                 level: 'advanced',
                 exp: 30,
+                description: 'Create 3D effects using CSS transforms.',
                 instructions: `
-                    <h4>Task: Parallax Scrolling</h4>
-                    <p><strong>Instructions:</strong> Add parallax effect:</p>
+                    <h4>Task: CSS 3D Transforms</h4>
+                    <p><strong>Instructions:</strong> Create 3D card flip effect:</p>
                     <ul>
-                        <li>Style .parallax-section with background-attachment: fixed</li>
-                        <li>Set background-size: cover and background-position: center</li>
-                        <li>Make it height: 100vh with display: flex</li>
-                        <li>Center content with align-items: center and justify-content: center</li>
-                        <li>Add color: white and text-align: center</li>
+                        <li>Set .card-container perspective: 1000px</li>
+                        <li>Style .card with transform-style: preserve-3d, transition: transform 0.6s</li>
+                        <li>On hover, rotate .card with transform: rotateY(180deg)</li>
+                        <li>Position .card-front and .card-back absolutely with backface-visibility: hidden</li>
+                        <li>Rotate .card-back 180 degrees initially</li>
                     </ul>
                     <p><strong>Reward:</strong> 30 EXP</p>
                 `,
-                htmlContent: `<div class="parallax-section">
-  <div class="overlay-content">
-    <h2>Parallax Section</h2>
-    <p>This content will scroll normally while the background moves slower.</p>
+                htmlContent: `<div class="card-container">
+  <div class="card">
+    <div class="card-front">Front</div>
+    <div class="card-back">Back</div>
   </div>
 </div>`,
-                solution: `.parallax-section {
-  background-image: url('parallax-bg.jpg');
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center;
-  height: 100vh;
+                solution: `.card-container {
+  perspective: 1000px;
+}
+
+.card {
+  width: 200px;
+  height: 200px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+}
+
+.card:hover {
+  transform: rotateY(180deg);
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  text-align: center;
-  padding: 2rem;
+  border-radius: 8px;
 }
 
-.overlay-content {
-  background: rgba(0, 0, 0, 0.5);
-  padding: 2rem;
-  border-radius: 8px;
+.card-front {
+  background: #3498db;
+  color: white;
+}
+
+.card-back {
+  background: #e74c3c;
+  color: white;
+  transform: rotateY(180deg);
 }`,
                 validate: (code) => {
-                    const hasSectionBackgroundAttachment = /\.parallax-section\s*\{[^}]*background-attachment\s*:\s*fixed/i.test(code);
-                    const hasSectionBackgroundSize = /\.parallax-section\s*\{[^}]*background-size\s*:\s*cover/i.test(code);
-                    const hasSectionBackgroundPosition = /\.parallax-section\s*\{[^}]*background-position\s*:\s*center/i.test(code);
-                    const hasSectionHeight = /\.parallax-section\s*\{[^}]*height\s*:\s*100vh/i.test(code);
-                    const hasSectionDisplay = /\.parallax-section\s*\{[^}]*display\s*:\s*flex/i.test(code);
-                    const hasSectionAlignItems = /\.parallax-section\s*\{[^}]*align-items\s*:\s*center/i.test(code);
-                    const hasSectionJustifyContent = /\.parallax-section\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
-                    const hasSectionColor = /\.parallax-section\s*\{[^}]*color\s*:\s*white/i.test(code);
-                    const hasSectionTextAlign = /\.parallax-section\s*\{[^}]*text-align\s*:\s*center/i.test(code);
-                    return hasSectionBackgroundAttachment && hasSectionBackgroundSize && hasSectionBackgroundPosition && 
-                           hasSectionHeight && hasSectionDisplay && hasSectionAlignItems && hasSectionJustifyContent &&
-                           hasSectionColor && hasSectionTextAlign;
+                    const hasContainerPerspective = /\.card-container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
+                    const hasCardTransformStyle = /\.card\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
+                    const hasCardTransition = /\.card\s*\{[^}]*transition\s*:\s*transform\s+0\.6s/i.test(code);
+                    const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
+                    const hasBackfaceVisibility = /backface-visibility\s*:\s*hidden/i.test(code);
+                    return hasContainerPerspective && hasCardTransformStyle && hasCardTransition && hasCardHoverRotate && hasBackfaceVisibility;
+                }
+            },
+            'advanced-10': {
+                title: 'CSS Complex Animation',
+                level: 'advanced',
+                exp: 30,
+                description: 'Create complex multi-step animations.',
+                instructions: `
+                    <h4>Task: CSS Complex Animation</h4>
+                    <p><strong>Instructions:</strong> Create bouncing ball with trail:</p>
+                    <ul>
+                        <li>Create @keyframes bounce with multiple stages: scale, translate, and rotate</li>
+                        <li>0%: transform: translateY(0) scale(1) rotate(0deg)</li>
+                        <li>25%: transform: translateY(-100px) scale(1.2) rotate(90deg)</li>
+                        <li>50%: transform: translateY(0) scale(0.8) rotate(180deg)</li>
+                        <li>Apply animation: bounce 2s ease-in-out infinite to .bouncing-ball</li>
+                    </ul>
+                    <p><strong>Reward:</strong> 30 EXP</p>
+                `,
+                htmlContent: `<div class="bouncing-ball">⚽</div>`,
+                solution: `@keyframes bounce {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-100px) scale(1.2) rotate(90deg);
+  }
+  50% {
+    transform: translateY(0) scale(0.8) rotate(180deg);
+  }
+  75% {
+    transform: translateY(-50px) scale(1.1) rotate(270deg);
+  }
+  100% {
+    transform: translateY(0) scale(1) rotate(360deg);
+  }
+}
+
+.bouncing-ball {
+  display: inline-block;
+  font-size: 40px;
+  animation: bounce 2s ease-in-out infinite;
+}`,
+                validate: (code) => {
+                    const hasBounceKeyframes = /@keyframes\s+bounce/i.test(code);
+                    const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*1\s*\)\s*rotate\(\s*0deg\s*\)/i.test(code);
+                    const hasTranslateYNeg100 = /transform\s*:\s*translateY\(\s*-100px\s*\)\s*scale\(\s*1\.2\s*\)\s*rotate\(\s*90deg\s*\)/i.test(code);
+                    const hasBallAnimation = /\.bouncing-ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+ease-in-out\s+infinite/i.test(code);
+                    return hasBounceKeyframes && hasTranslateY0 && hasTranslateYNeg100 && hasBallAnimation;
                 }
             }
         };
@@ -1184,6 +1238,9 @@ li {
         // Load game state first
         await this.loadGameState();
         
+        // Generate task cards
+        this.generateTaskCards();
+        
         // Then set up event listeners
         this.setupEventListeners();
         
@@ -1193,25 +1250,80 @@ li {
         console.log(`Game initialized for user: ${this.username}`);
     }
 
+    // Generate task cards for each level
+    generateTaskCards() {
+        const levels = ['beginner', 'intermediate', 'advanced'];
+        
+        levels.forEach(level => {
+            const tasksContainer = document.getElementById(`${level}Tasks`);
+            if (!tasksContainer) return;
+
+            const levelTasks = Object.keys(this.tasks).filter(taskId => 
+                this.tasks[taskId].level === level
+            );
+
+            let cardsHTML = '';
+            levelTasks.forEach(taskId => {
+                const task = this.tasks[taskId];
+                cardsHTML += this.createTaskCardHTML(taskId, task);
+            });
+
+            tasksContainer.innerHTML = cardsHTML;
+        });
+    }
+
+    // Create HTML for a task card
+    createTaskCardHTML(taskId, task) {
+        return `
+            <div class="task-card" data-task-id="${taskId}">
+                <div class="task-glow"></div>
+                <div class="task-header">
+                    <div class="task-icon">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14,2 14,8 20,8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10,9 9,9 8,9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="task-info">
+                        <h3 class="task-title">${task.title}</h3>
+                        <p class="task-description">${task.description}</p>
+                    </div>
+                    <div class="task-exp">
+                        <span class="exp-value">${task.exp}</span>
+                        <span class="exp-unit">EXP</span>
+                    </div>
+                </div>
+                <div class="task-footer">
+                    <button class="task-start-btn" data-task-id="${taskId}">
+                        <span>Start Task</span>
+                    </button>
+                    <div class="task-status">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
     // Set up all event listeners
     setupEventListeners() {
-        // Task card click handlers
-        document.querySelectorAll('.task-card').forEach(card => {
-            const taskId = card.dataset.taskId;
-            const startBtn = card.querySelector('.task-start-btn');
-            
-            if (startBtn) {
-                startBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    
-                    // Check EXP requirement before opening task
-                    if (this.canAccessTask(taskId)) {
-                        this.openTaskModal(taskId);
-                    } else {
-                        const requiredExp = this.getRequiredExpForTask(taskId);
-                        alert(`You need ${requiredExp} EXP to unlock this task. Current EXP: ${this.gameState.exp}`);
-                    }
-                });
+        // Task card click handlers - Use event delegation
+        document.addEventListener('click', (e) => {
+            if (e.target.closest('.task-start-btn')) {
+                const taskId = e.target.closest('.task-start-btn').dataset.taskId;
+                
+                // Check EXP requirement before opening task
+                if (this.canAccessTask(taskId)) {
+                    this.openTaskModal(taskId);
+                } else {
+                    const requiredExp = this.getRequiredExpForTask(taskId);
+                    alert(`You need ${requiredExp} EXP to unlock this task. Current EXP: ${this.gameState.exp}`);
+                }
             }
         });
 
@@ -1233,6 +1345,24 @@ li {
 
         // Certificate download
         document.getElementById('downloadCert')?.addEventListener('click', () => this.downloadCertificate());
+
+        // Theme toggle
+        document.getElementById('themeToggle')?.addEventListener('click', () => this.toggleTheme());
+
+        // Back button
+        document.getElementById('backBtn')?.addEventListener('click', () => {
+            window.history.back();
+        });
+    }
+
+    // Toggle theme
+    toggleTheme() {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        this.gameState.theme = newTheme;
+        this.saveGameState();
     }
 
     // Check if user can access a task based on EXP
@@ -1250,7 +1380,7 @@ li {
     // Get required EXP for a task
     getRequiredExpForTask(taskId) {
         const task = this.tasks[taskId];
-                if (!task) return 0;
+        if (!task) return 0;
         
         // Define EXP requirements
         const expRequirements = {
@@ -1292,6 +1422,9 @@ li {
                     htmlContent: data.html_content || {}
                 };
                 
+                // Apply theme
+                document.documentElement.setAttribute('data-theme', this.gameState.theme);
+                
                 console.log(`Loaded ${cssTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
             } else {
                 throw new Error('Failed to load from server');
@@ -1313,6 +1446,7 @@ li {
                         editorContent: parsedState.editorContent || {},
                         htmlContent: parsedState.htmlContent || {}
                     };
+                    document.documentElement.setAttribute('data-theme', this.gameState.theme);
                     console.log("Loaded from localStorage as fallback");
                 } catch (parseError) {
                     console.error("Error parsing localStorage data:", parseError);
@@ -1665,7 +1799,7 @@ li {
         delete this.gameState.editorContent[taskId];
         delete this.gameState.htmlContent[taskId];
         
-                console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
+        console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
         // Save state immediately
         await this.saveGameState();
@@ -1714,15 +1848,15 @@ li {
 
         // Deduct EXP only if the solution hasn't been unlocked yet
         if (!this.gameState.unlockedSolutions.has(taskId)) {
-            let expPenalty = 20; // default for beginner
-            if (task.level === 'intermediate') expPenalty = 40;
-            if (task.level === 'advanced') expPenalty = 60;
+            let expPenalty = 5; // Fixed penalty for all levels
+            if (task.level === 'intermediate') expPenalty = 10;
+            if (task.level === 'advanced') expPenalty = 15;
 
-            this.gameState.exp -= expPenalty; // Deduct EXP
+            this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty); // Deduct EXP but not below 0
             this.gameState.unlockedSolutions.add(taskId); // Mark solution as unlocked
             this.saveGameState(); // Save state after deduction
             this.updateExpCounter(); // Update EXP display
-            this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'success');
+            this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'info');
         } else {
             this.showValidationFeedback('Solution already revealed. No further EXP deduction.', 'info');
         }
@@ -1756,19 +1890,40 @@ li {
         if (!showSolutionBtn) return;
         
         // Calculate EXP penalty based on level
-        let expPenalty = 20; // default for beginner
-        if (task.level === 'intermediate') expPenalty = 40;
-        if (task.level === 'advanced') expPenalty = 60;
+        let expPenalty = 5;
+        if (task.level === 'intermediate') expPenalty = 10;
+        if (task.level === 'advanced') expPenalty = 15;
         
         if (isUnlocked) {
             showSolutionBtn.disabled = false;
-            showSolutionBtn.textContent = 'Show Solution';
+            showSolutionBtn.innerHTML = `
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Show Solution
+            `;
         } else if (failedAttempts >= 2) {
             showSolutionBtn.disabled = false;
-            showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+            showSolutionBtn.innerHTML = `
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Show Solution (-${expPenalty} EXP)
+            `;
         } else {
             showSolutionBtn.disabled = true;
-            showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
+            showSolutionBtn.innerHTML = `
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+                Show Solution (${2 - failedAttempts} attempts left)
+            `;
         }
     }
     
@@ -1783,69 +1938,84 @@ li {
         try {
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
-            const img = new Image();
             
-            img.onload = () => {
-                try {
-                    // Set canvas size to match your certificate image
-                    canvas.width = img.width;
-                    canvas.height = img.height;
+            // Create a simple certificate design
+            canvas.width = 800;
+            canvas.height = 600;
+            
+            // Background
+            ctx.fillStyle = '#f8f9ff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // Border
+            ctx.strokeStyle = '#3498db';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            
+            // Inner border
+            ctx.strokeStyle = '#2980b9';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(40, 40, canvas.width - 80, canvas.height - 80);
+            
+            // Title
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = 'bold 48px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText('Certificate of Completion', canvas.width / 2, 120);
+            
+            // Subtitle
+            ctx.font = '24px Arial';
+            ctx.fillText('CSS Learning Game', canvas.width / 2, 160);
+            
+            // This certifies
+            ctx.font = '20px Arial';
+            ctx.fillText('This certifies that', canvas.width / 2, 220);
+            
+            // User name
+            ctx.fillStyle = '#3498db';
+            ctx.font = 'bold 36px Arial';
+            ctx.fillText(userName, canvas.width / 2, 280);
+            
+            // Achievement text
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '20px Arial';
+            ctx.fillText('has successfully completed all 30 tasks', canvas.width / 2, 340);
+            ctx.fillText('in the CSS Learning Game', canvas.width / 2, 370);
+            ctx.fillText('earning a total of 600 EXP', canvas.width / 2, 400);
+            
+            // Date
+            ctx.font = '16px Arial';
+            const currentDate = new Date().toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            ctx.fillText(currentDate, canvas.width / 2, 480);
+            
+            // Signature line
+            ctx.fillStyle = '#7f8c8d';
+            ctx.font = '14px Arial';
+            ctx.fillText('CSS in My Style - Learning Platform', canvas.width / 2, 520);
+            
+            // Convert to blob and download
+            canvas.toBlob((blob) => {
+                if (blob) {
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
                     
-                    // Draw the certificate background image
-                    ctx.drawImage(img, 0, 0);
+                    document.body.appendChild(a);
+                    a.click();
                     
-                    // Calculate positions based on your certificate layout
-                    const centerX = canvas.width / 2;
-                    
-                    // USER NAME POSITIONING
-                    ctx.fillStyle = '#2d3748';
-                    ctx.font = 'bold 100px Montserrat Bold, sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    
-                    const nameY = canvas.height * 0.45;
-                    ctx.fillText(userName, centerX, nameY);
-                    
-                    // CURRENT DATE POSITIONING
-                    ctx.fillStyle = '#4a5568';
-                    ctx.font = '65px Arial, sans-serif';
-                    
-                    const currentDate = new Date().toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric'
-                    });
-                    
-                    const dateY = canvas.height * 0.85;
-                    ctx.fillText(currentDate, centerX, dateY);
-                    
-                    // Convert to blob and download
-                    canvas.toBlob((blob) => {
-                        if (blob) {
-                            const url = URL.createObjectURL(blob);
-                            const a = document.createElement('a');
-                            a.href = url;
-                            a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
-                            
-                            document.body.appendChild(a);
-                            a.click();
-                            
-                            setTimeout(() => {
-                                document.body.removeChild(a);
-                                URL.revokeObjectURL(url);
-                            }, 100);
-                        } else {
-                            throw new Error('Failed to create certificate blob');
-                        }
-                    }, 'image/png', 1.0);
-                } catch (error) {
-                    console.error('Error processing certificate:', error);
+                    setTimeout(() => {
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    }, 100);
+                } else {
                     alert('Error generating certificate. Please try again.');
                 }
-            };
-            
-            img.crossOrigin = 'anonymous';
-            img.src = 'CSS-01.png';
+            }, 'image/png', 1.0);
         } catch (error) {
             console.error('Error in downloadCertificate:', error);
             alert('Error generating certificate. Please try again.');
@@ -1880,9 +2050,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new CSSLearningGame();
 });
 
-// Disable context menu
-document.addEventListener('contextmenu', (e) => e.preventDefault());
-
 // ESC key to close modal
 document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
@@ -1897,27 +2064,27 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
 document.onkeydown = function(e) {
-  // Disable F12
-  if (e.keyCode === 123) return false;
+    // Disable F12
+    if (e.keyCode === 123) return false;
 
-  // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-  if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-    return false;
-  }
+    // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+    if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+        return false;
+    }
 
-  // Disable Ctrl+U (View Source)
-  if (e.ctrlKey && e.keyCode === 85) return false;
+    // Disable Ctrl+U (View Source)
+    if (e.ctrlKey && e.keyCode === 85) return false;
 
-  // Disable Ctrl+S (Save Page)
-  if (e.ctrlKey && e.keyCode === 83) return false;
+    // Disable Ctrl+S (Save Page)
+    if (e.ctrlKey && e.keyCode === 83) return false;
 
-  // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-  if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-    return false;
-  }
+    // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
+    if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+        return false;
+    }
 
-  // Disable Ctrl+Shift+K (Firefox)
-  if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+    // Disable Ctrl+Shift+K (Firefox)
+    if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
 };
 
 // Enhanced right-click protection
@@ -1938,8 +2105,3 @@ document.addEventListener("dragstart", function(e) {
     e.preventDefault();
     return false;
 });
-
-
-
-
-
