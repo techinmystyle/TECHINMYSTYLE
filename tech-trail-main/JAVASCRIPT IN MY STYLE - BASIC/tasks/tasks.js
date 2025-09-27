@@ -2045,15 +2045,21 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     if (!showSolutionBtn) return;
 
     const taskId = this.currentTask;
+    const task = this.tasks[taskId];
     const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
-
+    
+    // Calculate EXP penalty based on level
+    let expPenalty = 20; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 40;
+    if (task.level === 'advanced') expPenalty = 60;
+    
     if (isUnlocked) {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
     } else if (failedAttempts >= 2) {
-      showSolutionBtn.disabled = false; // FIXED: This should be false, not true
-      showSolutionBtn.textContent = 'Show Solution (-5 EXP)';
+      showSolutionBtn.disabled = false;
+      showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
     } else {
       showSolutionBtn.disabled = true;
       showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
