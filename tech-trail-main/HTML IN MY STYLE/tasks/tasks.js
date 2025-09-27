@@ -15,11 +15,11 @@ class HTMLLearningGame {
     };
 
     this.tasks = {
-      // BEGINNER TASKS (10 tasks - 10 EXP each)
+      // BEGINNER TASKS (10 tasks - 20 EXP each)
       'beginner-1': {
         title: 'Basic HTML Structure',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Create Basic HTML Structure</h4>
           <p><strong>Instructions:</strong> Create a basic HTML document with the following elements:</p>
@@ -28,7 +28,7 @@ class HTMLLearningGame {
             <li>A paragraph with the text "This is my first HTML page"</li>
             <li>Another paragraph with the text "I'm learning HTML step by step"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<h1>Welcome to HTML</h1>
 <p>This is my first HTML page</p>
@@ -43,7 +43,7 @@ class HTMLLearningGame {
       'beginner-2': {
         title: 'HTML Headings',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Create HTML Headings</h4>
           <p><strong>Instructions:</strong> Create the following heading structure:</p>
@@ -52,7 +52,7 @@ class HTMLLearningGame {
             <li>An <code>h2</code> heading with "Subtitle"</li>
             <li>An <code>h3</code> heading with "Section Title"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<h1>Main Title</h1>
 <h2>Subtitle</h2>
@@ -67,7 +67,7 @@ class HTMLLearningGame {
       'beginner-3': {
         title: 'Text Formatting',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Text Formatting</h4>
           <p><strong>Instructions:</strong> Create the following formatted text:</p>
@@ -76,7 +76,7 @@ class HTMLLearningGame {
             <li>A paragraph with <code>em</code> text "Emphasized text"</li>
             <li>A paragraph with <code>mark</code> text "Highlighted text"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<p><strong>Important text</strong></p>
 <p><em>Emphasized text</em></p>
@@ -91,7 +91,7 @@ class HTMLLearningGame {
       'beginner-4': {
         title: 'Line Breaks and Horizontal Rules',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Line Breaks and Horizontal Rules</h4>
           <p><strong>Instructions:</strong> Create the following structure:</p>
@@ -100,7 +100,7 @@ class HTMLLearningGame {
             <li>A horizontal rule</li>
             <li>Another paragraph with "After the rule"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<p>First line<br>Second line</p>
 <hr>
@@ -115,7 +115,7 @@ class HTMLLearningGame {
       'beginner-5': {
         title: 'HTML Comments',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: HTML Comments</h4>
           <p><strong>Instructions:</strong> Create the following:</p>
@@ -124,7 +124,7 @@ class HTMLLearningGame {
             <li>A paragraph with "Visible text"</li>
             <li>Another comment with text "Another comment"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<!-- This is a comment -->
 <p>Visible text</p>
@@ -139,7 +139,7 @@ class HTMLLearningGame {
       'beginner-6': {
         title: 'Basic Div Elements',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Basic Div Elements</h4>
           <p><strong>Instructions:</strong> Create the following structure:</p>
@@ -147,7 +147,7 @@ class HTMLLearningGame {
             <li>A div containing an h2 with "Section 1"</li>
             <li>A div containing a paragraph with "Content for section 1"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<div>
   <h2>Section 1</h2>
@@ -157,7 +157,7 @@ class HTMLLearningGame {
 </div>`,
         validate: (code) => {
           const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
-          const expected = `<div> <h2>section 1</h2> </div> <div> <p>content for section 1</p> </div>`;
+          const expected = `<div> <h22>section 1</h22> </div> <div> <p>content for section 1</p> </div>`;
           return normalized === expected;
         }
       },
@@ -165,7 +165,7 @@ class HTMLLearningGame {
       'beginner-7': {
         title: 'Span Elements',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Span Elements</h4>
           <p><strong>Instructions:</strong> Create a paragraph with:</p>
@@ -174,7 +174,7 @@ class HTMLLearningGame {
             <li>A span containing "highlighted word"</li>
             <li>Text " in the middle."</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<p>This is a paragraph with a <span>highlighted word</span> in the middle.</p>`,
         validate: (code) => {
@@ -187,14 +187,14 @@ class HTMLLearningGame {
       'beginner-8': {
         title: 'Preformatted Text',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Preformatted Text</h4>
           <p><strong>Instructions:</strong> Create a pre element with the following code:</p>
           <pre>function hello() {
     console.log("Hello World");
 }</pre>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<pre>function hello() {
     console.log("Hello World");
@@ -209,7 +209,7 @@ class HTMLLearningGame {
       'beginner-9': {
         title: 'Blockquotes',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Blockquotes</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -217,7 +217,7 @@ class HTMLLearningGame {
             <li>A blockquote with the text "The best way to learn HTML is by practicing."</li>
             <li>A paragraph with "- Anonymous"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<blockquote>The best way to learn HTML is by practicing.</blockquote>
 <p>- Anonymous</p>`,
@@ -231,7 +231,7 @@ class HTMLLearningGame {
       'beginner-10': {
         title: 'Address Element',
         level: 'beginner',
-        exp: 10,
+        exp: 20,
         instructions: `
           <h4>Task: Address Element</h4>
           <p><strong>Instructions:</strong> Create an address element with:</p>
@@ -240,7 +240,7 @@ class HTMLLearningGame {
             <li>Line break</li>
             <li>Text "123 Web Street, HTML City"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         solution: `<address>Contact us at:<br>123 Web Street, HTML City</address>`,
         validate: (code) => {
@@ -250,11 +250,11 @@ class HTMLLearningGame {
         }
       },
 
-      // INTERMEDIATE TASKS (10 tasks - 20 EXP each)
+      // INTERMEDIATE TASKS (10 tasks - 40 EXP each)
       'intermediate-1': {
         title: 'Unordered Lists',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Create Unordered Lists</h4>
           <p><strong>Instructions:</strong> Create an unordered list with:</p>
@@ -263,7 +263,7 @@ class HTMLLearningGame {
             <li>List item "CSS"</li>
             <li>List item "JavaScript"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<ul>
   <li>HTML</li>
@@ -280,7 +280,7 @@ class HTMLLearningGame {
       'intermediate-2': {
         title: 'Ordered Lists',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Create Ordered Lists</h4>
           <p><strong>Instructions:</strong> Create an ordered list with:</p>
@@ -289,7 +289,7 @@ class HTMLLearningGame {
             <li>List item "Learn CSS"</li>
             <li>List item "Learn JavaScript"</li>
           </ol>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<ol>
   <li>Learn HTML</li>
@@ -306,7 +306,7 @@ class HTMLLearningGame {
       'intermediate-3': {
         title: 'Basic Links',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Create Basic Links</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -314,7 +314,7 @@ class HTMLLearningGame {
             <li>A link to "https://www.google.com" with text "Google"</li>
             <li>A link to "https://www.github.com" with text "GitHub"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<a href="https://www.google.com">Google</a>
 <a href="https://www.github.com">GitHub</a>`,
@@ -328,7 +328,7 @@ class HTMLLearningGame {
       'intermediate-4': {
         title: 'Images',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Add Images</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -336,7 +336,7 @@ class HTMLLearningGame {
             <li>An image with src "image.jpg" and alt text "Sample Image"</li>
             <li>A paragraph with "This is a sample image"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<img src="image.jpg" alt="Sample Image">
 <p>This is a sample image</p>`,
@@ -350,7 +350,7 @@ class HTMLLearningGame {
       'intermediate-5': {
         title: 'Nested Lists',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
                 instructions: `
           <h4>Task: Create Nested Lists</h4>
           <p><strong>Instructions:</strong> Create an unordered list with:</p>
@@ -358,7 +358,7 @@ class HTMLLearningGame {
             <li>"Frontend" with nested list containing "HTML" and "CSS"</li>
             <li>"Backend" with nested list containing "Node.js" and "Python"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<ul>
   <li>Frontend
@@ -384,7 +384,7 @@ class HTMLLearningGame {
       'intermediate-6': {
         title: 'Tables Basic',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Create Basic Table</h4>
           <p><strong>Instructions:</strong> Create a table with:</p>
@@ -393,7 +393,7 @@ class HTMLLearningGame {
             <li>Data row with "John" and "25"</li>
             <li>Data row with "Jane" and "30"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<table>
   <tr>
@@ -419,7 +419,7 @@ class HTMLLearningGame {
       'intermediate-7': {
         title: 'Description Lists',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Create Description Lists</h4>
           <p><strong>Instructions:</strong> Create a description list with:</p>
@@ -427,7 +427,7 @@ class HTMLLearningGame {
             <li>Term "HTML" with description "HyperText Markup Language"</li>
             <li>Term "CSS" with description "Cascading Style Sheets"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<dl>
   <dt>HTML</dt>
@@ -445,15 +445,15 @@ class HTMLLearningGame {
       'intermediate-8': {
         title: 'Abbreviations and Acronyms',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Abbreviations and Acronyms</h4>
-          <p><strong>Instructions:</strong> Create:</p>
+          <p><strong>Instructions:</strong> Create:&lt;/p&gt;
           <ul>
             <li>A paragraph with "I love <abbr title="HyperText Markup Language">HTML</abbr>"</li>
             <li>A paragraph with "And <abbr title="Cascading Style Sheets">CSS</abbr> too"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<p>I love <abbr title="HyperText Markup Language">HTML</abbr></p>
 <p>And <abbr title="Cascading Style Sheets">CSS</abbr> too</p>`,
@@ -467,7 +467,7 @@ class HTMLLearningGame {
       'intermediate-9': {
         title: 'Code and Keyboard Elements',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Code and Keyboard Elements</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -475,7 +475,7 @@ class HTMLLearningGame {
             <li>A paragraph with "Use <code>console.log()</code> to debug"</li>
             <li>A paragraph with "Press <kbd>Ctrl+S</kbd> to save"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<p>Use <code>console.log()</code> to debug</p>
 <p>Press <kbd>Ctrl+S</kbd> to save</p>`,
@@ -489,7 +489,7 @@ class HTMLLearningGame {
       'intermediate-10': {
         title: 'Time and Date Elements',
         level: 'intermediate',
-        exp: 20,
+        exp: 40,
         instructions: `
           <h4>Task: Time and Date Elements</h4>
           <p><strong>Instructions:</strong> Create:</p>
@@ -497,7 +497,7 @@ class HTMLLearningGame {
             <li>A paragraph with "Published on <time datetime="2024-01-15">January 15, 2024</time>"</li>
             <li>A paragraph with "Updated <time datetime="2024-02-01">February 1, 2024</time>"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
         solution: `<p>Published on <time datetime="2024-01-15">January 15, 2024</time></p>
 <p>Updated <time datetime="2024-02-01">February 1, 2024</time></p>`,
@@ -508,11 +508,11 @@ class HTMLLearningGame {
         }
       },
 
-      // ADVANCED TASKS (10 tasks - 30 EXP each)
+      // ADVANCED TASKS (10 tasks - 60 EXP each)
       'advanced-1': {
         title: 'Contact Form',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Create a Contact Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -522,7 +522,7 @@ class HTMLLearningGame {
             <li>Textarea for "Message" with placeholder "Your message here..."</li>
             <li>Submit button with text "Send Message"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <input type="text" placeholder="Your full name">
@@ -540,7 +540,7 @@ class HTMLLearningGame {
       'advanced-2': {
         title: 'Registration Form',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Create Registration Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -550,7 +550,7 @@ class HTMLLearningGame {
             <li>Date input for birth date</li>
             <li>Submit button with text "Register"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <input type="text" placeholder="Username">
@@ -568,7 +568,7 @@ class HTMLLearningGame {
       'advanced-3': {
         title: 'Survey Form with Radio Buttons',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Survey Form with Radio Buttons</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -578,7 +578,7 @@ class HTMLLearningGame {
             <li>Radio button with value "satisfied" and label "Satisfied"</li>
             <li>Radio button with value "neutral" and label "Neutral"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <label>How satisfied are you?</label>
@@ -599,7 +599,7 @@ class HTMLLearningGame {
       'advanced-4': {
         title: 'Checkbox Form',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Checkbox Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -609,7 +609,7 @@ class HTMLLearningGame {
             <li>Checkbox with value "css" and label "CSS"</li>
             <li>Checkbox with value "js" and label "JavaScript"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <label>Select your skills:</label>
@@ -630,7 +630,7 @@ class HTMLLearningGame {
       'advanced-5': {
         title: 'Select Dropdown',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Select Dropdown</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -639,7 +639,7 @@ class HTMLLearningGame {
             <li>Select dropdown with options: "USA", "Canada", "UK", "Australia"</li>
             <li>Submit button with text "Submit"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <label>Choose your country:</label>
@@ -661,7 +661,7 @@ class HTMLLearningGame {
       'advanced-6': {
         title: 'File Upload Form',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: File Upload Form</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -670,7 +670,7 @@ class HTMLLearningGame {
             <li>File input that accepts ".pdf,.doc,.docx" files</li>
             <li>Submit button with text "Upload"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <label>Upload your resume:</label>
@@ -687,7 +687,7 @@ class HTMLLearningGame {
       'advanced-7': {
         title: 'Form with Fieldset',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Form with Fieldset</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -697,7 +697,7 @@ class HTMLLearningGame {
             <li>Text input with placeholder "Last Name"</li>
             <li>Email input with placeholder "Email"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <fieldset>
@@ -717,7 +717,7 @@ class HTMLLearningGame {
       'advanced-8': {
         title: 'Number and Range Inputs',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Number and Range Inputs</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -727,7 +727,7 @@ class HTMLLearningGame {
             <li>Label "Experience (years):"</li>
             <li>Range input with min="0" max="20"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <label>Age:</label>
@@ -745,7 +745,7 @@ class HTMLLearningGame {
       'advanced-9': {
         title: 'Search and URL Inputs',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Search and URL Inputs</h4>
           <p><strong>Instructions:</strong> Create a form with:</p>
@@ -754,7 +754,7 @@ class HTMLLearningGame {
             <li>URL input with placeholder "https://example.com"</li>
             <li>Submit button with text "Go"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <input type="search" placeholder="Search...">
@@ -771,7 +771,7 @@ class HTMLLearningGame {
       'advanced-10': {
         title: 'Complete Registration Form',
         level: 'advanced',
-        exp: 30,
+        exp: 60,
         instructions: `
           <h4>Task: Complete Registration Form</h4>
           <p><strong>Instructions:</strong> Create a comprehensive form with:</p>
@@ -783,7 +783,7 @@ class HTMLLearningGame {
             <li>Checkbox with label "I agree to terms"</li>
             <li>Submit button with text "Register"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
         solution: `<form>
   <input type="text" placeholder="Full Name">
@@ -1278,9 +1278,9 @@ class HTMLLearningGame {
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 5; // default for beginner
-    if (task.level === 'intermediate') expPenalty = 10;
-    if (task.level === 'advanced') expPenalty = 15;
+    let expPenalty = 20; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 40;
+    if (task.level === 'advanced') expPenalty = 60;
     
     if (isUnlocked) {
       showSolutionBtn.disabled = false;
@@ -1428,7 +1428,11 @@ class HTMLLearningGame {
     
     if (!isAlreadyUnlocked) {
       // Deduct EXP
-      this.gameState.exp = Math.max(0, this.gameState.exp - 5);
+      let expPenalty = 20; // default for beginner
+      if (task.level === 'intermediate') expPenalty = 40;
+      if (task.level === 'advanced') expPenalty = 60;
+
+      this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty);
       this.gameState.unlockedSolutions.add(taskId);
       this.updateExpCounter();
     }
@@ -1446,7 +1450,7 @@ class HTMLLearningGame {
     
     // Show feedback
     if (!isAlreadyUnlocked) {
-      this.showValidationFeedback('Solution revealed! 5 EXP deducted. Study the code and try to understand it.', 'error');
+      this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'error');
     } else {
             this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
     }
@@ -1664,6 +1668,3 @@ document.addEventListener("dragstart", function(e) {
     e.preventDefault();
     return false;
 });
-
-
-
