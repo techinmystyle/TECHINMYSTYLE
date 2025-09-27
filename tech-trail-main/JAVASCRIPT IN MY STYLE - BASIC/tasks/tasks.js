@@ -2026,13 +2026,14 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
     } else if (failedAttempts >= 2) {
-      showSolutionBtn.disabled = false;
+      showSolutionBtn.disabled = false; // FIXED: This should be false, not true
       showSolutionBtn.textContent = 'Show Solution (-5 EXP)';
     } else {
       showSolutionBtn.disabled = true;
       showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
     }
   }
+
   
   // Code Validation and Submission
   validateCode() {
