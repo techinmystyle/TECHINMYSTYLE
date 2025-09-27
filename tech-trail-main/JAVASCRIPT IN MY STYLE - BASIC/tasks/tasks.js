@@ -260,13 +260,16 @@ let colors = ["red", "blue", "green"];
 for (let i = 0; i < colors.length; i++) {
     console.log("Color:", colors[i]);
 }`,
-        validate: (code) => {
-          const hasForLoop = /for\s*\(/i.test(code);
-          const hasIncrement = /\+\+/i.test(code);
-          const hasArrayLoop = /\.length/i.test(code);
-          const hasConsoleLog = /console\.log/i.test(code);
-          return hasForLoop && hasIncrement && hasArrayLoop && hasConsoleLog;
-        }
+validate: (code) => {
+  const hasForLoop = /for\s*\(/i.test(code);
+  const hasIncrement = /\+\+/i.test(code);
+  const hasArrayLoop = /\.length/i.test(code);
+  const hasConsoleLog = /console\.log/i.test(code);
+  const hasCountText = /Count/i.test(code);
+  
+  return hasForLoop && hasIncrement && hasArrayLoop && hasConsoleLog && hasCountText;
+}
+
       },
 
       'beginner-7': {
