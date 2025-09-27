@@ -2221,7 +2221,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
 
     // Calculate EXP penalty based on level
-    let expPenalty = 20; // default for beginner
+    let expPenalty = 10; // default for beginner
     if (task.level === 'intermediate') expPenalty = 20;
     if (task.level === 'advanced') expPenalty = 30;
 
