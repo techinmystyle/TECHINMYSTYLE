@@ -1841,24 +1841,56 @@ li {
         }, 3000);
     }
     
+    // Calculate EXP penalty based on task level
+    getExpPenalty(taskLevel) {
+        const penalties = {
+            'beginner': 20,
+            'intermediate': 40,
+            'advanced': 60
+        };
+        return penalties[taskLevel] || 5;
+    }
+    
+    // Check if user can afford the solution
+    canAffordSolution(taskId) {
+        const task = this.tasks[taskId];
+        const expPenalty = this.getExpPenalty(task.level);
+        return this.gameState.exp >= expPenalty;
+    }
+    
     showSolution() {
         const taskId = this.currentTask;
         const task = this.tasks[taskId];
         const showSolutionBtn = document.getElementById('showSolution');
 
-        // Deduct EXP only if the solution hasn't been unlocked yet
-        if (!this.gameState.unlockedSolutions.has(taskId)) {
-            let expPenalty = 5; // Fixed penalty for all levels
-            if (task.level === 'intermediate') expPenalty = 10;
-            if (task.level === 'advanced') expPenalty = 15;
-
-            this.gameState.exp = Math.max(0, this.gameState.exp - expPenalty); // Deduct EXP but not below 0
-            this.gameState.unlockedSolutions.add(taskId); // Mark solution as unlocked
-            this.saveGameState(); // Save state after deduction
-            this.updateExpCounter(); // Update EXP display
-            this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'info');
-        } else {
+        // Check if solution has already been unlocked
+        if (this.gameState.unlockedSolutions.has(taskId)) {
             this.showValidationFeedback('Solution already revealed. No further EXP deduction.', 'info');
+        } else {
+            // Calculate EXP penalty
+            const expPenalty = this.getExpPenalty(task.level);
+            
+            // Check if user can afford the penalty
+            if (!this.canAffordSolution(taskId)) {
+                this.showValidationFeedback(
+                    `Insufficient EXP! You need ${expPenalty} EXP to view the solution, but you only have ${this.gameState.exp} EXP. Complete more tasks to earn EXP.`, 
+                    'error'
+                );
+                return; // Don't show solution if user can't afford it
+            }
+            
+            // Confirm with user before deducting EXP
+            const confirmMessage = `This will cost you ${expPenalty} EXP. Your current EXP: ${this.gameState.exp}. Do you want to continue?`;
+            if (!confirm(confirmMessage)) {
+                return; // User cancelled
+            }
+
+            // Deduct EXP and mark solution as unlocked
+            this.gameState.exp -= expPenalty;
+            this.gameState.unlockedSolutions.add(taskId);
+            this.saveGameState();
+            this.updateExpCounter();
+            this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'info');
         }
         
         // Switch to CSS mode and show solution in the editor
@@ -1867,7 +1899,7 @@ li {
         if (codeEditor) {
             codeEditor.value = task.solution;
             this.gameState.editorContent[taskId] = task.solution;
-            this.saveGameState(); // Save editor content
+            this.saveGameState();
         }
         
         // Update live preview
@@ -1889,12 +1921,11 @@ li {
         
         if (!showSolutionBtn) return;
         
-        // Calculate EXP penalty based on level
-        let expPenalty = 5;
-        if (task.level === 'intermediate') expPenalty = 10;
-        if (task.level === 'advanced') expPenalty = 15;
+        const expPenalty = this.getExpPenalty(task.level);
+        const canAfford = this.canAffordSolution(taskId);
         
         if (isUnlocked) {
+            // Solution already unlocked - user can view it again for free
             showSolutionBtn.disabled = false;
             showSolutionBtn.innerHTML = `
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1902,19 +1933,34 @@ li {
                     <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
                     <line x1="12" y1="17" x2="12.01" y2="17"></line>
                 </svg>
-                Show Solution
+                View Solution
             `;
         } else if (failedAttempts >= 2) {
-            showSolutionBtn.disabled = false;
-            showSolutionBtn.innerHTML = `
-                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <circle cx="12" cy="12" r="10"></circle>
-                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
-                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-                Show Solution (-${expPenalty} EXP)
-            `;
+            // User has failed 2+ times, check if they can afford the solution
+            if (canAfford) {
+                showSolutionBtn.disabled = false;
+                showSolutionBtn.innerHTML = `
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Show Solution (-${expPenalty} EXP)
+                `;
+            } else {
+                // User can't afford the solution
+                showSolutionBtn.disabled = true;
+                showSolutionBtn.innerHTML = `
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                        <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                    </svg>
+                    Need ${expPenalty} EXP (Have: ${this.gameState.exp})
+                `;
+            }
         } else {
+            // User hasn't failed enough times yet
             showSolutionBtn.disabled = true;
             showSolutionBtn.innerHTML = `
                 <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
