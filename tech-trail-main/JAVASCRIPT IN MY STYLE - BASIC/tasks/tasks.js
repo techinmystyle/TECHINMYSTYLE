@@ -23,7 +23,7 @@ class JSLearningGame {
       'beginner-1': {
         title: 'Variables and Console',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Variables and Console</h4>
           <p><strong>Instructions:</strong> Create JavaScript variables and log them:</p>
@@ -60,7 +60,7 @@ console.log("Age:", age);`,
       'beginner-2': {
         title: 'Basic Math Operations',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Basic Math Operations</h4>
           <p><strong>Instructions:</strong> Perform basic math operations:</p>
@@ -102,7 +102,7 @@ console.log("Quotient:", num1 / num2);`,
       'beginner-3': {
         title: 'String Manipulation',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: String Manipulation</h4>
           <p><strong>Instructions:</strong> Work with strings:</p>
@@ -143,7 +143,7 @@ console.log("Length:", message.length);`,
       'beginner-4': {
         title: 'Arrays Basics',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Arrays Basics</h4>
           <p><strong>Instructions:</strong> Create and manipulate arrays:</p>
@@ -185,7 +185,7 @@ console.log("Array length:", fruits.length);`,
       'beginner-5': {
         title: 'If-Else Statements',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: If-Else Statements</h4>
           <p><strong>Instructions:</strong> Use conditional statements:</p>
@@ -230,7 +230,7 @@ if (score >= 90) {
       'beginner-6': {
         title: 'For Loops',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: For Loops</h4>
           <p><strong>Instructions:</strong> Create loops:</p>
@@ -275,7 +275,7 @@ for (let i = 0; i < colors.length; i++) {
 'beginner-7': {
   title: 'Functions',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Functions</h4>
     <p><strong>Instructions:</strong> Create and use functions:</p>
@@ -317,7 +317,7 @@ console.log(result);`,
       'beginner-8': {
         title: 'Objects',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Objects</h4>
           <p><strong>Instructions:</strong> Create and use objects:</p>
@@ -364,7 +364,7 @@ console.log("Full object:", person);`,
       'beginner-9': {
         title: 'DOM Selection',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: DOM Selection</h4>
           <p><strong>Instructions:</strong> Select and modify DOM elements:</p>
@@ -408,7 +408,7 @@ console.log("DOM element updated!");`,
       'beginner-10': {
         title: 'Event Handling',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Event Handling</h4>
           <p><strong>Instructions:</strong> Add event listeners:</p>
@@ -464,7 +464,7 @@ button.addEventListener("click", function() {
       'beginner-11': {
         title: 'While Loops',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: While Loops</h4>
           <p><strong>Instructions:</strong> Use while loops:</p>
@@ -506,7 +506,7 @@ console.log("Loop finished!");`,
       'beginner-12': {
         title: 'Switch Statements',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Switch Statements</h4>
           <p><strong>Instructions:</strong> Use switch statements:</p>
@@ -570,7 +570,7 @@ console.log("Day:", dayName);`,
       'beginner-13': {
         title: 'Array Methods',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Array Methods</h4>
           <p><strong>Instructions:</strong> Use array methods:</p>
@@ -617,7 +617,7 @@ console.log("Doubled array:", doubled);`,
       'beginner-14': {
         title: 'String Methods',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: String Methods</h4>
           <p><strong>Instructions:</strong> Use string methods:</p>
@@ -663,7 +663,7 @@ console.log("Contains 'Script':", hasScript);`,
      'beginner-15': {
   title: 'Math Object',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Math Object</h4>
     <p><strong>Instructions:</strong> Use Math object methods:</p>
@@ -709,7 +709,7 @@ console.log("Maximum:", maximum);`,
    'beginner-16': {
   title: 'Date Object',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Date Object</h4>
     <p><strong>Instructions:</strong> Work with Date object:</p>
@@ -754,7 +754,7 @@ console.log("Day:", now.getDate());`,
       'beginner-17': {
         title: 'Template Literals',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Template Literals</h4>
           <p><strong>Instructions:</strong> Use template literals:</p>
@@ -794,7 +794,7 @@ console.log(message);`,
       'beginner-18': {
         title: 'Arrow Functions',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Arrow Functions</h4>
           <p><strong>Instructions:</strong> Create arrow functions:</p>
@@ -836,7 +836,7 @@ console.log("4 squared =", square(4));`,
       'beginner-19': {
         title: 'Local Storage',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Local Storage</h4>
           <p><strong>Instructions:</strong> Use localStorage:</p>
@@ -881,7 +881,7 @@ console.log("Removed username from localStorage");`,
       'beginner-20': {
         title: 'JSON Methods',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: JSON Methods</h4>
           <p><strong>Instructions:</strong> Work with JSON:</p>
@@ -928,7 +928,7 @@ console.log("Parsed object:", parsedObject);`,
       'beginner-21': {
         title: 'Try-Catch Blocks',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Try-Catch Blocks</h4>
           <p><strong>Instructions:</strong> Handle errors with try-catch:</p>
@@ -971,7 +971,7 @@ console.log("Parsed object:", parsedObject);`,
       'beginner-22': {
         title: 'SetTimeout and SetInterval',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Timers</h4>
           <p><strong>Instructions:</strong> Use setTimeout and setInterval:</p>
@@ -1021,7 +1021,7 @@ let intervalId = setInterval(() => {
      'beginner-23': {
   title: 'Form Validation',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Form Validation</h4>
     <p><strong>Instructions:</strong> Validate form input:</p>
@@ -1096,7 +1096,7 @@ button {
      'beginner-24': {
   title: 'Array Filter Method',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Array Filter</h4>
     <p><strong>Instructions:</strong> Use array filter method:</p>
@@ -1144,7 +1144,7 @@ console.log("Greater than 5:", greaterThanFive);`,
       'beginner-25': {
         title: 'Object Methods',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Object Methods</h4>
           <p><strong>Instructions:</strong> Create object with methods:</p>
@@ -1198,7 +1198,7 @@ console.log("10 / 5 =", calculator.divide(10, 5));`,
      'beginner-26': {
   title: 'Classes and Constructors',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Classes</h4>
     <p><strong>Instructions:</strong> Create a class:</p>
@@ -1251,7 +1251,7 @@ console.log(person2.introduce());`,
      'beginner-27': {
   title: 'Destructuring Assignment',
   level: 'beginner',
-  exp: 10,
+  exp: 5,
   instructions: `
     <h4>Task: Destructuring</h4>
     <p><strong>Instructions:</strong> Use destructuring assignment:</p>
@@ -1304,7 +1304,7 @@ console.log("Second color:", second);`,
       'beginner-28': {
         title: 'Async/Await Basics',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Async/Await</h4>
           <p><strong>Instructions:</strong> Use async/await:</p>
@@ -1355,7 +1355,7 @@ console.log("This runs immediately");`,
       'beginner-29': {
         title: 'Regular Expressions',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Regular Expressions</h4>
           <p><strong>Instructions:</strong> Use regular expressions:</p>
@@ -1403,7 +1403,7 @@ emails.forEach(email => {
       'beginner-30': {
         title: 'Final Project - Todo List',
         level: 'beginner',
-        exp: 10,
+        exp: 5,
         instructions: `
           <h4>Task: Todo List App</h4>
           <p><strong>Instructions:</strong> Create a simple todo list:</p>
