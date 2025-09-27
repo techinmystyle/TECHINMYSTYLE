@@ -531,7 +531,7 @@ li {
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
                 `,
-                htmlContent: `<div class="card"><h3 class="text">Shadowed Text</h3>
+                htmlContent: `<div class="card"><h3>Shadowed Text</h3>
 <p>This card has a shadow effect.</p>
 </div>`,
                 solution: `.card {
@@ -561,7 +561,7 @@ li {
                     </ul>
                     <p><strong>Reward:</strong> 20 EXP</p>
                 `,
-                htmlContent: `<div class="header"><h2 class="gradient-header">Gradient Header</h2></div>
+                htmlContent: `<div class="header"><h2>Gradient Header</h2></div>
 <div class="circle">Radial Gradient</div>`,
                 solution: `.header {
   background: linear-gradient(to right, blue, purple);
@@ -1440,7 +1440,7 @@ li {
                 <style>
                     body { font-family: Arial, sans-serif; padding: 20px; }
                 </style>
-                ${cssCode}
+                <style>${cssCode}</style>
             </head>
             <body>
                 ${htmlCode}
@@ -1508,7 +1508,7 @@ li {
         
         // Check if task is already completed to prevent duplicate EXP
         if (this.gameState.completedTasks.has(taskId)) {
-            console.warn('Task already completed, not adding that right 10!=20 so that is missing in the above code');
+            console.warn('Task already completed, not adding duplicate EXP.');
             this.showTaskAnswer();
             return;
         }
@@ -1560,40 +1560,37 @@ li {
     showSolution() {
         const taskId = this.currentTask;
         const task = this.tasks[taskId];
-        const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
-        const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
-        
-        // Calculate EXP penalty based on level
-        let expPenalty = 20; // default for beginner
-        if (task.level === 'intermediate') expPenalty = 40;
-        if (task.level === 'advanced') expPenalty = 60;
-        
-        if (isUnlocked) {
-            showSolutionBtn.disabled = false;
-            showSolutionBtn.textContent = 'Show Solution';
-        } else if (failedAttempts >= 2) {
-            showSolutionBtn.disabled = false;
-            showSolutionBtn.textContent = `Show Solution (-${expPenalty} EXP)`;
+        const showSolutionBtn = document.getElementById('showSolution');
+
+        // Deduct EXP only if the solution hasn't been unlocked yet
+        if (!this.gameState.unlockedSolutions.has(taskId)) {
+            let expPenalty = 20; // default for beginner
+            if (task.level === 'intermediate') expPenalty = 40;
+            if (task.level === 'advanced') expPenalty = 60;
+
+            this.gameState.exp -= expPenalty; // Deduct EXP
+            this.gameState.unlockedSolutions.add(taskId); // Mark solution as unlocked
+            this.saveGameState(); // Save state after deduction
+            this.updateExpCounter(); // Update EXP display
+            this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'success');
         } else {
-            showSolutionBtn.disabled = true;
-            showSolutionBtn.textContent = `Show Solution (${2 - failedAttempts} attempts left)`;
+            this.showValidationFeedback('Solution already revealed. No further EXP deduction.', 'info');
         }
         
-        // Switch to CSS mode and show solution
+        // Switch to CSS mode and show solution in the editor
         this.switchEditorMode('css');
         document.getElementById('codeEditor').value = task.solution;
         this.gameState.editorContent[taskId] = task.solution;
-        this.saveGameState();
+        this.saveGameState(); // Save editor content
         
         // Update live preview
         this.updateLivePreview();
         
-        // Show feedback
-        let expPenalty = 5; // default for beginner
-        if (task.level === 'intermediate') expPenalty = 10;
-        if (task.level === 'advanced') expPenalty = 15;
-        
-        this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'success');
+        // Disable the solution button after showing the solution
+        if (showSolutionBtn) {
+            showSolutionBtn.disabled = true;
+            showSolutionBtn.textContent = 'Solution Shown';
+        }
     }
     
     updateSolutionButton() {
@@ -1740,7 +1737,7 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-ocument.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
+document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
 document.onkeydown = function(e) {
   // Disable F12
