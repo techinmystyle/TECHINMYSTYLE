@@ -1642,7 +1642,28 @@ document.onkeydown = function(e) {
   }
 
   // Disable Ctrl+Shift+K (Firefox)
+  
   if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
 };
+
+// Enhanced right-click protection
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}, true);
+
+// Additional layer - disable selection
+document.addEventListener("selectstart", function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Disable drag
+document.addEventListener("dragstart", function(e) {
+    e.preventDefault();
+    return false;
+});
+
 
 
