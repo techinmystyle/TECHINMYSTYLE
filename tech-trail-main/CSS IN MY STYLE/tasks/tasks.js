@@ -346,11 +346,11 @@ li {
                 validate: (code) => {
                     const hasContainerFlex = /\.container\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasJustify = /\.container\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
-                    const hasAlign = /\.container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
+                                        const hasAlign = /\.container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
                     return hasContainerFlex && hasJustify && hasAlign;
                 }
             },
-                        'intermediate-2': {
+            'intermediate-2': {
                 title: 'CSS Grid Layout',
                 level: 'intermediate',
                 exp: 20,
@@ -481,7 +481,7 @@ li {
                 validate: (code) => {
                     const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
                     const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-                    const hasMediaQuery = /@media\s*$max-width\s*:\s*600px$/i.test(code);
+                    const hasMediaQuery = /@media\s*$[^)]*max-width\s*:\s*600px[^)]*$/i.test(code);
                     const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
                     return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
                 }
@@ -644,8 +644,8 @@ li {
                     const hasRootPrimary = /:root\s*\{[^}]*--primary-color/i.test(code);
                     const hasRootSecondary = /:root\s*\{[^}]*--secondary-color/i.test(code);
                     const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var$\s*--primary-color\s*$/i.test(code);
-                    const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var$\s*--secondary-color\s*$/i.test(code);
-                                        return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
+                                        const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var$\s*--secondary-color\s*$/i.test(code);
+                    return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
                 }
             },
             // ADVANCED TASKS (10 tasks - 30 EXP each)
@@ -948,8 +948,8 @@ li {
                     const hasTooltipTop = /\.tooltip\s*\{[^}]*top\s*:\s*-30px/i.test(code);
                     const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX$\s*-50%\s*$/i.test(code);
                     const hasOpacityTransition = /\.tooltip\s*\{[^}]*transition\s*:\s*opacity\s+0\.3s/i.test(code);
-                    const hasPointerEventsNone = /\.tooltip\s*\{[^}]*pointer-events\s*:\s*none/i.test(code);
-                                        const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
+                                        const hasPointerEventsNone = /\.tooltip\s*\{[^}]*pointer-events\s*:\s*none/i.test(code);
+                    const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
                     return hasContainerPosition && hasTooltipPosition && hasTooltipTop && hasTooltipTransform && hasOpacityTransition && hasPointerEventsNone && hasHoverEffect;
                 }
             },
@@ -1250,9 +1250,9 @@ li {
     // Get required EXP for a task
     getRequiredExpForTask(taskId) {
         const task = this.tasks[taskId];
-        if (!task) return 0;
+                if (!task) return 0;
         
-                // Define EXP requirements
+        // Define EXP requirements
         const expRequirements = {
             'beginner': 0,      // Always accessible
             'intermediate': 100, // Need 100 EXP (10 beginner tasks completed)
@@ -1940,7 +1940,6 @@ document.addEventListener("dragstart", function(e) {
 });
 
 
-            
 
 
 
