@@ -272,45 +272,47 @@ for (let i = 0; i < colors.length; i++) {
 
       },
 
-      'beginner-7': {
-        title: 'Functions',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Functions</h4>
-          <p><strong>Instructions:</strong> Create and use functions:</p>
-          <ul>
-            <li>Create a function called <code>greet</code> that takes a name parameter</li>
-            <li>Function should return "Hello, [name]!"</li>
-            <li>Call the function with your name</li>
-            <li>Log the result to console</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+'beginner-7': {
+  title: 'Functions',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Functions</h4>
+    <p><strong>Instructions:</strong> Create and use functions:</p>
+    <ul>
+      <li>Create a function called <code>greet</code> that takes a name parameter</li>
+      <li>Function should return "Hello, [name]!"</li>
+      <li>Call the function with your name</li>
+      <li>Log the result to console</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Function Example:</h3>
   <p>Console will show function output!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #ffeaa7;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `function greet(name) {
-    return "Hello, " + name + "!";
+  solution: `function greet(name) {
+  return "Hello, " + name + "!";
 }
 
 let result = greet("John");
 console.log(result);`,
-        validate: (code) => {
-          // FIX: Corrected regex for function definition with a parameter and function call
-          const hasGreetFunctionDefinition = /function\s+greet\s*$\s*\w+\s*$\s*\{/i.test(code);
-          const hasReturn = /return/i.test(code);
-          const hasFunctionCall = /\bgreet\s*$[^)]*$/i.test(code);
-          return hasGreetFunctionDefinition && hasReturn && hasFunctionCall;
-        }
-      },
+  validate: (code) => {
+    // Function definition with parameter
+    const hasGreetFunctionDefinition = /function\s+greet\s*\(\s*\w+\s*\)\s*\{/i.test(code);
+    // Must contain return statement
+    const hasReturn = /return\s+["'`]Hello.*["'`]/i.test(code);
+    // Function call greet("something")
+    const hasFunctionCall = /greet\s*\(\s*["'`]\w+["'`]\s*\)/i.test(code);
+    return hasGreetFunctionDefinition && hasReturn && hasFunctionCall;
+  }
+},
 
       'beginner-8': {
         title: 'Objects',
@@ -658,32 +660,32 @@ console.log("Contains 'Script':", hasScript);`,
         }
       },
 
-      'beginner-15': {
-        title: 'Math Object',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Math Object</h4>
-          <p><strong>Instructions:</strong> Use Math object methods:</p>
-          <ul>
-            <li>Generate a random number between 1 and 10 using <code>Math.random()</code></li>
-            <li>Round it using <code>Math.round()</code></li>
-            <li>Find the maximum of 15, 8, 23 using <code>Math.max()</code></li>
-            <li>Log all results</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+     'beginner-15': {
+  title: 'Math Object',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Math Object</h4>
+    <p><strong>Instructions:</strong> Use Math object methods:</p>
+    <ul>
+      <li>Generate a random number between 1 and 10 using <code>Math.random()</code></li>
+      <li>Round it using <code>Math.round()</code></li>
+      <li>Find the maximum of 15, 8, 23 using <code>Math.max()</code></li>
+      <li>Log all results</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Math Object:</h3>
   <p>Console shows Math method results!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #f8d7da;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `let randomNum = Math.random() * 10 + 1;
+  solution: `let randomNum = Math.random() * 10 + 1;
 console.log("Random number:", randomNum);
 
 let rounded = Math.round(randomNum);
@@ -691,56 +693,63 @@ console.log("Rounded:", rounded);
 
 let maximum = Math.max(15, 8, 23);
 console.log("Maximum:", maximum);`,
-        validate: (code) => {
-          // FIX: Corrected regex for Math.random()
-          const hasMathRandom = /\bMath\.random$$/i.test(code);
-          const hasMathRound = /Math\.round\(/i.test(code);
-          const hasMathMax = /Math\.max\(/i.test(code);
-          const hasConsoleLog = /console\.log/i.test(code);
-          return hasMathRandom && hasMathRound && hasMathMax && hasConsoleLog;
-        }
-      },
+  validate: (code) => {
+    // Must use Math.random()
+    const hasMathRandom = /Math\.random\s*\(\s*\)/i.test(code);
+    // Must use Math.round()
+    const hasMathRound = /Math\.round\s*\(/i.test(code);
+    // Must use Math.max()
+    const hasMathMax = /Math\.max\s*\(/i.test(code);
+    // Must log something
+    const hasConsoleLog = /console\.log\s*\(/i.test(code);
+    return hasMathRandom && hasMathRound && hasMathMax && hasConsoleLog;
+  }
+},
 
-      'beginner-16': {
-        title: 'Date Object',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Date Object</h4>
-          <p><strong>Instructions:</strong> Work with Date object:</p>
-          <ul>
-            <li>Create a new Date object</li>
-            <li>Get the current year using <code>getFullYear()</code></li>
-            <li>Get the current month using <code>getMonth()</code></li>
-            <li>Log the full date and individual components</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+   'beginner-16': {
+  title: 'Date Object',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Date Object</h4>
+    <p><strong>Instructions:</strong> Work with Date object:</p>
+    <ul>
+      <li>Create a new Date object</li>
+      <li>Get the current year using <code>getFullYear()</code></li>
+      <li>Get the current month using <code>getMonth()</code></li>
+      <li>Log the full date and individual components</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Date Object:</h3>
   <p>Console shows current date information!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #e2e3e5;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `let now = new Date();
+  solution: `let now = new Date();
 
 console.log("Full date:", now);
 console.log("Year:", now.getFullYear());
 console.log("Month:", now.getMonth() + 1); // +1 because months are 0-indexed
 console.log("Day:", now.getDate());`,
-        validate: (code) => {
-          // FIX: Corrected regex for new Date(), getFullYear(), getMonth()
-          const hasNewDate = /\bnew\s+Date$$/i.test(code);
-          const hasGetFullYear = /\.getFullYear$$/i.test(code);
-          const hasGetMonth = /\.getMonth$$/i.test(code);
-          const hasConsoleLog = /console\.log/i.test(code);
-          return hasNewDate && hasGetFullYear && hasGetMonth && hasConsoleLog;
-        }
-      },
+  validate: (code) => {
+    // Must create a new Date object
+    const hasNewDate = /\bnew\s+Date\s*\(\s*\)/i.test(code);
+    // Must use getFullYear()
+    const hasGetFullYear = /\.getFullYear\s*\(\s*\)/i.test(code);
+    // Must use getMonth()
+    const hasGetMonth = /\.getMonth\s*\(\s*\)/i.test(code);
+    // Must log something
+    const hasConsoleLog = /console\.log\s*\(/i.test(code);
+    return hasNewDate && hasGetFullYear && hasGetMonth && hasConsoleLog;
+  }
+}
+,
 
       'beginner-17': {
         title: 'Template Literals',
@@ -1009,28 +1018,28 @@ let intervalId = setInterval(() => {
         }
       },
 
-      'beginner-23': {
-        title: 'Form Validation',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Form Validation</h4>
-          <p><strong>Instructions:</strong> Validate form input:</p>
-          <ul>
-            <li>Get the value from input field with id "email"</li>
-            <li>Check if it contains "@" symbol</li>
-            <li>Check if length is at least 5 characters</li>
-            <li>Display validation message in element with id "validation"</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+     'beginner-23': {
+  title: 'Form Validation',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Form Validation</h4>
+    <p><strong>Instructions:</strong> Validate form input:</p>
+    <ul>
+      <li>Get the value from input field with id "email"</li>
+      <li>Check if it contains "@" symbol</li>
+      <li>Check if length is at least 5 characters</li>
+      <li>Display validation message in element with id "validation"</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Form Validation:</h3>
   <input type="text" id="email" placeholder="Enter email" value="test@example.com">
   <button onclick="validateEmail()">Validate</button>
   <div id="validation"></div>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #f8f9fa;
   border-radius: 8px;
@@ -1057,7 +1066,7 @@ button {
   margin-top: 10px;
   font-weight: bold;
 }`,
-        solution: `function validateEmail() {
+  solution: `function validateEmail() {
     let email = document.getElementById("email").value;
     let validationDiv = document.getElementById("validation");
 
@@ -1074,42 +1083,42 @@ button {
 
     console.log("Email validated:", email);
 }`,
-        validate: (code) => {
-          const hasGetElementById = /document\.getElementById/i.test(code);
-          // FIX: Corrected regex for .includes("@")
-          const hasIncludes = /\.includes\s*$\s*["']@["']\s*$/i.test(code);
-          const hasLength = /\.length/i.test(code);
-          const hasTextContent = /\.textContent/i.test(code);
-          return hasGetElementById && hasIncludes && hasLength && hasTextContent;
-        }
-      },
+  validate: (code) => {
+    const hasGetElementById = /document\.getElementById\s*\(/i.test(code);
+    const hasIncludes = /\.includes\s*\(\s*["']@["']\s*\)/i.test(code);
+    const hasLength = /\.length/i.test(code);
+    const hasTextContent = /\.textContent/i.test(code);
+    return hasGetElementById && hasIncludes && hasLength && hasTextContent;
+  }
+}
+,
 
-      'beginner-24': {
-        title: 'Array Filter Method',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Array Filter</h4>
-          <p><strong>Instructions:</strong> Use array filter method:</p>
-          <ul>
-            <li>Create an array of numbers from 1 to 10</li>
-            <li>Use <code>filter()</code> to get only even numbers</li>
-            <li>Use <code>filter()</code> to get numbers greater than 5</li>
-            <li>Log original array and both filtered arrays</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+     'beginner-24': {
+  title: 'Array Filter Method',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Array Filter</h4>
+    <p><strong>Instructions:</strong> Use array filter method:</p>
+    <ul>
+      <li>Create an array of numbers from 1 to 10</li>
+      <li>Use <code>filter()</code> to get only even numbers</li>
+      <li>Use <code>filter()</code> to get numbers greater than 5</li>
+      <li>Log original array and both filtered arrays</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Array Filter:</h3>
   <p>Console shows filtered arrays!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #e3f2fd;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  solution: `let numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 console.log("Original array:", numbers);
 
@@ -1118,15 +1127,19 @@ console.log("Even numbers:", evenNumbers);
 
 let greaterThanFive = numbers.filter(num => num > 5);
 console.log("Greater than 5:", greaterThanFive);`,
-        validate: (code) => {
-          // FIX: Corrected regex for numbers array initialization
-          const hasNumbers = /\bnumbers\s*=\s*$$[\s\S]*?$$/i.test(code);
-          const hasFilter = /\.filter\(/i.test(code);
-          const hasModulo = /%\s*2\s*===\s*0/i.test(code);
-          const hasGreaterThan = />\s*5/i.test(code);
-          return hasNumbers && hasFilter && hasModulo && hasGreaterThan;
-        }
-      },
+  validate: (code) => {
+    // Must declare numbers array
+    const hasNumbers = /\bnumbers\s*=\s*\[\s*1\s*,\s*2[\s\S]*10\s*\]/i.test(code);
+    // Must use filter()
+    const hasFilter = /\.filter\s*\(/i.test(code);
+    // Must check even condition with modulo
+    const hasModulo = /%\s*2\s*===\s*0/i.test(code);
+    // Must check > 5 condition
+    const hasGreaterThan = />\s*5/i.test(code);
+    return hasNumbers && hasFilter && hasModulo && hasGreaterThan;
+  }
+}
+,
 
       'beginner-25': {
         title: 'Object Methods',
@@ -1182,32 +1195,32 @@ console.log("10 / 5 =", calculator.divide(10, 5));`,
         }
       },
 
-      'beginner-26': {
-        title: 'Classes and Constructors',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Classes</h4>
-          <p><strong>Instructions:</strong> Create a class:</p>
-          <ul>
-            <li>Create a class called <code>Person</code></li>
-            <li>Add constructor that takes name and age</li>
-            <li>Add a method <code>introduce()</code> that returns introduction</li>
-            <li>Create an instance and call the method</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+     'beginner-26': {
+  title: 'Classes and Constructors',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Classes</h4>
+    <p><strong>Instructions:</strong> Create a class:</p>
+    <ul>
+      <li>Create a class called <code>Person</code></li>
+      <li>Add constructor that takes name and age</li>
+      <li>Add a method <code>introduce()</code> that returns introduction</li>
+      <li>Create an instance and call the method</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Classes:</h3>
   <p>Console shows class instance results!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #fce4ec;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `class Person {
+  solution: `class Person {
     constructor(name, age) {
         this.name = name;
         this.age = age;
@@ -1223,43 +1236,44 @@ console.log(person1.introduce());
 
 let person2 = new Person("Bob", 30);
 console.log(person2.introduce());`,
-        validate: (code) => {
-          const hasClass = /class\s+Person/i.test(code);
-          const hasConstructor = /constructor\s*\(/i.test(code);
-          const hasThis = /this\./i.test(code);
-          // FIX: Corrected regex for introduce() method
-          const hasIntroduce = /\bintroduce\s*$$/i.test(code);
-          const hasNew = /new\s+Person/i.test(code);
-          return hasClass && hasConstructor && hasThis && hasIntroduce && hasNew;
-        }
-      },
+  validate: (code) => {
+    const hasClass = /class\s+Person/i.test(code);
+    const hasConstructor = /constructor\s*\(/i.test(code);
+    const hasThis = /this\./i.test(code);
+    // FIX: Corrected regex for introduce() method definition
+    const hasIntroduce = /\bintroduce\s*\(\s*\)\s*\{/i.test(code);
+    const hasNew = /new\s+Person\s*\(/i.test(code);
+    return hasClass && hasConstructor && hasThis && hasIntroduce && hasNew;
+  }
+}
+,
 
-      'beginner-27': {
-        title: 'Destructuring Assignment',
-        level: 'beginner',
-        exp: 10,
-        instructions: `
-          <h4>Task: Destructuring</h4>
-          <p><strong>Instructions:</strong> Use destructuring assignment:</p>
-          <ul>
-            <li>Create an object with name, age, and city properties</li>
-            <li>Use destructuring to extract these values</li>
-            <li>Create an array and destructure first two elements</li>
-            <li>Log all destructured values</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<div id="output">
+     'beginner-27': {
+  title: 'Destructuring Assignment',
+  level: 'beginner',
+  exp: 10,
+  instructions: `
+    <h4>Task: Destructuring</h4>
+    <p><strong>Instructions:</strong> Use destructuring assignment:</p>
+    <ul>
+      <li>Create an object with name, age, and city properties</li>
+      <li>Use destructuring to extract these values</li>
+      <li>Create an array and destructure first two elements</li>
+      <li>Log all destructured values</li>
+    </ul>
+    <p><strong>Reward:</strong> 10 EXP</p>
+  `,
+  htmlContent: `<div id="output">
   <h3>Destructuring:</h3>
   <p>Console shows destructured values!</p>
 </div>`,
-        cssContent: `#output {
+  cssContent: `#output {
   padding: 20px;
   background: #e8f5e8;
   border-radius: 8px;
   margin: 20px 0;
 }`,
-        solution: `// Object destructuring
+  solution: `// Object destructuring
 let person = {
     name: "John",
     age: 28,
@@ -1276,15 +1290,16 @@ let colors = ["red", "green", "blue", "yellow"];
 let [first, second] = colors;
 console.log("First color:", first);
 console.log("Second color:", second);`,
-        validate: (code) => {
-          const hasObjectDestructuring = /\{\s*name\s*,\s*age\s*,\s*city\s*\}\s*=/i.test(code);
-          // FIX: Corrected regex for array destructuring and array content
-          const hasArrayDestructuring = /\b$$\s*\w+\s*,\s*\w+\s*$$\s*=/i.test(code);
-          const hasPersonObject = /person\s*=\s*\{/i.test(code);
-          const hasArray = /\b$$[\s\S]*red[\s\S]*green[\s\S]*blue[\s\S]*$$/i.test(code);
-          return hasObjectDestructuring && hasArrayDestructuring && hasPersonObject && hasArray;
-        }
-      },
+  validate: (code) => {
+    const hasPersonObject = /let\s+person\s*=\s*\{[^}]*\}/i.test(code);
+    const hasObjectDestructuring = /let\s*\{\s*name\s*,\s*age\s*,\s*city\s*\}\s*=\s*person/i.test(code);
+    const hasColorsArray = /let\s+colors\s*=\s*\[[^\]]*red[^\]]*green[^\]]*\]/i.test(code);
+    const hasArrayDestructuring = /let\s*\[\s*first\s*,\s*second\s*\]\s*=\s*colors/i.test(code);
+
+    return hasPersonObject && hasObjectDestructuring && hasColorsArray && hasArrayDestructuring;
+  }
+}
+,
 
       'beginner-28': {
         title: 'Async/Await Basics',
