@@ -91,10 +91,10 @@ console.log("Quotient:", num1 / num2);`,
         validate: (code) => {
           const hasNum1 = /let\s+num1\s*=|var\s+num1\s*=|const\s+num1\s*=/i.test(code);
           const hasNum2 = /let\s+num2\s*=|var\s+num2\s*=|const\s+num2\s*=/i.test(code);
-          const hasAddition = /\+/.test(code);
-          const hasSubtraction = /-/.test(code);
-          const hasMultiplication = /\*/.test(code);
-          const hasDivision = /\//.test(code);
+          const hasAddition = /\+/i.test(code);
+          const hasSubtraction = /-/i.test(code);
+          const hasMultiplication = /\*/i.test(code);
+          const hasDivision = /\//i.test(code);
           return hasNum1 && hasNum2 && hasAddition && hasSubtraction && hasMultiplication && hasDivision;
         }
       },
@@ -131,12 +131,12 @@ console.log("Uppercase:", message.toUpperCase());
 console.log("Lowercase:", message.toLowerCase());
 console.log("Length:", message.length);`,
         validate: (code) => {
-  const hasMessage = /let\s+message\s*=|var\s+message\s*=|const\s+message\s*=/i.test(code);
-  const hasToUpperCase = /\.toUpperCase\(\)/i.test(code);
-  const hasToLowerCase = /\.toLowerCase\(\)/i.test(code);
-  const hasLength = /\.length/i.test(code);
-  return hasMessage && hasToUpperCase && hasToLowerCase && hasLength;
-}
+          const hasMessage = /let\s+message\s*=|var\s+message\s*=|const\s+message\s*=/i.test(code);
+          const hasToUpperCase = /\.toUpperCase$$/i.test(code);
+          const hasToLowerCase = /\.toLowerCase$$/i.test(code);
+          const hasLength = /\.length/i.test(code);
+          return hasMessage && hasToUpperCase && hasToLowerCase && hasLength;
+        }
 
       },
 
@@ -260,15 +260,15 @@ let colors = ["red", "blue", "green"];
 for (let i = 0; i < colors.length; i++) {
     console.log("Color:", colors[i]);
 }`,
-validate: (code) => {
-  const hasForLoop = /for\s*\(/i.test(code);
-  const hasIncrement = /\+\+/i.test(code);
-  const hasArrayLoop = /\.length/i.test(code);
-  const hasConsoleLog = /console\.log/i.test(code);
-  const hasCountText = /Count/i.test(code);
-  
-  return hasForLoop && hasIncrement && hasArrayLoop && hasConsoleLog && hasCountText;
-}
+        validate: (code) => {
+          const hasForLoop = /for\s*\(/i.test(code);
+          const hasIncrement = /\+\+/i.test(code);
+          const hasArrayLoop = /\.length/i.test(code);
+          const hasConsoleLog = /console\.log/i.test(code);
+          const hasCountText = /Count/i.test(code);
+
+          return hasForLoop && hasIncrement && hasArrayLoop && hasConsoleLog && hasCountText;
+        }
 
       },
 
@@ -304,11 +304,11 @@ validate: (code) => {
 let result = greet("John");
 console.log(result);`,
         validate: (code) => {
-          const hasFunction = /function\s+greet/i.test(code);
-          const hasParameter = /greet\s*$\s*\w+\s*$/i.test(code);
+          // FIX: Corrected regex for function definition with a parameter and function call
+          const hasGreetFunctionDefinition = /function\s+greet\s*$\s*\w+\s*$\s*\{/i.test(code);
           const hasReturn = /return/i.test(code);
-          const hasFunctionCall = /greet\s*\(/i.test(code);
-          return hasFunction && hasParameter && hasReturn && hasFunctionCall;
+          const hasFunctionCall = /\bgreet\s*$[^)]*$/i.test(code);
+          return hasGreetFunctionDefinition && hasReturn && hasFunctionCall;
         }
       },
 
@@ -355,7 +355,7 @@ console.log("Full object:", person);`,
           const hasDotNotation = /person\./i.test(code);
           const hasNewProperty = /person\.\w+\s*=/i.test(code);
           const hasObjectBraces = /\{[\s\S]*\}/i.test(code);
-                    return hasPersonObject && hasDotNotation && hasNewProperty && hasObjectBraces;
+          return hasPersonObject && hasDotNotation && hasNewProperty && hasObjectBraces;
         }
       },
 
@@ -650,7 +650,7 @@ console.log("Joined with dashes:", joined);
 let hasScript = text.includes("Script");
 console.log("Contains 'Script':", hasScript);`,
         validate: (code) => {
-          const hasText = /text\s*=.*JavaScript/i.test(code);
+          const hasText = /text\s*=\s*.*JavaScript/i.test(code);
           const hasSplit = /\.split\(/i.test(code);
           const hasJoin = /\.join\(/i.test(code);
           const hasIncludes = /\.includes\(/i.test(code);
@@ -692,7 +692,8 @@ console.log("Rounded:", rounded);
 let maximum = Math.max(15, 8, 23);
 console.log("Maximum:", maximum);`,
         validate: (code) => {
-          const hasMathRandom = /Math\.random$$/i.test(code);
+          // FIX: Corrected regex for Math.random()
+          const hasMathRandom = /\bMath\.random$$/i.test(code);
           const hasMathRound = /Math\.round\(/i.test(code);
           const hasMathMax = /Math\.max\(/i.test(code);
           const hasConsoleLog = /console\.log/i.test(code);
@@ -732,7 +733,8 @@ console.log("Year:", now.getFullYear());
 console.log("Month:", now.getMonth() + 1); // +1 because months are 0-indexed
 console.log("Day:", now.getDate());`,
         validate: (code) => {
-          const hasNewDate = /new Date$$/i.test(code);
+          // FIX: Corrected regex for new Date(), getFullYear(), getMonth()
+          const hasNewDate = /\bnew\s+Date$$/i.test(code);
           const hasGetFullYear = /\.getFullYear$$/i.test(code);
           const hasGetMonth = /\.getMonth$$/i.test(code);
           const hasConsoleLog = /console\.log/i.test(code);
@@ -992,7 +994,7 @@ let counter = 0;
 let intervalId = setInterval(() => {
     counter++;
     console.log("Counter:", counter);
-    
+
     if (counter >= 5) {
         clearInterval(intervalId);
         console.log("Interval stopped");
@@ -1058,7 +1060,7 @@ button {
         solution: `function validateEmail() {
     let email = document.getElementById("email").value;
     let validationDiv = document.getElementById("validation");
-    
+
     if (email.length < 5) {
         validationDiv.textContent = "Email too short!";
         validationDiv.style.color = "red";
@@ -1069,12 +1071,13 @@ button {
         validationDiv.textContent = "Valid email!";
         validationDiv.style.color = "green";
     }
-    
+
     console.log("Email validated:", email);
 }`,
         validate: (code) => {
           const hasGetElementById = /document\.getElementById/i.test(code);
-          const hasIncludes = /\.includes\s*$\s*"@"\s*$/i.test(code);
+          // FIX: Corrected regex for .includes("@")
+          const hasIncludes = /\.includes\s*$\s*["']@["']\s*$/i.test(code);
           const hasLength = /\.length/i.test(code);
           const hasTextContent = /\.textContent/i.test(code);
           return hasGetElementById && hasIncludes && hasLength && hasTextContent;
@@ -1116,7 +1119,8 @@ console.log("Even numbers:", evenNumbers);
 let greaterThanFive = numbers.filter(num => num > 5);
 console.log("Greater than 5:", greaterThanFive);`,
         validate: (code) => {
-          const hasNumbers = /numbers\s*=.*$$.*$$/i.test(code);
+          // FIX: Corrected regex for numbers array initialization
+          const hasNumbers = /\bnumbers\s*=\s*$$[\s\S]*?$$/i.test(code);
           const hasFilter = /\.filter\(/i.test(code);
           const hasModulo = /%\s*2\s*===\s*0/i.test(code);
           const hasGreaterThan = />\s*5/i.test(code);
@@ -1208,7 +1212,7 @@ console.log("10 / 5 =", calculator.divide(10, 5));`,
         this.name = name;
         this.age = age;
     }
-    
+
     introduce() {
         return \`Hi, I'm \${this.name} and I'm \${this.age} years old.\`;
     }
@@ -1223,7 +1227,8 @@ console.log(person2.introduce());`,
           const hasClass = /class\s+Person/i.test(code);
           const hasConstructor = /constructor\s*\(/i.test(code);
           const hasThis = /this\./i.test(code);
-          const hasIntroduce = /introduce\s*$\s*$/i.test(code);
+          // FIX: Corrected regex for introduce() method
+          const hasIntroduce = /\bintroduce\s*$$/i.test(code);
           const hasNew = /new\s+Person/i.test(code);
           return hasClass && hasConstructor && hasThis && hasIntroduce && hasNew;
         }
@@ -1273,9 +1278,10 @@ console.log("First color:", first);
 console.log("Second color:", second);`,
         validate: (code) => {
           const hasObjectDestructuring = /\{\s*name\s*,\s*age\s*,\s*city\s*\}\s*=/i.test(code);
-          const hasArrayDestructuring = /$$\s*\w+\s*,\s*\w+\s*$$\s*=/i.test(code);
+          // FIX: Corrected regex for array destructuring and array content
+          const hasArrayDestructuring = /\b$$\s*\w+\s*,\s*\w+\s*$$\s*=/i.test(code);
           const hasPersonObject = /person\s*=\s*\{/i.test(code);
-          const hasArray = /$$.*red.*green.*blue.*$$/i.test(code);
+          const hasArray = /\b$$[\s\S]*red[\s\S]*green[\s\S]*blue[\s\S]*$$/i.test(code);
           return hasObjectDestructuring && hasArrayDestructuring && hasPersonObject && hasArray;
         }
       },
@@ -1307,13 +1313,13 @@ console.log("Second color:", second);`,
 }`,
         solution: `async function fetchData() {
     console.log("Fetching data...");
-    
+
     let data = await new Promise((resolve) => {
         setTimeout(() => {
             resolve("Data fetched successfully!");
         }, 2000);
     });
-    
+
     return data;
 }
 
@@ -1370,7 +1376,8 @@ emails.forEach(email => {
     console.log(\`\${email}: \${isValid ? 'Valid' : 'Invalid'}\`);
 });`,
         validate: (code) => {
-          const hasRegex = /\/.*@.*\//i.test(code);
+          // FIX: Corrected regex for matching a regex literal containing '@'
+          const hasRegex = /\/[^/]*@[^/]*\//i.test(code);
           const hasTest = /\.test\(/i.test(code);
           const hasForEach = /\.forEach/i.test(code);
           const hasEmailArray = /emails\s*=\s*\[/i.test(code);
@@ -1446,15 +1453,15 @@ emails.forEach(email => {
 function addTodo() {
     let input = document.getElementById("todoInput");
     let todoText = input.value.trim();
-    
+
     if (todoText === "") return;
-    
+
     let todo = {
         id: Date.now(),
         text: todoText,
         completed: false
     };
-    
+
     todos.push(todo);
     input.value = "";
     renderTodos();
@@ -1473,7 +1480,7 @@ function toggleTodo(id) {
 function renderTodos() {
     let todoList = document.getElementById("todoList");
     todoList.innerHTML = "";
-    
+
     todos.forEach(todo => {
         let li = document.createElement("li");
         li.className = \`todo-item \${todo.completed ? 'completed' : ''}\`;
@@ -1500,11 +1507,11 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
         }
       }
     };
-    
+
     this.currentTask = null;
     this.init();
   }
-  
+
   async init() {
     // Check if user is logged in first
     this.username = localStorage.getItem("username");
@@ -1520,29 +1527,29 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     this.updateUI();
     this.updateTheme();
   }
-  
+
   // Generate task cards dynamically
   generateTaskCards() {
     const container = document.getElementById('beginnerTasks');
     if (!container) return;
-    
-    const levelTasks = Object.entries(this.tasks).filter(([taskId, task]) => 
+
+    const levelTasks = Object.entries(this.tasks).filter(([taskId, task]) =>
       task.level === 'beginner'
     );
-    
+
     levelTasks.forEach(([taskId, task]) => {
       const taskCard = this.createTaskCard(taskId, task);
       container.appendChild(taskCard);
     });
   }
-  
+
   createTaskCard(taskId, task) {
     const taskCard = document.createElement('div');
     taskCard.className = 'task-card';
     taskCard.dataset.taskId = taskId;
-    
+
     const icon = '<polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>';
-    
+
     taskCard.innerHTML = `
       <div class="task-glow"></div>
       <div class="task-header">
@@ -1575,10 +1582,10 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
         </div>
       </div>
     `;
-    
+
     return taskCard;
   }
-  
+
   getTaskDescription(taskId) {
     const descriptions = {
       'beginner-1': 'Learn to create variables and use console.log()',
@@ -1612,23 +1619,23 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       'beginner-29': 'Use regular expressions for pattern matching',
       'beginner-30': 'Build a complete todo list application'
     };
-    
+
     return descriptions[taskId] || 'Complete this JavaScript task to earn EXP';
   }
-  
+
   // FIXED: Load game state from MongoDB with fallback to localStorage
   async loadGameState() {
     try {
       // First, try to load from MongoDB
       const response = await fetch(`${API_BASE}/progress/${this.username}`);
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log("Loaded progress from server:", data);
-        
+
         // Convert server data to local game state
         const jsTasks = data.javascript || [];
-        
+
         // Calculate EXP from completed tasks
         let calculatedExp = 0;
         jsTasks.forEach(taskId => {
@@ -1636,7 +1643,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
             calculatedExp += this.tasks[taskId].exp;
           }
         });
-        
+
         this.gameState = {
           exp: calculatedExp,
           completedTasks: new Set(jsTasks),
@@ -1647,14 +1654,14 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
           htmlContent: data.html_content || {},
           cssContent: data.css_content || {}
         };
-        
+
         console.log(`Loaded ${jsTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
       } else {
         throw new Error('Failed to load from server');
       }
     } catch (error) {
       console.error("Error loading from server, trying localStorage:", error);
-      
+
       // Fallback to localStorage
       const saved = localStorage.getItem('jsLearningGame');
       if (saved) {
@@ -1714,19 +1721,19 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       // Data is still saved locally, so user can continue
     }
   }
-  
+
   // Event Listeners
   setupEventListeners() {
     // Back button
     document.getElementById('backBtn').addEventListener('click', () => {
       window.location.href = '../index.html';
     });
-    
+
     // Theme toggle
     document.getElementById('themeToggle').addEventListener('click', () => {
       this.toggleTheme();
     });
-    
+
     // Task start buttons (delegated event listener)
     document.addEventListener('click', (e) => {
       if (e.target.closest('.task-start-btn')) {
@@ -1737,32 +1744,32 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
         }
       }
     });
-    
+
     // Modal close
     document.getElementById('closeModal').addEventListener('click', () => {
       this.closeTaskModal();
     });
-    
+
     // Modal overlay click
     document.getElementById('taskModal').addEventListener('click', (e) => {
       if (e.target.id === 'taskModal') {
         this.closeTaskModal();
       }
     });
-    
+
     // Editor mode buttons
     document.getElementById('htmlBtn').addEventListener('click', () => {
       this.switchEditorMode('html');
     });
-    
+
     document.getElementById('cssBtn').addEventListener('click', () => {
       this.switchEditorMode('css');
     });
-    
+
     document.getElementById('jsBtn').addEventListener('click', () => {
       this.switchEditorMode('js');
     });
-    
+
     // Code editor
     document.getElementById('codeEditor').addEventListener('input', (e) => {
       if (this.currentTask) {
@@ -1777,7 +1784,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
         this.updateLivePreview();
       }
     });
-    
+
     // Validation and submission
     const validateCodeBtn = document.getElementById('validateCode');
     if (validateCodeBtn) {
@@ -1799,12 +1806,12 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
             this.showSolution();
         });
     }
-    
+
     // Certificate download
     document.getElementById('downloadCertificate').addEventListener('click', () => {
       this.downloadCertificate();
     });
-    
+
     // ESC key to close modal
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
@@ -1812,7 +1819,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       }
     });
   }
-  
+
   // Switch between HTML, CSS, and JS editor modes
   switchEditorMode(mode) {
     this.currentEditorMode = mode;
@@ -1821,12 +1828,12 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     const jsBtn = document.getElementById('jsBtn');
     const editorTitleText = document.getElementById('editorTitleText');
     const codeEditor = document.getElementById('codeEditor');
-    
+
     // Remove active class from all buttons
     htmlBtn.classList.remove('active');
     cssBtn.classList.remove('active');
     jsBtn.classList.remove('active');
-    
+
     if (mode === 'html') {
       htmlBtn.classList.add('active');
       editorTitleText.textContent = 'HTML Editor';
@@ -1847,18 +1854,18 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       codeEditor.value = this.gameState.editorContent[this.currentTask] || '';
     }
   }
-  
+
   // Theme Management
   toggleTheme() {
     this.gameState.theme = this.gameState.theme === 'light' ? 'dark' : 'light';
     this.updateTheme();
     this.saveGameState();
   }
-  
+
   updateTheme() {
     document.documentElement.setAttribute('data-theme', this.gameState.theme);
   }
-  
+
   // UI Updates
   updateUI() {
     this.updateExpCounter();
@@ -1866,45 +1873,45 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     this.updateTaskCards();
     this.updateCertificateSection();
   }
-  
+
   updateExpCounter() {
     document.getElementById('expCount').textContent = this.gameState.exp;
   }
-  
+
   updateProgressBars() {
-    const levelTasks = Object.keys(this.tasks).filter(taskId => 
+    const levelTasks = Object.keys(this.tasks).filter(taskId =>
       this.tasks[taskId].level === 'beginner'
     );
-    const completedCount = levelTasks.filter(taskId => 
+    const completedCount = levelTasks.filter(taskId =>
       this.gameState.completedTasks.has(taskId)
     ).length;
     const totalCount = levelTasks.length;
     const percentage = (completedCount / totalCount) * 100;
-    
+
     const progressText = document.getElementById('beginnerProgress');
     const progressBar = document.getElementById('beginnerProgressBar');
-    
+
     if (progressText) {
       progressText.textContent = `${completedCount}/${totalCount} Completed`;
     }
     if (progressBar) {
       progressBar.style.width = `${percentage}%`;
     }
-    
+
     // Update progress percentage display
     const progressPercentageElement = progressText?.parentElement?.querySelector('.progress-percentage');
     if (progressPercentageElement) {
       progressPercentageElement.textContent = `${Math.round(percentage)}%`;
     }
   }
-  
+
   updateTaskCards() {
     Object.keys(this.tasks).forEach(taskId => {
       const taskCard = document.querySelector(`[data-task-id="${taskId}"]`);
       if (taskCard) {
         const isCompleted = this.gameState.completedTasks.has(taskId);
         const startBtn = taskCard.querySelector('.task-start-btn span');
-        
+
         if (isCompleted) {
           taskCard.classList.add('completed');
           if (startBtn) startBtn.textContent = 'Completed';
@@ -1915,16 +1922,16 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       }
     });
   }
-  
+
   updateCertificateSection() {
     const totalTasks = Object.keys(this.tasks).length;
     const completedCount = this.gameState.completedTasks.size;
     const isUnlocked = completedCount === totalTasks;
-    
+
     const certificateStatus = document.getElementById('certificateStatus');
     const certificateOverlay = document.getElementById('certificateOverlay');
     const certificateActions = document.getElementById('certificateActions');
-    
+
     if (isUnlocked) {
       certificateStatus.innerHTML = `
         <svg class="icon check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1947,16 +1954,16 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       certificateActions.classList.remove('enabled');
     }
   }
-  
+
   // Task Modal Management
   openTaskModal(taskId) {
     this.currentTask = taskId;
     const task = this.tasks[taskId];
-    
+
     // Update modal content
     document.getElementById('modalTitle').textContent = task.title;
     document.getElementById('taskInstructions').innerHTML = task.instructions;
-    
+
     // Initialize content for the task
     if (!this.gameState.htmlContent[taskId]) {
       this.gameState.htmlContent[taskId] = task.htmlContent;
@@ -1964,52 +1971,52 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     if (!this.gameState.cssContent[taskId]) {
       this.gameState.cssContent[taskId] = task.cssContent;
     }
-    
+
     // Start in JS mode
     this.switchEditorMode('js');
-    
+
     // Reset validation state
     this.resetValidationState();
-    
+
     // Update solution button state
     this.updateSolutionButton();
-    
+
     // Show modal
     document.getElementById('taskModal').classList.add('active');
     document.body.style.overflow = 'hidden';
-    
+
     // Update live preview
     this.updateLivePreview();
   }
-  
+
   closeTaskModal() {
     document.getElementById('taskModal').classList.remove('active');
     document.body.style.overflow = '';
     this.currentTask = null;
   }
-  
+
   // Reset all button states and feedback
   resetValidationState() {
     const validateBtn = document.getElementById('validateCode');
     const submitBtn = document.getElementById('submitCode');
     const showSolutionBtn = document.getElementById('showSolution');
     const feedback = document.getElementById('validationFeedback');
-    
+
     // Reset all buttons to enabled state
     if (validateBtn) {
       validateBtn.disabled = false;
       validateBtn.textContent = 'Validate';
     }
-    
+
     if (submitBtn) {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Submit';
     }
-    
+
     if (showSolutionBtn) {
       showSolutionBtn.disabled = true;
     }
-    
+
     // Hide feedback
     if (feedback) {
       feedback.style.display = 'none';
@@ -2017,7 +2024,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       feedback.textContent = '';
     }
   }
-  
+
   updateSolutionButton() {
     const showSolutionBtn = document.getElementById('showSolution');
     if (!showSolutionBtn) return;
@@ -2025,7 +2032,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     const taskId = this.currentTask;
     const failedAttempts = this.gameState.failedAttempts[taskId] || 0;
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
-    
+
     if (isUnlocked) {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
@@ -2038,7 +2045,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     }
   }
 
-  
+
   // Code Validation and Submission
   validateCode() {
     if (!this.currentTask) {
@@ -2049,19 +2056,19 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
     const code = document.getElementById('codeEditor').value.trim();
     const task = this.tasks[this.currentTask];
     const submitBtn = document.getElementById('submitCode');
-    
+
     if (this.currentEditorMode !== 'js') {
       this.showValidationFeedback('Please switch to JavaScript editor to write your JS code.', 'error');
       return;
     }
-    
+
     if (!code) {
       this.showValidationFeedback('Please write some JavaScript code first.', 'error');
       return;
     }
-    
+
     const isValid = task.validate(code);
-    
+
     if (isValid) {
       this.showValidationFeedback('Perfect! Your JavaScript code is correct. Click Submit to earn EXP!', 'success');
       if (submitBtn) submitBtn.disabled = false;
@@ -2070,46 +2077,46 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       const taskId = this.currentTask;
       this.gameState.failedAttempts[taskId] = (this.gameState.failedAttempts[taskId] || 0) + 1;
       this.saveGameState();
-      
+
       this.showValidationFeedback('Your JavaScript doesn\'t match the expected output. Check the instructions and try again.', 'error');
       if (submitBtn) submitBtn.disabled = true;
-      
+
       // Update solution button
       this.updateSolutionButton();
     }
   }
-  
+
   showValidationFeedback(message, type) {
     const feedback = document.getElementById('validationFeedback');
     if (feedback) {
       feedback.textContent = message;
       feedback.className = `validation-feedback ${type}`;
       feedback.style.display = 'block';
-      
+
       // Scroll to feedback for better visibility
       feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
   }
-  
+
   // FIXED: Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
-    
+
     // Check if task is already completed to prevent duplicate EXP
     if (this.gameState.completedTasks.has(taskId)) {
       console.warn('Task already completed, not adding EXP again');
       this.showTaskAnswer();
       return;
     }
-    
+
     // Add to completed tasks and EXP
     this.gameState.completedTasks.add(taskId);
     this.gameState.exp += task.exp;
     delete this.gameState.editorContent[taskId];
     delete this.gameState.htmlContent[taskId];
     delete this.gameState.cssContent[taskId];
-    
+
     console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
     // Save state immediately
@@ -2141,11 +2148,11 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
 
     this.showTaskAnswer();
   }
-  
+
   // Show the answer after task completion
   showTaskAnswer() {
     const task = this.tasks[this.currentTask];
-    
+
     // Update the instructions to show the answer
     const instructionsDiv = document.getElementById('taskInstructions');
     if (instructionsDiv) {
@@ -2157,45 +2164,45 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
         <p><strong>Great job!</strong> You can now move on to the next task.</p>
       `;
     }
-    
+
     // Disable all buttons since task is completed
     document.getElementById('validateCode').disabled = true;
     document.getElementById('submitCode').disabled = true;
     document.getElementById('showSolution').disabled = true;
-    
+
     // Show completion message in feedback
     this.showValidationFeedback(`Congratulations! You earned ${task.exp} EXP!`, 'success');
-    
+
     // Close modal after delay
     setTimeout(() => {
       this.closeTaskModal();
     }, 3000);
   }
-  
+
   showSolution() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
     const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
-    
+
     if (!isAlreadyUnlocked) {
       // Deduct EXP
       this.gameState.exp = Math.max(0, this.gameState.exp - 5);
       this.gameState.unlockedSolutions.add(taskId);
       this.updateExpCounter();
     }
-    
+
     // Switch to JS mode and show solution
     this.switchEditorMode('js');
     document.getElementById('codeEditor').value = task.solution;
     this.gameState.editorContent[taskId] = task.solution;
     this.saveGameState();
-    
+
     // Update live preview
     this.updateLivePreview();
-    
+
     // Update button
     this.updateSolutionButton();
-    
+
     // Show feedback
     if (!isAlreadyUnlocked) {
       this.showValidationFeedback('Solution revealed! 5 EXP deducted. Study the code and try to understand it.', 'error');
@@ -2203,13 +2210,13 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
     }
   }
-  
+
   updateLivePreview() {
     const htmlCode = this.gameState.htmlContent[this.currentTask] || this.tasks[this.currentTask].htmlContent;
     const cssCode = this.gameState.cssContent[this.currentTask] || this.tasks[this.currentTask].cssContent;
     const jsCode = this.gameState.editorContent[this.currentTask] || '';
     const preview = document.getElementById('livePreview');
-    
+
     const previewContent = `
       <!DOCTYPE html>
       <html lang="en">
@@ -2242,58 +2249,58 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       </body>
       </html>
     `;
-    
+
     preview.srcdoc = previewContent;
   }
-  
+
   // Certificate Generation
   async downloadCertificate() {
     const userName = document.getElementById('userName').value.trim();
-    
+
     if (!userName) {
       alert('Please enter your name to generate the certificate.');
       return;
     }
-    
+
     try {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       const img = new Image();
-      
+
       img.onload = () => {
         try {
           // Set canvas size to match your certificate image
           canvas.width = img.width;
           canvas.height = img.height;
-          
+
           // Draw the certificate background image
           ctx.drawImage(img, 0, 0);
-          
+
           // Calculate positions based on your certificate layout
           const centerX = canvas.width / 2;
-          
+
           // USER NAME POSITIONING
           ctx.fillStyle = '#2d3748';
           ctx.font = 'bold 48px Arial, sans-serif';
           ctx.textAlign = 'center';
           ctx.textBaseline = 'middle';
-          
+
           const nameY = canvas.height * 0.45;
           ctx.fillText(userName, centerX, nameY);
-          
+
           // CURRENT DATE POSITIONING
           ctx.fillStyle = '#4a5568';
           ctx.font = '28px Arial, sans-serif';
-          
+
           const currentDate = new Date().toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'long',
             day: 'numeric'
           });
-          
+
           const dateY = canvas.height * 0.85;
           ctx.fillText(currentDate, centerX, dateY);
-          
+
           // Convert to blob and download
           canvas.toBlob((blob) => {
             if (blob) {
@@ -2301,35 +2308,35 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
               const a = document.createElement('a');
               a.href = url;
               a.download = `JavaScript_Certificate_${userName.replace(/\s+/g, '_')}.png`;
-              
+
               document.body.appendChild(a);
               a.click();
-              
+
               setTimeout(() => {
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
               }, 100);
-              
+
               alert('🎉 Certificate downloaded successfully!');
             } else {
               throw new Error('Failed to create certificate blob');
             }
           }, 'image/png', 1.0);
-          
+
         } catch (error) {
           console.error('Error processing certificate:', error);
           alert('Error generating certificate. Please try again.');
         }
       };
-      
+
       img.onerror = () => {
         console.error('Could not load certificate image (1.png)');
         alert('Certificate template not found. Please ensure 1.png is in the same directory.');
       };
-      
+
       img.crossOrigin = 'anonymous';
       img.src = 'js-basic-01.png';
-      
+
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
       alert('Error generating certificate. Please try again.');
@@ -2384,6 +2391,3 @@ document.onkeydown = function(e) {
   // Disable Ctrl+Shift+K (Firefox)
   if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
 };
-
-
-
