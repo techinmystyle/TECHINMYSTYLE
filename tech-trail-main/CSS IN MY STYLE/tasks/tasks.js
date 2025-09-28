@@ -496,7 +496,7 @@ li {
                 validate: (code) => {
                     const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
                     const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-                    const hasMediaQuery = /@media\s*\([^)]*max-width\s*:\s*600px[^)]*\)/i.test(code);
+                    const hasMediaQuery = /@media\s*$[^)]*max-width\s*:\s*600px[^)]*$/i.test(code);
                     const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
                     return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
                 }
@@ -528,8 +528,8 @@ li {
 }`,
                 validate: (code) => {
                     const hasKeyframes = /@keyframes\s+bounce/i.test(code);
-                    const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
-                    const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
+                    const hasTranslateY0 = /transform\s*:\s*translateY$\s*0\s*$/i.test(code);
+                    const hasTranslateYNeg20 = /transform\s*:\s*translateY$\s*-20px\s*$/i.test(code);
                     const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
                     return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
                 }
@@ -560,8 +560,8 @@ li {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }`,
                 validate: (code) => {
-                    const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
-                    const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
+                    const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
+                    const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*$/i.test(code);
                     return hasCardBoxShadow && hasTextShadow;
                 }
             },
@@ -591,8 +591,8 @@ li {
   background: radial-gradient(circle, red, yellow);
 }`,
                 validate: (code) => {
-                    const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
-                    const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
+                    const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient$\s*to\s+right\s*,\s*blue\s*,\s*purple\s*$/i.test(code);
+                    const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient$\s*circle\s*,\s*red\s*,\s*yellow\s*$/i.test(code);
                     return hasHeaderLinearGradient && hasCircleRadialGradient;
                 }
             },
@@ -626,8 +626,8 @@ li {
 }`,
                 validate: (code) => {
                     const hasBoxTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
-                    const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
-                    const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
+                    const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale$\s*1\.2\s*$/i.test(code);
+                    const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate$\s*45deg\s*$/i.test(code);
                     return hasBoxTransition && hasBoxHoverScale && hasRotateTransform;
                 }
             },
@@ -664,8 +664,8 @@ li {
                 validate: (code) => {
                     const hasRootPrimary = /:root\s*\{[^}]*--primary-color/i.test(code);
                     const hasRootSecondary = /:root\s*\{[^}]*--secondary-color/i.test(code);
-                    const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
-                    const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
+                    const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var$\s*--primary-color\s*$/i.test(code);
+                    const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var$\s*--secondary-color\s*$/i.test(code);
                     return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
                 }
             },
@@ -727,7 +727,7 @@ li {
                 validate: (code) => {
                     const hasNavbarFlex = /\.navbar\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasMenuFlex = /\.menu\s*\{[^}]*display\s*:\s*flex/i.test(code);
-                    const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba\(\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*\)/i.test(code);
+                    const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba$\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*$/i.test(code);
                     return hasNavbarFlex && hasMenuFlex && hasLinkHover;
                 }
             },
@@ -774,9 +774,9 @@ li {
 }`,
                 validate: (code) => {
                     const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
-                    const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat\(auto-fit,\s*minmax\(250px,\s*1fr\)\)/i.test(code);
+                    const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat$auto-fit,\s*minmax\(250px,\s*1fr$\)/i.test(code);
                     const hasGap = /\.dashboard\s*\{[^}]*gap\s*:\s*20px/i.test(code);
-                    const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY\(\s*-5px\s*\)/i.test(code);
+                    const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY$\s*-5px\s*$/i.test(code);
                     return hasDashboardGrid && hasAutoFit && hasGap && hasCardHover;
                 }
             },
@@ -827,7 +827,7 @@ li {
 }`,
                 validate: (code) => {
                     const hasOverlayFixed = /\.modal-overlay\s*\{[^}]*position\s*:\s*fixed/i.test(code);
-                    const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*\)/i.test(code);
+                    const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*$/i.test(code);
                     const hasOverlayFlex = /\.modal-overlay\s*\{[^}]*display\s*:\s*flex/i.test(code);
                     const hasContentRadius = /\.modal-content\s*\{[^}]*border-radius\s*:\s*8px/i.test(code);
                     return hasOverlayFixed && hasOverlayBackground && hasOverlayFlex && hasContentRadius;
@@ -882,7 +882,7 @@ li {
                 validate: (code) => {
                     const hasHeaderSticky = /\.sticky-header\s*\{[^}]*position\s*:\s*sticky/i.test(code);
                     const hasHeaderTop = /\.sticky-header\s*\{[^}]*top\s*:\s*0/i.test(code);
-                    const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
+                    const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
                     const hasZIndex = /\.sticky-header\s*\{[^}]*z-index\s*:\s*100/i.test(code);
                     return hasHeaderSticky && hasHeaderTop && hasHeaderShadow && hasZIndex;
                 }
@@ -935,7 +935,7 @@ li {
                     const hasContainerPosition = /\.tooltip-container\s*\{[^}]*position\s*:\s*relative/i.test(code);
                     const hasTooltipPosition = /\.tooltip\s*\{[^}]*position\s*:\s*absolute/i.test(code);
                     const hasTooltipTop = /\.tooltip\s*\{[^}]*top\s*:\s*-30px/i.test(code);
-                    const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX\(\s*-50%\s*\)/i.test(code);
+                    const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX$\s*-50%\s*$/i.test(code);
                     const hasOpacityTransition = /\.tooltip\s*\{[^}]*transition\s*:\s*opacity\s+0\.3s/i.test(code);
                     const hasPointerEventsNone = /\.tooltip\s*\{[^}]*pointer-events\s*:\s*none/i.test(code);
                     const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
@@ -1162,7 +1162,7 @@ li {
                     const hasContainerPerspective = /\.card-container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
                     const hasCardTransformStyle = /\.card\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
                     const hasCardTransition = /\.card\s*\{[^}]*transition\s*:\s*transform\s+0\.6s/i.test(code);
-                    const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
+                    const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY$\s*180deg\s*$/i.test(code);
                     const hasBackfaceVisibility = /backface-visibility\s*:\s*hidden/i.test(code);
                     return hasContainerPerspective && hasCardTransformStyle && hasCardTransition && hasCardHoverRotate && hasBackfaceVisibility;
                 }
@@ -1210,8 +1210,8 @@ li {
 }`,
                 validate: (code) => {
                     const hasBounceKeyframes = /@keyframes\s+bounce/i.test(code);
-                    const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*1\s*\)\s*rotate\(\s*0deg\s*\)/i.test(code);
-                    const hasTranslateYNeg100 = /transform\s*:\s*translateY\(\s*-100px\s*\)\s*scale\(\s*1\.2\s*\)\s*rotate\(\s*90deg\s*\)/i.test(code);
+                    const hasTranslateY0 = /transform\s*:\s*translateY$\s*0\s*$\s*scale$\s*1\s*$\s*rotate$\s*0deg\s*$/i.test(code);
+                    const hasTranslateYNeg100 = /transform\s*:\s*translateY$\s*-100px\s*$\s*scale$\s*1\.2\s*$\s*rotate$\s*90deg\s*$/i.test(code);
                     const hasBallAnimation = /\.bouncing-ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+ease-in-out\s+infinite/i.test(code);
                     return hasBounceKeyframes && hasTranslateY0 && hasTranslateYNeg100 && hasBallAnimation;
                 }
@@ -1224,16 +1224,14 @@ li {
 
     // Initialize the game
     async init() {
-        // Get username from URL params, localStorage, or prompt user
+        // --- MODIFIED: Remove username prompt and use default/local storage ---
         const urlParams = new URLSearchParams(window.location.search);
-        this.username = urlParams.get('username') || 
-                       localStorage.getItem('gameUsername') || 
-                       prompt('Enter your username:') || 
-                       'Guest';
+        this.username = localStorage.getItem('gameUsername') || urlParams.get('username') || 'Ramu 4012Y'; // Using 'Ramu 4012Y' as default
         
-        if (this.username && this.username !== 'Guest') {
+        if (this.username && this.username !== 'Guest') { // Ensure the default is saved if it's not 'Guest'
             localStorage.setItem('gameUsername', this.username);
         }
+        // --- END MODIFICATION ---
 
         // Load game state first
         await this.loadGameState();
@@ -1470,16 +1468,12 @@ li {
         // Always save to localStorage first (immediate backup)
         localStorage.setItem('cssLearningGame', JSON.stringify(stateToSave));
 
-        // Save to MongoDB
+        // --- MODIFIED: Send full state to MongoDB ---
         try {
             const response = await fetch(`${API_BASE}/task/save-progress`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: this.username,
-                    course: "css",
-                    task_id: this.currentTask || 'general'
-                })
+                body: JSON.stringify(stateToSave) // Send the entire state object
             });
 
             if (response.ok) {
@@ -1491,6 +1485,7 @@ li {
         } catch (error) {
             console.error("Error saving to server:", error);
         }
+        // --- END MODIFICATION ---
     }
     
     updateUI() {
@@ -1804,6 +1799,30 @@ li {
         // Save state immediately
         await this.saveGameState();
         this.updateUI();
+
+        // --- MODIFIED: Send explicit task completion to MongoDB ---
+        try {
+            const response = await fetch(`${API_BASE}/task/complete`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    username: this.username,
+                    course: "css",
+                    task_id: taskId
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log("Task completion confirmed by server:", data);
+            } else {
+                throw new Error(`Server responded with ${response.status}`);
+            }
+        } catch (error) {
+            console.error("Error confirming task completion with server:", error);
+            // Task is still marked complete locally
+        }
+        // --- END MODIFICATION ---
 
         this.showTaskAnswer();
     }
