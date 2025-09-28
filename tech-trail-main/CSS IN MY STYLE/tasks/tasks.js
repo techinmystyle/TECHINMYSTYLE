@@ -1800,29 +1800,31 @@ li {
         await this.saveGameState();
         this.updateUI();
 
-        // --- MODIFIED: Send explicit task completion to MongoDB ---
-        try {
-            const response = await fetch(`${API_BASE}/task/complete`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    username: this.username,
-                    course: "css",
-                    task_id: taskId
-                })
-            });
+      // --- MODIFIED: Send explicit task completion with EXP to MongoDB ---
+try {
+    const response = await fetch(`${API_BASE}/task/complete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            username: this.username,
+            course: "css",
+            task_id: taskId,
+            exp: task.exp   // ✅ include EXP points!
+        })
+    });
 
-            if (response.ok) {
-                const data = await response.json();
-                console.log("Task completion confirmed by server:", data);
-            } else {
-                throw new Error(`Server responded with ${response.status}`);
-            }
-        } catch (error) {
-            console.error("Error confirming task completion with server:", error);
-            // Task is still marked complete locally
-        }
-        // --- END MODIFICATION ---
+    if (response.ok) {
+        const data = await response.json();
+        console.log("Task completion confirmed by server:", data);
+    } else {
+        throw new Error(`Server responded with ${response.status}`);
+    }
+} catch (error) {
+    console.error("Error confirming task completion with server:", error);
+    // Task is still marked complete locally
+}
+// --- END MODIFICATION ---
+
 
         this.showTaskAnswer();
     }
