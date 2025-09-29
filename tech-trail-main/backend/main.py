@@ -48,15 +48,21 @@ class ForgotPasswordData(BaseModel):
     email: str
 
 # --- Register ---
+# --- Replacement for your existing '/register' route ---
 @app.post("/register")
 def register(user: RegisterData):
     if users_collection.find_one({"username": user.username}):
         return {"message": "Username already exists."}
     if users_collection.find_one({"email": user.email}):
         return {"message": "Email already registered."}
+
+    # Hash the user's password before storing it
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
+
     users_collection.insert_one({
         "username": user.username,
-        "password": user.password,    # WARNING: Insecure! Use hashed passwords in production.
+        # Store the hashed password (decoded to a string)
+        "password": hashed_password.decode('utf-8'),
         "email": user.email,
         "progress": {},
         "total_completed": 0,
@@ -68,13 +74,13 @@ def register(user: RegisterData):
     return {"message": "success"}
 
 # --- Login ---
+# --- Replacement for your existing '/login' route ---
 @app.post("/login")
 def login(data: LoginData):
-    user = users_collection.find_one({
-        "username": data.username,
-        "password": data.password
-    })
-    if user:
+    user = users_collection.find_one({"username": data.username})
+
+    # Check if user exists and if the provided password matches the stored hash
+    if user and bcrypt.checkpw(data.password.encode('utf-8'), user["password"].encode('utf-8')):
         return {
             "message": "success",
             "username": user["username"],
@@ -82,6 +88,8 @@ def login(data: LoginData):
             "total_completed": user.get("total_completed", 0),
             "email": user["email"]
         }
+    
+    # Return a generic error message for security
     return {"message": "Invalid username or password."}
 
 # --- Task Complete ---
@@ -221,45 +229,41 @@ def courses_meta():
 EMAIL_ADDRESS = "techinmystyle@gmail.com"
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 
+# --- Replacement for your existing '/forgot-password' route ---
 @app.post("/forgot-password")
 def forgot_password(data: ForgotPasswordData):
     user = users_collection.find_one({"email": data.email})
-    # Always return generic response for privacy
+    
+    # Always return a generic success message to prevent email enumeration
     generic_success = {"message": "success"}
-    generic_error = {"message": "Failed to send recovery email. Please try again later."}
 
-    if not user:
-        return generic_success
+    if user:
+        # If the user exists, send them a recovery email
+        msg = MIMEMultipart()
+        msg["From"] = EMAIL_ADDRESS
+        msg["To"] = data.email
+        msg["Subject"] = "Password Recovery Request - Tech In My Style"
+        # DO NOT SEND THE PASSWORD. It is hashed.
+        body = f"""Hello {user['username']},
 
-    user_password = user.get("password")
-    if not user_password:
-        return generic_error
+We received a request to recover the password for your account on Tech In My Style.
 
-    msg = MIMEMultipart()
-    msg["From"] = EMAIL_ADDRESS
-    msg["To"] = data.email
-    msg["Subject"] = "Your Password Recovery - Tech In My Style"
-    body = f"""Hello {user['username']},
-
-You, or someone using your email, requested to recover your password on Tech In My Style.
-
-Your password is: {user_password}
-
-We recommend you log in and change your password if you did not initiate this request.
+If you made this request, you can log in with your existing password. If you have forgotten it, please contact support directly through our website as we cannot send passwords via email for security reasons.
 
 Best regards,
 Tech In My Style Team
 """
-    msg.attach(MIMEText(body, "plain"))
+        msg.attach(MIMEText(body, "plain"))
 
-    try:
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
-            smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            smtp.send_message(msg)
-        return generic_success
-    except Exception as e:
-        print("Error sending email:", e)
-        return generic_error
+        try:
+            with smtplib.SMTP_SSL("smtp.gmail.com", 465) as smtp:
+                smtp.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+                smtp.send_message(msg)
+        except Exception as e:
+            print("Error sending email:", e)
+            # Don't expose the error to the client
+    
+    return generic_success
 
 # --- Frontend protection route ---
 @app.get("/", response_class=HTMLResponse)
