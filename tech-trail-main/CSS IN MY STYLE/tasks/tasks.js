@@ -1,6 +1,3 @@
-// API Base URL - Update this to match your FastAPI endpoint
-const API_BASE = "https://tech-trail-w2ap.onrender.com";
-
 // Game State Management
 class CSSLearningGame {
   constructor() {
@@ -1149,19 +1146,21 @@ li {
   }
   
   async init() {
-    // Check if user is logged in first
-    this.username = localStorage.getItem("username");
-    if (!this.username) {
-      alert("Please log in first to access the course!");
-      window.location.href = "../../login.html"; // Adjust path as needed
-      return;
-    }
-
+    // FIXED: Create a demo username if none exists instead of redirecting
+    this.username = localStorage.getItem("username") || this.createDemoUser();
+    
     await this.loadGameState();
     this.setupEventListeners();
     this.generateTaskCards();
     this.updateUI();
     this.updateTheme();
+  }
+  
+  // Create a demo user for testing
+  createDemoUser() {
+    const demoUsername = "demo_user_" + Date.now();
+    localStorage.setItem("username", demoUsername);
+    return demoUsername;
   }
   
   // Generate task cards dynamically
@@ -1267,71 +1266,32 @@ li {
     return descriptions[taskId] || 'Complete this CSS task to earn EXP';
   }
   
-  // FIXED: Load game state from MongoDB with fallback to localStorage
+  // FIXED: Load game state from localStorage only (removed API dependency)
   async loadGameState() {
     try {
-      // First, try to load from MongoDB
-      const response = await fetch(`${API_BASE}/progress/${this.username}`);
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Loaded progress from server:", data);
-        
-        // Convert server data to local game state
-        const cssTasks = data.css || [];
-        
-        // Calculate EXP from completed tasks
-        let calculatedExp = 0;
-        cssTasks.forEach(taskId => {
-          if (this.tasks[taskId]) {
-            calculatedExp += this.tasks[taskId].exp;
-          }
-        });
-        
+      const saved = localStorage.getItem('cssLearningGame_' + this.username);
+      if (saved) {
+        const parsedState = JSON.parse(saved);
         this.gameState = {
-          exp: calculatedExp,
-          completedTasks: new Set(cssTasks),
-          unlockedSolutions: new Set(data.unlocked_solutions || []),
-          failedAttempts: data.failed_attempts || {},
-          theme: data.theme || 'light',
-          editorContent: data.editor_content || {},
-          htmlContent: data.html_content || {}
+          exp: parsedState.exp || 0,
+          completedTasks: new Set(parsedState.completedTasks || []),
+          unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+          failedAttempts: parsedState.failedAttempts || {},
+          theme: parsedState.theme || 'light',
+          editorContent: parsedState.editorContent || {},
+          htmlContent: parsedState.htmlContent || {}
         };
-        
-        console.log(`Loaded ${cssTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
-      } else {
-        throw new Error('Failed to load from server');
+        console.log(`Loaded ${this.gameState.completedTasks.size} completed tasks, Total EXP: ${this.gameState.exp}`);
       }
     } catch (error) {
-      console.error("Error loading from server, trying localStorage:", error);
-      
-      // Fallback to localStorage
-      const saved = localStorage.getItem('cssLearningGame');
-      if (saved) {
-        try {
-          const parsedState = JSON.parse(saved);
-          this.gameState = {
-            exp: parsedState.exp || 0,
-            completedTasks: new Set(parsedState.completedTasks || []),
-            unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-            failedAttempts: parsedState.failedAttempts || {},
-            theme: parsedState.theme || 'light',
-            editorContent: parsedState.editorContent || {},
-            htmlContent: parsedState.htmlContent || {}
-          };
-          console.log("Loaded from localStorage as fallback");
-        } catch (parseError) {
-          console.error("Error parsing localStorage data:", parseError);
-        }
-      }
+      console.error("Error loading game state:", error);
     }
   }
 
-  // FIXED: Save game state to both MongoDB and localStorage
+  // FIXED: Save game state to localStorage only
   async saveGameState() {
     const stateToSave = {
-      username: this.username,
-      course: "css",
+      exp: this.gameState.exp,
       completedTasks: Array.from(this.gameState.completedTasks),
       unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
       failedAttempts: this.gameState.failedAttempts,
@@ -1340,26 +1300,12 @@ li {
       htmlContent: this.gameState.htmlContent
     };
 
-    // Always save to localStorage first (immediate backup)
-    localStorage.setItem('cssLearningGame', JSON.stringify(stateToSave));
-
-    // Save to MongoDB
+    // Save to localStorage
     try {
-      const response = await fetch(`${API_BASE}/task/save-progress`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(stateToSave)
-      });
-
-      if (response.ok) {
-        const result = await response.json();
-        console.log("Progress saved to server:", result);
-      } else {
-        throw new Error(`Server responded with ${response.status}`);
-      }
+      localStorage.setItem('cssLearningGame_' + this.username, JSON.stringify(stateToSave));
+      console.log("Progress saved to localStorage");
     } catch (error) {
-      console.error("Error saving to server:", error);
-      // Data is still saved locally, so user can continue
+      console.error("Error saving game state:", error);
     }
   }
   
@@ -1367,7 +1313,7 @@ li {
   setupEventListeners() {
     // Back button
     document.getElementById('backBtn').addEventListener('click', () => {
-      window.location.href = '../index.html';
+      history.back();
     });
     
     // Theme toggle
@@ -1765,7 +1711,7 @@ li {
     }
   }
   
-  // FIXED: Submit Task Completion with proper MongoDB sync
+  // FIXED: Submit Task Completion with proper localStorage sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
@@ -1788,29 +1734,6 @@ li {
     // Save state immediately
     await this.saveGameState();
     this.updateUI();
-
-    // Send completion to MongoDB via individual task completion API
-    try {
-      const response = await fetch(`${API_BASE}/task/complete`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username: this.username,
-          course: "css",
-          task_id: taskId
-        })
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Task completion confirmed by server:", data);
-      } else {
-        throw new Error(`Server responded with ${response.status}`);
-      }
-    } catch (error) {
-      console.error("Error confirming task completion with server:", error);
-      // Task is still marked complete locally
-    }
 
     this.showTaskAnswer();
   }
@@ -1889,7 +1812,7 @@ li {
     }
   }
   
-  // Certificate Generation
+  // FIXED: Certificate Generation with proper canvas handling
   async downloadCertificate() {
     const userName = document.getElementById('userName').value.trim();
     
@@ -1899,80 +1822,79 @@ li {
     }
     
     try {
+      // Create a simple certificate with canvas
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      const img = new Image();
       
-      img.onload = () => {
-        try {
-          // Set canvas size to match your certificate image
-          canvas.width = img.width;
-          canvas.height = img.height;
+      // Set canvas size
+      canvas.width = 800;
+      canvas.height = 600;
+      
+      // White background
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Border
+      ctx.strokeStyle = '#1572b6';
+      ctx.lineWidth = 10;
+      ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+      
+      // Title
+      ctx.fillStyle = '#1572b6';
+      ctx.font = 'bold 48px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('Certificate of Completion', canvas.width / 2, 120);
+      
+      // Subtitle
+      ctx.fillStyle = '#666666';
+      ctx.font = '24px Arial';
+      ctx.fillText('CSS Learning Course', canvas.width / 2, 180);
+      
+      // Name
+      ctx.fillStyle = '#2d3748';
+      ctx.font = 'bold 36px Arial';
+      ctx.fillText(`This certifies that`, canvas.width / 2, 280);
+      
+      ctx.fillStyle = '#1572b6';
+      ctx.font = 'bold 48px Arial';
+      ctx.fillText(userName, canvas.width / 2, 340);
+      
+      ctx.fillStyle = '#2d3748';
+      ctx.font = 'bold 36px Arial';
+      ctx.fillText(`has successfully completed`, canvas.width / 2, 400);
+      ctx.fillText(`all 30 CSS tasks`, canvas.width / 2, 450);
+      
+      // Date
+      ctx.fillStyle = '#666666';
+      ctx.font = '20px Arial';
+      const currentDate = new Date().toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      ctx.fillText(`Issued on ${currentDate}`, canvas.width / 2, 520);
+      
+      // Convert to blob and download
+      canvas.toBlob((blob) => {
+        if (blob) {
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
           
-          // Draw the certificate background image
-          ctx.drawImage(img, 0, 0);
+          document.body.appendChild(a);
+          a.click();
           
-          // Calculate positions based on your certificate layout
-          const centerX = canvas.width / 2;
+          setTimeout(() => {
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+          }, 100);
           
-          // USER NAME POSITIONING
-          ctx.fillStyle = '#2d3748';
-          ctx.font = 'bold 100px Montserrat Bold, sans-serif';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          
-          const nameY = canvas.height * 0.45;
-          ctx.fillText(userName, centerX, nameY);
-          
-          // CURRENT DATE POSITIONING
-          ctx.fillStyle = '#4a5510';
-          ctx.font = '65px Arial, sans-serif';
-          ctx.textAlign = 'center';
-          
-          const currentDate = new Date().toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric'
-          });
-          
-          const dateY = canvas.height * 0.85;
-          ctx.fillText(currentDate, centerX, dateY);
-          
-          // Convert to blob and download
-          canvas.toBlob((blob) => {
-            if (blob) {
-              const url = URL.createObjectURL(blob);
-              const a = document.createElement('a');
-              a.href = url;
-              a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
-              
-              document.body.appendChild(a);
-              a.click();
-              
-              setTimeout(() => {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-              }, 100);
-              
-              alert('🎉 Certificate downloaded successfully!');
-            } else {
-              throw new Error('Failed to create certificate blob');
-            }
-          }, 'image/png', 1.0);
-          
-        } catch (error) {
-          console.error('Error processing certificate:', error);
-          alert('Error generating certificate. Please try again.');
+          alert('🎉 Certificate downloaded successfully!');
+        } else {
+          throw new Error('Failed to create certificate blob');
         }
-      };
-      
-      img.onerror = () => {
-        console.error('Could not load certificate image (15.png)');
-        alert('Certificate template not found. Please ensure 15.png is in the same directory.');
-      };
-      
-      img.crossOrigin = 'anonymous';
-      img.src = '15.png';
+      }, 'image/png', 1.0);
       
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
@@ -2000,50 +1922,4 @@ li {
 // Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new CSSLearningGame();
-});
-
-// Browser security measures - disable developer tools and right-click
-document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
-
-document.onkeydown = function(e) {
-  // Disable F12
-  if (e.keyCode === 123) return false;
-
-  // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
-  if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
-    return false;
-  }
-
-  // Disable Ctrl+U (View Source)
-  if (e.ctrlKey && e.keyCode === 85) return false;
-
-  // Disable Ctrl+S (Save Page)
-  if (e.ctrlKey && e.keyCode === 83) return false;
-
-  // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
-  if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
-    return false;
-  }
-
-  // Disable Ctrl+Shift+K (Firefox)
-  if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
-};
-
-// Enhanced right-click protection
-document.addEventListener("contextmenu", function(e) {
-    e.preventDefault();
-    e.stopPropagation();
-    return false;
-}, true);
-
-// Additional layer - disable selection
-document.addEventListener("selectstart", function(e) {
-    e.preventDefault();
-    return false;
-});
-
-// Disable drag
-document.addEventListener("dragstart", function(e) {
-    e.preventDefault();
-    return false;
 });
