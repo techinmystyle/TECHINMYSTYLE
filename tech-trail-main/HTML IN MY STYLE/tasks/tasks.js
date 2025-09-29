@@ -2,7 +2,7 @@
 const API_BASE = "https://tech-trail-w2ap.onrender.com";
 
 // Game State Management
-class CSSLearningGame {
+class HTMLLearningGame {
   constructor() {
     this.username = null;
     this.gameState = {
@@ -11,1135 +11,797 @@ class CSSLearningGame {
       unlockedSolutions: new Set(),
       failedAttempts: {},
       theme: 'light',
-      editorContent: {},
-      htmlContent: {}
+      editorContent: {}
     };
 
-    this.currentEditorMode = 'css'; // 'html' or 'css'
-
     this.tasks = {
-      // BEGINNER TASKS (10 tasks - 10 EXP each)
+      // BEGINNER TASKS (10 tasks - 20 EXP each)
       'beginner-1': {
-        title: 'Basic CSS Selectors',
+        title: 'Basic HTML Structure',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: Basic CSS Selectors</h4>
-          <p><strong>Instructions:</strong> Style the HTML elements with CSS:</p>
+          <h4>Task: Create Basic HTML Structure</h4>
+          <p><strong>Instructions:</strong> Create a basic HTML document with the following elements:</p>
           <ul>
-            <li>Make the h1 element color red</li>
-            <li>Make the paragraph color blue</li>
-            <li>Make the span element color green</li>
+            <li>An <code>h1</code> heading with the text "Welcome to HTML"</li>
+            <li>A paragraph with the text "This is my first HTML page"</li>
+            <li>Another paragraph with the text "I'm learning HTML step by step"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<h1>Main Heading</h1>
-<p>This is a paragraph with a <span>highlighted word</span>.</p>`,
-        solution: `h1 {
-  color: red;
-}
-
-p {
-  color: blue;
-}
-
-span {
-  color: green;
-}`,
+        solution: `<h1>Welcome to HTML</h1>
+<p>This is my first HTML page</p>
+<p>I'm learning HTML step by step</p>`,
         validate: (code) => {
-          const hasH1Red = /h1\s*\{[^}]*color\s*:\s*red/i.test(code);
-          const hasPBlue = /p\s*\{[^}]*color\s*:\s*blue/i.test(code);
-          const hasSpanGreen = /span\s*\{[^}]*color\s*:\s*green/i.test(code);
-          return hasH1Red && hasPBlue && hasSpanGreen;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<h1>welcome to html</h1> <p>this is my first html page</p> <p>i'm learning html step by step</p>`;
+          return normalized === expected;
         }
       },
 
       'beginner-2': {
-        title: 'CSS Font Properties',
+        title: 'HTML Headings',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Font Properties</h4>
-          <p><strong>Instructions:</strong> Apply font styling:</p>
+          <h4>Task: Create HTML Headings</h4>
+          <p><strong>Instructions:</strong> Create the following heading structure:</p>
           <ul>
-            <li>Make the h1 font-size 24px</li>
-            <li>Make the h1 font-weight bold</li>
-            <li>Make the paragraph font-family Arial</li>
+            <li>An <code>h1</code> heading with "Main Title"</li>
+            <li>An <code>h2</code> heading with "Subtitle"</li>
+            <li>An <code>h3</code> heading with "Section Title"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<h1>Styled Heading</h1>
-<p>This paragraph should have Arial font.</p>`,
-        solution: `h1 {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-p {
-  font-family: Arial;
-}`,
+        solution: `<h1>Main Title</h1>
+<h2>Subtitle</h2>
+<h3>Section Title</h3>`,
         validate: (code) => {
-          const hasH1FontSize = /h1\s*\{[^}]*font-size\s*:\s*24px/i.test(code);
-          const hasH1FontWeight = /h1\s*\{[^}]*font-weight\s*:\s*bold/i.test(code);
-          const hasPFontFamily = /p\s*\{[^}]*font-family\s*:\s*arial/i.test(code);
-          return hasH1FontSize && hasH1FontWeight && hasPFontFamily;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<h1>main title</h1> <h2>subtitle</h2> <h3>section title</h3>`;
+          return normalized === expected;
         }
       },
 
       'beginner-3': {
-        title: 'CSS Background Colors',
+        title: 'Text Formatting',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Background Colors</h4>
-          <p><strong>Instructions:</strong> Apply background colors:</p>
+          <h4>Task: Text Formatting</h4>
+          <p><strong>Instructions:</strong> Create the following formatted text:</p>
           <ul>
-            <li>Give the div a background-color of lightblue</li>
-            <li>Give the paragraph a background-color of lightyellow</li>
+            <li>A paragraph with <code>strong</code> text "Important text"</li>
+            <li>A paragraph with <code>em</code> text "Emphasized text"</li>
+            <li>A paragraph with <code>mark</code> text "Highlighted text"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<div>
-  <p>This paragraph is inside a div.</p>
-</div>`,
-        solution: `div {
-  background-color: lightblue;
-}
-
-p {
-  background-color: lightyellow;
-}`,
+        solution: `<p><strong>Important text</strong></p>
+<p><em>Emphasized text</em></p>
+<p><mark>Highlighted text</mark></p>`,
         validate: (code) => {
-          const hasDivBg = /div\s*\{[^}]*background-color\s*:\s*lightblue/i.test(code);
-          const hasPBg = /p\s*\{[^}]*background-color\s*:\s*lightyellow/i.test(code);
-          return hasDivBg && hasPBg;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p><strong>important text</strong></p> <p><em>emphasized text</em></p> <p><mark>highlighted text</mark></p>`;
+          return normalized === expected;
         }
       },
 
       'beginner-4': {
-        title: 'CSS Text Alignment',
+        title: 'Line Breaks and Horizontal Rules',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Text Alignment</h4>
-          <p><strong>Instructions:</strong> Align text elements:</p>
+          <h4>Task: Line Breaks and Horizontal Rules</h4>
+          <p><strong>Instructions:</strong> Create the following structure:</p>
           <ul>
-            <li>Center align the h1 element</li>
-            <li>Right align the paragraph</li>
+            <li>A paragraph with "First line" followed by a line break and "Second line"</li>
+            <li>A horizontal rule</li>
+            <li>Another paragraph with "After the rule"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<h1>Centered Title</h1>
-<p>This paragraph should be right-aligned.</p>`,
-        solution: `h1 {
-  text-align: center;
-}
-
-p {
-  text-align: right;
-}`,
+        solution: `<p>First line<br>Second line</p>
+<hr>
+<p>After the rule</p>`,
         validate: (code) => {
-          const hasH1Center = /h1\s*\{[^}]*text-align\s*:\s*center/i.test(code);
-          const hasPRight = /p\s*\{[^}]*text-align\s*:\s*right/i.test(code);
-          return hasH1Center && hasPRight;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p>first line<br>second line</p> <hr> <p>after the rule</p>`;
+          return normalized === expected;
         }
       },
 
       'beginner-5': {
-        title: 'CSS Margins',
+        title: 'HTML Comments',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Margins</h4>
-          <p><strong>Instructions:</strong> Apply margins:</p>
+          <h4>Task: HTML Comments</h4>
+          <p><strong>Instructions:</strong> Create the following:</p>
           <ul>
-            <li>Give the h1 a margin-top of 20px</li>
-            <li>Give the paragraph a margin-left of 30px</li>
+            <li>A comment with text "This is a comment"</li>
+            <li>A paragraph with "Visible text"</li>
+            <li>Another comment with text "Another comment"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<h1>Heading with Top Margin</h1>
-<p>Paragraph with Left Margin</p>`,
-        solution: `h1 {
-  margin-top: 20px;
-}
-
-p {
-  margin-left: 30px;
-}`,
+        solution: `<!-- This is a comment -->
+<p>Visible text</p>
+<!-- Another comment -->`,
         validate: (code) => {
-          const hasH1MarginTop = /h1\s*\{[^}]*margin-top\s*:\s*20px/i.test(code);
-          const hasPMarginLeft = /p\s*\{[^}]*margin-left\s*:\s*30px/i.test(code);
-          return hasH1MarginTop && hasPMarginLeft;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<!-- this is a comment --> <p>visible text</p> <!-- another comment -->`;
+          return normalized === expected;
         }
       },
 
       'beginner-6': {
-        title: 'CSS Padding',
+        title: 'Basic Div Elements',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Padding</h4>
-          <p><strong>Instructions:</strong> Apply padding:</p>
+          <h4>Task: Basic Div Elements</h4>
+          <p><strong>Instructions:</strong> Create the following structure:</p>
           <ul>
-            <li>Give the div padding of 15px</li>
-            <li>Give the paragraph padding-top of 10px</li>
+            <li>A div containing an h2 with "Section 1"</li>
+            <li>A div containing a paragraph with "Content for section 1"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<div>
-  <p>This paragraph is inside a padded div.</p>
+        solution: `<div>
+  <h2>Section 1</h2>
+</div>
+<div>
+  <p>Content for section 1</p>
 </div>`,
-        solution: `div {
-  padding: 15px;
-}
-
-p {
-  padding-top: 10px;
-}`,
         validate: (code) => {
-          const hasDivPadding = /div\s*\{[^}]*padding\s*:\s*15px/i.test(code);
-          const hasPPaddingTop = /p\s*\{[^}]*padding-top\s*:\s*10px/i.test(code);
-          return hasDivPadding && hasPPaddingTop;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<div> <h2>section 1</h2> </div> <div> <p>content for section 1</p> </div>`;
+          return normalized === expected;
         }
       },
 
       'beginner-7': {
-        title: 'CSS Borders',
+        title: 'Span Elements',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Borders</h4>
-          <p><strong>Instructions:</strong> Add borders:</p>
+          <h4>Task: Span Elements</h4>
+          <p><strong>Instructions:</strong> Create a paragraph with:</p>
           <ul>
-            <li>Give the div border: 2px solid black</li>
-            <li>Give the paragraph border-bottom: 1px solid red</li>
+            <li>Text "This is a paragraph with a "</li>
+            <li>A span containing "highlighted word"</li>
+            <li>Text " in the middle."</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<div>
-  <p>This paragraph has a bottom border.</p>
-</div>`,
-        solution: `div {
-  border: 2px solid black;
-}
-
-p {
-  border-bottom: 1px solid red;
-}`,
+        solution: `<p>This is a paragraph with a <span>highlighted word</span> in the middle.</p>`,
         validate: (code) => {
-          const hasDivBorder = /div\s*\{[^}]*border\s*:\s*2px\s+solid\s+black/i.test(code);
-          const hasPBorderBottom = /p\s*\{[^}]*border-bottom\s*:\s*1px\s+solid\s+red/i.test(code);
-          return hasDivBorder && hasPBorderBottom;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p>this is a paragraph with a <span>highlighted word</span> in the middle.</p>`;
+          return normalized === expected;
         }
       },
 
       'beginner-8': {
-        title: 'CSS Width and Height',
+        title: 'Preformatted Text',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Width and Height</h4>
-          <p><strong>Instructions:</strong> Set dimensions:</p>
-          <ul>
-            <li>Give the div width: 200px and height: 100px</li>
-            <li>Give the paragraph width: 150px</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <h4>Task: Preformatted Text</h4>
+          <p><strong>Instructions:</strong> Create a pre element with the following code:</p>
+          <pre>function hello() {
+    console.log("Hello World");
+}</pre>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<div>
-  <p>This paragraph has a specific width.</p>
-</div>`,
-        solution: `div {
-  width: 200px;
-  height: 100px;
-}
-
-p {
-  width: 150px;
-}`,
+        solution: `<pre>function hello() {
+    console.log("Hello World");
+}</pre>`,
         validate: (code) => {
-          const hasDivWidth = /div\s*\{[^}]*width\s*:\s*200px/i.test(code);
-          const hasDivHeight = /div\s*\{[^}]*height\s*:\s*100px/i.test(code);
-          const hasPWidth = /p\s*\{[^}]*width\s*:\s*150px/i.test(code);
-          return hasDivWidth && hasDivHeight && hasPWidth;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<pre>function hello() { console.log("hello world"); }</pre>`;
+          return normalized === expected;
         }
       },
 
       'beginner-9': {
-        title: 'CSS List Styling',
+        title: 'Blockquotes',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS List Styling</h4>
-          <p><strong>Instructions:</strong> Style the list:</p>
+          <h4>Task: Blockquotes</h4>
+          <p><strong>Instructions:</strong> Create:</p>
           <ul>
-            <li>Remove bullets from ul (list-style-type: none)</li>
-            <li>Make li elements display: inline</li>
+            <li>A blockquote with the text "The best way to learn HTML is by practicing."</li>
+            <li>A paragraph with "- Anonymous"</li>
           </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<ul>
-  <li>Item 1</li>
-  <li>Item 2</li>
-  <li>Item 3</li>
-</ul>`,
-        solution: `ul {
-  list-style-type: none;
-}
-
-li {
-  display: inline;
-}`,
+        solution: `<blockquote>The best way to learn HTML is by practicing.</blockquote>
+<p>- Anonymous</p>`,
         validate: (code) => {
-          const hasUlListStyle = /ul\s*\{[^}]*list-style-type\s*:\s*none/i.test(code);
-          const hasLiDisplay = /li\s*\{[^}]*display\s*:\s*inline/i.test(code);
-          return hasUlListStyle && hasLiDisplay;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<blockquote>the best way to learn html is by practicing.</blockquote> <p>- anonymous</p>`;
+          return normalized === expected;
         }
       },
 
       'beginner-10': {
-        title: 'CSS Class Selectors',
+        title: 'Address Element',
         level: 'beginner',
         exp: 10,
         instructions: `
-          <h4>Task: CSS Class Selectors</h4>
-          <p><strong>Instructions:</strong> Style elements with classes:</p>
+          <h4>Task: Address Element</h4>
+          <p><strong>Instructions:</strong> Create an address element with:</p>
           <ul>
-            <li>Make elements with class "highlight" background-color yellow</li>
-            <li>Make elements with class "large" font-size 18px</li>
-          </ul>
-          <p><strong>Reward:</strong> 10 EXP</p>
-        `,
-        htmlContent: `<p class="highlight">This paragraph is highlighted.</p>
-<p class="large">This paragraph is large.</p>
-<p class="highlight large">This paragraph is both.</p>`,
-        solution: `.highlight {
-  background-color: yellow;
-}
-
-.large {
-  font-size: 18px;
-}`,
-        validate: (code) => {
-          const hasHighlightBg = /\.highlight\s*\{[^}]*background-color\s*:\s*yellow/i.test(code);
-          const hasLargeFontSize = /\.large\s*\{[^}]*font-size\s*:\s*18px/i.test(code);
-          return hasHighlightBg && hasLargeFontSize;
-        }
-      },
-
-      // INTERMEDIATE TASKS (10 tasks - 20 EXP each)
-      'intermediate-1': {
-        title: 'CSS Flexbox Basics',
-        level: 'intermediate',
-        exp: 20,
-        instructions: `
-          <h4>Task: CSS Flexbox Basics</h4>
-          <p><strong>Instructions:</strong> Create a flex container:</p>
-          <ul>
-            <li>Make the container display: flex</li>
-            <li>Set justify-content: center</li>
-            <li>Set align-items: center</li>
+            <li>Text "Contact us at:"</li>
+            <li>Line break</li>
+            <li>Text "123 Web Street, HTML City"</li>
           </ul>
           <p><strong>Reward:</strong> 20 EXP</p>
         `,
-        htmlContent: `<div class="container">
-  <div class="item">Item 1</div>
-  <div class="item">Item 2</div>
-  <div class="item">Item 3</div>
-</div>`,
-        solution: `.container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}`,
+        solution: `<address>Contact us at:<br>123 Web Street, HTML City</address>`,
         validate: (code) => {
-          const hasContainerFlex = /\.container\s*\{[^}]*display\s*:\s*flex/i.test(code);
-          const hasJustify = /\.container\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
-          const hasAlign = /\.container\s*\{[^}]*align-items\s*:\s*center/i.test(code);
-          return hasContainerFlex && hasJustify && hasAlign;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<address>contact us at:<br>123 web street, html city</address>`;
+          return normalized === expected;
+        }
+      },
+
+      // INTERMEDIATE TASKS (10 tasks - 40 EXP each)
+      'intermediate-1': {
+        title: 'Unordered Lists',
+        level: 'intermediate',
+        exp: 20,
+        instructions: `
+          <h4>Task: Create Unordered Lists</h4>
+          <p><strong>Instructions:</strong> Create an unordered list with:</p>
+          <ul>
+            <li>List item "HTML"</li>
+            <li>List item "CSS"</li>
+            <li>List item "JavaScript"</li>
+          </ul>
+          <p><strong>Reward:</strong> 40 EXP</p>
+        `,
+        solution: `<ul>
+  <li>HTML</li>
+  <li>CSS</li>
+  <li>JavaScript</li>
+</ul>`,
+        validate: (code) => {
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<ul> <li>html</li> <li>css</li> <li>javascript</li> </ul>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-2': {
-        title: 'CSS Grid Layout',
+        title: 'Ordered Lists',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Grid Layout</h4>
-          <p><strong>Instructions:</strong> Build a grid layout:</p>
-          <ul>
-            <li>Make the container display: grid</li>
-            <li>Define 3 equal columns with grid-template-columns: 1fr 1fr 1fr</li>
-            <li>Add gap: 10px between items</li>
-          </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <h4>Task: Create Ordered Lists</h4>
+          <p><strong>Instructions:</strong> Create an ordered list with:</p>
+          <ol>
+            <li>List item "Learn HTML"</li>
+            <li>List item "Learn CSS"</li>
+            <li>List item "Learn JavaScript"</li>
+          </ol>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="grid-container">
-  <div class="grid-item">1</div>
-  <div class="grid-item">2</div>
-  <div class="grid-item">3</div>
-  <div class="grid-item">4</div>
-  <div class="grid-item">5</div>
-  <div class="grid-item">6</div>
-</div>`,
-        solution: `.grid-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-}`,
+        solution: `<ol>
+  <li>Learn HTML</li>
+  <li>Learn CSS</li>
+  <li>Learn JavaScript</li>
+</ol>`,
         validate: (code) => {
-          const hasContainerGrid = /\.grid-container\s*\{[^}]*display\s*:\s*grid/i.test(code);
-          const hasGridColumns = /\.grid-container\s*\{[^}]*grid-template-columns\s*:\s*1fr\s+1fr\s+1fr/i.test(code);
-          const hasGap = /\.grid-container\s*\{[^}]*gap\s*:\s*10px/i.test(code);
-          return hasContainerGrid && hasGridColumns && hasGap;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<ol> <li>learn html</li> <li>learn css</li> <li>learn javascript</li> </ol>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-3': {
-        title: 'CSS Positioning',
+        title: 'Basic Links',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Positioning</h4>
-          <p><strong>Instructions:</strong> Position elements:</p>
+          <h4>Task: Create Basic Links</h4>
+          <p><strong>Instructions:</strong> Create:</p>
           <ul>
-            <li>Make the container position: relative</li>
-            <li>Make the box position: absolute</li>
-            <li>Set top: 20px and right: 20px for the box</li>
+            <li>A link to "https://www.google.com" with text "Google"</li>
+            <li>A link to "https://www.github.com" with text "GitHub"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="container">
-  <p>This is the container content.</p>
-  <div class="box">Positioned Box</div>
-</div>`,
-        solution: `.container {
-  position: relative;
-}
-
-.box {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-}`,
+        solution: `<a href="https://www.google.com">Google</a>
+<a href="https://www.github.com">GitHub</a>`,
         validate: (code) => {
-          const hasContainerRelative = /\.container\s*\{[^}]*position\s*:\s*relative/i.test(code);
-          const hasBoxAbsolute = /\.box\s*\{[^}]*position\s*:\s*absolute/i.test(code);
-          const hasBoxTop = /\.box\s*\{[^}]*top\s*:\s*20px/i.test(code);
-          const hasBoxRight = /\.box\s*\{[^}]*right\s*:\s*20px/i.test(code);
-          return hasContainerRelative && hasBoxAbsolute && hasBoxTop && hasBoxRight;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<a href="https://www.google.com">google</a> <a href="https://www.github.com">github</a>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-4': {
-        title: 'CSS Hover Effects',
+        title: 'Images',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Hover Effects</h4>
-          <p><strong>Instructions:</strong> Add hover effects:</p>
+          <h4>Task: Add Images</h4>
+          <p><strong>Instructions:</strong> Create:</p>
           <ul>
-            <li>Make buttons background blue</li>
-            <li>On hover, change background to red</li>
-            <li>Add transition duration of 0.3s for smooth effect</li>
+            <li>An image with src "image.jpg" and alt text "Sample Image"</li>
+            <li>A paragraph with "This is a sample image"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<button class="btn">Hover Me</button>
-<button class="btn">Another Button</button>`,
-        solution: `.btn {
-  background-color: blue;
-  transition: background-color 0.3s;
-}
-
-.btn:hover {
-  background-color: red;
-}`,
+        solution: `<img src="image.jpg" alt="Sample Image">
+<p>This is a sample image</p>`,
         validate: (code) => {
-          const hasBtnBlue = /\.btn\s*\{[^}]*background-color\s*:\s*blue/i.test(code);
-          const hasTransition = /\.btn\s*\{[^}]*transition\s*:\s*background-color\s+0\.3s/i.test(code);
-          const hasBtnHoverRed = /\.btn:hover\s*\{[^}]*background-color\s*:\s*red/i.test(code);
-          return hasBtnBlue && hasTransition && hasBtnHoverRed;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<img src="image.jpg" alt="sample image"> <p>this is a sample image</p>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-5': {
-        title: 'CSS Responsive Design',
+        title: 'Nested Lists',
         level: 'intermediate',
         exp: 20,
-        instructions: `
-          <h4>Task: CSS Responsive Design</h4>
-          <p><strong>Instructions:</strong> Create responsive layout:</p>
+                instructions: `
+          <h4>Task: Create Nested Lists</h4>
+          <p><strong>Instructions:</strong> Create an unordered list with:</p>
           <ul>
-            <li>Make container width: 100% and max-width: 800px</li>
-            <li>Add media query for max-width: 600px</li>
-            <li>In media query, make container font-size: 14px</li>
+            <li>"Frontend" with nested list containing "HTML" and "CSS"</li>
+            <li>"Backend" with nested list containing "Node.js" and "Python"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="container">
-  <h2>Responsive Container</h2>
-  <p>This container adapts to screen size.</p>
-</div>`,
-        solution: `.container {
-  width: 100%;
-  max-width: 800px;
-}
-
-@media (max-width: 600px) {
-  .container {
-    font-size: 14px;
-  }
-}`,
+        solution: `<ul>
+  <li>Frontend
+    <ul>
+      <li>HTML</li>
+      <li>CSS</li>
+    </ul>
+  </li>
+  <li>Backend
+    <ul>
+      <li>Node.js</li>
+      <li>Python</li>
+    </ul>
+  </li>
+</ul>`,
         validate: (code) => {
-          const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
-          const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-          const hasMediaQuery = /@media\s*\([^)]*max-width\s*:\s*600px[^)]*\)/i.test(code);
-          const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
-          return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<ul> <li>frontend <ul> <li>html</li> <li>css</li> </ul> </li> <li>backend <ul> <li>node.js</li> <li>python</li> </ul> </li> </ul>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-6': {
-        title: 'CSS Animations',
+        title: 'Tables Basic',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Animations</h4>
-          <p><strong>Instructions:</strong> Create bouncing animation:</p>
+          <h4>Task: Create Basic Table</h4>
+          <p><strong>Instructions:</strong> Create a table with:</p>
           <ul>
-            <li>Create @keyframes bounce animation</li>
-            <li>0% and 100%: transform: translateY(0)</li>
-            <li>50%: transform: translateY(-20px)</li>
-            <li>Apply animation to .ball: animation: bounce 2s infinite</li>
+            <li>Header row with "Name" and "Age"</li>
+            <li>Data row with "John" and "25"</li>
+            <li>Data row with "Jane" and "30"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="ball">Bouncing Ball</div>`,
-        solution: `@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
-}
-
-.ball {
-  animation: bounce 2s infinite;
-}`,
+        solution: `<table>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+  </tr>
+  <tr>
+    <td>John</td>
+    <td>25</td>
+  </tr>
+  <tr>
+    <td>Jane</td>
+    <td>30</td>
+  </tr>
+</table>`,
         validate: (code) => {
-          const hasKeyframes = /@keyframes\s+bounce/i.test(code);
-          const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
-          const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
-          const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
-          return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<table> <tr> <th>name</th> <th>age</th> </tr> <tr> <td>john</td> <td>25</td> </tr> <tr> <td>jane</td> <td>30</td> </tr> </table>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-7': {
-        title: 'CSS Shadows',
+        title: 'Description Lists',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Shadows</h4>
-          <p><strong>Instructions:</strong> Add shadow effects:</p>
+          <h4>Task: Create Description Lists</h4>
+          <p><strong>Instructions:</strong> Create a description list with:</p>
           <ul>
-            <li>Give .card box-shadow: 0 4px 8px rgba(0,0,0,0.1)</li>
-            <li>Give .text text-shadow: 2px 2px 4px rgba(0,0,0,0.3)</li>
+            <li>Term "HTML" with description "HyperText Markup Language"</li>
+            <li>Term "CSS" with description "Cascading Style Sheets"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="card">
-  <h3 class="text">Shadowed Text</h3>
-  <p>This card has a shadow effect.</p>
-</div>`,
-        solution: `.card {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.text {
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-}`,
+        solution: `<dl>
+  <dt>HTML</dt>
+  <dd>HyperText Markup Language</dd>
+  <dt>CSS</dt>
+  <dd>Cascading Style Sheets</dd>
+</dl>`,
         validate: (code) => {
-          const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
-          const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
-          return hasCardBoxShadow && hasTextShadow;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<dl> <dt>html</dt> <dd>hypertext markup language</dd> <dt>css</dt> <dd>cascading style sheets</dd> </dl>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-8': {
-        title: 'CSS Gradients',
+        title: 'Abbreviations and Acronyms',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Gradients</h4>
-          <p><strong>Instructions:</strong> Create gradient backgrounds:</p>
+          <h4>Task: Abbreviations and Acronyms</h4>
+          <p><strong>Instructions:</strong> Create:&amp;lt;/p&amp;gt;
           <ul>
-            <li>Give .header background: linear-gradient(to right, blue, purple)</li>
-            <li>Give .circle background: radial-gradient(circle, red, yellow)</li>
+            <li>A paragraph with "I love <abbr title="HyperText Markup Language">HTML</abbr>"</li>
+            <li>A paragraph with "And <abbr title="Cascading Style Sheets">CSS</abbr> too"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="header">
-  <h2>Gradient Header</h2>
-</div>
-<div class="circle">Radial Gradient</div>`,
-        solution: `.header {
-  background: linear-gradient(to right, blue, purple);
-}
-
-.circle {
-  background: radial-gradient(circle, red, yellow);
-}`,
+        solution: `<p>I love <abbr title="HyperText Markup Language">HTML</abbr></p>
+<p>And <abbr title="Cascading Style Sheets">CSS</abbr> too</p>`,
         validate: (code) => {
-          const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
-          const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
-          return hasHeaderLinearGradient && hasCircleRadialGradient;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p>i love <abbr title="hypertext markup language">html</abbr></p> <p>and <abbr title="cascading style sheets">css</abbr> too</p>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-9': {
-        title: 'CSS Transform',
+        title: 'Code and Keyboard Elements',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Transform</h4>
-          <p><strong>Instructions:</strong> Apply transforms:</p>
+          <h4>Task: Code and Keyboard Elements</h4>
+          <p><strong>Instructions:</strong> Create:</p>
           <ul>
-            <li>Make .box transform: scale(1.2) on hover</li>
-            <li>Make .rotate transform: rotate(45deg)</li>
-            <li>Add transition: transform 0.3s to .box</li>
+            <li>A paragraph with "Use <code>console.log()</code> to debug"</li>
+            <li>A paragraph with "Press <kbd>Ctrl+S</kbd> to save"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="box">Hover to Scale</div>
-<div class="rotate">Rotated Box</div>`,
-        solution: `.box {
-  transition: transform 0.3s;
-}
-
-.box:hover {
-  transform: scale(1.2);
-}
-
-.rotate {
-  transform: rotate(45deg);
-}`,
+        solution: `<p>Use <code>console.log()</code> to debug</p>
+<p>Press <kbd>Ctrl+S</kbd> to save</p>`,
         validate: (code) => {
-          const hasBoxTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
-          const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
-          const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
-          return hasBoxTransition && hasBoxHoverScale && hasRotateTransform;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p>use <code>console.log()</code> to debug</p> <p>press <kbd>ctrl+s</kbd> to save</p>`;
+          return normalized === expected;
         }
       },
 
       'intermediate-10': {
-        title: 'CSS Variables',
+        title: 'Time and Date Elements',
         level: 'intermediate',
         exp: 20,
         instructions: `
-          <h4>Task: CSS Variables</h4>
-          <p><strong>Instructions:</strong> Use CSS custom properties:</p>
+          <h4>Task: Time and Date Elements</h4>
+          <p><strong>Instructions:</strong> Create:</p>
           <ul>
-            <li>Define --primary-color: #3498db in :root</li>
-            <li>Define --secondary-color: #e74c3c in :root</li>
-            <li>Use var(--primary-color) for .primary background</li>
-            <li>Use var(--secondary-color) for .secondary background</li>
+            <li>A paragraph with "Published on <time datetime="2024-01-15">January 15, 2024</time>"</li>
+            <li>A paragraph with "Updated <time datetime="2024-02-01">February 1, 2024</time>"</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 40 EXP</p>
         `,
-        htmlContent: `<div class="primary">Primary Color</div>
-<div class="secondary">Secondary Color</div>`,
-        solution: `:root {
-  --primary-color: #3498db;
-  --secondary-color: #e74c3c;
-}
-
-.primary { 
-  background: var(--primary-color); 
-}
-
-.secondary { 
-  background: var(--secondary-color); 
-}`,
+        solution: `<p>Published on <time datetime="2024-01-15">January 15, 2024</time></p>
+<p>Updated <time datetime="2024-02-01">February 1, 2024</time></p>`,
         validate: (code) => {
-          const hasRootPrimary = /:root\s*\{[^}]*--primary-color/i.test(code);
-          const hasRootSecondary = /:root\s*\{[^}]*--secondary-color/i.test(code);
-          const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
-          const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
-          return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<p>published on <time datetime="2024-01-15">january 15, 2024</time></p> <p>updated <time datetime="2024-02-01">february 1, 2024</time></p>`;
+          return normalized === expected;
         }
       },
 
-      // ADVANCED TASKS (10 tasks - 30 EXP each)
+      // ADVANCED TASKS (10 tasks - 60 EXP each)
       'advanced-1': {
-        title: 'Advanced Flexbox Layout',
+        title: 'Contact Form',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: Advanced Flexbox Layout</h4>
-          <p><strong>Instructions:</strong> Build a responsive navbar:</p>
+          <h4>Task: Create a Contact Form</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Make .navbar display: flex with justify-content: space-between</li>
-            <li>Make .menu display: flex with list-style: none</li>
-            <li>Add hover effect: background-color: rgba(255, 255, 255, 0.2) for .menu a:hover</li>
+            <li>Text input for "Name" with placeholder "Your full name"</li>
+            <li>Email input for "Email" with placeholder "your@email.com"</li>
+            <li>Textarea for "Message" with placeholder "Your message here..."</li>
+            <li>Submit button with text "Send Message"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<nav class="navbar">
-  <div class="logo">Logo</div>
-  <ul class="menu">
-    <li><a href="#">Home</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Services</a></li>
-    <li><a href="#">Contact</a></li>
-  </ul>
-</nav>`,
-        solution: `.navbar {
-  display: flex;
-  justify-content: space-between;
-}
-
-.menu {
-  display: flex;
-  list-style: none;
-}
-
-.menu a:hover {
-  background-color: rgba(255, 255, 255, 0.2);
-}`,
+        solution: `<form>
+  <input type="text" placeholder="Your full name">
+  <input type="email" placeholder="your@email.com">
+  <textarea placeholder="Your message here..."></textarea>
+  <button type="submit">Send Message</button>
+</form>`,
         validate: (code) => {
-          const hasNavbarFlex = /\.navbar\s*\{[^}]*display\s*:\s*flex/i.test(code);
-          const hasNavbarJustify = /\.navbar\s*\{[^}]*justify-content\s*:\s*space-between/i.test(code);
-          const hasMenuFlex = /\.menu\s*\{[^}]*display\s*:\s*flex/i.test(code);
-          const hasMenuListStyle = /\.menu\s*\{[^}]*list-style\s*:\s*none/i.test(code);
-          const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba\(\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*\)/i.test(code);
-          return hasNavbarFlex && hasNavbarJustify && hasMenuFlex && hasMenuListStyle && hasLinkHover;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <input type="text" placeholder="your full name"> <input type="email" placeholder="your@email.com"> <textarea placeholder="your message here..."></textarea> <button type="submit">send message</button> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-2': {
-        title: 'Advanced Grid Layout',
+        title: 'Registration Form',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: Advanced Grid Layout</h4>
-          <p><strong>Instructions:</strong> Create responsive card layout:</p>
+          <h4>Task: Create Registration Form</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Make .dashboard display: grid with grid-template-columns: repeat(auto-fit, minmax(250px, 1fr))</li>
-            <li>Add gap: 20px and padding: 20px</li>
-            <li>Add hover effect: transform: translateY(-5px) for .card:hover</li>
+            <li>Text input for username with placeholder "Username"</li>
+            <li>Password input with placeholder "Password"</li>
+            <li>Date input for birth date</li>
+            <li>Submit button with text "Register"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="dashboard">
-  <div class="card">Card 1</div>
-  <div class="card">Card 2</div>
-  <div class="card">Card 3</div>
-  <div class="card">Card 4</div>
-  <div class="card">Card 5</div>
-  <div class="card">Card 6</div>
-</div>`,
-        solution: `.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  padding: 20px;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}`,
+        solution: `<form>
+  <input type="text" placeholder="Username">
+  <input type="password" placeholder="Password">
+  <input type="date">
+  <button type="submit">Register</button>
+</form>`,
         validate: (code) => {
-          const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
-          const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat\(auto-fit,\s*minmax\(250px,\s*1fr\)\)/i.test(code);
-          const hasGap = /\.dashboard\s*\{[^}]*gap\s*:\s*20px/i.test(code);
-          const hasPadding = /\.dashboard\s*\{[^}]*padding\s*:\s*20px/i.test(code);
-          const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY\(\s*-5px\s*\)/i.test(code);
-          return hasDashboardGrid && hasAutoFit && hasGap && hasPadding && hasCardHover;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <input type="text" placeholder="username"> <input type="password" placeholder="password"> <input type="date"> <button type="submit">register</button> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-3': {
-        title: 'CSS Modal Popup',
+        title: 'Survey Form with Radio Buttons',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Modal Popup</h4>
-          <p><strong>Instructions:</strong> Create a modal:</p>
+          <h4>Task: Survey Form with Radio Buttons</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Make .modal-overlay position: fixed with full screen coverage (top: 0, left: 0, width: 100%, height: 100%)</li>
-            <li>Set background-color: rgba(0, 0, 0, 0.5)</li>
-            <li>Use display: flex with justify-content: center and align-items: center</li>
-            <li>Style .modal-content with background: white, border-radius: 8px, padding: 20px</li>
+            <li>Label "How satisfied are you?"</li>
+            <li>Radio button with value "very-satisfied" and label "Very Satisfied"</li>
+            <li>Radio button with value "satisfied" and label "Satisfied"</li>
+            <li>Radio button with value "neutral" and label "Neutral"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<button class="open-modal-btn">Open Modal</button>
-<div class="modal-overlay">
-  <div class="modal-content">
-    <h2>Modal Title</h2>
-    <p>This is a modal window.</p>
-    <button class="close-modal-btn">Close</button>
-  </div>
-</div>`,
-        solution: `.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 8px;
-  padding: 20px;
-}`,
+        solution: `<form>
+  <label>How satisfied are you?</label>
+  <input type="radio" name="satisfaction" value="very-satisfied">
+  <label>Very Satisfied</label>
+  <input type="radio" name="satisfaction" value="satisfied">
+  <label>Satisfied</label>
+  <input type="radio" name="satisfaction" value="neutral">
+  <label>Neutral</label>
+</form>`,
         validate: (code) => {
-          const hasOverlayFixed = /\.modal-overlay\s*\{[^}]*position\s*:\s*fixed/i.test(code);
-          const hasOverlayTop = /\.modal-overlay\s*\{[^}]*top\s*:\s*0/i.test(code);
-          const hasOverlayLeft = /\.modal-overlay\s*\{[^}]*left\s*:\s*0/i.test(code);
-          const hasOverlayWidth = /\.modal-overlay\s*\{[^}]*width\s*:\s*100%/i.test(code);
-          const hasOverlayHeight = /\.modal-overlay\s*\{[^}]*height\s*:\s*100%/i.test(code);
-          const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*\)/i.test(code);
-          const hasOverlayFlex = /\.modal-overlay\s*\{[^}]*display\s*:\s*flex/i.test(code);
-          const hasOverlayJustify = /\.modal-overlay\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
-          const hasOverlayAlign = /\.modal-overlay\s*\{[^}]*align-items\s*:\s*center/i.test(code);
-          const hasContentBackground = /\.modal-content\s*\{[^}]*background\s*:\s*white/i.test(code);
-          const hasContentRadius = /\.modal-content\s*\{[^}]*border-radius\s*:\s*8px/i.test(code);
-          const hasContentPadding = /\.modal-content\s*\{[^}]*padding\s*:\s*20px/i.test(code);
-          return hasOverlayFixed && hasOverlayTop && hasOverlayLeft && hasOverlayWidth && hasOverlayHeight && hasOverlayBackground && hasOverlayFlex && hasOverlayJustify && hasOverlayAlign && hasContentBackground && hasContentRadius && hasContentPadding;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <label>how satisfied are you?</label> <input type="radio" name="satisfaction" value="very-satisfied"> <label>very satisfied</label> <input type="radio" name="satisfaction" value="satisfied"> <label>satisfied</label> <input type="radio" name="satisfaction" value="neutral"> <label>neutral</label> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-4': {
-        title: 'CSS Sticky Header',
+        title: 'Checkbox Form',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Sticky Header</h4>
-          <p><strong>Instructions:</strong> Make sticky header:</p>
+          <h4>Task: Checkbox Form</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Make .sticky-header position: sticky with top: 0</li>
-            <li>Add background-color: #333 and box-shadow: 0 2px 4px rgba(0,0,0,0.1)</li>
-            <li>Set z-index: 100</li>
+            <li>Label "Select your skills:"</li>
+            <li>Checkbox with value "html" and label "HTML"</li>
+            <li>Checkbox with value "css" and label "CSS"</li>
+            <li>Checkbox with value "js" and label "JavaScript"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<header class="sticky-header">
-  <h1>Sticky Header</h1>
-</header>
-<main class="content">
-  <section>Content Section 1</section>
-  <section>Content Section 2</section>
-  <section>Content Section 3</section>
-</main>`,
-        solution: `.sticky-header {
-  position: sticky;
-  top: 0;
-  background-color: #333;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  z-index: 100;
-}`,
+        solution: `<form>
+  <label>Select your skills:</label>
+  <input type="checkbox" value="html">
+  <label>HTML</label>
+  <input type="checkbox" value="css">
+  <label>CSS</label>
+  <input type="checkbox" value="js">
+  <label>JavaScript</label>
+</form>`,
         validate: (code) => {
-          const hasHeaderSticky = /\.sticky-header\s*\{[^}]*position\s*:\s*sticky/i.test(code);
-          const hasHeaderTop = /\.sticky-header\s*\{[^}]*top\s*:\s*0/i.test(code);
-          const hasHeaderBackground = /\.sticky-header\s*\{[^}]*background-color\s*:\s*#333/i.test(code);
-          const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
-          const hasZIndex = /\.sticky-header\s*\{[^}]*z-index\s*:\s*100/i.test(code);
-          return hasHeaderSticky && hasHeaderTop && hasHeaderBackground && hasHeaderShadow && hasZIndex;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <label>select your skills:</label> <input type="checkbox" value="html"> <label>html</label> <input type="checkbox" value="css"> <label>css</label> <input type="checkbox" value="js"> <label>javascript</label> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-5': {
-        title: 'CSS Tooltip',
+        title: 'Select Dropdown',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Tooltip</h4>
-          <p><strong>Instructions:</strong> Create tooltip:</p>
+          <h4>Task: Select Dropdown</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Make .tooltip-container position: relative</li>
-            <li>Style .tooltip with position: absolute, top: -30px, left: 50%</li>
-            <li>Use transform: translateX(-50%) to center tooltip</li>
-            <li>Add opacity: 0 by default, opacity: 1 on .tooltip-trigger:hover + .tooltip</li>
+            <li>Label "Choose your country:"</li>
+            <li>Select dropdown with options: "USA", "Canada", "UK", "Australia"</li>
+            <li>Submit button with text "Submit"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="tooltip-container">
-  <span class="tooltip-trigger">Hover over me</span>
-  <div class="tooltip">Tooltip content</div>
-</div>`,
-        solution: `.tooltip-container {
-  position: relative;
-}
-
-.tooltip {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-}
-
-.tooltip-trigger:hover + .tooltip {
-  opacity: 1;
-}`,
+        solution: `<form>
+  <label>Choose your country:</label>
+  <select>
+    <option>USA</option>
+    <option>Canada</option>
+    <option>UK</option>
+    <option>Australia</option>
+  </select>
+  <button type="submit">Submit</button>
+</form>`,
         validate: (code) => {
-          const hasContainerPosition = /\.tooltip-container\s*\{[^}]*position\s*:\s*relative/i.test(code);
-          const hasTooltipPosition = /\.tooltip\s*\{[^}]*position\s*:\s*absolute/i.test(code);
-          const hasTooltipTop = /\.tooltip\s*\{[^}]*top\s*:\s*-30px/i.test(code);
-          const hasTooltipLeft = /\.tooltip\s*\{[^}]*left\s*:\s*50%/i.test(code);
-          const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX\(\s*-50%\s*\)/i.test(code);
-          const hasTooltipOpacity = /\.tooltip\s*\{[^}]*opacity\s*:\s*0/i.test(code);
-          const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
-          return hasContainerPosition && hasTooltipPosition && hasTooltipTop && hasTooltipLeft && hasTooltipTransform && hasTooltipOpacity && hasHoverEffect;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <label>choose your country:</label> <select> <option>usa</option> <option>canada</option> <option>uk</option> <option>australia</option> </select> <button type="submit">submit</button> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-6': {
-        title: 'CSS Progress Bar',
+        title: 'File Upload Form',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Progress Bar</h4>
-          <p><strong>Instructions:</strong> Build a progress bar:</p>
+          <h4>Task: File Upload Form</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Style .progress-bar-container with width: 100%, height: 20px, background-color: #eee, border-radius: 10px</li>
-            <li>Style .progress-fill with height: 100%, width: 75%, transition: width 0.5s ease</li>
+            <li>Label "Upload your resume:"</li>
+            <li>File input that accepts ".pdf,.doc,.docx" files</li>
+            <li>Submit button with text "Upload"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="progress-bar-container">
-  <div class="progress-fill"></div>
-</div>`,
-        solution: `.progress-bar-container {
-  width: 100%;
-  height: 20px;
-  background-color: #eee;
-  border-radius: 10px;
-}
-
-.progress-fill {
-  height: 100%;
-  width: 75%;
-  transition: width 0.5s ease;
-}`,
+        solution: `<form>
+  <label>Upload your resume:</label>
+  <input type="file" accept=".pdf,.doc,.docx">
+  <button type="submit">Upload</button>
+</form>`,
         validate: (code) => {
-          const hasContainerWidth = /\.progress-bar-container\s*\{[^}]*width\s*:\s*100%/i.test(code);
-          const hasContainerHeight = /\.progress-bar-container\s*\{[^}]*height\s*:\s*20px/i.test(code);
-          const hasContainerBackground = /\.progress-bar-container\s*\{[^}]*background-color\s*:\s*#eee/i.test(code);
-          const hasContainerRadius = /\.progress-bar-container\s*\{[^}]*border-radius\s*:\s*10px/i.test(code);
-          const hasFillHeight = /\.progress-fill\s*\{[^}]*height\s*:\s*100%/i.test(code);
-          const hasFillWidth = /\.progress-fill\s*\{[^}]*width\s*:\s*75%/i.test(code);
-          const hasFillTransition = /\.progress-fill\s*\{[^}]*transition\s*:\s*width\s+0\.5s\s+ease/i.test(code);
-          return hasContainerWidth && hasContainerHeight && hasContainerBackground && hasContainerRadius && hasFillHeight && hasFillWidth && hasFillTransition;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+                    const expected = `<form> <label>upload your resume:</label> <input type="file" accept=".pdf,.doc,.docx"> <button type="submit">upload</button> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-7': {
-        title: 'CSS Accordion',
+        title: 'Form with Fieldset',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Accordion</h4>
-          <p><strong>Instructions:</strong> Create accordion:</p>
+          <h4>Task: Form with Fieldset</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Hide .accordion-input with display: none</li>
-            <li>Style .accordion-label as display: block, padding: 15px, cursor: pointer</li>
-            <li>Set .accordion-content max-height: 0, overflow: hidden, transition: max-height 0.3s ease-out</li>
-            <li>Use :checked selector to expand content</li>
+            <li>Fieldset with legend "Personal Information"</li>
+            <li>Text input with placeholder "First Name"</li>
+            <li>Text input with placeholder "Last Name"</li>
+            <li>Email input with placeholder "Email"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="accordion">
-  <input type="checkbox" id="panel1" class="accordion-input">
-  <label for="panel1" class="accordion-label">Panel 1</label>
-  <div class="accordion-content">
-    <p>Panel 1 content...</p>
-  </div>
-  
-  <input type="checkbox" id="panel2" class="accordion-input">
-  <label for="panel2" class="accordion-label">Panel 2</label>
-  <div class="accordion-content">
-    <p>Panel 2 content...</p>
-  </div>
-</div>`,
-        solution: `.accordion-input {
-  display: none;
-}
-
-.accordion-label {
-  display: block;
-  padding: 15px;
-  cursor: pointer;
-}
-
-.accordion-content {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
-}
-
-.accordion-input:checked + .accordion-label + .accordion-content {
-  max-height: 200px;
-}`,
+        solution: `<form>
+  <fieldset>
+    <legend>Personal Information</legend>
+    <input type="text" placeholder="First Name">
+    <input type="text" placeholder="Last Name">
+    <input type="email" placeholder="Email">
+  </fieldset>
+</form>`,
         validate: (code) => {
-          const hasInputHidden = /\.accordion-input\s*\{[^}]*display\s*:\s*none/i.test(code);
-          const hasLabelBlock = /\.accordion-label\s*\{[^}]*display\s*:\s*block/i.test(code);
-          const hasLabelPadding = /\.accordion-label\s*\{[^}]*padding\s*:\s*15px/i.test(code);
-          const hasLabelCursor = /\.accordion-label\s*\{[^}]*cursor\s*:\s*pointer/i.test(code);
-          const hasContentMaxHeight = /\.accordion-content\s*\{[^}]*max-height\s*:\s*0/i.test(code);
-          const hasContentOverflow = /\.accordion-content\s*\{[^}]*overflow\s*:\s*hidden/i.test(code);
-          const hasContentTransition = /\.accordion-content\s*\{[^}]*transition\s*:\s*max-height\s+0\.3s\s+ease-out/i.test(code);
-          return hasInputHidden && hasLabelBlock && hasLabelPadding && hasLabelCursor && hasContentMaxHeight && hasContentOverflow && hasContentTransition;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <fieldset> <legend>personal information</legend> <input type="text" placeholder="first name"> <input type="text" placeholder="last name"> <input type="email" placeholder="email"> </fieldset> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-8': {
-        title: 'CSS Loader Animation',
+        title: 'Number and Range Inputs',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Loader Animation</h4>
-          <p><strong>Instructions:</strong> Create a spinner loader:</p>
+          <h4>Task: Number and Range Inputs</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Style .loader with width: 40px, height: 40px</li>
-            <li>Add border: 4px solid transparent</li>
-            <li>Set border-top: 4px solid #3498db</li>
-            <li>Make it circular with border-radius: 50%</li>
-            <li>Create @keyframes spin and apply animation: spin 1s linear infinite</li>
+            <li>Label "Age:"</li>
+            <li>Number input with min="18" max="100"</li>
+            <li>Label "Experience (years):"</li>
+            <li>Range input with min="0" max="20"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="loader"></div>`,
-        solution: `@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.loader {
-  width: 40px;
-  height: 40px;
-  border: 4px solid transparent;
-  border-top: 4px solid #3498db;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}`,
+        solution: `<form>
+  <label>Age:</label>
+  <input type="number" min="18" max="100">
+  <label>Experience (years):</label>
+  <input type="range" min="0" max="20">
+</form>`,
         validate: (code) => {
-          const hasSpinKeyframes = /@keyframes\s+spin/i.test(code);
-          const hasLoaderWidth = /\.loader\s*\{[^}]*width\s*:\s*40px/i.test(code);
-          const hasLoaderHeight = /\.loader\s*\{[^}]*height\s*:\s*40px/i.test(code);
-          const hasBorderTransparent = /\.loader\s*\{[^}]*border\s*:\s*4px\s+solid\s+transparent/i.test(code);
-          const hasBorderTop = /\.loader\s*\{[^}]*border-top\s*:\s*4px\s+solid\s+#3498db/i.test(code);
-          const hasBorderRadius = /\.loader\s*\{[^}]*border-radius\s*:\s*50%/i.test(code);
-          const hasAnimation = /\.loader\s*\{[^}]*animation\s*:\s*spin\s+1s\s+linear\s+infinite/i.test(code);
-          return hasSpinKeyframes && hasLoaderWidth && hasLoaderHeight && hasBorderTransparent && hasBorderTop && hasBorderRadius && hasAnimation;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <label>age:</label> <input type="number" min="18" max="100"> <label>experience (years):</label> <input type="range" min="0" max="20"> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-9': {
-        title: 'CSS 3D Transforms',
+        title: 'Search and URL Inputs',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS 3D Transforms</h4>
-          <p><strong>Instructions:</strong> Create 3D card flip effect:</p>
+          <h4>Task: Search and URL Inputs</h4>
+          <p><strong>Instructions:</strong> Create a form with:</p>
           <ul>
-            <li>Set .card-container perspective: 1000px</li>
-            <li>Style .card with transform-style: preserve-3d, transition: transform 0.6s</li>
-            <li>On hover, rotate .card with transform: rotateY(180deg)</li>
-            <li>Position .card-front and .card-back absolutely with backface-visibility: hidden</li>
-            <li>Rotate .card-back 180 degrees initially</li>
+            <li>Search input with placeholder "Search..."</li>
+            <li>URL input with placeholder "https://example.com"</li>
+            <li>Submit button with text "Go"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="card-container">
-  <div class="card">
-    <div class="card-front">Front</div>
-    <div class="card-back">Back</div>
-  </div>
-</div>`,
-        solution: `.card-container {
-  perspective: 1000px;
-}
-
-.card {
-  transform-style: preserve-3d;
-  transition: transform 0.6s;
-}
-
-.card:hover {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  position: absolute;
-  backface-visibility: hidden;
-}
-
-.card-back {
-  transform: rotateY(180deg);
-}`,
+        solution: `<form>
+  <input type="search" placeholder="Search...">
+  <input type="url" placeholder="https://example.com">
+  <button type="submit">Go</button>
+</form>`,
         validate: (code) => {
-          const hasContainerPerspective = /\.card-container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
-          const hasCardTransformStyle = /\.card\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
-          const hasCardTransition = /\.card\s*\{[^}]*transition\s*:\s*transform\s+0\.6s/i.test(code);
-          const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
-          const hasBackfaceVisibility = /backface-visibility\s*:\s*hidden/i.test(code);
-          const hasCardBackRotate = /\.card-back\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
-          return hasContainerPerspective && hasCardTransformStyle && hasCardTransition && hasCardHoverRotate && hasBackfaceVisibility && hasCardBackRotate;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <input type="search" placeholder="search..."> <input type="url" placeholder="https://example.com"> <button type="submit">go</button> </form>`;
+          return normalized === expected;
         }
       },
 
       'advanced-10': {
-        title: 'CSS Complex Animation',
+        title: 'Complete Registration Form',
         level: 'advanced',
         exp: 30,
         instructions: `
-          <h4>Task: CSS Complex Animation</h4>
-          <p><strong>Instructions:</strong> Create bouncing ball with trail:</p>
+          <h4>Task: Complete Registration Form</h4>
+          <p><strong>Instructions:</strong> Create a comprehensive form with:</p>
           <ul>
-            <li>Create @keyframes bounce with multiple stages: scale, translate, and rotate</li>
-            <li>0%: transform: translateY(0) scale(1) rotate(0deg)</li>
-            <li>25%: transform: translateY(-100px) scale(1.2) rotate(90deg)</li>
-            <li>50%: transform: translateY(0) scale(0.8) rotate(180deg)</li>
-            <li>Apply animation: bounce 2s ease-in-out infinite to .bouncing-ball</li>
+            <li>Text input for "Full Name"</li>
+            <li>Email input for "Email"</li>
+            <li>Password input for "Password"</li>
+            <li>Select for "Country" with options: "USA", "Canada", "UK"</li>
+            <li>Checkbox with label "I agree to terms"</li>
+            <li>Submit button with text "Register"</li>
           </ul>
-          <p><strong>Reward:</strong> 30 EXP</p>
+          <p><strong>Reward:</strong> 60 EXP</p>
         `,
-        htmlContent: `<div class="bouncing-ball">⚽</div>`,
-        solution: `@keyframes bounce {
-  0% {
-    transform: translateY(0) scale(1) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-100px) scale(1.2) rotate(90deg);
-  }
-  50% {
-    transform: translateY(0) scale(0.8) rotate(180deg);
-  }
-  75% {
-    transform: translateY(-50px) scale(1.1) rotate(270deg);
-  }
-  100% {
-    transform: translateY(0) scale(1) rotate(360deg);
-  }
-}
-
-.bouncing-ball {
-  animation: bounce 2s ease-in-out infinite;
-}`,
+        solution: `<form>
+  <input type="text" placeholder="Full Name">
+  <input type="email" placeholder="Email">
+  <input type="password" placeholder="Password">
+  <select>
+    <option>USA</option>
+    <option>Canada</option>
+    <option>UK</option>
+  </select>
+  <input type="checkbox">
+  <label>I agree to terms</label>
+  <button type="submit">Register</button>
+</form>`,
         validate: (code) => {
-          const hasBounceKeyframes = /@keyframes\s+bounce/i.test(code);
-          const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*1\s*\)\s*rotate\(\s*0deg\s*\)/i.test(code);
-          const hasTranslateYNeg100 = /transform\s*:\s*translateY\(\s*-100px\s*\)\s*scale\(\s*1\.2\s*\)\s*rotate\(\s*90deg\s*\)/i.test(code);
-          const hasTranslateY0Scale08 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*0\.8\s*\)\s*rotate\(\s*180deg\s*\)/i.test(code);
-          const hasBallAnimation = /\.bouncing-ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+ease-in-out\s+infinite/i.test(code);
-          return hasBounceKeyframes && hasTranslateY0 && hasTranslateYNeg100 && hasTranslateY0Scale08 && hasBallAnimation;
+          const normalized = code.toLowerCase().replace(/\s+/g, ' ').trim();
+          const expected = `<form> <input type="text" placeholder="full name"> <input type="email" placeholder="email"> <input type="password" placeholder="password"> <select> <option>usa</option> <option>canada</option> <option>uk</option> </select> <input type="checkbox"> <label>i agree to terms</label> <button type="submit">register</button> </form>`;
+          return normalized === expected;
         }
       }
     };
@@ -1232,39 +894,39 @@ li {
   
   getTaskDescription(taskId) {
     const descriptions = {
-      'beginner-1': 'Learn to select and style HTML elements with CSS',
-      'beginner-2': 'Control font properties like size, weight, and family',
-      'beginner-3': 'Apply background colors to elements',
-      'beginner-4': 'Align text content in different ways',
-      'beginner-5': 'Add space around elements using margins',
-      'beginner-6': 'Add internal spacing using padding',
-      'beginner-7': 'Add borders around elements',
-      'beginner-8': 'Control element dimensions with width and height',
-      'beginner-9': 'Style lists and list items',
-      'beginner-10': 'Use class selectors to target specific elements',
-      'intermediate-1': 'Learn the fundamentals of CSS Flexbox layout',
-      'intermediate-2': 'Create layouts using CSS Grid',
-      'intermediate-3': 'Position elements with different positioning methods',
-      'intermediate-4': 'Create interactive hover effects',
-      'intermediate-5': 'Create responsive layouts with media queries',
-      'intermediate-6': 'Create CSS keyframe animations',
-      'intermediate-7': 'Add depth with box and text shadows',
-      'intermediate-8': 'Create beautiful gradients',
-      'intermediate-9': 'Transform elements with scale, rotate, and translate',
-      'intermediate-10': 'Use CSS custom properties (variables)',
-      'advanced-1': 'Create complex layouts with advanced Flexbox properties',
-      'advanced-2': 'Create responsive card layouts using CSS Grid',
-      'advanced-3': 'Create a modal popup using pure CSS',
-      'advanced-4': 'Create a sticky navigation header',
-      'advanced-5': 'Create interactive tooltips with pure CSS',
-      'advanced-6': 'Create animated progress bars',
-      'advanced-7': 'Create a collapsible accordion using CSS',
-      'advanced-8': 'Create animated loading spinners',
-      'advanced-9': 'Create 3D effects using CSS transforms',
-      'advanced-10': 'Create complex multi-step animations'
+      'beginner-1': 'Create your first HTML document with headings and paragraphs',
+      'beginner-2': 'Learn to structure content with different heading levels',
+      'beginner-3': 'Apply text formatting with strong, em, and mark elements',
+      'beginner-4': 'Use line breaks and horizontal rules for content separation',
+      'beginner-5': 'Add comments to document your HTML code',
+      'beginner-6': 'Organize content using div container elements',
+      'beginner-7': 'Apply inline styling with span elements',
+      'beginner-8': 'Display preformatted text and code snippets',
+      'beginner-9': 'Create quotations using blockquote elements',
+      'beginner-10': 'Add contact information with address elements',
+      'intermediate-1': 'Create bullet point lists with unordered lists',
+      'intermediate-2': 'Create numbered lists with ordered lists',
+      'intermediate-3': 'Add navigation with hyperlinks',
+      'intermediate-4': 'Embed images with proper alt text',
+      'intermediate-5': 'Create complex nested list structures',
+      'intermediate-6': 'Display tabular data with table elements',
+      'intermediate-7': 'Define terms and descriptions with definition lists',
+      'intermediate-8': 'Add abbreviations with explanatory tooltips',
+      'intermediate-9': 'Display code snippets and keyboard shortcuts',
+      'intermediate-10': 'Add semantic time and date information',
+      'advanced-1': 'Build a complete contact form with validation',
+      'advanced-2': 'Create user registration with secure inputs',
+      'advanced-3': 'Design surveys with radio button selections',
+      'advanced-4': 'Allow multiple selections with checkboxes',
+      'advanced-5': 'Provide options with dropdown menus',
+      'advanced-6': 'Enable file uploads with input restrictions',
+      'advanced-7': 'Group form elements with fieldsets',
+      'advanced-8': 'Collect numeric data with specialized inputs',
+      'advanced-9': 'Create search and URL input fields',
+      'advanced-10': 'Build a comprehensive registration system'
     };
     
-    return descriptions[taskId] || 'Complete this CSS task to earn EXP';
+    return descriptions[taskId] || 'Complete this HTML task to earn EXP';
   }
   
   // FIXED: Load game state from MongoDB with fallback to localStorage
@@ -1278,11 +940,11 @@ li {
         console.log("Loaded progress from server:", data);
         
         // Convert server data to local game state
-        const cssTasks = data.css || [];
+        const htmlTasks = data.html || [];
         
         // Calculate EXP from completed tasks
         let calculatedExp = 0;
-        cssTasks.forEach(taskId => {
+        htmlTasks.forEach(taskId => {
           if (this.tasks[taskId]) {
             calculatedExp += this.tasks[taskId].exp;
           }
@@ -1290,15 +952,14 @@ li {
         
         this.gameState = {
           exp: calculatedExp,
-          completedTasks: new Set(cssTasks),
+          completedTasks: new Set(htmlTasks),
           unlockedSolutions: new Set(data.unlocked_solutions || []),
           failedAttempts: data.failed_attempts || {},
           theme: data.theme || 'light',
-          editorContent: data.editor_content || {},
-          htmlContent: data.html_content || {}
+          editorContent: data.editor_content || {}
         };
         
-        console.log(`Loaded ${cssTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
+        console.log(`Loaded ${htmlTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
       } else {
         throw new Error('Failed to load from server');
       }
@@ -1306,7 +967,7 @@ li {
       console.error("Error loading from server, trying localStorage:", error);
       
       // Fallback to localStorage
-      const saved = localStorage.getItem('cssLearningGame');
+      const saved = localStorage.getItem('htmlLearningGame');
       if (saved) {
         try {
           const parsedState = JSON.parse(saved);
@@ -1316,8 +977,7 @@ li {
             unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
             failedAttempts: parsedState.failedAttempts || {},
             theme: parsedState.theme || 'light',
-            editorContent: parsedState.editorContent || {},
-            htmlContent: parsedState.htmlContent || {}
+            editorContent: parsedState.editorContent || {}
           };
           console.log("Loaded from localStorage as fallback");
         } catch (parseError) {
@@ -1331,17 +991,16 @@ li {
   async saveGameState() {
     const stateToSave = {
       username: this.username,
-      course: "css",
+      course: "html",
       completedTasks: Array.from(this.gameState.completedTasks),
       unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
       failedAttempts: this.gameState.failedAttempts,
       theme: this.gameState.theme,
-      editorContent: this.gameState.editorContent,
-      htmlContent: this.gameState.htmlContent
+      editorContent: this.gameState.editorContent
     };
 
     // Always save to localStorage first (immediate backup)
-    localStorage.setItem('cssLearningGame', JSON.stringify(stateToSave));
+    localStorage.setItem('htmlLearningGame', JSON.stringify(stateToSave));
 
     // Save to MongoDB
     try {
@@ -1353,7 +1012,7 @@ li {
 
       if (response.ok) {
         const result = await response.json();
-        console.log("Progress saved to server:", result);
+                console.log("Progress saved to server:", result);
       } else {
         throw new Error(`Server responded with ${response.status}`);
       }
@@ -1400,20 +1059,11 @@ li {
     
     // Code editor
     document.getElementById('codeEditor').addEventListener('input', (e) => {
-      if (this.currentTask && this.currentEditorMode === 'css') {
+      if (this.currentTask) {
         this.gameState.editorContent[this.currentTask] = e.target.value;
         this.saveGameState();
         this.updateLivePreview();
       }
-    });
-    
-    // Editor mode buttons
-    document.getElementById('htmlBtn').addEventListener('click', () => {
-      this.switchEditorMode('html');
-    });
-    
-    document.getElementById('cssBtn').addEventListener('click', () => {
-      this.switchEditorMode('css');
     });
     
     // Validation and submission
@@ -1564,13 +1214,9 @@ li {
     document.getElementById('modalTitle').textContent = task.title;
     document.getElementById('taskInstructions').innerHTML = task.instructions;
     
-    // Initialize HTML content for the task
-    if (!this.gameState.htmlContent[taskId]) {
-      this.gameState.htmlContent[taskId] = task.htmlContent;
-    }
-    
-    // Start in CSS mode
-    this.switchEditorMode('css');
+    // Load saved editor content or set default
+    const savedContent = this.gameState.editorContent[taskId] || '';
+    document.getElementById('codeEditor').value = savedContent;
     
     // Reset validation state
     this.resetValidationState();
@@ -1622,65 +1268,6 @@ li {
     }
   }
   
-  switchEditorMode(mode) {
-    this.currentEditorMode = mode;
-    const htmlBtn = document.getElementById('htmlBtn');
-    const cssBtn = document.getElementById('cssBtn');
-    const editorTitle = document.getElementById('editorTitle');
-    const codeEditor = document.getElementById('codeEditor');
-    
-    if (mode === 'html') {
-      if (htmlBtn) htmlBtn.classList.add('active');
-      if (cssBtn) cssBtn.classList.remove('active');
-      if (editorTitle) editorTitle.textContent = 'HTML Editor';
-      if (codeEditor) {
-        codeEditor.placeholder = 'HTML code is predefined. Switch to CSS to write your styles.';
-        codeEditor.readOnly = true;
-        codeEditor.value = this.gameState.htmlContent[this.currentTask] || '';
-      }
-    } else {
-      if (cssBtn) cssBtn.classList.add('active');
-      if (htmlBtn) htmlBtn.classList.remove('active');
-      if (editorTitle) editorTitle.textContent = 'CSS Editor';
-      if (codeEditor) {
-        codeEditor.placeholder = 'Write your CSS code here...';
-        codeEditor.readOnly = false;
-        codeEditor.value = this.gameState.editorContent[this.currentTask] || '';
-      }
-    }
-    
-    // Update live preview
-    this.updateLivePreview();
-  }
-  
-  updateLivePreview() {
-    const htmlCode = this.gameState.htmlContent[this.currentTask] || this.tasks[this.currentTask].htmlContent;
-    const cssCode = this.gameState.editorContent[this.currentTask] || '';
-    const preview = document.getElementById('livePreview');
-    
-    if (preview) {
-      const previewContent = `
-        <!DOCTYPE html>
-        <html lang='en'>
-        <head>
-          <meta charset='UTF-8'>
-          <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-          <title>Preview</title>
-          <style>
-            body { font-family: Arial, sans-serif; padding: 20px; }
-          </style>
-          <style>${cssCode}</style>
-        </head>
-        <body>
-          ${htmlCode}
-        </body>
-        </html>
-      `;
-      
-      preview.srcdoc = previewContent;
-    }
-  }
-  
   updateSolutionButton() {
     const showSolutionBtn = document.getElementById('showSolution');
     if (!showSolutionBtn) return;
@@ -1691,16 +1278,16 @@ li {
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 10; // beginner penalty
-    if (task.level === 'intermediate') expPenalty = 20;
-    if (task.level === 'advanced') expPenalty = 30;
+    let expPenalty = 20; // default for beginner
+    if (task.level === 'intermediate') expPenalty = 40;
+    if (task.level === 'advanced') expPenalty = 60;
     
     if (isUnlocked) {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
     } else if (failedAttempts >= 2) {
       if (this.gameState.exp < expPenalty) {
-        showSolutionBtn.disabled = true;
+        showSolutionBtn.disabled = true; // Disable if not enough EXP to pay penalty
         showSolutionBtn.textContent = `Not enough EXP (${expPenalty} required)`;
       } else {
         showSolutionBtn.disabled = false;
@@ -1724,20 +1311,15 @@ li {
     const task = this.tasks[this.currentTask];
     const submitBtn = document.getElementById('submitCode');
     
-    if (this.currentEditorMode === 'html') {
-      this.showValidationFeedback('Please switch to CSS editor to write your CSS code.', 'error');
-      return;
-    }
-    
     if (!code) {
-      this.showValidationFeedback('Please write some CSS code first.', 'error');
+      this.showValidationFeedback('Please write some HTML code first.', 'error');
       return;
     }
     
     const isValid = task.validate(code);
     
     if (isValid) {
-      this.showValidationFeedback('Perfect! Your CSS code is correct. Click Submit to earn EXP!', 'success');
+      this.showValidationFeedback('Perfect! Your HTML code is correct. Click Submit to earn EXP!', 'success');
       if (submitBtn) submitBtn.disabled = false;
     } else {
       // Track failed attempts
@@ -1745,7 +1327,7 @@ li {
       this.gameState.failedAttempts[taskId] = (this.gameState.failedAttempts[taskId] || 0) + 1;
       this.saveGameState();
       
-      this.showValidationFeedback('Your CSS doesn\'t match the expected output. Check the instructions and try again.', 'error');
+      this.showValidationFeedback('Your HTML doesn\'t match the expected output. Check the instructions and try again.', 'error');
       if (submitBtn) submitBtn.disabled = true;
       
       // Update solution button
@@ -1781,7 +1363,6 @@ li {
     this.gameState.completedTasks.add(taskId);
     this.gameState.exp += task.exp;
     delete this.gameState.editorContent[taskId];
-    delete this.gameState.htmlContent[taskId];
     
     console.log(`Task ${taskId} completed. Added ${task.exp} EXP. Total EXP: ${this.gameState.exp}`);
 
@@ -1796,7 +1377,7 @@ li {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: this.username,
-          course: "css",
+          course: "html",
           task_id: taskId
         })
       });
@@ -1825,7 +1406,7 @@ li {
       instructionsDiv.innerHTML = `
         <h4>🎉 Task Completed Successfully!</h4>
         <p><strong>Congratulations!</strong> You earned ${task.exp} EXP!</p>
-        <p><strong>Here's the correct CSS solution:</strong></p>
+        <p><strong>Here's the correct answer:</strong></p>
         <pre><code>${task.solution.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code></pre>
         <p><strong>Great job!</strong> You can now move on to the next task.</p>
       `;
@@ -1851,26 +1432,25 @@ li {
     const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 20; // beginner penalty
+    let expPenalty = 20; // default for beginner
     if (task.level === 'intermediate') expPenalty = 40;
     if (task.level === 'advanced') expPenalty = 60;
     
     // Check if the user has enough EXP to reveal the solution
     if (!isAlreadyUnlocked && this.gameState.exp < expPenalty) {
       this.showValidationFeedback(`You don't have enough EXP to view this solution. You need at least ${expPenalty} EXP.`, 'error');
-      return;
+      return; // Prevent showing the solution if EXP is insufficient
     }
 
     // Deduct EXP only if solution is not already unlocked
     if (!isAlreadyUnlocked) {
-      this.gameState.exp -= expPenalty;
+      this.gameState.exp -= expPenalty; // Deduct directly, as we've already checked for negative
       this.gameState.unlockedSolutions.add(taskId);
       this.saveGameState();
       this.updateExpCounter();
     }
     
-    // Switch to CSS mode and show solution in editor
-    this.switchEditorMode('css');
+    // Show solution in editor
     document.getElementById('codeEditor').value = task.solution;
     this.gameState.editorContent[taskId] = task.solution;
     this.saveGameState();
@@ -1885,8 +1465,63 @@ li {
     if (!isAlreadyUnlocked) {
       this.showValidationFeedback(`Solution revealed! ${expPenalty} EXP deducted. Study the code and try to understand it.`, 'error');
     } else {
-      this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
+            this.showValidationFeedback('Here\'s the solution again. Study it carefully!', 'success');
     }
+  }
+  
+  updateLivePreview() {
+    const code = document.getElementById('codeEditor').value;
+    const preview = document.getElementById('livePreview');
+    
+    const previewContent = `
+      <!DOCTYPE html>
+      <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Preview</title>
+        <style>
+          body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+          }
+          h1, h2, h3 { color: #e34c26; }
+          a { color: #f16529; text-decoration: none; }
+          a:hover { text-decoration: underline; }
+          ul { padding-left: 20px; }
+          form { max-width: 400px; }
+          input, textarea, button, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: inherit;
+          }
+          button {
+            background: #e34c26;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+          }
+          button:hover { background: #d63916; }
+          table { border-collapse: collapse; width: 100%; }
+          th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+          th { background-color: #f2f2f2; }
+        </style>
+      </head>
+      <body>
+        ${code}
+      </body>
+      </html>
+    `;
+    
+    preview.srcdoc = previewContent;
   }
   
   // Certificate Generation
@@ -1944,7 +1579,7 @@ li {
               const url = URL.createObjectURL(blob);
               const a = document.createElement('a');
               a.href = url;
-              a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
+              a.download = `HTML_Certificate_${userName.replace(/\s+/g, '_')}.png`;
               
               document.body.appendChild(a);
               a.click();
@@ -1967,8 +1602,8 @@ li {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (15.png)');
-        alert('Certificate template not found. Please ensure 15.png is in the same directory.');
+        console.error('Could not load certificate image (4.png)');
+        alert('Certificate template not found. Please ensure 4.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
@@ -1988,8 +1623,7 @@ li {
       unlockedSolutions: new Set(),
       failedAttempts: {},
       theme: 'light',
-      editorContent: {},
-      htmlContent: {}
+      editorContent: {}
     };
     this.saveGameState();
     this.updateUI();
@@ -1999,10 +1633,9 @@ li {
 
 // Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-  new CSSLearningGame();
+  new HTMLLearningGame();
 });
 
-// Browser security measures - disable developer tools and right-click
 document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
 document.onkeydown = function(e) {
@@ -2026,6 +1659,7 @@ document.onkeydown = function(e) {
   }
 
   // Disable Ctrl+Shift+K (Firefox)
+  
   if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
 };
 
