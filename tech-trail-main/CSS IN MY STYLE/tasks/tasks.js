@@ -18,11 +18,11 @@ class CSSLearningGame {
     this.currentEditorMode = 'css'; // 'html' or 'css'
 
     this.tasks = {
-      // BEGINNER TASKS (10 tasks - 20 EXP each)
+      // BEGINNER TASKS (10 tasks - 10 EXP each)
       'beginner-1': {
         title: 'Basic CSS Selectors',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: Basic CSS Selectors</h4>
           <p><strong>Instructions:</strong> Style the HTML elements with CSS:</p>
@@ -31,7 +31,7 @@ class CSSLearningGame {
             <li>Make the paragraph color blue</li>
             <li>Make the span element color green</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<h1>Main Heading</h1>
 <p>This is a paragraph with a <span>highlighted word</span>.</p>`,
@@ -57,7 +57,7 @@ span {
       'beginner-2': {
         title: 'CSS Font Properties',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Font Properties</h4>
           <p><strong>Instructions:</strong> Apply font styling:</p>
@@ -66,7 +66,7 @@ span {
             <li>Make the h1 font-weight bold</li>
             <li>Make the paragraph font-family Arial</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<h1>Styled Heading</h1>
 <p>This paragraph should have Arial font.</p>`,
@@ -89,7 +89,7 @@ p {
       'beginner-3': {
         title: 'CSS Background Colors',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Background Colors</h4>
           <p><strong>Instructions:</strong> Apply background colors:</p>
@@ -97,7 +97,7 @@ p {
             <li>Give the div a background-color of lightblue</li>
             <li>Give the paragraph a background-color of lightyellow</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<div>
   <p>This paragraph is inside a div.</p>
@@ -119,7 +119,7 @@ p {
       'beginner-4': {
         title: 'CSS Text Alignment',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Text Alignment</h4>
           <p><strong>Instructions:</strong> Align text elements:</p>
@@ -127,7 +127,7 @@ p {
             <li>Center align the h1 element</li>
             <li>Right align the paragraph</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<h1>Centered Title</h1>
 <p>This paragraph should be right-aligned.</p>`,
@@ -148,7 +148,7 @@ p {
       'beginner-5': {
         title: 'CSS Margins',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Margins</h4>
           <p><strong>Instructions:</strong> Apply margins:</p>
@@ -156,7 +156,7 @@ p {
             <li>Give the h1 a margin-top of 20px</li>
             <li>Give the paragraph a margin-left of 30px</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<h1>Heading with Top Margin</h1>
 <p>Paragraph with Left Margin</p>`,
@@ -177,7 +177,7 @@ p {
       'beginner-6': {
         title: 'CSS Padding',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Padding</h4>
           <p><strong>Instructions:</strong> Apply padding:</p>
@@ -185,7 +185,7 @@ p {
             <li>Give the div padding of 15px</li>
             <li>Give the paragraph padding-top of 10px</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<div>
   <p>This paragraph is inside a padded div.</p>
@@ -207,7 +207,7 @@ p {
       'beginner-7': {
         title: 'CSS Borders',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Borders</h4>
           <p><strong>Instructions:</strong> Add borders:</p>
@@ -215,7 +215,7 @@ p {
             <li>Give the div border: 2px solid black</li>
             <li>Give the paragraph border-bottom: 1px solid red</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<div>
   <p>This paragraph has a bottom border.</p>
@@ -237,7 +237,7 @@ p {
       'beginner-8': {
         title: 'CSS Width and Height',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Width and Height</h4>
           <p><strong>Instructions:</strong> Set dimensions:</p>
@@ -245,7 +245,7 @@ p {
             <li>Give the div width: 200px and height: 100px</li>
             <li>Give the paragraph width: 150px</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<div>
   <p>This paragraph has a specific width.</p>
@@ -269,7 +269,7 @@ p {
       'beginner-9': {
         title: 'CSS List Styling',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS List Styling</h4>
           <p><strong>Instructions:</strong> Style the list:</p>
@@ -277,7 +277,7 @@ p {
             <li>Remove bullets from ul (list-style-type: none)</li>
             <li>Make li elements display: inline</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<ul>
   <li>Item 1</li>
@@ -301,7 +301,7 @@ li {
       'beginner-10': {
         title: 'CSS Class Selectors',
         level: 'beginner',
-        exp: 20,
+        exp: 10,
         instructions: `
           <h4>Task: CSS Class Selectors</h4>
           <p><strong>Instructions:</strong> Style elements with classes:</p>
@@ -309,7 +309,7 @@ li {
             <li>Make elements with class "highlight" background-color yellow</li>
             <li>Make elements with class "large" font-size 18px</li>
           </ul>
-          <p><strong>Reward:</strong> 20 EXP</p>
+          <p><strong>Reward:</strong> 10 EXP</p>
         `,
         htmlContent: `<p class="highlight">This paragraph is highlighted.</p>
 <p class="large">This paragraph is large.</p>
@@ -328,11 +328,11 @@ li {
         }
       },
 
-      // INTERMEDIATE TASKS (10 tasks - 40 EXP each)
+      // INTERMEDIATE TASKS (10 tasks - 20 EXP each)
       'intermediate-1': {
         title: 'CSS Flexbox Basics',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Flexbox Basics</h4>
           <p><strong>Instructions:</strong> Create a flex container:</p>
@@ -341,7 +341,7 @@ li {
             <li>Set justify-content: center</li>
             <li>Set align-items: center</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="container">
   <div class="item">Item 1</div>
@@ -364,7 +364,7 @@ li {
       'intermediate-2': {
         title: 'CSS Grid Layout',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Grid Layout</h4>
           <p><strong>Instructions:</strong> Build a grid layout:</p>
@@ -373,7 +373,7 @@ li {
             <li>Define 3 equal columns with grid-template-columns: 1fr 1fr 1fr</li>
             <li>Add gap: 10px between items</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="grid-container">
   <div class="grid-item">1</div>
@@ -399,7 +399,7 @@ li {
       'intermediate-3': {
         title: 'CSS Positioning',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Positioning</h4>
           <p><strong>Instructions:</strong> Position elements:</p>
@@ -408,7 +408,7 @@ li {
             <li>Make the box position: absolute</li>
             <li>Set top: 20px and right: 20px for the box</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="container">
   <p>This is the container content.</p>
@@ -435,7 +435,7 @@ li {
       'intermediate-4': {
         title: 'CSS Hover Effects',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Hover Effects</h4>
           <p><strong>Instructions:</strong> Add hover effects:</p>
@@ -444,7 +444,7 @@ li {
             <li>On hover, change background to red</li>
             <li>Add transition duration of 0.3s for smooth effect</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<button class="btn">Hover Me</button>
 <button class="btn">Another Button</button>`,
@@ -467,7 +467,7 @@ li {
       'intermediate-5': {
         title: 'CSS Responsive Design',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Responsive Design</h4>
           <p><strong>Instructions:</strong> Create responsive layout:</p>
@@ -476,7 +476,7 @@ li {
             <li>Add media query for max-width: 600px</li>
             <li>In media query, make container font-size: 14px</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="container">
   <h2>Responsive Container</h2>
@@ -504,7 +504,7 @@ li {
       'intermediate-6': {
         title: 'CSS Animations',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Animations</h4>
           <p><strong>Instructions:</strong> Create bouncing animation:</p>
@@ -514,7 +514,7 @@ li {
             <li>50%: transform: translateY(-20px)</li>
             <li>Apply animation to .ball: animation: bounce 2s infinite</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="ball">Bouncing Ball</div>`,
         solution: `@keyframes bounce {
@@ -537,7 +537,7 @@ li {
       'intermediate-7': {
         title: 'CSS Shadows',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Shadows</h4>
           <p><strong>Instructions:</strong> Add shadow effects:</p>
@@ -545,7 +545,7 @@ li {
             <li>Give .card box-shadow: 0 4px 8px rgba(0,0,0,0.1)</li>
             <li>Give .text text-shadow: 2px 2px 4px rgba(0,0,0,0.3)</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="card">
   <h3 class="text">Shadowed Text</h3>
@@ -568,7 +568,7 @@ li {
       'intermediate-8': {
         title: 'CSS Gradients',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Gradients</h4>
           <p><strong>Instructions:</strong> Create gradient backgrounds:</p>
@@ -576,7 +576,7 @@ li {
             <li>Give .header background: linear-gradient(to right, blue, purple)</li>
             <li>Give .circle background: radial-gradient(circle, red, yellow)</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="header">
   <h2>Gradient Header</h2>
@@ -599,7 +599,7 @@ li {
       'intermediate-9': {
         title: 'CSS Transform',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Transform</h4>
           <p><strong>Instructions:</strong> Apply transforms:</p>
@@ -608,7 +608,7 @@ li {
             <li>Make .rotate transform: rotate(45deg)</li>
             <li>Add transition: transform 0.3s to .box</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="box">Hover to Scale</div>
 <div class="rotate">Rotated Box</div>`,
@@ -634,7 +634,7 @@ li {
       'intermediate-10': {
         title: 'CSS Variables',
         level: 'intermediate',
-        exp: 40,
+        exp: 20,
         instructions: `
           <h4>Task: CSS Variables</h4>
           <p><strong>Instructions:</strong> Use CSS custom properties:</p>
@@ -644,7 +644,7 @@ li {
             <li>Use var(--primary-color) for .primary background</li>
             <li>Use var(--secondary-color) for .secondary background</li>
           </ul>
-          <p><strong>Reward:</strong> 40 EXP</p>
+          <p><strong>Reward:</strong> 20 EXP</p>
         `,
         htmlContent: `<div class="primary">Primary Color</div>
 <div class="secondary">Secondary Color</div>`,
@@ -669,11 +669,11 @@ li {
         }
       },
 
-      // ADVANCED TASKS (10 tasks - 60 EXP each)
+      // ADVANCED TASKS (10 tasks - 30 EXP each)
       'advanced-1': {
         title: 'Advanced Flexbox Layout',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Advanced Flexbox Layout</h4>
           <p><strong>Instructions:</strong> Build a responsive navbar:</p>
@@ -682,7 +682,7 @@ li {
             <li>Make .menu display: flex with list-style: none</li>
             <li>Add hover effect: background-color: rgba(255, 255, 255, 0.2) for .menu a:hover</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<nav class="navbar">
   <div class="logo">Logo</div>
@@ -719,7 +719,7 @@ li {
       'advanced-2': {
         title: 'Advanced Grid Layout',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: Advanced Grid Layout</h4>
           <p><strong>Instructions:</strong> Create responsive card layout:</p>
@@ -728,7 +728,7 @@ li {
             <li>Add gap: 20px and padding: 20px</li>
             <li>Add hover effect: transform: translateY(-5px) for .card:hover</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="dashboard">
   <div class="card">Card 1</div>
@@ -761,7 +761,7 @@ li {
       'advanced-3': {
         title: 'CSS Modal Popup',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Modal Popup</h4>
           <p><strong>Instructions:</strong> Create a modal:</p>
@@ -771,7 +771,7 @@ li {
             <li>Use display: flex with justify-content: center and align-items: center</li>
             <li>Style .modal-content with background: white, border-radius: 8px, padding: 20px</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<button class="open-modal-btn">Open Modal</button>
 <div class="modal-overlay">
@@ -818,7 +818,7 @@ li {
       'advanced-4': {
         title: 'CSS Sticky Header',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Sticky Header</h4>
           <p><strong>Instructions:</strong> Make sticky header:</p>
@@ -827,7 +827,7 @@ li {
             <li>Add background-color: #333 and box-shadow: 0 2px 4px rgba(0,0,0,0.1)</li>
             <li>Set z-index: 100</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<header class="sticky-header">
   <h1>Sticky Header</h1>
@@ -857,7 +857,7 @@ li {
       'advanced-5': {
         title: 'CSS Tooltip',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Tooltip</h4>
           <p><strong>Instructions:</strong> Create tooltip:</p>
@@ -867,7 +867,7 @@ li {
             <li>Use transform: translateX(-50%) to center tooltip</li>
             <li>Add opacity: 0 by default, opacity: 1 on .tooltip-trigger:hover + .tooltip</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="tooltip-container">
   <span class="tooltip-trigger">Hover over me</span>
@@ -903,7 +903,7 @@ li {
       'advanced-6': {
         title: 'CSS Progress Bar',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Progress Bar</h4>
           <p><strong>Instructions:</strong> Build a progress bar:</p>
@@ -911,7 +911,7 @@ li {
             <li>Style .progress-bar-container with width: 100%, height: 20px, background-color: #eee, border-radius: 10px</li>
             <li>Style .progress-fill with height: 100%, width: 75%, transition: width 0.5s ease</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="progress-bar-container">
   <div class="progress-fill"></div>
@@ -943,7 +943,7 @@ li {
       'advanced-7': {
         title: 'CSS Accordion',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Accordion</h4>
           <p><strong>Instructions:</strong> Create accordion:</p>
@@ -953,7 +953,7 @@ li {
             <li>Set .accordion-content max-height: 0, overflow: hidden, transition: max-height 0.3s ease-out</li>
             <li>Use :checked selector to expand content</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="accordion">
   <input type="checkbox" id="panel1" class="accordion-input">
@@ -1002,7 +1002,7 @@ li {
       'advanced-8': {
         title: 'CSS Loader Animation',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Loader Animation</h4>
           <p><strong>Instructions:</strong> Create a spinner loader:</p>
@@ -1013,7 +1013,7 @@ li {
             <li>Make it circular with border-radius: 50%</li>
             <li>Create @keyframes spin and apply animation: spin 1s linear infinite</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="loader"></div>`,
         solution: `@keyframes spin {
@@ -1044,7 +1044,7 @@ li {
       'advanced-9': {
         title: 'CSS 3D Transforms',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS 3D Transforms</h4>
           <p><strong>Instructions:</strong> Create 3D card flip effect:</p>
@@ -1055,7 +1055,7 @@ li {
             <li>Position .card-front and .card-back absolutely with backface-visibility: hidden</li>
             <li>Rotate .card-back 180 degrees initially</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="card-container">
   <div class="card">
@@ -1098,7 +1098,7 @@ li {
       'advanced-10': {
         title: 'CSS Complex Animation',
         level: 'advanced',
-        exp: 60,
+        exp: 30,
         instructions: `
           <h4>Task: CSS Complex Animation</h4>
           <p><strong>Instructions:</strong> Create bouncing ball with trail:</p>
@@ -1109,7 +1109,7 @@ li {
             <li>50%: transform: translateY(0) scale(0.8) rotate(180deg)</li>
             <li>Apply animation: bounce 2s ease-in-out infinite to .bouncing-ball</li>
           </ul>
-          <p><strong>Reward:</strong> 60 EXP</p>
+          <p><strong>Reward:</strong> 30 EXP</p>
         `,
         htmlContent: `<div class="bouncing-ball">⚽</div>`,
         solution: `@keyframes bounce {
@@ -1691,16 +1691,16 @@ li {
     const isUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 20; // default for beginner
-    if (task.level === 'intermediate') expPenalty = 40;
-    if (task.level === 'advanced') expPenalty = 60;
+    let expPenalty = 10; // beginner penalty
+    if (task.level === 'intermediate') expPenalty = 20;
+    if (task.level === 'advanced') expPenalty = 30;
     
     if (isUnlocked) {
       showSolutionBtn.disabled = false;
       showSolutionBtn.textContent = 'Show Solution';
     } else if (failedAttempts >= 2) {
       if (this.gameState.exp < expPenalty) {
-        showSolutionBtn.disabled = true; // Disable if not enough EXP to pay penalty
+        showSolutionBtn.disabled = true;
         showSolutionBtn.textContent = `Not enough EXP (${expPenalty} required)`;
       } else {
         showSolutionBtn.disabled = false;
@@ -1851,19 +1851,19 @@ li {
     const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 20; // default for beginner
-    if (task.level === 'intermediate') expPenalty = 40;
-    if (task.level === 'advanced') expPenalty = 60;
+    let expPenalty = 10; // beginner penalty
+    if (task.level === 'intermediate') expPenalty = 20;
+    if (task.level === 'advanced') expPenalty = 30;
     
     // Check if the user has enough EXP to reveal the solution
     if (!isAlreadyUnlocked && this.gameState.exp < expPenalty) {
       this.showValidationFeedback(`You don't have enough EXP to view this solution. You need at least ${expPenalty} EXP.`, 'error');
-      return; // Prevent showing the solution if EXP is insufficient
+      return;
     }
 
     // Deduct EXP only if solution is not already unlocked
     if (!isAlreadyUnlocked) {
-      this.gameState.exp -= expPenalty; // Deduct directly, as we've already checked for negative
+      this.gameState.exp -= expPenalty;
       this.gameState.unlockedSolutions.add(taskId);
       this.saveGameState();
       this.updateExpCounter();
