@@ -7,6 +7,8 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+# Add this import at the top of main.py
+import bcrypt
 
 # --- MongoDB Connection ---
 client = MongoClient(
