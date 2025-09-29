@@ -1,3 +1,6 @@
+// API Base URL - Update this to match your FastAPI endpoint
+const API_BASE = "https://tech-trail-w2ap.onrender.com";
+
 // Game State Management
 class CSSLearningGame {
   constructor() {
@@ -367,7 +370,7 @@ li {
           <p><strong>Instructions:</strong> Build a grid layout:</p>
           <ul>
             <li>Make the container display: grid</li>
-            <li>Define 3 equal columns with grid-template-columns: 1fr 1fr 1fr</li>
+                        <li>Define 3 equal columns with grid-template-columns: 1fr 1fr 1fr</li>
             <li>Add gap: 10px between items</li>
           </ul>
           <p><strong>Reward:</strong> 20 EXP</p>
@@ -492,7 +495,7 @@ li {
         validate: (code) => {
           const hasContainerWidth = /\.container\s*\{[^}]*width\s*:\s*100%/i.test(code);
           const hasContainerMaxWidth = /\.container\s*\{[^}]*max-width\s*:\s*800px/i.test(code);
-          const hasMediaQuery = /@media\s*\([^)]*max-width\s*:\s*600px[^)]*\)/i.test(code);
+          const hasMediaQuery = /@media\s*$[^)]*max-width\s*:\s*600px[^)]*$/i.test(code);
           const hasMediaFontSize = /@media[\s\S]*\.container\s*\{[^}]*font-size\s*:\s*14px/i.test(code);
           return hasContainerWidth && hasContainerMaxWidth && hasMediaQuery && hasMediaFontSize;
         }
@@ -524,8 +527,8 @@ li {
 }`,
         validate: (code) => {
           const hasKeyframes = /@keyframes\s+bounce/i.test(code);
-          const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)/i.test(code);
-          const hasTranslateYNeg20 = /transform\s*:\s*translateY\(\s*-20px\s*\)/i.test(code);
+          const hasTranslateY0 = /transform\s*:\s*translateY$\s*0\s*$/i.test(code);
+          const hasTranslateYNeg20 = /transform\s*:\s*translateY$\s*-20px\s*$/i.test(code);
           const hasBallAnimation = /\.ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+infinite/i.test(code);
           return hasKeyframes && hasTranslateY0 && hasTranslateYNeg20 && hasBallAnimation;
         }
@@ -556,8 +559,8 @@ li {
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }`,
         validate: (code) => {
-          const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
-          const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*\)/i.test(code);
+          const hasCardBoxShadow = /\.card\s*\{[^}]*box-shadow\s*:\s*0\s+4px\s+8px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
+          const hasTextShadow = /\.text\s*\{[^}]*text-shadow\s*:\s*2px\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.3\s*$/i.test(code);
           return hasCardBoxShadow && hasTextShadow;
         }
       },
@@ -587,8 +590,8 @@ li {
   background: radial-gradient(circle, red, yellow);
 }`,
         validate: (code) => {
-          const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient\(\s*to\s+right\s*,\s*blue\s*,\s*purple\s*\)/i.test(code);
-          const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient\(\s*circle\s*,\s*red\s*,\s*yellow\s*\)/i.test(code);
+          const hasHeaderLinearGradient = /\.header\s*\{[^}]*background\s*:\s*linear-gradient$\s*to\s+right\s*,\s*blue\s*,\s*purple\s*$/i.test(code);
+          const hasCircleRadialGradient = /\.circle\s*\{[^}]*background\s*:\s*radial-gradient$\s*circle\s*,\s*red\s*,\s*yellow\s*$/i.test(code);
           return hasHeaderLinearGradient && hasCircleRadialGradient;
         }
       },
@@ -622,8 +625,8 @@ li {
 }`,
         validate: (code) => {
           const hasBoxTransition = /\.box\s*\{[^}]*transition\s*:\s*transform\s+0\.3s/i.test(code);
-          const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale\(\s*1\.2\s*\)/i.test(code);
-          const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate\(\s*45deg\s*\)/i.test(code);
+          const hasBoxHoverScale = /\.box:hover\s*\{[^}]*transform\s*:\s*scale$\s*1\.2\s*$/i.test(code);
+          const hasRotateTransform = /\.rotate\s*\{[^}]*transform\s*:\s*rotate$\s*45deg\s*$/i.test(code);
           return hasBoxTransition && hasBoxHoverScale && hasRotateTransform;
         }
       },
@@ -660,8 +663,8 @@ li {
         validate: (code) => {
           const hasRootPrimary = /:root\s*\{[^}]*--primary-color/i.test(code);
           const hasRootSecondary = /:root\s*\{[^}]*--secondary-color/i.test(code);
-          const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var\(\s*--primary-color\s*\)/i.test(code);
-          const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var\(\s*--secondary-color\s*\)/i.test(code);
+          const hasPrimaryVar = /\.primary\s*\{[^}]*background\s*:\s*var$\s*--primary-color\s*$/i.test(code);
+          const hasSecondaryVar = /\.secondary\s*\{[^}]*background\s*:\s*var$\s*--secondary-color\s*$/i.test(code);
           return hasRootPrimary && hasRootSecondary && hasPrimaryVar && hasSecondaryVar;
         }
       },
@@ -677,7 +680,7 @@ li {
           <ul>
             <li>Make .navbar display: flex with justify-content: space-between</li>
             <li>Make .menu display: flex with list-style: none</li>
-            <li>Add hover effect: background-color: rgba(255, 255, 255, 0.2) for .menu a:hover</li>
+                        <li>Add hover effect: background-color: rgba(255, 255, 255, 0.2) for .menu a:hover</li>
           </ul>
           <p><strong>Reward:</strong> 30 EXP</p>
         `,
@@ -708,7 +711,7 @@ li {
           const hasNavbarJustify = /\.navbar\s*\{[^}]*justify-content\s*:\s*space-between/i.test(code);
           const hasMenuFlex = /\.menu\s*\{[^}]*display\s*:\s*flex/i.test(code);
           const hasMenuListStyle = /\.menu\s*\{[^}]*list-style\s*:\s*none/i.test(code);
-          const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba\(\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*\)/i.test(code);
+          const hasLinkHover = /\.menu\s+a:hover\s*\{[^}]*background-color\s*:\s*rgba$\s*255\s*,\s*255\s*,\s*255\s*,\s*0\.2\s*$/i.test(code);
           return hasNavbarFlex && hasNavbarJustify && hasMenuFlex && hasMenuListStyle && hasLinkHover;
         }
       },
@@ -747,10 +750,10 @@ li {
 }`,
         validate: (code) => {
           const hasDashboardGrid = /\.dashboard\s*\{[^}]*display\s*:\s*grid/i.test(code);
-          const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat\(auto-fit,\s*minmax\(250px,\s*1fr\)\)/i.test(code);
+          const hasAutoFit = /\.dashboard\s*\{[^}]*grid-template-columns\s*:\s*repeat$auto-fit,\s*minmax\(250px,\s*1fr$\)/i.test(code);
           const hasGap = /\.dashboard\s*\{[^}]*gap\s*:\s*20px/i.test(code);
           const hasPadding = /\.dashboard\s*\{[^}]*padding\s*:\s*20px/i.test(code);
-          const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY\(\s*-5px\s*\)/i.test(code);
+          const hasCardHover = /\.card:hover\s*\{[^}]*transform\s*:\s*translateY$\s*-5px\s*$/i.test(code);
           return hasDashboardGrid && hasAutoFit && hasGap && hasPadding && hasCardHover;
         }
       },
@@ -801,7 +804,7 @@ li {
           const hasOverlayLeft = /\.modal-overlay\s*\{[^}]*left\s*:\s*0/i.test(code);
           const hasOverlayWidth = /\.modal-overlay\s*\{[^}]*width\s*:\s*100%/i.test(code);
           const hasOverlayHeight = /\.modal-overlay\s*\{[^}]*height\s*:\s*100%/i.test(code);
-          const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*\)/i.test(code);
+          const hasOverlayBackground = /\.modal-overlay\s*\{[^}]*background-color\s*:\s*rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.5\s*$/i.test(code);
           const hasOverlayFlex = /\.modal-overlay\s*\{[^}]*display\s*:\s*flex/i.test(code);
           const hasOverlayJustify = /\.modal-overlay\s*\{[^}]*justify-content\s*:\s*center/i.test(code);
           const hasOverlayAlign = /\.modal-overlay\s*\{[^}]*align-items\s*:\s*center/i.test(code);
@@ -845,7 +848,7 @@ li {
           const hasHeaderSticky = /\.sticky-header\s*\{[^}]*position\s*:\s*sticky/i.test(code);
           const hasHeaderTop = /\.sticky-header\s*\{[^}]*top\s*:\s*0/i.test(code);
           const hasHeaderBackground = /\.sticky-header\s*\{[^}]*background-color\s*:\s*#333/i.test(code);
-          const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*\)/i.test(code);
+          const hasHeaderShadow = /\.sticky-header\s*\{[^}]*box-shadow\s*:\s*0\s+2px\s+4px\s+rgba$\s*0\s*,\s*0\s*,\s*0\s*,\s*0\.1\s*$/i.test(code);
           const hasZIndex = /\.sticky-header\s*\{[^}]*z-index\s*:\s*100/i.test(code);
           return hasHeaderSticky && hasHeaderTop && hasHeaderBackground && hasHeaderShadow && hasZIndex;
         }
@@ -890,7 +893,7 @@ li {
           const hasTooltipPosition = /\.tooltip\s*\{[^}]*position\s*:\s*absolute/i.test(code);
           const hasTooltipTop = /\.tooltip\s*\{[^}]*top\s*:\s*-30px/i.test(code);
           const hasTooltipLeft = /\.tooltip\s*\{[^}]*left\s*:\s*50%/i.test(code);
-          const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX\(\s*-50%\s*\)/i.test(code);
+          const hasTooltipTransform = /\.tooltip\s*\{[^}]*transform\s*:\s*translateX$\s*-50%\s*$/i.test(code);
           const hasTooltipOpacity = /\.tooltip\s*\{[^}]*opacity\s*:\s*0/i.test(code);
           const hasHoverEffect = /\.tooltip-trigger:hover\s*\+\s*\.tooltip\s*\{[^}]*opacity\s*:\s*1/i.test(code);
           return hasContainerPosition && hasTooltipPosition && hasTooltipTop && hasTooltipLeft && hasTooltipTransform && hasTooltipOpacity && hasHoverEffect;
@@ -934,7 +937,7 @@ li {
           const hasFillWidth = /\.progress-fill\s*\{[^}]*width\s*:\s*75%/i.test(code);
           const hasFillTransition = /\.progress-fill\s*\{[^}]*transition\s*:\s*width\s+0\.5s\s+ease/i.test(code);
           return hasContainerWidth && hasContainerHeight && hasContainerBackground && hasContainerRadius && hasFillHeight && hasFillWidth && hasFillTransition;
-        }
+                  }
       },
 
       'advanced-7': {
@@ -1085,9 +1088,9 @@ li {
           const hasContainerPerspective = /\.card-container\s*\{[^}]*perspective\s*:\s*1000px/i.test(code);
           const hasCardTransformStyle = /\.card\s*\{[^}]*transform-style\s*:\s*preserve-3d/i.test(code);
           const hasCardTransition = /\.card\s*\{[^}]*transition\s*:\s*transform\s+0\.6s/i.test(code);
-          const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
+          const hasCardHoverRotate = /\.card:hover\s*\{[^}]*transform\s*:\s*rotateY$\s*180deg\s*$/i.test(code);
           const hasBackfaceVisibility = /backface-visibility\s*:\s*hidden/i.test(code);
-          const hasCardBackRotate = /\.card-back\s*\{[^}]*transform\s*:\s*rotateY\(\s*180deg\s*\)/i.test(code);
+          const hasCardBackRotate = /\.card-back\s*\{[^}]*transform\s*:\s*rotateY$\s*180deg\s*$/i.test(code);
           return hasContainerPerspective && hasCardTransformStyle && hasCardTransition && hasCardHoverRotate && hasBackfaceVisibility && hasCardBackRotate;
         }
       },
@@ -1132,9 +1135,9 @@ li {
 }`,
         validate: (code) => {
           const hasBounceKeyframes = /@keyframes\s+bounce/i.test(code);
-          const hasTranslateY0 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*1\s*\)\s*rotate\(\s*0deg\s*\)/i.test(code);
-          const hasTranslateYNeg100 = /transform\s*:\s*translateY\(\s*-100px\s*\)\s*scale\(\s*1\.2\s*\)\s*rotate\(\s*90deg\s*\)/i.test(code);
-          const hasTranslateY0Scale08 = /transform\s*:\s*translateY\(\s*0\s*\)\s*scale\(\s*0\.8\s*\)\s*rotate\(\s*180deg\s*\)/i.test(code);
+          const hasTranslateY0 = /transform\s*:\s*translateY$\s*0\s*$\s*scale$\s*1\s*$\s*rotate$\s*0deg\s*$/i.test(code);
+          const hasTranslateYNeg100 = /transform\s*:\s*translateY$\s*-100px\s*$\s*scale$\s*1\.2\s*$\s*rotate$\s*90deg\s*$/i.test(code);
+          const hasTranslateY0Scale08 = /transform\s*:\s*translateY$\s*0\s*$\s*scale$\s*0\.8\s*$\s*rotate$\s*180deg\s*$/i.test(code);
           const hasBallAnimation = /\.bouncing-ball\s*\{[^}]*animation\s*:\s*bounce\s+2s\s+ease-in-out\s+infinite/i.test(code);
           return hasBounceKeyframes && hasTranslateY0 && hasTranslateYNeg100 && hasTranslateY0Scale08 && hasBallAnimation;
         }
@@ -1146,21 +1149,19 @@ li {
   }
   
   async init() {
-    // FIXED: Create a demo username if none exists instead of redirecting
-    this.username = localStorage.getItem("username") || this.createDemoUser();
-    
+    // Check if user is logged in first
+    this.username = localStorage.getItem("username");
+    if (!this.username) {
+      alert("Please log in first to access the course!");
+      window.location.href = "../../login.html"; // Adjust path as needed
+      return;
+    }
+
     await this.loadGameState();
     this.setupEventListeners();
     this.generateTaskCards();
     this.updateUI();
     this.updateTheme();
-  }
-  
-  // Create a demo user for testing
-  createDemoUser() {
-    const demoUsername = "demo_user_" + Date.now();
-    localStorage.setItem("username", demoUsername);
-    return demoUsername;
   }
   
   // Generate task cards dynamically
@@ -1222,7 +1223,7 @@ li {
           <svg class="icon check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <polyline points="20 6 9 17 4 12"></polyline>
           </svg>
-        </div>
+                </div>
       </div>
     `;
     
@@ -1266,32 +1267,71 @@ li {
     return descriptions[taskId] || 'Complete this CSS task to earn EXP';
   }
   
-  // FIXED: Load game state from localStorage only (removed API dependency)
+  // Load game state from MongoDB with fallback to localStorage
   async loadGameState() {
     try {
-      const saved = localStorage.getItem('cssLearningGame_' + this.username);
-      if (saved) {
-        const parsedState = JSON.parse(saved);
+      // First, try to load from MongoDB
+      const response = await fetch(`${API_BASE}/progress/${this.username}`);
+      
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Loaded progress from server:", data);
+        
+        // Convert server data to local game state
+        const cssTasks = data.css || [];
+        
+        // Calculate EXP from completed tasks
+        let calculatedExp = 0;
+        cssTasks.forEach(taskId => {
+          if (this.tasks[taskId]) {
+            calculatedExp += this.tasks[taskId].exp;
+          }
+        });
+        
         this.gameState = {
-          exp: parsedState.exp || 0,
-          completedTasks: new Set(parsedState.completedTasks || []),
-          unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
-          failedAttempts: parsedState.failedAttempts || {},
-          theme: parsedState.theme || 'light',
-          editorContent: parsedState.editorContent || {},
-          htmlContent: parsedState.htmlContent || {}
+          exp: calculatedExp,
+          completedTasks: new Set(cssTasks),
+          unlockedSolutions: new Set(data.unlocked_solutions || []),
+          failedAttempts: data.failed_attempts || {},
+          theme: data.theme || 'light',
+          editorContent: data.editor_content || {},
+          htmlContent: data.html_content || {}
         };
-        console.log(`Loaded ${this.gameState.completedTasks.size} completed tasks, Total EXP: ${this.gameState.exp}`);
+        
+        console.log(`Loaded ${cssTasks.length} completed tasks, Total EXP: ${calculatedExp}`);
+      } else {
+        throw new Error('Failed to load from server');
       }
     } catch (error) {
-      console.error("Error loading game state:", error);
+      console.error("Error loading from server, trying localStorage:", error);
+      
+      // Fallback to localStorage
+      const saved = localStorage.getItem('cssLearningGame_' + this.username);
+      if (saved) {
+        try {
+          const parsedState = JSON.parse(saved);
+          this.gameState = {
+            exp: parsedState.exp || 0,
+            completedTasks: new Set(parsedState.completedTasks || []),
+            unlockedSolutions: new Set(parsedState.unlockedSolutions || []),
+            failedAttempts: parsedState.failedAttempts || {},
+            theme: parsedState.theme || 'light',
+            editorContent: parsedState.editorContent || {},
+            htmlContent: parsedState.htmlContent || {}
+          };
+          console.log("Loaded from localStorage as fallback");
+        } catch (parseError) {
+          console.error("Error parsing localStorage data:", parseError);
+        }
+      }
     }
   }
 
-  // FIXED: Save game state to localStorage only
+  // Save game state to both MongoDB and localStorage
   async saveGameState() {
     const stateToSave = {
-      exp: this.gameState.exp,
+      username: this.username,
+      course: "css",
       completedTasks: Array.from(this.gameState.completedTasks),
       unlockedSolutions: Array.from(this.gameState.unlockedSolutions),
       failedAttempts: this.gameState.failedAttempts,
@@ -1300,12 +1340,26 @@ li {
       htmlContent: this.gameState.htmlContent
     };
 
-    // Save to localStorage
+    // Always save to localStorage first (immediate backup)
+    localStorage.setItem('cssLearningGame_' + this.username, JSON.stringify(stateToSave));
+
+    // Save to MongoDB
     try {
-      localStorage.setItem('cssLearningGame_' + this.username, JSON.stringify(stateToSave));
-      console.log("Progress saved to localStorage");
+      const response = await fetch(`${API_BASE}/task/save-progress`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(stateToSave)
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("Progress saved to server:", result);
+      } else {
+        throw new Error(`Server responded with ${response.status}`);
+      }
     } catch (error) {
-      console.error("Error saving game state:", error);
+      console.error("Error saving to server:", error);
+      // Data is still saved locally, so user can continue
     }
   }
   
@@ -1313,7 +1367,7 @@ li {
   setupEventListeners() {
     // Back button
     document.getElementById('backBtn').addEventListener('click', () => {
-      history.back();
+      window.location.href = '../index.html';
     });
     
     // Theme toggle
@@ -1585,7 +1639,7 @@ li {
         codeEditor.value = this.gameState.htmlContent[this.currentTask] || '';
       }
     } else {
-      if (cssBtn) cssBtn.classList.add('active');
+            if (cssBtn) cssBtn.classList.add('active');
       if (htmlBtn) htmlBtn.classList.remove('active');
       if (editorTitle) editorTitle.textContent = 'CSS Editor';
       if (codeEditor) {
@@ -1658,7 +1712,6 @@ li {
     }
   }
 
-  
   // Code Validation and Submission
   validateCode() {
     if (!this.currentTask) {
@@ -1711,7 +1764,7 @@ li {
     }
   }
   
-  // FIXED: Submit Task Completion with proper localStorage sync
+  // Submit Task Completion with proper MongoDB sync
   async submitTask() {
     const taskId = this.currentTask;
     const task = this.tasks[taskId];
@@ -1734,6 +1787,29 @@ li {
     // Save state immediately
     await this.saveGameState();
     this.updateUI();
+
+    // Send completion to MongoDB via individual task completion API
+    try {
+      const response = await fetch(`${API_BASE}/task/complete`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: this.username,
+          course: "css",
+          task_id: taskId
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Task completion confirmed by server:", data);
+      } else {
+        throw new Error(`Server responded with ${response.status}`);
+      }
+    } catch (error) {
+      console.error("Error confirming task completion with server:", error);
+      // Task is still marked complete locally
+    }
 
     this.showTaskAnswer();
   }
@@ -1774,9 +1850,9 @@ li {
     const isAlreadyUnlocked = this.gameState.unlockedSolutions.has(taskId);
     
     // Calculate EXP penalty based on level
-    let expPenalty = 10; // beginner penalty
-    if (task.level === 'intermediate') expPenalty = 20;
-    if (task.level === 'advanced') expPenalty = 30;
+    let expPenalty = 20; // beginner penalty
+    if (task.level === 'intermediate') expPenalty = 40;
+    if (task.level === 'advanced') expPenalty = 60;
     
     // Check if the user has enough EXP to reveal the solution
     if (!isAlreadyUnlocked && this.gameState.exp < expPenalty) {
@@ -1812,7 +1888,7 @@ li {
     }
   }
   
-  // FIXED: Certificate Generation with proper canvas handling
+  // Certificate Generation with proper canvas handling
   async downloadCertificate() {
     const userName = document.getElementById('userName').value.trim();
     
@@ -1822,7 +1898,91 @@ li {
     }
     
     try {
-      // Create a simple certificate with canvas
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      
+      img.onload = () => {
+        try {
+          // Set canvas size to match your certificate image
+          canvas.width = img.width;
+          canvas.height = img.height;
+          
+          // Draw the certificate background image
+          ctx.drawImage(img, 0, 0);
+          
+          // Calculate positions based on your certificate layout
+          const centerX = canvas.width / 2;
+          
+          // USER NAME POSITIONING
+          ctx.fillStyle = '#2d3748';
+          ctx.font = 'bold 100px Montserrat Bold, sans-serif';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          
+          const nameY = canvas.height * 0.45;
+          ctx.fillText(userName, centerX, nameY);
+          
+          // CURRENT DATE POSITIONING
+          ctx.fillStyle = '#4a5510';
+          ctx.font = '65px Arial, sans-serif';
+          ctx.textAlign = 'center';
+          
+          const currentDate = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          
+          const dateY = canvas.height * 0.85;
+          ctx.fillText(currentDate, centerX, dateY);
+          
+          // Convert to blob and download
+          canvas.toBlob((blob) => {
+            if (blob) {
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = `CSS_Certificate_${userName.replace(/\s+/g, '_')}.png`;
+              
+              document.body.appendChild(a);
+              a.click();
+              
+              setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }, 100);
+              
+              alert('🎉 Certificate downloaded successfully!');
+            } else {
+              throw new Error('Failed to create certificate blob');
+            }
+          }, 'image/png', 1.0);
+          
+        } catch (error) {
+          console.error('Error processing certificate:', error);
+          alert('Error generating certificate. Please try again.');
+        }
+      };
+      
+      img.onerror = () => {
+        console.error('Could not load certificate image');
+        // Fallback to simple certificate generation
+        this.generateSimpleCertificate(userName);
+      };
+      
+      img.crossOrigin = 'anonymous';
+      img.src = 'CSS-01.png'; // CSS certificate template
+      
+    } catch (error) {
+      console.error('Error in downloadCertificate:', error);
+      this.generateSimpleCertificate(userName);
+    }
+  }
+
+  // Fallback simple certificate generation
+  generateSimpleCertificate(userName) {
+    try {
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       
@@ -1853,7 +2013,7 @@ li {
       // Name
       ctx.fillStyle = '#2d3748';
       ctx.font = 'bold 36px Arial';
-      ctx.fillText(`This certifies that`, canvas.width / 2, 280);
+      ctx.fillText('This certifies that', canvas.width / 2, 280);
       
       ctx.fillStyle = '#1572b6';
       ctx.font = 'bold 48px Arial';
@@ -1861,8 +2021,8 @@ li {
       
       ctx.fillStyle = '#2d3748';
       ctx.font = 'bold 36px Arial';
-      ctx.fillText(`has successfully completed`, canvas.width / 2, 400);
-      ctx.fillText(`all 30 CSS tasks`, canvas.width / 2, 450);
+      ctx.fillText('has successfully completed', canvas.width / 2, 400);
+      ctx.fillText('all 30 CSS tasks', canvas.width / 2, 450);
       
       // Date
       ctx.fillStyle = '#666666';
@@ -1894,10 +2054,10 @@ li {
         } else {
           throw new Error('Failed to create certificate blob');
         }
-      }, 'image/png', 1.0);
+            }, 'image/png', 1.0);
       
     } catch (error) {
-      console.error('Error in downloadCertificate:', error);
+      console.error('Error in generateSimpleCertificate:', error);
       alert('Error generating certificate. Please try again.');
     }
   }
@@ -1922,4 +2082,50 @@ li {
 // Initialize the game when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
   new CSSLearningGame();
+});
+
+// Security features to prevent cheating
+document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
+
+document.onkeydown = function(e) {
+  // Disable F12
+  if (e.keyCode === 123) return false;
+
+  // Disable Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+  if (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74 || e.keyCode === 67)) {
+    return false;
+  }
+
+  // Disable Ctrl+U (View Source)
+  if (e.ctrlKey && e.keyCode === 85) return false;
+
+  // Disable Ctrl+S (Save Page)
+  if (e.ctrlKey && e.keyCode === 83) return false;
+
+  // Disable Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+P
+  if (e.ctrlKey && (e.keyCode === 65 || e.keyCode === 67 || e.keyCode === 86 || e.keyCode === 80)) {
+    return false;
+  }
+
+  // Disable Ctrl+Shift+K (Firefox)
+  if (e.ctrlKey && e.shiftKey && e.keyCode === 75) return false;
+};
+
+// Enhanced right-click protection
+document.addEventListener("contextmenu", function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}, true);
+
+// Additional layer - disable selection
+document.addEventListener("selectstart", function(e) {
+    e.preventDefault();
+    return false;
+});
+
+// Disable drag
+document.addEventListener("dragstart", function(e) {
+    e.preventDefault();
+    return false;
 });
