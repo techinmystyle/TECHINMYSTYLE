@@ -23,11 +23,16 @@ app = FastAPI()
 # Enable CORS (adapt allow_origins for production)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # This allows all origins
+    allow_origins=[
+        "https://techinmystyle.com", 
+        "http://127.0.0.1:5500", 
+        "http://localhost:5500"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # --- Pydantic Models ---
 class RegisterData(BaseModel):
