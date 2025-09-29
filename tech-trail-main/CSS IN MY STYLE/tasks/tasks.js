@@ -2002,6 +2002,7 @@ document.addEventListener('DOMContentLoaded', () => {
   new CSSLearningGame();
 });
 
+// Browser security measures - disable developer tools and right-click
 document.addEventListener("contextmenu", (e) => e.preventDefault()); // Disable right click
 
 document.onkeydown = function(e) {
