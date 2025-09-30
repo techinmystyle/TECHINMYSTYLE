@@ -1,0 +1,19 @@
+# Block sensitive files
+/*.env
+  Status: 403
+
+/*.config
+  Status: 403
+
+/*.ini
+  Status: 403
+
+/*.py
+  Status: 403
+
+# Security headers for all files
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer-when-downgrade
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
