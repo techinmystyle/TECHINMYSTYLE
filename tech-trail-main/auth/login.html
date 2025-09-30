@@ -483,10 +483,14 @@ a:focus-visible {
       </div>
       <button type="submit" id="loginBtn">Sign In</button>
     </form>
-    <p id="status" role="alert" aria-live="polite"></p>
+<p id="status" role="alert" aria-live="polite"></p>
+    <!-- ADD THIS LINE -->
+    <a href="register.html#forgot">Forgot Password?</a>
+    
     <a href="register.html">Don't have an account? Sign Up</a>
-  </div>
+This link will take users to the `register.html` page and you can add a little bit of javascript to that page to automatically show the forgot password section if `#forgot` is in the url.
 
+After you've added these files and updates, your users will have a fully functional and secure way to reset their passwords if they ever get locked out.
   <script>
     const loginBtn = document.getElementById('loginBtn');
     const status = document.getElementById('status');
