@@ -1,0 +1,5 @@
+# Redirect everything to HTTPS
+http://* https://:splat 301!
+
+# Example page redirect
+/oldpage  /newpage  301
