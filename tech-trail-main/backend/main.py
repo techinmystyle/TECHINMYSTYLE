@@ -88,7 +88,10 @@ def forgot_password(data: ForgotPasswordData):
         )
         EMAIL_ADDRESS = "techinmystyle@gmail.com"
         EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
-        reset_link_placeholder = f"https://techinmystyle.com/auth/reset_password.html?token={token}"
+        
+        # This link now correctly points to your reset_password.html page
+        reset_link = f"https://techinmystyle.com/auth/reset_password.html?token={token}"
+        
         msg = MIMEMultipart()
         msg["From"] = EMAIL_ADDRESS
         msg["To"] = data.email
@@ -97,7 +100,7 @@ def forgot_password(data: ForgotPasswordData):
 
 You have requested for a password reset. Please use the link below:
 
-{reset_link_placeholder}
+{reset_link}
 
 Thank you for using TECH IN MY STYLE !!!
 
@@ -111,8 +114,10 @@ Thank you for using TECH IN MY STYLE !!!
                 smtp.send_message(msg)
         except Exception as e:
             print(f"Error sending email: {e}")
+            
+    # Always return a generic success message for security
     return {"message": "success"}
-
+    
 # --- NEW: Set New Password ---
 @app.post("/reset-password")
 def reset_password(data: ResetPasswordData):
