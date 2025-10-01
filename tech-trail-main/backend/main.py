@@ -70,10 +70,27 @@ def register(user: RegisterData):
 @app.post("/login")
 def login(data: LoginData):
     user = users_collection.find_one({"username": data.username})
-    if user and bcrypt.checkpw(data.password.encode('utf-8'), user["password"].encode('utf-8')):
-        return { "message": "success", "username": user["username"], "progress": user.get("progress", {}),
-                 "total_completed": user.get("total_completed", 0), "email": user["email"] }
+    if not user:
+        return {"message": "Invalid username or password."}
+
+    stored_pass = user["password"]
+
+    # Case 1: password stored as str (new accounts)
+    if isinstance(stored_pass, str):
+        if bcrypt.checkpw(data.password.encode('utf-8'), stored_pass.encode('utf-8')):
+            return {"message": "success", "username": user["username"], "progress": user.get("progress", {}),
+                    "total_completed": user.get("total_completed", 0), "email": user["email"]}
+
+    # Case 2: password stored as bytes (old accounts)
+    if isinstance(stored_pass, bytes):
+        if bcrypt.checkpw(data.password.encode('utf-8'), stored_pass):
+            # upgrade: save it as utf-8 string for consistency
+            users_collection.update_one({"_id": user["_id"]}, {"$set": {"password": stored_pass.decode('utf-8')}})
+            return {"message": "success", "username": user["username"], "progress": user.get("progress", {}),
+                    "total_completed": user.get("total_completed", 0), "email": user["email"]}
+
     return {"message": "Invalid username or password."}
+
 
 # --- SECURE: Request Password Reset ---
 @app.post("/forgot-password")
