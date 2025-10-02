@@ -13,8 +13,9 @@ import datetime
 from datetime import timezone
 
 # --- MongoDB Connection ---
-MONGO_URI = os.getenv("MONGO_URI", "mongodb+srv://shaikbasharam20:basharam@cluster0.lwcietu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-client = MongoClient(MONGO_URI)
+client = MongoClient(
+    "mongodb+srv://shaikbasharam20:basharam@cluster0.lwcietu.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+)
 db = client["tech_in_my_style"]
 users_collection = db["users"]
 
@@ -23,7 +24,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://techinmystyle.com", "http://127.0.0.1:5500", "http://localhost:5500", "*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -60,9 +61,11 @@ def register(user: RegisterData):
         return {"message": "Email already registered."}
     hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt())
     users_collection.insert_one({
-        "username": user.username, "password": hashed_password.decode('utf-8'), "email": user.email,
-        "progress": {}, "total_completed": 0, "unlocked_solutions": [], "failed_attempts": {},
-        "theme": "light", "editor_content": {}
+        "username": user.username,
+        "password": hashed_password.decode('utf-8'),
+        "email": user.email,
+        "progress": {}, "total_completed": 0, "unlocked_solutions": [],
+        "failed_attempts": {}, "theme": "light", "editor_content": {}
     })
     return {"message": "success"}
 
@@ -70,28 +73,14 @@ def register(user: RegisterData):
 @app.post("/login")
 def login(data: LoginData):
     user = users_collection.find_one({"username": data.username})
-    if not user:
-        return {"message": "Invalid username or password."}
-
-    stored_pass = user["password"]
-
-    # Case 1: password stored as str (new accounts)
-    if isinstance(stored_pass, str):
-        if bcrypt.checkpw(data.password.encode('utf-8'), stored_pass.encode('utf-8')):
-            return {"message": "success", "username": user["username"], "progress": user.get("progress", {}),
-                    "total_completed": user.get("total_completed", 0), "email": user["email"]}
-
-    # Case 2: password stored as bytes (old accounts)
-    if isinstance(stored_pass, bytes):
-        if bcrypt.checkpw(data.password.encode('utf-8'), stored_pass):
-            # upgrade: save it as utf-8 string for consistency
-            users_collection.update_one({"_id": user["_id"]}, {"$set": {"password": stored_pass.decode('utf-8')}})
-            return {"message": "success", "username": user["username"], "progress": user.get("progress", {}),
-                    "total_completed": user.get("total_completed", 0), "email": user["email"]}
-
+    if user and bcrypt.checkpw(data.password.encode('utf-8'), user["password"].encode('utf-8')):
+        return {
+            "message": "success", "username": user["username"],
+            "progress": user.get("progress", {}),
+            "total_completed": user.get("total_completed", 0), "email": user["email"]
+        }
     return {"message": "Invalid username or password."}
-
-
+    
 # --- SECURE: Request Password Reset ---
 @app.post("/forgot-password")
 def forgot_password(data: ForgotPasswordData):
@@ -106,13 +95,13 @@ def forgot_password(data: ForgotPasswordData):
         EMAIL_ADDRESS = "techinmystyle@gmail.com"
         EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
         
-        # This link now correctly points to your reset_password.html page
         reset_link = f"https://techinmystyle.com/auth/reset_password.html?token={token}"
         
         msg = MIMEMultipart()
         msg["From"] = EMAIL_ADDRESS
         msg["To"] = data.email
         msg["Subject"] = "Password Reset Request - Tech In My Style"
+        
         body = f"""Greetings from TECH IN MY STYLE !!!
 
 You have requested for a password reset. Please use the link below:
@@ -132,19 +121,22 @@ Thank you for using TECH IN MY STYLE !!!
         except Exception as e:
             print(f"Error sending email: {e}")
             
-    # Always return a generic success message for security
     return {"message": "success"}
-    
-# --- NEW: Set New Password ---
+
+# --- SECURE: Perform Password Reset ---
 @app.post("/reset-password")
 def reset_password(data: ResetPasswordData):
+    current_time = datetime.datetime.now(timezone.utc)
     user = users_collection.find_one({
         "reset_token": data.token,
-        "reset_token_expires": {"$gt": datetime.datetime.now(timezone.utc)}
+        "reset_token_expires": {"$gt": current_time}
     })
+
     if not user:
-        return {"message": "Invalid or expired token. Please try again."}
+        return {"message": "Invalid or expired token."}
+
     new_hashed_password = bcrypt.hashpw(data.new_password.encode('utf-8'), bcrypt.gensalt())
+    
     users_collection.update_one(
         {"_id": user["_id"]},
         {
@@ -160,16 +152,22 @@ def complete_task(task: TaskUpdate):
     user = users_collection.find_one({"username": task.username})
     if not user:
         return {"error": "User not found"}
+
     progress = user.get("progress", {})
     course = task.course.lower()
     task_list = progress.get(course, [])
+
     if task.task_id not in task_list:
         task_list.append(task.task_id)
         progress[course] = task_list
         total_completed = sum(len(tasks) for tasks in progress.values())
+
         users_collection.update_one(
             {"username": task.username},
-            {"$set": {"progress": progress, "total_completed": total_completed}}
+            {"$set": {
+                "progress": progress,
+                "total_completed": total_completed
+            }}
         )
     return {"message": "Task marked as complete."}
 
@@ -183,20 +181,37 @@ def save_progress(data: dict):
     failed_attempts = data.get("failedAttempts", {})
     theme = data.get("theme", "light")
     editor_content = data.get("editorContent", {})
+
     if not username or not course:
         return {"error": "Missing required fields"}
+
     user = users_collection.find_one({"username": username})
     if not user:
         return {"error": "User not found"}
+
     progress = user.get("progress", {})
     progress[course] = completed_tasks
     total_completed = sum(len(tasks) for tasks in progress.values())
+
     update_data = {
-        "progress": progress, "total_completed": total_completed, "unlocked_solutions": unlocked_solutions,
-        "failed_attempts": failed_attempts, "theme": theme, "editor_content": editor_content
+        "progress": progress,
+        "total_completed": total_completed,
+        "unlocked_solutions": unlocked_solutions,
+        "failed_attempts": failed_attempts,
+        "theme": theme,
+        "editor_content": editor_content
     }
-    users_collection.update_one({"username": username}, {"$set": update_data})
-    return {"message": "Progress saved successfully", "progress": progress, "total_completed": total_completed}
+
+    users_collection.update_one(
+        {"username": username},
+        {"$set": update_data}
+    )
+
+    return {
+        "message": "Progress saved successfully",
+        "progress": progress,
+        "total_completed": total_completed
+    }
 
 # --- Enhanced Progress Endpoint ---
 @app.get("/progress/{username}")
@@ -204,11 +219,16 @@ def get_progress(username: str):
     user = users_collection.find_one({"username": username})
     if not user:
         return {}
+    
     return {
-        "progress": user.get("progress", {}), "total_completed": user.get("total_completed", 0),
-        "unlocked_solutions": user.get("unlocked_solutions", []), "failed_attempts": user.get("failed_attempts", {}),
-        "theme": user.get("theme", "light"), "editor_content": user.get("editor_content", {}),
-        "html": user.get("progress", {}).get("html", []), "css": user.get("progress", {}).get("css", []),
+        "progress": user.get("progress", {}),
+        "total_completed": user.get("total_completed", 0),
+        "unlocked_solutions": user.get("unlocked_solutions", []),
+        "failed_attempts": user.get("failed_attempts", {}),
+        "theme": user.get("theme", "light"),
+        "editor_content": user.get("editor_content", {}),
+        "html": user.get("progress", {}).get("html", []),
+        "css": user.get("progress", {}).get("css", []),
         "js": user.get("progress", {}).get("js", [])
     }
 
@@ -220,32 +240,31 @@ def leaderboard():
     for user in users:
         progress = user.get("progress", {})
         course_progress = {course: len(tasks) for course, tasks in progress.items()}
-        board.append({"user": user["username"], "score": user.get("total_completed", 0), "courses": course_progress})
+        board.append({
+            "user": user["username"],
+            "score": user.get("total_completed", 0),
+            "courses": course_progress
+        })
     return sorted(board, key=lambda x: x["score"], reverse=True)
 
-# --- Deprecated/Insecure Endpoint ---
+# --- WARNING: This endpoint is insecure and will no longer work. ---
 @app.post("/user/progress")
 def get_user_progress(user: dict):
     return {"message": "This endpoint is deprecated and insecure."}
 
+
 # --- Courses Meta ---
 @app.get("/courses/meta")
 def courses_meta():
-    return {"ai": 30, "ml": 30, "dl": 30, "java": 30, "c": 30, "html": 30,
-            "css": 30, "js": 30, "js-intermediate": 30, "python": 30, "dsc": 30}
+    return {
+        "ai": 30, "ml": 30, "dl": 30, "java": 30, "c": 30, "html": 30,
+        "css": 30, "js": 30, "js-intermediate": 30, "python": 30, "dsc": 30
+    }
 
-# --- Frontend protection route ---
 @app.get("/", response_class=HTMLResponse)
 async def home():
-    html_content = """
-    <html>
-    <head><title>Tech In My Style</title></head>
-    <body><h1>Welcome to Tech In My Style API 🚀</h1><p>Your learning platform is running successfully!</p></body>
-    </html>
-    """
-    return HTMLResponse(content=html_content)
+    return HTMLResponse(content="<h1>Welcome to Tech In My Style API</h1>")
 
-# --- Uvicorn entry point for local/dev ---
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
