@@ -2410,7 +2410,7 @@ document.getElementById("todoInput").addEventListener("keypress", function(e) {
       };
 
       img.crossOrigin = 'anonymous';
-      img.src = 'js-basic-01.png';
+      img.src = 'JS-BASIC.png';
 
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
