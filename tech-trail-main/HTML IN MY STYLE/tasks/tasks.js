@@ -1602,12 +1602,12 @@ class HTMLLearningGame {
       };
       
       img.onerror = () => {
-        console.error('Could not load certificate image (4.png)');
-        alert('Certificate template not found. Please ensure 4.png is in the same directory.');
+        console.error('Could not load certificate image (15.png)');
+        alert('Certificate template not found. Please ensure 15.png is in the same directory.');
       };
       
       img.crossOrigin = 'anonymous';
-      img.src = 'HTML-01.png';
+      img.src = '15.png';
       
     } catch (error) {
       console.error('Error in downloadCertificate:', error);
