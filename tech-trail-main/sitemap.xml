@@ -5,42 +5,47 @@
   <!-- Main Pages -->
   <url>
     <loc>https://techinmystyle.com/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://i.pinimg.com/736x/5a/4a/56/5a4a5668649a44c83c9e0ad68f206682.jpg</image:loc>
+      <image:title>Tech In My Style Logo</image:title>
+      <image:caption>Tech In My Style Official Logo</image:caption>
+    </image:image>
   </url>
   
   <url>
     <loc>https://techinmystyle.com/courses</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
     <loc>https://techinmystyle.com/feedback</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   
   <url>
     <loc>https://techinmystyle.com/about-us</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>https://techinmystyle.com/stay-connected</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://techinmystyle.com/leaderboard</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -48,7 +53,7 @@
   <!-- Course Pages -->
   <url>
     <loc>https://techinmystyle.com/HTML%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -60,7 +65,7 @@
   
   <url>
     <loc>https://techinmystyle.com/CSS%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -72,7 +77,7 @@
   
   <url>
     <loc>https://techinmystyle.com/JAVASCRIPT%20IN%20MY%20STYLE%20-%20BASIC/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -84,7 +89,7 @@
   
   <url>
     <loc>https://techinmystyle.com/JAVASCRIPT%20IN%20MY%20STYLE%20-%20INTERMEDIATE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -96,7 +101,7 @@
   
   <url>
     <loc>https://techinmystyle.com/PYTHON%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -108,7 +113,7 @@
   
   <url>
     <loc>https://techinmystyle.com/JAVA%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -120,7 +125,7 @@
   
   <url>
     <loc>https://techinmystyle.com/C%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -132,7 +137,7 @@
   
   <url>
     <loc>https://techinmystyle.com/AI%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -144,7 +149,7 @@
   
   <url>
     <loc>https://techinmystyle.com/ML%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -156,7 +161,7 @@
   
   <url>
     <loc>https://techinmystyle.com/DL%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -168,7 +173,7 @@
   
   <url>
     <loc>https://techinmystyle.com/DSC%20IN%20MY%20STYLE/</loc>
-    <lastmod>2025-01-06</lastmod>
+    <lastmod>2025-10-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <image:image>
@@ -179,3 +184,4 @@
   </url>
 
 </urlset>
+s
