@@ -33,4 +33,3 @@ Crawl-delay: 1
 
 # Sitemap location
 Sitemap: https://techinmystyle.com/sitemap.xml
-Sitemap: https://techinmystyle.com/sitemap-courses.xml
