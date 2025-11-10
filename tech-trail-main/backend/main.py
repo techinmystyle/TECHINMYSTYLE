@@ -7,6 +7,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import bcrypt  # ✅ Added for password hashing
 
 # ==============================
 # --- MongoDB Connection ---
@@ -63,9 +64,12 @@ def register(user: RegisterData):
     if users_collection.find_one({"email": user.email}):
         return {"message": "Email already registered."}
     
+    # ✅ Hash the password before storing
+    hashed_pw = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+
     users_collection.insert_one({
         "username": user.username,
-        "password": user.password,  # ⚠️ Use hashing in production!
+        "password": hashed_pw,  # stored as hash
         "email": user.email,
         "progress": {},
         "total_completed": 0
@@ -77,11 +81,14 @@ def register(user: RegisterData):
 # ==============================
 @app.post("/login")
 def login(data: LoginData):
-    user = users_collection.find_one({
-        "username": data.username,
-        "password": data.password
-    })
-    if user:
+    user = users_collection.find_one({"username": data.username})
+    if not user:
+        return {"message": "Invalid username or password."}
+
+    stored_hashed_pw = user["password"].encode("utf-8")
+
+    # ✅ Verify the password
+    if bcrypt.checkpw(data.password.encode("utf-8"), stored_hashed_pw):
         return {
             "message": "success",
             "username": user["username"],
@@ -89,6 +96,7 @@ def login(data: LoginData):
             "total_completed": user.get("total_completed", 0),
             "email": user["email"]
         }
+
     return {"message": "Invalid username or password."}
 
 # ==============================
@@ -146,8 +154,8 @@ def progress(username: str):
 def get_progress(user: dict):
     username = user.get("username")
     password = user.get("password")
-    user_data = users_collection.find_one({"username": username, "password": password})
-    if user_data:
+    user_data = users_collection.find_one({"username": username})
+    if user_data and bcrypt.checkpw(password.encode("utf-8"), user_data["password"].encode("utf-8")):
         return {"progress": user_data.get("progress", {})}
     return {"message": "unauthorized"}
 
@@ -174,24 +182,20 @@ def forgot_password(data: ForgotPasswordData):
     generic_success = {"message": "success"}
     generic_error = {"message": "Failed to send recovery email. Please try again later."}
 
+    # For security, do not expose password — just send reset info or message
     if not user:
         return generic_success
-
-    user_password = user.get("password")
-    if not user_password:
-        return generic_error
 
     msg = MIMEMultipart()
     msg["From"] = EMAIL_ADDRESS
     msg["To"] = data.email
-    msg["Subject"] = "Your Password Recovery - Tech In My Style"
+    msg["Subject"] = "Password Reset Request - Tech In My Style"
     body = f"""Hello {user['username']},
 
-You requested to recover your password on Tech In My Style.
+We received a password reset request for your account on Tech In My Style.
+For security reasons, we cannot send your password directly (it is stored encrypted).
 
-Your password is: {user_password}
-
-If this wasn’t you, please change it immediately.
+Please contact support or visit the reset page to set a new password.
 
 - Tech In My Style Team
 """
@@ -213,13 +217,10 @@ If this wasn’t you, please change it immediately.
 async def home():
     html_content = """
     <html>
-    <head>
-        <title>Tech In My Style</title>
-    </head>
+    <head><title>Tech In My Style</title></head>
     <body>
         <h1>Welcome to Tech In My Style 🚀</h1>
         <p>Your learning platform backend is running successfully!</p>
-
         <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
