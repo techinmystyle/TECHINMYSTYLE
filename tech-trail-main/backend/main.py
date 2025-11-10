@@ -8,7 +8,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-# --- MongoDB Connection (Render Environment) ---
+# ==============================
+# --- MongoDB Connection ---
+# ==============================
 MONGO_URL = os.getenv("MONGO_URL")
 if not MONGO_URL:
     raise ValueError("❌ MONGO_URL not found in environment variables.")
@@ -17,7 +19,9 @@ client = MongoClient(MONGO_URL)
 db = client["tech_in_my_style"]
 users_collection = db["users"]
 
+# ==============================
 # --- FastAPI Setup ---
+# ==============================
 app = FastAPI()
 
 # Enable CORS
@@ -29,7 +33,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# ==============================
 # --- Pydantic Models ---
+# ==============================
 class RegisterData(BaseModel):
     username: str
     password: str
@@ -47,13 +53,16 @@ class TaskUpdate(BaseModel):
 class ForgotPasswordData(BaseModel):
     email: str
 
+# ==============================
 # --- Register ---
+# ==============================
 @app.post("/register")
 def register(user: RegisterData):
     if users_collection.find_one({"username": user.username}):
         return {"message": "Username already exists."}
     if users_collection.find_one({"email": user.email}):
         return {"message": "Email already registered."}
+    
     users_collection.insert_one({
         "username": user.username,
         "password": user.password,  # ⚠️ Use hashing in production!
@@ -63,7 +72,9 @@ def register(user: RegisterData):
     })
     return {"message": "success"}
 
+# ==============================
 # --- Login ---
+# ==============================
 @app.post("/login")
 def login(data: LoginData):
     user = users_collection.find_one({
@@ -80,7 +91,9 @@ def login(data: LoginData):
         }
     return {"message": "Invalid username or password."}
 
+# ==============================
 # --- Task Complete ---
+# ==============================
 @app.post("/task/complete")
 def complete_task(task: TaskUpdate):
     user = users_collection.find_one({"username": task.username})
@@ -102,7 +115,9 @@ def complete_task(task: TaskUpdate):
         )
     return {"message": "Task marked as complete."}
 
+# ==============================
 # --- Leaderboard ---
+# ==============================
 @app.get("/leaderboard")
 def leaderboard():
     users = users_collection.find()
@@ -117,7 +132,9 @@ def leaderboard():
         })
     return sorted(board, key=lambda x: x["score"], reverse=True)
 
+# ==============================
 # --- Progress by username ---
+# ==============================
 @app.get("/progress/{username}")
 def progress(username: str):
     user = users_collection.find_one({"username": username})
@@ -134,7 +151,9 @@ def get_progress(user: dict):
         return {"progress": user_data.get("progress", {})}
     return {"message": "unauthorized"}
 
+# ==============================
 # --- Courses Meta ---
+# ==============================
 @app.get("/courses/meta")
 def courses_meta():
     return {
@@ -143,7 +162,9 @@ def courses_meta():
         "python": 30, "dsc": 30
     }
 
+# ==============================
 # --- Forgot Password ---
+# ==============================
 EMAIL_ADDRESS = "techinmystyle@gmail.com"
 EMAIL_PASSWORD = os.getenv("EMAIL_PASS")
 
@@ -185,7 +206,9 @@ If this wasn’t you, please change it immediately.
         print("Error sending email:", e)
         return generic_error
 
+# ==============================
 # --- Frontend Protection Route ---
+# ==============================
 @app.get("/", response_class=HTMLResponse)
 async def home():
     html_content = """
@@ -195,7 +218,7 @@ async def home():
     </head>
     <body>
         <h1>Welcome to Tech In My Style 🚀</h1>
-        <p>Your learning platform is running successfully!</p>
+        <p>Your learning platform backend is running successfully!</p>
 
         <script>
         document.addEventListener('contextmenu', event => event.preventDefault());
@@ -213,8 +236,9 @@ async def home():
     """
     return HTMLResponse(content=html_content)
 
-
-# --- Run app ---
+# ==============================
+# --- Run app (for local dev) ---
+# ==============================
 if __name__ == "__main__":
     import uvicorn
     port = int(os.environ.get("PORT", 8000))
