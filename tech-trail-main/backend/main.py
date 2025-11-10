@@ -7,15 +7,11 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from dotenv import load_dotenv  # ✅ Load environment variables from .env
 
-# --- Load environment variables ---
-load_dotenv()
-
-# --- MongoDB Connection ---
+# --- MongoDB Connection (Render Environment) ---
 MONGO_URL = os.getenv("MONGO_URL")
 if not MONGO_URL:
-    raise ValueError("❌ MONGO_URL not found in .env file")
+    raise ValueError("❌ MONGO_URL not found in environment variables.")
 
 client = MongoClient(MONGO_URL)
 db = client["tech_in_my_style"]
