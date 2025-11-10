@@ -1938,7 +1938,7 @@
           document.getElementById('courseSummaryTable').style.display = 'none';
           
           try {
-            const res = await fetch(`https://tech-trail-w2ap.onrender.com/progress/${encodeURIComponent(username)}`);
+            const res = await fetch(`https://techinmystyle.onrender.com/progress/${encodeURIComponent(username)}`);
             if (!res.ok) throw new Error("Failed to fetch user progress");
             
             const prog = await res.json();
