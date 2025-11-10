@@ -30,13 +30,20 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # ==============================
 app = FastAPI()
 
-# Enable CORS
+# --- ✅ Secure & Production-Safe CORS Setup ---
+origins = [
+    "https://techinmystyle.com",
+    "https://www.techinmystyle.com",
+    "http://localhost:5500",       # optional: local testing
+    "http://127.0.0.1:5500"
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],   # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],   # Allow all custom headers
 )
 
 # ==============================
@@ -69,7 +76,7 @@ def register(user: RegisterData):
     if users_collection.find_one({"email": user.email}):
         return {"message": "Email already registered."}
     
-    # ✅ Hash password securely using passlib
+    # ✅ Hash password securely using passlib (bcrypt)
     hashed_pw = pwd_context.hash(user.password)
 
     users_collection.insert_one({
