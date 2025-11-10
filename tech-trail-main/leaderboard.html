@@ -1692,7 +1692,7 @@
 
         async function loadCourseTotals() {
           try {
-            const res = await fetch('https://tech-trail-w2ap.onrender.com/courses/meta');
+            const res = await fetch('https://techinmystyle.onrender.com/courses/meta');
             if(!res.ok) throw new Error("Failed to fetch course totals");
             courseTotals = await res.json();
           } catch {
@@ -1706,7 +1706,7 @@
         async function loadBoard() {
           await loadCourseTotals();
           try {
-            const res = await fetch('https://tech-trail-w2ap.onrender.com/leaderboard');
+            const res = await fetch('https://techinmystyle.onrender.com/leaderboard');
             if (!res.ok) throw new Error("Failed to fetch leaderboard");
             leaderboardData = await res.json();
             applySearchAndSort();
