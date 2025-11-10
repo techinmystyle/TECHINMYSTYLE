@@ -7,7 +7,7 @@ import os
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-import bcrypt  # ✅ Added for password hashing
+from passlib.context import CryptContext  # ✅ Secure password hashing
 
 # ==============================
 # --- MongoDB Connection ---
@@ -19,6 +19,11 @@ if not MONGO_URL:
 client = MongoClient(MONGO_URL)
 db = client["tech_in_my_style"]
 users_collection = db["users"]
+
+# ==============================
+# --- Password Hashing Setup ---
+# ==============================
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # ==============================
 # --- FastAPI Setup ---
@@ -64,12 +69,12 @@ def register(user: RegisterData):
     if users_collection.find_one({"email": user.email}):
         return {"message": "Email already registered."}
     
-    # ✅ Hash the password before storing
-    hashed_pw = bcrypt.hashpw(user.password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
+    # ✅ Hash password securely using passlib
+    hashed_pw = pwd_context.hash(user.password)
 
     users_collection.insert_one({
         "username": user.username,
-        "password": hashed_pw,  # stored as hash
+        "password": hashed_pw,  # Stored as hashed value
         "email": user.email,
         "progress": {},
         "total_completed": 0
@@ -85,10 +90,8 @@ def login(data: LoginData):
     if not user:
         return {"message": "Invalid username or password."}
 
-    stored_hashed_pw = user["password"].encode("utf-8")
-
-    # ✅ Verify the password
-    if bcrypt.checkpw(data.password.encode("utf-8"), stored_hashed_pw):
+    # ✅ Verify password using passlib
+    if pwd_context.verify(data.password, user["password"]):
         return {
             "message": "success",
             "username": user["username"],
@@ -155,7 +158,7 @@ def get_progress(user: dict):
     username = user.get("username")
     password = user.get("password")
     user_data = users_collection.find_one({"username": username})
-    if user_data and bcrypt.checkpw(password.encode("utf-8"), user_data["password"].encode("utf-8")):
+    if user_data and pwd_context.verify(password, user_data["password"]):
         return {"progress": user_data.get("progress", {})}
     return {"message": "unauthorized"}
 
@@ -182,7 +185,7 @@ def forgot_password(data: ForgotPasswordData):
     generic_success = {"message": "success"}
     generic_error = {"message": "Failed to send recovery email. Please try again later."}
 
-    # For security, do not expose password — just send reset info or message
+    # For security, never send stored passwords
     if not user:
         return generic_success
 
@@ -193,7 +196,7 @@ def forgot_password(data: ForgotPasswordData):
     body = f"""Hello {user['username']},
 
 We received a password reset request for your account on Tech In My Style.
-For security reasons, we cannot send your password directly (it is stored encrypted).
+For security reasons, your password cannot be sent directly (it is stored encrypted).
 
 Please contact support or visit the reset page to set a new password.
 
