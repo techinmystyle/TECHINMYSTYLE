@@ -1,4 +1,4 @@
-const API_BASE = "https://tech-trail-w2ap.onrender.com"; // your FastAPI endpoint
+const API_BASE = "https://techinmystyle.onrender.com"; // your FastAPI endpoint
 
 const tasks = [
   {
