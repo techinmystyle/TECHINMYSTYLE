@@ -8,18 +8,18 @@ Disallow: /private/
 Disallow: /*.json$
 Disallow: /api/
 
-# Allow all courses explicitly
-Allow: /HTML%20IN%20MY%20STYLE/
-Allow: /CSS%20IN%20MY%20STYLE/
-Allow: /JAVASCRIPT%20IN%20MY%20STYLE%20-%20BASIC/
-Allow: /JAVASCRIPT%20IN%20MY%20STYLE%20-%20INTERMEDIATE/
-Allow: /PYTHON%20IN%20MY%20STYLE/
-Allow: /JAVA%20IN%20MY%20STYLE/
-Allow: /C%20IN%20MY%20STYLE/
-Allow: /AI%20IN%20MY%20STYLE/
-Allow: /ML%20IN%20MY%20STYLE/
-Allow: /DL%20IN%20MY%20STYLE/
-Allow: /DSC%20IN%20MY%20STYLE/
+# Allow all courses explicitly (updated to hyphenated URLs)
+Allow: /html-in-my-style/
+Allow: /css-in-my-style/
+Allow: /javascript-in-my-style-basic/
+Allow: /javascript-in-my-style-intermediate/
+Allow: /python-in-my-style/
+Allow: /java-in-my-style/
+Allow: /c-in-my-style/
+Allow: /ai-in-my-style/
+Allow: /ml-in-my-style/
+Allow: /dl-in-my-style/
+Allow: /dsc-in-my-style/
 
 # Allow important pages
 Allow: /courses
